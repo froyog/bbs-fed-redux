@@ -1,0 +1,6 @@
+# node_modules and bower_components is ignored by default
+build/*
+
+# Ignore register service worker to remove
+# no-undef warnings
+src/registerServiceWorker.js
