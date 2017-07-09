@@ -1,12 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import './app.less';
+import ForumList from './ForumList';
 
 
 class App extends React.Component {
     render () {
         return (
-            <h1>TwT BBS Testing Page</h1>
+            <ForumList />
         );
     }
 }
