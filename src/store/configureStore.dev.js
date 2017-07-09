@@ -17,11 +17,11 @@ const configureStore = preloadedState => {
     if (module.hot) {
         module.hot.accept('../reducers/rootReducer', () => {
             const nextRootReducer = require('../reducers/rootReducer').default;
-            store.replaceReducer(nextRootReducer)
-        })
+            store.replaceReducer(nextRootReducer);
+        });
     }
 
     return store;
-}
+};
 
 export default configureStore;

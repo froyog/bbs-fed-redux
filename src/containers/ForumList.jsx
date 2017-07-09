@@ -12,7 +12,7 @@ class ForumListWrapper extends React.Component {
     };
 
     componentWillMount() {
-        this.props.getForumList()
+        this.props.getForumList();
     }
 
     render () {
@@ -22,7 +22,7 @@ class ForumListWrapper extends React.Component {
             <ForumList
                 isFetching={isFetching}
                 forums={items} />
-        ) 
+        ); 
     }
 }
 
@@ -32,8 +32,8 @@ const mapStateToProps = (state) => {
         isFetching: state.getIn(['forumList', 'isFetching']),
         items: state.getIn(['forumList', 'items']),
         reachTime: state.getIn(['forumList', 'reachTime'])
-    }
-}
+    };
+};
 
 
 ForumListWrapper = connect(mapStateToProps, {

@@ -12,7 +12,7 @@ const ForumList = props => {
                 <p>Info: {info}</p>
                 <p>Board Count: {c_board}</p>
             </li>
-        )
+        );
     });
     const renderLoadingStatus = isFetching && <h2>Loading...</h2>;
 
@@ -21,8 +21,8 @@ const ForumList = props => {
             {renderLoadingStatus}
             {renderForums}
         </ul>
-    )
-}
+    );
+};
 
 ForumList.propTypes = {
     isFetching: PropTypes.bool.isRequired,
@@ -34,4 +34,4 @@ ForumList.propTypes = {
     }).isRequired).isRequired
 };
 
-export default ForumList
+export default ForumList;

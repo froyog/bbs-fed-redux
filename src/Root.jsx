@@ -9,6 +9,6 @@ const store = configureStore();
 const Root = () =>
     <Provider store={store}>
         <App />
-    </Provider>
+    </Provider>;
 
 export default Root;
