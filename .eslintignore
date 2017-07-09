@@ -2,5 +2,6 @@
 build/*
 
 # Ignore register service worker to remove
-# no-undef warnings
+# "process" no-undef warnings
 src/registerServiceWorker.js
+src/store/configureStore.js

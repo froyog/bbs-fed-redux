@@ -3,7 +3,7 @@
 
     parser: "babel-eslint",
 
-    plugins: ["react", "import"],
+    plugins: ["react", "import", "immutablejs"],
 
     env: {
         es6: true,
@@ -35,14 +35,14 @@
     },
 
     rules: {
-        "indent": [1, 4],
+        "indent": [1, 4, { "SwitchCase": 1 }],
         "semi": [1, "always"],
         "array-callback-return": 1,
         "default-case": [1, { commentPattern: "^no default$" }],
         "dot-location": [1, "property"],
         "eqeqeq": [1, "allow-null"],
         "guard-for-in": 1,
-        "new-cap": [1, { newIsCap: true }],
+        "new-cap": 0,
         "new-parens": 1,
         "no-array-constructor": 1,
         "no-caller": 1,
