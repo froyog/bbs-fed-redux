@@ -1,6 +1,5 @@
-import { fromJS, set, Map } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import * as ActionTypes from '../actions/forumList';
-
 
 const defaultState = fromJS({
     isFetching: false,
@@ -9,9 +8,9 @@ const defaultState = fromJS({
 
 export const forumList = (state = defaultState, action) => {
     switch (action.type) {
-        case ActionTypes.REQUEST_FORUMLIST:
-            return set('isFetching', true);
-        case ActionTypes.RECEIVE_FORUMLIST:
+        case ActionTypes.GET_FORUMLIST_REQUEST:
+            return state.set('isFetching', true);
+        case ActionTypes.GET_FORUMLIST_SUCCESS:
             return Map({
                 'isFetching': false,
                 'items': fromJS(action.json.data),

@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 const ForumList = props => {
     const { isFetching, forums } = props;
     const renderForums = forums.map((forum) => {
-        const { name, c_board, id, info } = forum;
+        const { name, cBoard, id, info } = forum;
         return (
             <li key={id}>
                 <p>Name: {name}</p>
                 <p>Info: {info}</p>
-                <p>Board Count: {c_board}</p>
+                <p>Board Count: {cBoard}</p>
             </li>
         );
     });
@@ -29,7 +29,7 @@ ForumList.propTypes = {
     forums: PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string.isRequired,
         info: PropTypes.string.isRequired,
-        c_board: PropTypes.number.isRequired,
+        cBoard: PropTypes.number.isRequired,
         id: PropTypes.number.isRequired
     }).isRequired).isRequired
 };
