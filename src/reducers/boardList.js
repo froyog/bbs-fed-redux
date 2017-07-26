@@ -25,7 +25,7 @@ const boardListByFid = (state = Map(), action) => {
         case ActionTypes.GET_BOARDLIST_REQUEST:
         case ActionTypes.GET_BOARDLIST_SUCCESS:
             return state.set(
-                ''+action.fid, boardList(state.get(action['fid']), action)
+                action.fid, boardList(state.get(action['fid']), action)
             );
         default:
             return state;

@@ -21,10 +21,24 @@ let ForumWrapper = props => {
     );
 };
 
+const propTypes = {
+    info: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        info: PropTypes.string.isRequired,
+        cBoard: PropTypes.number.isRequired,
+        id: PropTypes.number.isRequired
+    }).isRequired,
+    getBoardList: PropTypes.func.isRequired,
+    isFetching: PropTypes.bool,
+    items: PropTypes.shape({
+        boards: PropTypes.array.isRequired,
+        forum: PropTypes.object.isRequired
+    })
+}
 
 const mapStateToProps = (state, ownProps) => {
     const fid = ownProps.info.id;
-    const detailedInfo = state.getIn(['boardList', ''+fid]);
+    const detailedInfo = state.getIn(['boardList', fid]);
     if (!detailedInfo) return {};
     return {
         isFetching: detailedInfo.get('isFetching'),

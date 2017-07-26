@@ -11,10 +11,10 @@ class ForumListWrapper extends React.Component {
         getForumList: PropTypes.func.isRequired,
         isFetching: PropTypes.bool.isRequired,
         items: PropTypes.arrayOf(PropTypes.shape({
-            name: PropTypes.string.isRequied,
-            info: PropTypes.string.isRequied,
-            cBoard: PropTypes.number.isRequied,
-            id: PropTypes.number.isRequied
+            name: PropTypes.string.isRequired,
+            info: PropTypes.string.isRequired,
+            cBoard: PropTypes.number.isRequired,
+            id: PropTypes.number.isRequired
         }).isRequired).isRequired
     };
 

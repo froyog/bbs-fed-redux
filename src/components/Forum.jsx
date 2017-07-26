@@ -3,6 +3,21 @@ import PropTypes from 'prop-types';
 
 
 class Forum extends React.Component {
+    static propTypes = {
+        isFetching: PropTypes.bool,
+        basicInfo: PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            info: PropTypes.string.isRequired,
+            cBoard: PropTypes.number.isRequired,
+            id: PropTypes.number.isRequired
+        }),
+        detailedInfo: PropTypes.shape({
+            boards: PropTypes.array.isRequired,
+            forum: PropTypes.object.isRequired
+        }),
+        onGetDetail: PropTypes.func.isRequired
+    }
+
     constructor () {
         super();
         this.state = {
