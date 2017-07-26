@@ -31,8 +31,8 @@ class ForumListWrapper extends React.Component {
                     key={fid}
                     info={forum}
                 />
-            )
-        })
+            );
+        });
 
         return (
             <ul>

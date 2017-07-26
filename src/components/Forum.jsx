@@ -26,23 +26,23 @@ class Forum extends React.Component {
         const { name, info, cBoard } = basicInfo;
         let renderDetailForum;
 
-        if (detailedInfo) {
-            renderDetailForum = (
-                <ul>
-                    detailedInfo.boards.map(board => {
-                        const { cThread, id, info, name } = board;
-                        return (
-                            <li key={id}>
-                                <p>Name: {name}</p>
-                                <p>Info: {info}</p>
-                                <p>Thread Count: {cThread}</p>
-                            </li>
-                        )
-                    })
-                </ul>
-            )
+        if (detailedInfo && this.state.expanded) {
+            renderDetailForum = isFetching
+                ? <h5>Loading Boards</h5>
+                :
+                    (<ul>
+                        {detailedInfo.boards.map(board => {
+                            const { cThread, id, info, name } = board;
+                            return (
+                                <li key={id}>
+                                    <p>Name: {name}</p>
+                                    <p>Info: {info}</p>
+                                    <p>Thread Count: {cThread}</p>
+                                </li>
+                            );
+                        })}
+                    </ul>);
         }
-
 
         return (
             <li>
@@ -54,8 +54,9 @@ class Forum extends React.Component {
                 >
                     Expand
                 </button>
+                {renderDetailForum}
             </li>
-        )
+        );
     }
 }
 

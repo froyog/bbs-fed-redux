@@ -15,22 +15,22 @@ let ForumWrapper = props => {
             basicInfo={info}
             detailedInfo={items}
             onGetDetail={(fid) => {
-                getBoardList(fid)
+                getBoardList(fid);
             }}
         />
-    )
-}
+    );
+};
 
 
 const mapStateToProps = (state, ownProps) => {
     const fid = ownProps.info.id;
-    const detailedInfo = state.getIn(['boardList', ''+fid])
+    const detailedInfo = state.getIn(['boardList', ''+fid]);
     if (!detailedInfo) return {};
     return {
         isFetching: detailedInfo.get('isFetching'),
         items: detailedInfo.get('items')
     };
-}
+};
 
 
 ForumWrapper = connect(mapStateToProps, {
