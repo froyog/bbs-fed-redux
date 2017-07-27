@@ -15,6 +15,12 @@ const forumList = (state = defaultState, action) => {
                 'isFetching': false,
                 'items': fromJS(action.json.data)
             });
+        case ActionTypes.GET_FORUMLIST_FAILURE:
+            return Map({
+                'isFetching': false,
+                'items': [],
+                'error': fromJS(action.error)
+            });
         default:
             return state;
 

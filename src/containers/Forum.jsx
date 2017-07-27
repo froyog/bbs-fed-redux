@@ -21,7 +21,7 @@ let ForumWrapper = props => {
     );
 };
 
-const propTypes = {
+ForumWrapper.propTypes = {
     info: PropTypes.shape({
         name: PropTypes.string.isRequired,
         info: PropTypes.string.isRequired,
@@ -31,10 +31,10 @@ const propTypes = {
     getBoardList: PropTypes.func.isRequired,
     isFetching: PropTypes.bool,
     items: PropTypes.shape({
-        boards: PropTypes.array.isRequired,
-        forum: PropTypes.object.isRequired
+        boards: PropTypes.array,
+        forum: PropTypes.object
     })
-}
+};
 
 const mapStateToProps = (state, ownProps) => {
     const fid = ownProps.info.id;

@@ -3,7 +3,7 @@ import * as ActionTypes from '../actions/forumList';
 
 const defaultState = fromJS({
     isFetching: false,
-    items: []
+    items: {}
 });
 
 const boardList = (state = defaultState, action) => {

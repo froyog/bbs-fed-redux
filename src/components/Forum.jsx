@@ -12,8 +12,8 @@ class Forum extends React.Component {
             id: PropTypes.number.isRequired
         }),
         detailedInfo: PropTypes.shape({
-            boards: PropTypes.array.isRequired,
-            forum: PropTypes.object.isRequired
+            boards: PropTypes.array,
+            forum: PropTypes.object
         }),
         onGetDetail: PropTypes.func.isRequired
     }
@@ -44,19 +44,18 @@ class Forum extends React.Component {
         if (detailedInfo && this.state.expanded) {
             renderDetailForum = isFetching
                 ? <h5>Loading Boards</h5>
-                :
-                    (<ul>
-                        {detailedInfo.boards.map(board => {
-                            const { cThread, id, info, name } = board;
-                            return (
-                                <li key={id}>
-                                    <p>Name: {name}</p>
-                                    <p>Info: {info}</p>
-                                    <p>Thread Count: {cThread}</p>
-                                </li>
-                            );
-                        })}
-                    </ul>);
+                : <ul>
+                    {detailedInfo.boards.map(board => {
+                        const { cThread, id, info, name } = board;
+                        return (
+                            <li key={id}>
+                                <p>Name: {name}</p>
+                                <p>Info: {info}</p>
+                                <p>Thread Count: {cThread}</p>
+                            </li>
+                        );
+                    })}
+                </ul>;
         }
 
         return (
