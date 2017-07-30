@@ -7,14 +7,16 @@ import Forums from './ForumList';
 import Home from './Home';
 import Me from './Me';
 import NoMatch from '../components/NoMatch';
+import { isMobile } from '../utils/isMobile';
 
 import '../styles/app.less';
+
 
 class App extends React.Component {
     constructor () {
         super();
         this.state = {
-            sidebarOpen: true
+            sidebarOpen: !isMobile(1000)
         };
 
         this.handleToggleSidebar = this.handleToggleSidebar.bind(this);
@@ -29,13 +31,13 @@ class App extends React.Component {
     render () {
         const { sidebarOpen } = this.state;
         const mainStyle = {
-            'left': `${sidebarOpen ? '200px' : '0'}`
+            'margin-left': `${sidebarOpen ? '200px' : '0'}`
         };
 
         return (
             <div>
-                <Header onToggleMenu={this.handleToggleSidebar}/>
-                <Sidebar open={sidebarOpen}/>
+                <Header onToggleMenu={this.handleToggleSidebar} />
+                <Sidebar open={sidebarOpen} onCloseSidebar={this.handleToggleSidebar} />
                 <div id="main" style={mainStyle}>
                     <Switch>
                         <Route exact path='/' component={Home} />

@@ -18,6 +18,10 @@
 .slogan {
     height: 18px;
     margin-top: 10px;
+
+    @media @phones {
+        display: none;
+    }
 }
 
 .menu-button-wrapper {
@@ -26,13 +30,14 @@
     height: 50px;
 
     &:hover .icon-menu {
-        color: #666;
+        color: #555;
     }
 
     .icon-menu {
+        font-size: 14px;
         position: absolute;
         top: 15px;
-        left: 20px;
+        left: 24px;
         color: #bbb;
     }
 
