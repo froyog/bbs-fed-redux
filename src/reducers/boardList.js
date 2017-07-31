@@ -1,6 +1,7 @@
 import { fromJS, Map } from 'immutable';
 import * as ActionTypes from '../actions/forumList';
 
+
 const defaultState = fromJS({
     isFetching: false,
     items: {}

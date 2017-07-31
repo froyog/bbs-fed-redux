@@ -11,6 +11,9 @@
 }
 
 .sidebar-overlay {
+    // no overlays on bigger screen
+    display: none;
+
     background-color: #000;
     position: fixed;
     top: 0;
@@ -20,4 +23,8 @@
     left: 0;
     z-index: 10;
     transition: opacity .3s ease-out, visibility .3s ease-out;
+
+    @media @phones {
+        display: block;
+    }
 }
