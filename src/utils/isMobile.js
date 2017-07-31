@@ -6,4 +6,4 @@ export const isMobile = (breakpointWidth = 1000) => {
         return false;
     }
     return true;
-}
+};

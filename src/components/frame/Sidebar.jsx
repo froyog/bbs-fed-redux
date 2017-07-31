@@ -17,7 +17,7 @@ const Sidebar = props => {
             style={sidebarOpenStyle}>
 
         </nav>
-    )
-}
+    );
+};
 
 export default Sidebar;

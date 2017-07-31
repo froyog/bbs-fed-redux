@@ -28,8 +28,8 @@ let Header = props => {
             </Link>
             <img className="slogan" src={slogan} alt="slogan" />
         </header>
-    )
-}
+    );
+};
 
 
 const mapStateToProps = state => ({

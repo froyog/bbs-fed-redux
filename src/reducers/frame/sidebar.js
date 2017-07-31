@@ -8,6 +8,6 @@ const sidebar = (state = false, action) => {
         default:
             return state;
     }
-}
+};
 
 export default sidebar;
