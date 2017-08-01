@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 
 import Header from './frame/Header';
@@ -13,7 +14,9 @@ import '../styles/app.less';
 
 
 class App extends React.Component {
-
+    static propTypes = {
+        isOpen: PropTypes.bool.isRequired
+    };
 
     render () {
         const { isOpen } = this.props;

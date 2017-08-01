@@ -11,7 +11,7 @@ import slogan from '../../resources/slogan.jpg';
 
 let Header = props => {
     const { isOpen, onToggleSidebar } = props;
-    
+
     return (
         <header id="header" role="banner">
             <div className="menu-button-wrapper">
@@ -31,6 +31,10 @@ let Header = props => {
     );
 };
 
+Header.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onToggleSidebar: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
     // current open state

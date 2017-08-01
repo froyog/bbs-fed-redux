@@ -9,6 +9,20 @@ import '../../styles/frame/sidebar.less';
 
 
 class SidebarWrapper extends React.Component {
+    static propTypes = {
+        isOpen: PropTypes.bool.isRequired,
+        onToggleSidebar: PropTypes.func.isRequired,
+        maxYoffset: PropTypes.number,
+        minXOffset: PropTypes.number,
+        minXDragDistance: PropTypes.number
+    };
+
+    static defaultProps = {
+        maxYoffset: 150, // pixel
+        minXOffset: 60,
+        minXDragDistance: 40
+    };
+
     constructor () {
         super();
         this.state = {
@@ -44,7 +58,7 @@ class SidebarWrapper extends React.Component {
 
     handleTouchEnd () {
         const { startX, lastX, startY, lastY } = this.state;
-        const { onToggleSidebar } = this.props;
+        const { onToggleSidebar, maxYoffset, minXOffset, minXDragDistance } = this.props;
 
         this.setState({
             startX: 0,
@@ -53,13 +67,13 @@ class SidebarWrapper extends React.Component {
             lastY: 0
         });
 
-        if (Math.abs(startY - lastY) > 150) return;
+        if (Math.abs(startY - lastY) > maxYoffset) return;
 
-        if (lastX - startX > 60 && startX < 40) {
+        if (lastX - startX > minXOffset && startX < minXDragDistance) {
             // slide right (open)
             // drag startX must be restricted
             onToggleSidebar(true);
-        } else if (startX - lastX > 60) {
+        } else if (startX - lastX > minXOffset) {
             // slide left (close)
             onToggleSidebar(false);
         }

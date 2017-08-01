@@ -20,4 +20,8 @@ const Sidebar = props => {
     );
 };
 
+Sidebar.propTypes = {
+    isOpen: PropTypes.bool.isRequired
+};
+
 export default Sidebar;
