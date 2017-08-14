@@ -1,8 +1,9 @@
 import React from 'react';
-import Card from '../components/common/Card';
+import { Card, CardTitle } from '../components/common/Card';
+import cover from '../assests/cover.jpg';
 
 
 const Home = () =>
-    <Card>Hello <button>hi</button> <a href="www.baidu.com">hi</a></Card>
+    <p>This is home</p>
 
 export default Home;

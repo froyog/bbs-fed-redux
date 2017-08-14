@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { toJS } from '../utils/to-js';
 import Forum from './Forum';
 
+import { Grid, Row } from 'react-bootstrap';
+
 
 class ForumListWrapper extends React.Component {
     static propTypes = {
@@ -35,10 +37,12 @@ class ForumListWrapper extends React.Component {
         });
 
         return (
-            <ul>
+            <Grid className="clearfix">
                 {isFetching && <h2>Loading...</h2>}
-                {renderForumList}
-            </ul>
+                <Row>
+                    {renderForumList}
+                </Row>
+            </Grid>
         );
     }
 }

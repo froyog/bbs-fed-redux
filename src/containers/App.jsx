@@ -12,7 +12,6 @@ import { connect } from 'react-redux';
 import { isMobile } from '../utils/isMobile';
 import { toggleSidebar } from '../actions/frame/sidebar';
 
-
 import '../styles/app.less';
 
 

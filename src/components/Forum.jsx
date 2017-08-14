@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Card, CardImage } from './common/Card';
+import { Col } from 'react-bootstrap';
+import '../styles/forum/forum-page.less';
 
 
 class Forum extends React.Component {
@@ -21,8 +24,10 @@ class Forum extends React.Component {
     constructor () {
         super();
         this.state = {
-            exxpanded: false
+            expanded: false
         };
+
+        this.handleExpand = this.handleExpand.bind(this);
     }
 
     handleExpand () {
@@ -38,10 +43,11 @@ class Forum extends React.Component {
 
     render () {
         const { basicInfo, detailedInfo, isFetching } = this.props;
-        const { name, info, cBoard } = basicInfo;
+        const { name, info, cBoard, id } = basicInfo;
+        const { expanded } = this.state;
         let renderDetailForum;
 
-        if (detailedInfo && this.state.expanded) {
+        if (detailedInfo && expanded) {
             renderDetailForum = isFetching
                 ? <h5>Loading Boards</h5>
                 : <ul>
@@ -57,19 +63,22 @@ class Forum extends React.Component {
                     })}
                 </ul>;
         }
-
+        console.log(this.state);
         return (
-            <li>
-                <p>Name: {name}</p>
-                <p>Info: {info}</p>
-                <p>Boards Number: {cBoard}</p>
-                <button
-                    onClick={this.handleExpand.bind(this)}
-                >
-                    Expand
-                </button>
+            <Col
+                className={expanded ? 'forum-expand' : ''}
+                md={6}
+                onClick={this.handleExpand}
+            >
+                <CardImage
+                    className="card-forum"
+                    image={`http://bbs.tju.edu.cn:8080/api/forum/${id}/cover`}
+                    alt="Forum Cover"
+                    title={name}
+                />
                 {renderDetailForum}
-            </li>
+            </Col>
+
         );
     }
 }

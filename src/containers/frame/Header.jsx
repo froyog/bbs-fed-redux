@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { toggleSidebar } from '../../actions/frame/sidebar';
 
 import '../../styles/frame/header.less';
-import logo from '../../resources/logo.png';
-import slogan from '../../resources/slogan.jpg';
+import logo from '../../assests/logo.png';
+import slogan from '../../assests/slogan.jpg';
 
 
 let Header = props => {
