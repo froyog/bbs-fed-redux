@@ -12,28 +12,27 @@
         border-radius: 0 0 2px 2px;
     }
 
-}
+    .card-image {
+        overflow: hidden;
+        position: relative;
+        max-height: 60%;
 
-.card-image {
-    overflow: hidden;
-    max-height: 60%;
-    position: relative;
+        img {
+            .screen(relative);
+            display: block;
+            width: 100%;
+        }
 
-    img {
-        .screen(relative);
-        display: block;
-        width: 100%;
-    }
-
-    h1 {
-        // card title
-        color: #fff;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        margin: 0;
-        padding: 24px;
-        font-weight: normal;
-        font-size: 24px;
+        h1 {
+            // card title
+            color: #fff;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            margin: 0;
+            padding: 24px;
+            font-weight: normal;
+            font-size: 24px;
+        }
     }
 }

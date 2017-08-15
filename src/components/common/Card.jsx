@@ -18,7 +18,7 @@ export const Card = props => {
             {children}
         </div>
     );
-}
+};
 
 Card.propTypes = {
     className: PropTypes.string,
@@ -26,16 +26,20 @@ Card.propTypes = {
 };
 
 export const CardImage = props => {
-    const { image, alt, title, className } = props;
-    const customClassName = className ? `card card-image ${className}` : 'card card-image';
+    const { image, alt, title, className, children } = props;
+    const customClassName = className ? `card ${className}` : 'card';
+    const customContent = children && <div className="card-content">{children}</div>;
 
     return (
         <div className={customClassName}>
-            <img src={image} alt={alt} />
-            <h1>{title}</h1>
+            <div className="card-image">
+                <img src={image} alt={alt} />
+                <h1>{title}</h1>
+            </div>
+            {customContent}
         </div>
     );
-}
+};
 
 CardImage.propTypes = {
     image: PropTypes.string.isRequired,

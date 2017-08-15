@@ -1,11 +1,33 @@
+@import '../universal';
+
+
 .card-forum {
-    height: 300px;
     cursor: pointer;
     transition: all .3s;
+
+    &.active {
+        width: 100%;
+        height: auto;
+        cursor: auto;
+
+
+        .card {
+            .shadowed-deep;
+        }
+
+        .card-image {
+            img, h1 { display: none; }
+        }
+    }
 }
 
-.forum-expand {
-    width: 100%;
-    transition: all .3s;
+.forum-detail {
+    margin-bottom: 20px;
 
+    .media-heading {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    .media-left { padding-right: 20px; }
+    p { margin-bottom: 5px; }
 }

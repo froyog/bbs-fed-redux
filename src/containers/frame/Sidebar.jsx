@@ -25,8 +25,8 @@ let SidebarWrapper = props => {
                 style={overlayStyle}>
             </div>
         </div>
-    )
-}
+    );
+};
 
 Sidebar.propTypes = {
     isOpen: PropTypes.bool.isRequired,

@@ -1,9 +1,7 @@
 import React from 'react';
-import { Card, CardTitle } from '../components/common/Card';
-import cover from '../assests/cover.jpg';
-
+// import PropTypes from 'prop-types';
 
 const Home = () =>
-    <p>This is home</p>
+    <p>This is home</p>;
 
 export default Home;
