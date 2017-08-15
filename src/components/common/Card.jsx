@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 
 import '../../styles/common/card.less';
 
-export const Card = props => {
-    const { className, topBorder, children, ...restProps } = props;
+export const Card = ({ className, topBorder, children, ...restProps }) => {
     const customClassName = className ? `card ${className}` : 'card';
     if (topBorder) {
         restProps.style = { borderTop: topBorder ? '3px solid #2565ac' : 0 };
@@ -25,8 +24,7 @@ Card.propTypes = {
     topBorder: PropTypes.bool
 };
 
-export const CardImage = props => {
-    const { image, alt, title, className, children } = props;
+export const CardImage = ({ image, alt, title, className, children }) => {
     const customClassName = className ? `card ${className}` : 'card';
     const customContent = children && <div className="card-content">{children}</div>;
 
