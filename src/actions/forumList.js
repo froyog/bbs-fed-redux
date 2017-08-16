@@ -28,11 +28,11 @@ export const getForumList = () => (dispatch, getState) => {
 // Logic is the same above
 export const GET_BOARDLIST_REQUEST = 'GET_BOARDLIST_REQUEST';
 export const GET_BOARDLIST_SUCCESS = 'GET_BOARDLIST_SUCCESS';
-export const GET_BOARDLIST_FAILURE = 'GET_FORUMLIST_FAILURE';
+export const GET_BOARDLIST_FAILURE = 'GET_BOARDLIST_FAILURE';
 
 const fetchBoardList = fid => ({
     [CALL_API]: {
-        types: [GET_BOARDLIST_REQUEST, GET_BOARDLIST_SUCCESS, GET_FORUMLIST_FAILURE],
+        types: [GET_BOARDLIST_REQUEST, GET_BOARDLIST_SUCCESS, GET_BOARDLIST_FAILURE],
         apiPath: `forum/${fid}`,
     },
     fid: fid
@@ -40,7 +40,7 @@ const fetchBoardList = fid => ({
 
 export const getBoardList = fid => (dispatch, getState) => {
     const boardListByFid = getState().getIn(['boardList', fid]);
-    if (boardListByFid && boardListByFid.get('isFetching')) {
+    if (boardListByFid) {
         return null;
     }
     return dispatch(fetchBoardList(fid));

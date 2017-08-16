@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CardImage } from './common/Card';
 import FetchingOverlay from './common/FetchingOverlay';
+import ErrorControl from './common/ErrorControl';
 import { Col, ListGroup, ListGroupItem,
          Media, Button } from 'react-bootstrap';
 import '../styles/forum/forum-page.less';
@@ -20,7 +21,8 @@ class Forum extends React.Component {
             boards: PropTypes.array,
             forum: PropTypes.object
         }),
-        onGetDetail: PropTypes.func.isRequired
+        onGetDetail: PropTypes.func.isRequired,
+        error: PropTypes.string
     }
 
     constructor () {
@@ -53,12 +55,12 @@ class Forum extends React.Component {
     }
 
     render () {
-        const { basicInfo, detailedInfo, isFetching } = this.props;
+        const { basicInfo, detailedInfo, isFetching, error } = this.props;
         const { name, info, cBoard, id } = basicInfo;
         const { expanded } = this.state;
         let renderForumDetail;
 
-        if (detailedInfo && expanded) {
+        if (detailedInfo && expanded && !error) {
             if (!isFetching) {
                 const { moderator } = detailedInfo.forum;
                 const renderModerators = moderator.length
@@ -103,10 +105,11 @@ class Forum extends React.Component {
 
         return (
             <Col
-                className={(expanded && !isFetching) ? 'card-forum active' : 'card-forum'}
+                className={(expanded && !isFetching && !error) ? 'card-forum active' : 'card-forum'}
                 md={6}
                 onClick={this.handleExpand}
             >
+                {error && <ErrorControl />}
                 {isFetching ? <FetchingOverlay /> : null}
                 <CardImage
                     image={`http://bbs.tju.edu.cn:8080/api/forum/${id}/cover`}

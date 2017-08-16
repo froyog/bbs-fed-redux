@@ -6,20 +6,16 @@ import { toJS } from '../utils/to-js';
 import Forum from '../components/Forum';
 
 
-let ForumWrapper = props => {
-    const { info, getBoardList,
-            isFetching, items } = props;
-    return (
-        <Forum
-            isFetching={isFetching}
-            basicInfo={info}
-            detailedInfo={items}
-            onGetDetail={(fid) => {
-                getBoardList(fid);
-            }}
-        />
-    );
-};
+let ForumWrapper = ({ info, getBoardList, isFetching, items, error }) =>
+    <Forum
+        isFetching={isFetching}
+        basicInfo={info}
+        detailedInfo={items}
+        onGetDetail={(fid) => {
+            getBoardList(fid);
+        }}
+        error={error}
+    />;
 
 ForumWrapper.propTypes = {
     info: PropTypes.shape({
@@ -33,16 +29,20 @@ ForumWrapper.propTypes = {
     items: PropTypes.shape({
         boards: PropTypes.array,
         forum: PropTypes.object
-    })
+    }),
+    error: PropTypes.string
 };
 
 const mapStateToProps = (state, ownProps) => {
     const fid = ownProps.info.id;
     const detailedInfo = state.getIn(['boardList', fid]);
+    const error = state.getIn(['boardList', fid, 'error']) || null;
+
     if (!detailedInfo) return {};
     return {
         isFetching: detailedInfo.get('isFetching'),
-        items: detailedInfo.get('items')
+        items: detailedInfo.get('items'),
+        error: error
     };
 };
 
