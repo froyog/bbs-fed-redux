@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getForumList } from '../actions/forumList';
+import { getForumList } from '../../actions/forumList';
 import { connect } from 'react-redux';
-import { toJS } from '../utils/to-js';
-import Forum from './Forum';
+import { toJS } from '../../utils/to-js';
+import Forum from './ForumWrapper';
 
 import { Grid, Row } from 'react-bootstrap';
 

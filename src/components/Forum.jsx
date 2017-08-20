@@ -67,40 +67,40 @@ class Forum extends React.Component {
                 ? moderator.map(admin => <a href={`${admin.uid}`}>{admin.name} </a>)
                 : '暂无';
             renderForumDetail =
-            <div>
-                <Media className="forum-detail">
-                    <Media.Left>
-                        <img width={200} height={200} src={`http://bbs.tju.edu.cn:8080/api/forum/${id}/cover`} alt="Forum Cover" />
-                    </Media.Left>
-                    <Media.Body>
-                        <Media.Heading>{name}</Media.Heading>
-                        <p>板块：{cBoard}</p>
-                        <p>区长：{renderModerators}</p>
-                        <p>{info}</p>
-                        <Button
+                <div>
+                    <Media className="forum-detail">
+                        <Media.Left>
+                            <img width={200} height={200} src={`http://bbs.tju.edu.cn:8080/api/forum/${id}/cover`} alt="Forum Cover" />
+                        </Media.Left>
+                        <Media.Body>
+                            <Media.Heading>{name}</Media.Heading>
+                            <p>板块：{cBoard}</p>
+                            <p>区长：{renderModerators}</p>
+                            <p>{info}</p>
+                            <Button
                             className="raised"
                             bsStyle="primary"
                             onClick={this.handleCollapse}
                         >
                             收起
                         </Button>
-                    </Media.Body>
-                </Media>
-                <ListGroup>
-                    {detailedInfo.boards.map(board => {
-                        const { id, info, name } = board;
-                        return (
-                            <ListGroupItem
+                        </Media.Body>
+                    </Media>
+                    <ListGroup>
+                        {detailedInfo.boards.map(board => {
+                            const { id, info, name } = board;
+                            return (
+                                <ListGroupItem
                                 key={id}
                                 header={name}
                                 href={`forums/board/${id}`}
                                 >
-                                {info}
-                            </ListGroupItem>
-                        );
-                    })}
-                </ListGroup>
-            </div>;
+                                    {info}
+                                </ListGroupItem>
+                            );
+                        })}
+                    </ListGroup>
+                </div>;
         }
 
         return (

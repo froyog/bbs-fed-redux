@@ -4,7 +4,8 @@ import { Switch, Route } from 'react-router-dom';
 
 import Header from './frame/Header';
 import Sidebar from './frame/Sidebar';
-import Forums from './ForumList';
+import ForumList from './forum/ForumList';
+import Board from './forum/Board';
 import Home from './Home';
 import Me from './Me';
 import NoMatch from '../components/NoMatch';
@@ -106,7 +107,8 @@ class App extends React.Component {
                 <div id="main" style={mainStyle}>
                     <Switch>
                         <Route exact path='/' component={Home} />
-                        <Route path='/forums' component={Forums} />
+                        <Route exact path='/forum' component={ForumList} />
+                        <Route path='/forum/:bid' component={Board} />
                         <Route path='/user/me' component={Me} />
                         <Route component={NoMatch} />
                     </Switch>

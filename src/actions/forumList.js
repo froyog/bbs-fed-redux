@@ -9,7 +9,7 @@ export const GET_FORUMLIST_FAILURE = 'GET_FORUMLIST_FAILURE';
 const fetchForumList = () => ({
     [CALL_API]: {
         types: [GET_FORUMLIST_REQUEST, GET_FORUMLIST_SUCCESS, GET_FORUMLIST_FAILURE],
-        apiPath: 'forums'
+        apiPath: 'forum'
     }
 });
 

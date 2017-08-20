@@ -1,5 +1,5 @@
 import { fromJS, Map } from 'immutable';
-import * as ActionTypes from '../actions/forumList';
+import * as ActionTypes from '../../actions/forumList';
 
 
 const defaultState = fromJS({
@@ -20,7 +20,7 @@ const boardList = (state = defaultState, action) => {
             return Map({
                 'isFetching': false,
                 'error': fromJS(action.error)
-            })
+            });
         default:
             return state;
     }

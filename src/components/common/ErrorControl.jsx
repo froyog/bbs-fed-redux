@@ -16,7 +16,7 @@ class ErrorControl extends React.Component {
     }
 
     handleDismissAlert () {
-        this.setState({ isAlertVisible: false })
+        this.setState({ isAlertVisible: false });
     }
 
     render () {
@@ -34,7 +34,7 @@ class ErrorControl extends React.Component {
                     </p>
                 </Alert>
             </Collapse>
-        )
+        );
     }
 }
 
