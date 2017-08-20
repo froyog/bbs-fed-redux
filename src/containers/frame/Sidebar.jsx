@@ -30,7 +30,7 @@ let SidebarWrapper = props => {
 
 Sidebar.propTypes = {
     isOpen: PropTypes.bool.isRequired,
-    onToggleSidebar: PropTypes.func.isRequired
+    onToggleSidebar: PropTypes.func
 };
 
 
