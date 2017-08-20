@@ -13,6 +13,7 @@ import { isMobile } from '../utils/isMobile';
 import { toggleSidebar } from '../actions/frame/sidebar';
 
 import '../styles/app.less';
+import '../styles/global.less';
 
 
 class App extends React.Component {
@@ -90,7 +91,7 @@ class App extends React.Component {
     render () {
         const { isOpen } = this.props;
         const mainStyle = {
-            'marginLeft': `${isOpen ? '200px' : '0'}`
+            [isMobile() ? 'left' : 'marginLeft']: `${isOpen ? '200px' : '0'}`
         };
 
         return (

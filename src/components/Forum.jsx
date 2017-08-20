@@ -58,55 +58,55 @@ class Forum extends React.Component {
         const { basicInfo, detailedInfo, isFetching, error } = this.props;
         const { name, info, cBoard, id } = basicInfo;
         const { expanded } = this.state;
+        const isExpand = detailedInfo && expanded && !error && !isFetching;
         let renderForumDetail;
 
-        if (detailedInfo && expanded && !error) {
-            if (!isFetching) {
-                const { moderator } = detailedInfo.forum;
-                const renderModerators = moderator.length
-                    ? moderator.map(admin => <a href={`${admin.uid}`}>{admin.name} </a>)
-                    : '暂无';
-                renderForumDetail =
-                    <div>
-                        <Media className="forum-detail">
-                            <Media.Left>
-                                <img width={200} height={200} src={`http://bbs.tju.edu.cn:8080/api/forum/${id}/cover`} alt="Forum Cover" />
-                            </Media.Left>
-                            <Media.Body>
-                                <Media.Heading>{name}</Media.Heading>
-                                <p>板块：{cBoard}</p>
-                                <p>区长：{renderModerators}</p>
-                                <p>{info}</p>
-                                <Button
-                                    bsStyle="primary"
-                                    onClick={this.handleCollapse}
-                                    >
-                                    收起
-                                </Button>
-                            </Media.Body>
-                        </Media>
-                        <ListGroup>
-                            {detailedInfo.boards.map(board => {
-                                const { id, info, name } = board;
-                                return (
-                                    <ListGroupItem
-                                        key={id}
-                                        header={name}
-                                        href={`forums/board/${id}`}
-                                        >
-                                        {info}
-                                    </ListGroupItem>
-                                );
-                            })}
-                        </ListGroup>
-                    </div>;
-            }
+        if (isExpand) {
+            const { moderator } = detailedInfo.forum;
+            const renderModerators = moderator.length
+                ? moderator.map(admin => <a href={`${admin.uid}`}>{admin.name} </a>)
+                : '暂无';
+            renderForumDetail =
+            <div>
+                <Media className="forum-detail">
+                    <Media.Left>
+                        <img width={200} height={200} src={`http://bbs.tju.edu.cn:8080/api/forum/${id}/cover`} alt="Forum Cover" />
+                    </Media.Left>
+                    <Media.Body>
+                        <Media.Heading>{name}</Media.Heading>
+                        <p>板块：{cBoard}</p>
+                        <p>区长：{renderModerators}</p>
+                        <p>{info}</p>
+                        <Button
+                            className="raised"
+                            bsStyle="primary"
+                            onClick={this.handleCollapse}
+                        >
+                            收起
+                        </Button>
+                    </Media.Body>
+                </Media>
+                <ListGroup>
+                    {detailedInfo.boards.map(board => {
+                        const { id, info, name } = board;
+                        return (
+                            <ListGroupItem
+                                key={id}
+                                header={name}
+                                href={`forums/board/${id}`}
+                                >
+                                {info}
+                            </ListGroupItem>
+                        );
+                    })}
+                </ListGroup>
+            </div>;
         }
 
         return (
             <Col
-                className={(expanded && !isFetching && !error) ? 'card-forum active' : 'card-forum'}
-                md={6}
+                className={isExpand ? 'card-forum active' : 'card-forum'}
+                sm={6}
                 onClick={this.handleExpand}
             >
                 {error && <ErrorControl />}

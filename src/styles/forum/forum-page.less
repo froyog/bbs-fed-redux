@@ -2,12 +2,11 @@
 
 
 .card-forum {
-    position: relative;
     cursor: pointer;
     transition: all .4s;
 
     .card {
-        height: 350px;
+        height: 300px;
     }
 
     &.active {
@@ -15,10 +14,10 @@
         height: auto;
         cursor: auto;
 
-
         .card {
-            .shadowed-deep;
             height: auto;
+            box-shadow: @shadow-deep;
+            margin: 1rem 0 1.5rem;
         }
 
         .card-image {
@@ -36,4 +35,8 @@
     }
     .media-left { padding-right: 20px; }
     p { margin-bottom: 5px; }
+
+    @media @phones {
+        .media-left { display: none; }
+    }
 }
