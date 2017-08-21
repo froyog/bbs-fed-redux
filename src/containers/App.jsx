@@ -17,13 +17,6 @@ import '../styles/app.less';
 import '../styles/global.less';
 
 
-const TestHome = () =>
-    <h2>Home</h2>
-
-const TestForum = () =>
-    <h2>TestForum</h2>
-
-
 class App extends React.Component {
     static propTypes = {
         isOpen: PropTypes.bool.isRequired,
