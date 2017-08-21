@@ -5,7 +5,7 @@ import * as ActionTypes from '../../actions/board';
 const defaultState = fromJS({
     isFetching: false,
     boardInfo: {},
-    thread: [],
+    threads: [],
     error: ''
 });
 

@@ -78,12 +78,12 @@ class Forum extends React.Component {
                             <p>区长：{renderModerators}</p>
                             <p>{info}</p>
                             <Button
-                            className="raised"
-                            bsStyle="primary"
-                            onClick={this.handleCollapse}
-                        >
-                            收起
-                        </Button>
+                                className="raised"
+                                bsStyle="primary"
+                                onClick={this.handleCollapse}
+                            >
+                                收起
+                            </Button>
                         </Media.Body>
                     </Media>
                     <ListGroup>
@@ -91,9 +91,9 @@ class Forum extends React.Component {
                             const { id, info, name } = board;
                             return (
                                 <ListGroupItem
-                                key={id}
-                                header={name}
-                                href={`forums/board/${id}`}
+                                    key={id}
+                                    header={name}
+                                    href={`/forum/board/${id}`}
                                 >
                                     {info}
                                 </ListGroupItem>
