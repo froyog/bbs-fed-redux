@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { Link } from 'react-router-dom';
 import '../../styles/frame/sidebar.less';
 
 
@@ -14,8 +14,12 @@ const Sidebar = props => {
         <nav
             id="sidebar"
             role="navigation"
-            style={sidebarOpenStyle}>
-
+            style={sidebarOpenStyle}
+        >
+            <ul>
+                <li><Link to='/'>Home</Link></li>
+                <li><Link to='/forum'>Forum</Link></li>
+            </ul>
         </nav>
     );
 };

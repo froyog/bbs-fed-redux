@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Link, withRouter } from 'react-router-dom';
 
 import Header from './frame/Header';
 import Sidebar from './frame/Sidebar';
@@ -15,6 +15,13 @@ import { toggleSidebar } from '../actions/frame/sidebar';
 
 import '../styles/app.less';
 import '../styles/global.less';
+
+
+const TestHome = () =>
+    <h2>Home</h2>
+
+const TestForum = () =>
+    <h2>TestForum</h2>
 
 
 class App extends React.Component {
@@ -124,6 +131,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus))
 });
-App = connect(mapStateToProps, mapDispatchToProps)(App);
+App = withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
 
 export default App;

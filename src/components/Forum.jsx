@@ -5,6 +5,7 @@ import FetchingOverlay from './common/FetchingOverlay';
 import ErrorControl from './common/ErrorControl';
 import { Col, ListGroup, ListGroupItem,
          Media, Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import '../styles/forum/forum-page.less';
 
 
@@ -90,13 +91,14 @@ class Forum extends React.Component {
                         {detailedInfo.boards.map(board => {
                             const { id, info, name } = board;
                             return (
-                                <ListGroupItem
-                                    key={id}
-                                    header={name}
-                                    href={`/forum/board/${id}`}
-                                >
-                                    {info}
-                                </ListGroupItem>
+                                <LinkContainer to={`/forum/board/${id}`}>
+                                    <ListGroupItem
+                                        key={id}
+                                        header={name}
+                                    >
+                                        {info}
+                                    </ListGroupItem>
+                                </LinkContainer>
                             );
                         })}
                     </ListGroup>

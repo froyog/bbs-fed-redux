@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import '../../styles/common/card.less';
 
-export const Card = ({ className, topBorder, children, ...restProps }) => {
+export const Card = ({ className, title, children, ...restProps }) => {
     const customClassName = className ? `card ${className}` : 'card';
 
     return (
@@ -20,7 +20,7 @@ export const Card = ({ className, topBorder, children, ...restProps }) => {
 
 Card.propTypes = {
     className: PropTypes.string,
-    topBorder: PropTypes.bool
+    title: PropTypes.string
 };
 
 export const CardImage = ({ image, alt, title, className, children }) => {
