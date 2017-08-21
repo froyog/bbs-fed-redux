@@ -4,11 +4,10 @@ import FetchingOverlay from '../common/FetchingOverlay';
 import { Card } from '../common/Card';
 
 
-const Board = ({ isFetching, boardInfo, threads }) => {
+const Board = ({ boardInfo, threads }) => {
+    const { name } = boardInfo;
     return (
-        <Card>
-            {isFetching && <FetchingOverlay />}
-            <h1>hahaha</h1>
+        <Card title={name}>
         </Card>
     );
 };

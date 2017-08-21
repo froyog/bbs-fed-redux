@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getBoard } from '../../actions/board';
 import Board from '../../components/forum/Board';
+import FetchingOverlay from '../../components/common/FetchingOverlay';
 import { toJS } from '../../utils/to-js';
 
 
@@ -32,17 +33,16 @@ class BoardWrapper extends React.Component {
         getBoard: PropTypes.func.isRequired
     };
 
-    componentDidMount() {
+    componentWillMount() {
         const { getBoard, match } = this.props;
         getBoard(match.params.bid, 0);
     }
 
     render () {
         const { isFetching, boardInfo, threads } = this.props;
-        console.log(isFetching);
+        if (isFetching || !boardInfo || !threads) return <FetchingOverlay fullPage/>
         return (
             <Board
-                isFetching={isFetching}
                 boardInfo={boardInfo}
                 threads={threads} />
         )
@@ -52,9 +52,8 @@ class BoardWrapper extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     const bid = ownProps.match.params.bid;
-    const page = 0;
+    const page = 0; //testing
     const board = state.getIn(['board', bid, page]);
-
     if (!board) return {};
     return {
         isFetching: board.get('isFetching'),

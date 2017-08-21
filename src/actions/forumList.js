@@ -17,7 +17,7 @@ const fetchForumList = () => ({
 // Relies on redux-thunk middleware
 export const getForumList = () => (dispatch, getState) => {
     const forumList = getState().get('forumList');
-    if (forumList.get('items').length || forumList.get('isFetching')) {
+    if (forumList.get('items').size || forumList.get('isFetching')) {
         return null;
     }
     return dispatch(fetchForumList());

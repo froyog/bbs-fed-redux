@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, Link, withRouter } from 'react-router-dom';
+import { Grid } from 'react-bootstrap';
 
 import Header from './frame/Header';
 import Sidebar from './frame/Sidebar';
@@ -105,13 +106,15 @@ class App extends React.Component {
                 <Header />
                 <Sidebar />
                 <div id="main" style={mainStyle}>
-                    <Switch>
-                        <Route exact path='/' component={Home} />
-                        <Route exact path='/forum' component={Forum} />
-                        <Route path='/forum/board/:bid' component={Board} />
-                        <Route path='/user/me' component={Me} />
-                        <Route component={NoMatch} />
-                    </Switch>
+                    <Grid>
+                        <Switch>
+                            <Route exact path='/' component={Home} />
+                            <Route exact path='/forum' component={Forum} />
+                            <Route path='/forum/board/:bid' component={Board} />
+                            <Route path='/user/me' component={Me} />
+                            <Route component={NoMatch} />
+                        </Switch>
+                    </Grid>
                 </div>
             </div>
         );

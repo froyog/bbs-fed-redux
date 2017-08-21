@@ -77,7 +77,7 @@ class Forum extends React.Component {
                             <Media.Heading>{name}</Media.Heading>
                             <p>板块：{cBoard}</p>
                             <p>区长：{renderModerators}</p>
-                            <p>{info}</p>
+                            <p>简介：{info}</p>
                             <Button
                                 className="raised"
                                 bsStyle="primary"
@@ -91,11 +91,11 @@ class Forum extends React.Component {
                         {detailedInfo.boards.map(board => {
                             const { id, info, name } = board;
                             return (
-                                <LinkContainer to={`/forum/board/${id}`}>
-                                    <ListGroupItem
-                                        key={id}
-                                        header={name}
-                                    >
+                                <LinkContainer
+                                    to={`/forum/board/${id}`}
+                                    key={id}
+                                >
+                                    <ListGroupItem header={name}>
                                         {info}
                                     </ListGroupItem>
                                 </LinkContainer>

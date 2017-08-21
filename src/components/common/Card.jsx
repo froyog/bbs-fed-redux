@@ -12,6 +12,7 @@ export const Card = ({ className, title, children, ...restProps }) => {
             {...restProps}
         >
             <div className="card-content">
+                <h1 className="card-title">{title}</h1>
                 {children}
             </div>
         </div>
