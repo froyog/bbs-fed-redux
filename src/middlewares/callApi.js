@@ -1,3 +1,6 @@
+// callApi middleware. Dont't expect you to understand this
+// refer to https://github.com/reactjs/redux/tree/master/examples/real-world for more comments
+
 import { camelizeKeys } from 'humps';
 
 
