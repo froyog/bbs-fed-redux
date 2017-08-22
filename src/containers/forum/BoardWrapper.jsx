@@ -40,12 +40,12 @@ class BoardWrapper extends React.Component {
 
     render () {
         const { isFetching, boardInfo, threads } = this.props;
-        if (isFetching || !boardInfo || !threads) return <FetchingOverlay fullPage/>
+        if (isFetching || !boardInfo || !threads) return <FetchingOverlay fullPage/>;
         return (
             <Board
                 boardInfo={boardInfo}
                 threads={threads} />
-        )
+        );
     }
 }
 

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { getForumList } from '../../actions/forumList';
 import { connect } from 'react-redux';
 import { toJS } from '../../utils/to-js';
+import FetchingOverlay from '../../components/common/FetchingOverlay';
 import Forum from './ForumWrapper';
 
 import { Row } from 'react-bootstrap';
@@ -36,6 +37,7 @@ class ForumListWrapper extends React.Component {
             );
         });
 
+        if (isFetching) return <FetchingOverlay fullPage />;
         return (
             <Row>
                 {renderForumList}

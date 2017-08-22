@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route, Link, withRouter } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import { Grid } from 'react-bootstrap';
 
 import Header from './frame/Header';
 import Sidebar from './frame/Sidebar';
 import Forum from './forum/ForumList';
 import Board from './forum/BoardWrapper';
-import Home from './Home';
+import Home from './bbs-index/Home';
 import Me from './Me';
 import NoMatch from '../components/NoMatch';
 import { connect } from 'react-redux';
