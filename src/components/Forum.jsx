@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { CardImage } from './common/Card';
 import FetchingOverlay from './common/FetchingOverlay';
 import ErrorControl from './common/ErrorControl';
@@ -65,8 +66,17 @@ class Forum extends React.Component {
         if (isExpand) {
             const { moderator } = detailedInfo.forum;
             const renderModerators = moderator.length
-                ? moderator.map(admin => <a href={`${admin.uid}`}>{admin.name} </a>)
+                ? moderator.map(admin =>
+                    <Link
+                        className="admin-name"
+                        key={admin.uid}
+                        to={`/user/${admin.uid}`}
+                    >
+                        {admin.name}
+                    </Link>
+                )
                 : '暂无';
+
             renderForumDetail =
                 <div>
                     <Media className="forum-detail">
