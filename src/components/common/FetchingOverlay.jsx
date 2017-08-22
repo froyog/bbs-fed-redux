@@ -27,4 +27,11 @@ const FetchingOverlay = ({ fullPage }) =>
         </div>
     </div>;
 
+FetchingOverlay.propTypes = {
+    fullPage: PropTypes.bool.isRequired
+};
+FetchingOverlay.defaultProps = {
+    fullPage: false
+};
+
 export default FetchingOverlay;
