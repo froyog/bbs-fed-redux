@@ -1,0 +1,40 @@
+@import '../universal';
+
+.thread-item {
+    .media-heading {
+        font-size: 16px;
+    }
+    .media-right {
+        text-align: right;
+    }
+
+    .title-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .comments-count {
+        color: inherit;
+        &:hover { text-decoration: none; }
+        @media @phones {
+            display: none;
+        }
+        .icon-comment {
+            font-size: 13px;
+            font-weight: bold;
+            margin-right: 2px;
+        }
+    }
+
+    .pipe {
+        margin: 0 5px;
+        color: #ccc;
+    }
+
+    .avatar {
+        border-radius: 50%;
+        width: 26px;
+        height: 26px;
+        line-height: 26px;
+    }
+}

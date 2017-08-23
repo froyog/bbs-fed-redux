@@ -7,6 +7,8 @@ import { Card } from '../../components/common/Card';
 import FetchingOverlay from '../../components/common/FetchingOverlay';
 import ThreadItem from '../../components/common/ThreadItem';
 
+import '../../styles/home.less';
+
 
 class TopTenWrapper extends React.Component {
     static propTypes = {
@@ -27,25 +29,24 @@ class TopTenWrapper extends React.Component {
     };
 
     componentWillMount() {
-        const { getTopTen } = this.props;
-        getTopTen();
+        this.props.getTopTen();
     }
 
     render () {
         const { topTenThreads, isFetching } = this.props;
         if (!topTenThreads || isFetching) {
-            return <FetchingOverlay fullPage />
+            return <FetchingOverlay fullPage />;
         }
 
         const renderThreads = topTenThreads.map(topTenThreads =>
-            <ThreadItem key={id} thread={topTenThreads} />
-        )
+            <ThreadItem key={topTenThreads.id} thread={topTenThreads} />
+        );
 
         return (
-            <Card title="全站十大">
+            <Card title="全站十大" className="card-home">
                 {renderThreads}
             </Card>
-        )
+        );
     }
 }
 
@@ -55,7 +56,7 @@ const mapStateToProps = state => {
     if (!topTen) return {};
     return {
         isFetching: topTen.get('isFetching'),
-        topTenThreads: topTen.get('topTen')
+        topTenThreads: topTen.get('items')
     };
 };
 const mapDispatchToProps = dispatch => ({

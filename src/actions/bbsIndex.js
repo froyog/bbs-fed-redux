@@ -32,7 +32,7 @@ export const INVAILDATE_LATEST = 'INVAILDATE_LATEST';
 // To judge whether latest threads should be fetched
 //     - node not exist => fetch
 //     - is fetching => dont't fetch
-//     - invaildate ? fetch : don't fetch
+//     - invaildate => fetch
 const shouldFetchLatest = (latestNode) => {
     if (!latestNode) {
         return true;
@@ -41,7 +41,7 @@ const shouldFetchLatest = (latestNode) => {
     } else {
         return latest.get('didInvaildate');
     }
-}
+};
 
 // No cache for latest
 export const getLatest = () => (dispatch, getState) => {
@@ -54,5 +54,8 @@ export const getLatest = () => (dispatch, getState) => {
             }
         });
     }
-
 };
+
+export const refreshLatest = () => dispatch => {
+    return dispatch({ type: INVAILDATE_LATEST });
+}

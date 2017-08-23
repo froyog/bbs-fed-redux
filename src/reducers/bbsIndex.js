@@ -3,7 +3,7 @@ import * as ActionTypes from '../actions/bbsIndex';
 
 const topTenDefaultState = fromJS({
     isFetching: false,
-    topTen: [],
+    items: [],
     error: ''
 });
 
@@ -14,7 +14,7 @@ const topTen = (state = topTenDefaultState, action) => {
         case ActionTypes.GET_TOPTEN_SUCCESS:
             return Map({
                 'isFetching': false,
-                'topTen': fromJS(action.json.data)
+                'items': fromJS(action.json.data)
             });
         case ActionTypes.GET_TOPTEN_FAILURE:
             return Map({
@@ -29,7 +29,7 @@ const topTen = (state = topTenDefaultState, action) => {
 const latestDefaultState = fromJS({
     isFetching: false,
     didInvaildate: false,
-    latest: [],
+    items: [],
     error: ''
 });
 
@@ -41,7 +41,7 @@ const latest = (state = latestDefaultState, action) => {
             return Map({
                 'isFetching': false,
                 'didInvaildate': false,
-                'latest': fromJS(action.json.data)
+                'items': fromJS(action.json.data)
             });
         case ActionTypes.GET_LATEST_FAILURE:
             return Map({
