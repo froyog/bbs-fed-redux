@@ -40,7 +40,9 @@ class BoardWrapper extends React.Component {
 
     render () {
         const { isFetching, boardInfo, threads } = this.props;
-        if (isFetching || !boardInfo || !threads) return <FetchingOverlay fullPage/>;
+        if (isFetching || !boardInfo || !threads) {
+            return <FetchingOverlay fullPage/>;
+        }
         return (
             <Board
                 boardInfo={boardInfo}
@@ -54,6 +56,7 @@ const mapStateToProps = (state, ownProps) => {
     const bid = ownProps.match.params.bid;
     const page = 0; //testing
     const board = state.getIn(['board', bid, page]);
+    
     if (!board) return {};
     return {
         isFetching: board.get('isFetching'),

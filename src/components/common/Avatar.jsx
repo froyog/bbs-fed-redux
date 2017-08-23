@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import defaultAvatar from '../../assests/avatar-default.png';
 import anonymousAvatar from '../../assests/anonymous.png';
 
-const COLOR_ARRAY = ['#2196f3', '#3f51b5', '#9c27b0', '#ff5722', '#f44336', '#009688']
+const COLOR_ARRAY = ['#2196f3', '#3f51b5', '#9c27b0', '#ff5722', '#f44336', '#009688'];
 
 class ImageFeed extends React.Component {
     static propTypes = {
@@ -51,13 +51,13 @@ class ImageFeed extends React.Component {
                 <Link to={`/user/${id}`}>
                     <span
                         style={{ backgroundColor: randomColor, color: '#fff',
-                                 display: 'inline-block', fontWeight: 'bold', textAlign: 'center' }}
+                            display: 'inline-block', fontWeight: 'bold', textAlign: 'center' }}
                         {...restProps}
                         >
                         {name.substring(0, 1).toUpperCase()}
                     </span>
                 </Link>
-            )
+            );
         }
         return (
             <Link to={`/user/${id}`}>

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
 import { getLatest, refreshLatest } from '../../actions/bbsIndex';
 import { toJS } from '../../utils/to-js';
 import { Card } from '../../components/common/Card';
@@ -9,6 +10,23 @@ import ThreadItem from '../../components/common/ThreadItem';
 
 
 class Latest extends React.Component {
+    static propTypes = {
+        getLatest: PropTypes.func.isRequired,
+        refresh: PropTypes.func.isRequired,
+        latestThreads: PropTypes.arrayOf(PropTypes.shape({
+            boardId: PropTypes.number,
+            authorId: PropTypes.number,
+            tReply: PropTypes.number,
+            boardName: PropTypes.string,
+            authorName: PropTypes.string,
+            title: PropTypes.string,
+            id: PropTypes.number,
+            cPost: PropTypes.number,
+            anonymous: PropTypes.number
+        })),
+        isFetching: PropTypes.bool,
+    };
+
     componentWillMount() {
         this.props.getLatest();
     }
@@ -30,11 +48,17 @@ class Latest extends React.Component {
 
         return (
             <Card title="最新" className="card-home">
-                <button onClick={this.handleRefresh.bind(this)}>refresh</button>
+                <Button
+                    onClick={this.handleRefresh.bind(this)}
+                    className="refresh-button raised"
+                    bsStyle="success"
+                >
+                    刷新
+                </Button>
                 {isFetching && <FetchingOverlay />}
                 {renderThreads}
             </Card>
-        )
+        );
     }
 }
 

@@ -42,5 +42,21 @@ const ThreadItem = ({ thread }) => {
         </Media>
     );
 };
+ThreadItem.propTypes = {
+    thread: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        boardId: PropTypes.number.isRequired,
+        boardName: PropTypes.string.isRequired,
+        authorId: PropTypes.number.isRequired,
+        authorName: PropTypes.string.isRequired,
+        tReply: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        cPost: PropTypes.number.isRequired,
+        anonymous: PropTypes.oneOfType([
+            PropTypes.number,
+            PropTypes.bool
+        ])
+    }).isRequired
+};
 
 export default ThreadItem;

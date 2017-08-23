@@ -16,7 +16,6 @@ class TopTenWrapper extends React.Component {
         topTenThreads: PropTypes.arrayOf(PropTypes.shape({
             boardId: PropTypes.number,
             authorId: PropTypes.number,
-            authorName: PropTypes.number,
             tReply: PropTypes.number,
             boardName: PropTypes.string,
             authorName: PropTypes.string,

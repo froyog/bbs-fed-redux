@@ -15,7 +15,7 @@ const fetchTopTen = () => ({
 
 // Fetch request depends on cache
 export const getTopTen = () => (dispatch, getState) => {
-    const topTen = getState().get('topTen');
+    const topTen = getState().getIn(['bbsIndex', 'topTen']);
     if (topTen) {
         return null;
     }
@@ -36,10 +36,10 @@ export const INVAILDATE_LATEST = 'INVAILDATE_LATEST';
 const shouldFetchLatest = (latestNode) => {
     if (!latestNode) {
         return true;
-    } else if (latest.get('isFetching')) {
+    } else if (latestNode.get('isFetching')) {
         return false;
     } else {
-        return latest.get('didInvaildate');
+        return latestNode.get('didInvaildate');
     }
 };
 
@@ -58,4 +58,4 @@ export const getLatest = () => (dispatch, getState) => {
 
 export const refreshLatest = () => dispatch => {
     return dispatch({ type: INVAILDATE_LATEST });
-}
+};
