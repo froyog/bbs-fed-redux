@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getForumList } from '../../actions/forumList';
 import { connect } from 'react-redux';
-import { toJS } from '../../utils/to-js';
+import { toJS } from '../../util.js';
 import FetchingOverlay from '../../components/common/FetchingOverlay';
 import Forum from './ForumWrapper';
 

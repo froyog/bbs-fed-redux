@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getBoardList } from '../../actions/forumList';
-import { toJS } from '../../utils/to-js';
+import { toJS } from '../../util.js';
 import Forum from '../../components/Forum';
 
 

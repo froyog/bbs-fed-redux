@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import '../../styles/common/card.less';
 
-export const Card = ({ className, title, children, ...restProps }) => {
+export const Card = ({ className, title, nopadding, action, children, ...restProps }) => {
     const customClassName = className ? `card ${className}` : 'card';
 
     return (
@@ -14,6 +14,10 @@ export const Card = ({ className, title, children, ...restProps }) => {
             <div className="card-content">
                 <h1 className="card-title">{title}</h1>
                 {children}
+            </div>
+            {nopadding}
+            <div className="card-action">
+                {action}
             </div>
         </div>
     );

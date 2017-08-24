@@ -16,8 +16,15 @@ const ThreadItem = ({ thread }) => {
         <Media className="thread-item">
             <Media.Body>
                 <Media.Heading>
-                    <Link to={`/forum/board/${boardId}`}>[{boardName}]</Link>
-                    &nbsp;
+                    {
+                        boardName &&
+                        <Link
+                            className="board-link"
+                            to={`/forum/board/${boardId}/page/1`}
+                        >
+                            [{boardName}]
+                        </Link>
+                    }
                     <Link to={`/forum/thread/${id}`} className="title-link">{title}</Link>
                 </Media.Heading>
                 <p>
@@ -46,7 +53,7 @@ ThreadItem.propTypes = {
     thread: PropTypes.shape({
         id: PropTypes.number.isRequired,
         boardId: PropTypes.number.isRequired,
-        boardName: PropTypes.string.isRequired,
+        boardName: PropTypes.string,
         authorId: PropTypes.number.isRequired,
         authorName: PropTypes.string.isRequired,
         tReply: PropTypes.number.isRequired,

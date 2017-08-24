@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTopTen } from '../../actions/bbsIndex';
-import { toJS } from '../../utils/to-js';
+import { toJS } from '../../util.js';
 import { Card } from '../../components/common/Card';
 import FetchingOverlay from '../../components/common/FetchingOverlay';
 import ThreadItem from '../../components/common/ThreadItem';

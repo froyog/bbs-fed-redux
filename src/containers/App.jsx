@@ -11,7 +11,7 @@ import Home from './bbs-index/Home';
 import Me from './Me';
 import NoMatch from '../components/NoMatch';
 import { connect } from 'react-redux';
-import { isMobile } from '../utils/isMobile';
+import { isMobile } from '../util.js';
 import { toggleSidebar } from '../actions/frame/sidebar';
 
 import '../styles/app.less';
@@ -110,7 +110,7 @@ class App extends React.Component {
                         <Switch>
                             <Route exact path='/' component={Home} />
                             <Route exact path='/forum' component={Forum} />
-                            <Route path='/forum/board/:bid' component={Board} />
+                            <Route path='/forum/board/:bid/page/:page' component={Board} />
                             <Route path='/user/me' component={Me} />
                             <Route component={NoMatch} />
                         </Switch>

@@ -1,0 +1,18 @@
+@import '../universal';
+
+ul.thread-list-withborder {
+    padding: 0;
+    & > div {
+        padding: 12px 24px;
+        border-bottom: 1px solid #eee;
+        margin: 0;
+
+        @media @phones {
+            padding: 9px 18px;
+        }
+
+        &:hover {
+            background-color: #eee;
+        }
+    }
+}
