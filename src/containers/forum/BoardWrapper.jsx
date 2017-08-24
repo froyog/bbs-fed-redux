@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Tabs, Tab } from 'react-bootstrap';
 import { getBoard } from '../../actions/board';
-import Board from '../../components/forum/Board';
+import { Card } from '../../components/common/Card';
 import FetchingOverlay from '../../components/common/FetchingOverlay';
 import { toJS } from '../../utils/to-js';
 
@@ -20,7 +21,7 @@ class BoardWrapper extends React.Component {
             cElite: PropTypes.number,
             id: PropTypes.number
         }),
-        threads: PropTypes.arrayOf(PropTypes.shape({
+        threadList: PropTypes.arrayOf(PropTypes.shape({
             bElite: PropTypes.number,
             bTop: PropTypes.number,
             authorName: PropTypes.string,
@@ -35,18 +36,22 @@ class BoardWrapper extends React.Component {
 
     componentWillMount() {
         const { getBoard, match } = this.props;
-        getBoard(match.params.bid, 0);
+        getBoard(match.params.bid, 0, 'elite', '');
     }
 
     render () {
-        const { isFetching, boardInfo, threads } = this.props;
-        if (isFetching || !boardInfo || !threads) {
+        const { isFetching, boardInfo, threadList } = this.props;
+        if (isFetching || !boardInfo || !threadList) {
             return <FetchingOverlay fullPage/>;
         }
+
+        const { name, cThread, info } = boardInfo;
         return (
-            <Board
-                boardInfo={boardInfo}
-                threads={threads} />
+            <Card title={name}>
+                <p>版主：暂无</p>
+                <p>帖数：{cThread}</p>
+                <p>简介：{info}</p>
+            </Card>
         );
     }
 }
@@ -54,18 +59,17 @@ class BoardWrapper extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     const bid = ownProps.match.params.bid;
-    const page = 0; //testing
-    const board = state.getIn(['board', bid, page]);
-    
+    const board = state.getIn(['board', bid]);
+
     if (!board) return {};
     return {
         isFetching: board.get('isFetching'),
         boardInfo: board.get('boardInfo'),
-        threads: board.get('threads')
+        threadList: board.get('threadList')
     };
 };
 const mapDispatchToProps = dispatch => ({
-    getBoard: (bid, page) => dispatch(getBoard(bid, page))
+    getBoard: (bid, page, type, order) => dispatch(getBoard(bid, page, type, order))
 });
 
 BoardWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(BoardWrapper));

@@ -5,7 +5,10 @@ import * as ActionTypes from '../../actions/board';
 const defaultState = fromJS({
     isFetching: false,
     boardInfo: {},
-    threads: [],
+    threadList: [],
+    page: 0,
+    order: '',
+    type: '',
     error: ''
 });
 
@@ -16,8 +19,11 @@ const board = (state = defaultState, action) => {
         case ActionTypes.GET_BOARD_SUCCESS:
             return Map({
                 'isFetching': false,
+                'page': action.page,
+                'order': action.order,
+                'type': action.threadType,
                 'boardInfo': fromJS(action.json.data.board),
-                'threads': fromJS(action.json.data.thread)
+                'threadList': fromJS(action.json.data.thread)
             });
         case ActionTypes.GET_BOARD_FAILURE:
             return Map({
@@ -34,8 +40,8 @@ const boardByBid = (state = Map(), action) => {
         case ActionTypes.GET_BOARD_REQUEST:
         case ActionTypes.GET_BOARD_SUCCESS:
         case ActionTypes.GET_BOARD_FAILURE:
-            return state.setIn(
-                [action.bid, action.page], board(state.get(action['bid']), action)
+            return state.set(
+                action.bid, board(state.get(action['bid']), action)
             );
         default:
             return state;
