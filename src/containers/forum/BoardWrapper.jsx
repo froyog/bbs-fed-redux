@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Pagination } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getBoard } from '../../actions/board';
@@ -23,7 +24,12 @@ class BoardWrapper extends React.Component {
             anonymous: PropTypes.number,
             info: PropTypes.string,
             cElite: PropTypes.number,
-            id: PropTypes.number
+            id: PropTypes.number,
+            moderator: PropTypes.arrayOf(PropTypes.shape({
+                uid: PropTypes.number,
+                name: PropTypes.string,
+                nickname: PropTypes.string
+            }))
         }),
         threadList: PropTypes.arrayOf(PropTypes.shape({
             bElite: PropTypes.number,
@@ -78,10 +84,15 @@ class BoardWrapper extends React.Component {
             return <FetchingOverlay fullPage />;
         }
 
-        const { name, cThread, info } = boardInfo;
+        const { name, cThread, info, moderator } = boardInfo;
         const renderThreads = threadList.map(thread =>
             <ThreadItem key={thread.id} thread={thread} />
         );
+        const renderModerator = moderator.map(admin => {
+            const { uid, name } = admin;
+            return <Link className="admin-name" to={`/user/${uid}`}>name</Link>
+        })
+
         return (
             <Card
                 title={name}

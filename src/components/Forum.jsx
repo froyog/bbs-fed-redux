@@ -102,7 +102,7 @@ class Forum extends React.Component {
                             const { id, info, name } = board;
                             return (
                                 <LinkContainer
-                                    to={`/forum/board/${id}`}
+                                    to={`/forum/board/${id}/page/1`}
                                     key={id}
                                 >
                                     <ListGroupItem header={name}>
