@@ -15,11 +15,13 @@ const Login = (state = defaultState, action) => {
         case ActionTypes.LOGIN_SUCCESS:
             return Map({
                 'isFetching': false,
-                'userInfo': fromJS(action.json.data)
+                'userInfo': fromJS(action.json.data),
+                'error': ''
             });
         case ActionTypes.LOGIN_FAILURE:
             return Map({
                 'isFetching': false,
+                'userInfo': {},
                 'error': fromJS(action.error)
             });
         default:

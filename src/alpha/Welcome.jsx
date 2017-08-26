@@ -49,7 +49,7 @@ class Welcome extends React.Component {
         return (
             <div id="welcome">
                 <h1>求实BBS</h1>
-                <h2>抢先体验</h2>
+                <h2>抢先体验<small>v0.1.5</small></h2>
                 <h1 className="countdown">
                     {second}.
                     <small>{milisecond}</small>

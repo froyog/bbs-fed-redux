@@ -24,26 +24,53 @@ class WelcomeLogin extends React.PureComponent {
         this.state = {
             name: '',
             password: '',
-            inviteError: ''
-        }
+            localError: ''
+        };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.userInfo) {
-            if (nextProps.userInfo.group === 2) {
+        const adminGroup = nextProps.userInfo.group;
+        if (adminGroup) {
+            if (adminGroup === 2) {
                 // manager
                 const { toggleAuth, onAuthPass } = this.props;
                 toggleAuth(AUTH_PASS);
                 onAuthPass();
                 return;
             } else {
-                // fetch goes here
-                this.setState({
-                    inviteError: '无法确定您的身份，您是管理员吗'
-                });
+                // not manager, check alpha server invitation list
+                // get invitation data from bbs-alpha-with-koa
+                // refer to https://git.twtstudio.com/weixinming/bbs-alpha-with-koa
+                const { localError } = this.state;
+                const { toggleAuth, onAuthPass } = this.props;
+                fetch('/signin', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        uid: nextProps.userInfo.uid
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(res => res.json())
+                    .then(json => {
+                        if (!json.err) {
+                            toggleAuth(AUTH_PASS);
+                            onAuthPass();
+                            return;
+                        }
+                        this.setState({
+                            localError: '无法确定您的身份，您是管理员吗'
+                        });
+                        return;
+                    }, json => {
+                        this.setState({
+                            localError: '网络错误'
+                        });
+                    });
             }
         }
     }
@@ -64,13 +91,13 @@ class WelcomeLogin extends React.PureComponent {
     }
 
     render () {
-        const { name, password, isLaoding, inviteError } = this.state;
+        const { name, password, isLaoding, localError } = this.state;
         const { isFetching, userInfo, error } = this.props;
 
         return (
             <div className="login-form">
                 <p>{error && error}</p>
-                <p>{inviteError && inviteError}</p>
+                <p>{localError && localError}</p>
                 <Form inline>
                     <FormGroup>
                         <ControlLabel>用户名</ControlLabel>
@@ -113,7 +140,7 @@ const mapStateToProps = state => {
         userInfo: login.get('userInfo'),
         error: login.get('error')
     };
-}
+};
 const mapDispatchToProps = dispatch => ({
     login: userInfo => dispatch(login(userInfo)),
     toggleAuth: authStatus => dispatch(toggleAuth(authStatus))
