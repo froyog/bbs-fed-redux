@@ -8,23 +8,29 @@ export const CALL_API = 'Call API';
 
 const API_ROOT = 'http://bbs.tju.edu.cn:8080/api';
 
-const fetchApi = (apiPath, headers = {}) => {
+const fetchApi = (apiPath, request = {}) => {
     const fullUrl = `${API_ROOT}/${apiPath}`;
-    let { contentType, auth, payload } = headers;
+    const { headers, body, method } = request;
 
-    let customHeaders;
-    if (contentType) {
-        customHeaders['Content-types'] = contentType;
+    let customRequest;
+    if (method) {
+        customRequest.method = method;
     }
-    if (auth) {
-        customHeaders['Authentication'] = `${auth.uid}|${auth.token}`;
+    if (body) {
+        customRequest.body = body;
     }
-    if (payload) {
-        customHeaders['body'] = payload;
+    if (headers) {
+        const { contentType, auth } = headers;
+        if (contentType) {
+            customRequest.headers['Content-Type'] = contentType || 'application/json';
+        }
+        if (auth) {
+            customRequest.headers['Authentication'] = `${auth.uid}|${auth.token}`;
+        }
     }
 
     return (
-        fetch(fullUrl, customHeaders)
+        fetch(fullUrl, customRequest)
             .then(res => res.json())
             .then(json => {
                 if (json.err) {
@@ -32,7 +38,6 @@ const fetchApi = (apiPath, headers = {}) => {
                 }
 
                 const camelizedJson = camelizeKeys(json);
-
                 return camelizedJson;
             })
     );
