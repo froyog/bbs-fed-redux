@@ -1,11 +1,15 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Alert, Collapse, Button } from 'react-bootstrap';
 
 import '../../styles/common/error.less';
 
 
 class ErrorControl extends React.Component {
+    static propTypes = {
+        content: PropTypes.string.isRequired
+    };
+
     constructor () {
         super();
         this.state = {

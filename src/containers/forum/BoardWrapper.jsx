@@ -90,8 +90,8 @@ class BoardWrapper extends React.Component {
         );
         const renderModerator = moderator.map(admin => {
             const { uid, name } = admin;
-            return <Link className="admin-name" to={`/user/${uid}`}>name</Link>
-        })
+            return <Link className="admin-name" to={`/user/${uid}`}>name</Link>;
+        });
 
         return (
             <Card
