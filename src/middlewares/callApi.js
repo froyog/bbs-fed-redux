@@ -30,13 +30,13 @@ const fetchApi = (apiPath, request = {}) => {
             customRequest.headers['Authentication'] = `${auth.uid}|${auth.token}`;
         }
     }
-    console.log(customRequest);
+
     return (
         fetch(fullUrl, customRequest)
             .then(res => res.json())
             .then(json => {
                 if (json.err) {
-                    return Promise.reject(json.data);
+                    return Promise.reject(json);
                 }
 
                 const camelizedJson = camelizeKeys(json);
