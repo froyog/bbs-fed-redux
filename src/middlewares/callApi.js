@@ -11,16 +11,18 @@ const API_ROOT = 'http://bbs.tju.edu.cn:8080/api';
 const fetchApi = (apiPath, request = {}) => {
     const fullUrl = `${API_ROOT}/${apiPath}`;
     const { headers, body, method } = request;
+    let customRequest = {};
 
-    let customRequest;
     if (method) {
-        customRequest.method = method;
+        customRequest.method = method.toUpperCase();
     }
     if (body) {
-        customRequest.body = body;
+        customRequest.body = JSON.stringify(body);
     }
     if (headers) {
         const { contentType, auth } = headers;
+        customRequest.headers = {};
+
         if (contentType) {
             customRequest.headers['Content-Type'] = contentType || 'application/json';
         }
@@ -28,7 +30,7 @@ const fetchApi = (apiPath, request = {}) => {
             customRequest.headers['Authentication'] = `${auth.uid}|${auth.token}`;
         }
     }
-
+    console.log(customRequest);
     return (
         fetch(fullUrl, customRequest)
             .then(res => res.json())
@@ -50,7 +52,7 @@ export default store => next => action => {
         return next(action);
     }
 
-    let { apiPath, types, headers } = callAPI;
+    let { apiPath, types, request } = callAPI;
 
     if (typeof apiPath !== 'string') {
         throw new Error('Specify a string apiPath URL.');
@@ -71,7 +73,7 @@ export default store => next => action => {
     const [ requestType, successType, failureType ] = types;
     next(actionWith({ type: requestType }));
 
-    return fetchApi(apiPath, headers).then(
+    return fetchApi(apiPath, request).then(
         response => next(actionWith({
             json: response,
             type: successType
