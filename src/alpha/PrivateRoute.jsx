@@ -6,10 +6,14 @@ import { toJS } from '../util';
 
 
 let PrivateRoute = ({ component: Component, auth, ...restProps }) =>
-    <Route {...restProps} render={props =>
-        auth.isAuthenticated
-            ? <Component {...props} />
-            : <Redirect to='/welcome' />}
+    <Route {...restProps} render={props => {
+                if (auth.isAuthenticated) {
+                    return <Component {...props} />;
+                }
+                alert('您正在使用抢先体验版，请先登录来访问其他功能');
+                return <Redirect to='/welcome' />;
+            }
+        }
     />;
 
 PrivateRoute.propTypes = {
