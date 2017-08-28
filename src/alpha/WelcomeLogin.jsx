@@ -44,7 +44,6 @@ class WelcomeLogin extends React.PureComponent {
                 // not manager, check alpha server invitation list
                 // get invitation data from bbs-alpha-with-koa
                 // refer to https://git.twtstudio.com/weixinming/bbs-alpha-with-koa
-                const { localError } = this.state;
                 const { toggleAuth, onAuthPass } = this.props;
                 fetch('/signin', {
                     method: 'POST',
@@ -62,8 +61,9 @@ class WelcomeLogin extends React.PureComponent {
                             onAuthPass();
                             return;
                         }
+                        toggleAuth(AUTH_FAIL);
                         this.setState({
-                            localError: '无法确定您的身份，您是管理员吗'
+                            localError: '您似乎不在邀请列表中，请联系管理员获取邀请资格'
                         });
                         return;
                     }, json => {
@@ -91,8 +91,8 @@ class WelcomeLogin extends React.PureComponent {
     }
 
     render () {
-        const { name, password, isLaoding, localError } = this.state;
-        const { isFetching, userInfo, error } = this.props;
+        const { name, password, localError } = this.state;
+        const { isFetching, error } = this.props;
 
         return (
             <div className="login-form">

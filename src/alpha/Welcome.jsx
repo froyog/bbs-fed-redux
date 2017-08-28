@@ -1,6 +1,6 @@
 // For alpha testing authentication
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import WelcomeLogin from './WelcomeLogin';
 
 import './style/alpha.less';
@@ -49,7 +49,8 @@ class Welcome extends React.Component {
         return (
             <div id="welcome">
                 <h1>求实BBS</h1>
-                <h2>抢先体验<small>v0.1.5</small></h2>
+                <h2>抢先体验</h2>
+                <p className="version-info">ALPHA 0.1.5</p>
                 <h1 className="countdown">
                     {second}.
                     <small>{milisecond}</small>

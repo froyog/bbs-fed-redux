@@ -1,7 +1,8 @@
 import { fromJS } from 'immutable';
 
 const defaultState = fromJS({
-    isAuthenticated: false
+    isAuthenticated: process.env.NODE_ENV === 'development'
+    // skip authentication under development environment
 });
 
 const auth = (state = defaultState, action) => {
