@@ -13,7 +13,9 @@ const HomeWrapper = () =>
             <Card title="还没看过瘾？"></Card>
         </Col>
         <Col md={3}>
-
+            <Card style={{ minHeight: '1000px' }}>
+                我是右边栏站位符 :)
+            </Card>
         </Col>
     </Row>;
 

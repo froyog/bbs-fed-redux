@@ -1,5 +1,9 @@
 @import '../universal';
 
+.card.no-padding .card-content {
+    padding-bottom: 0;
+}
+
 ul.thread-list-withborder {
     padding: 0;
     & > div {
@@ -14,5 +18,37 @@ ul.thread-list-withborder {
         &:hover {
             background-color: #eee;
         }
+    }
+
+    p.no-data {
+        text-align: center;
+        padding-bottom: 24px;
+        font-size: 16px;
+        margin-top: 30px;
+    }
+
+}
+
+ul.board-operation {
+    margin: 10px 0;
+    padding-left: 0;
+    position: relative;
+    & > span {
+        padding-left: 24px;
+        font-weight: bold;
+    }
+    & > li {
+        display: inline;
+        padding-left: 24px;
+        cursor: pointer;
+        transition: color .3s ease;
+        &:hover, &.active {
+            color: #e77574;
+        }
+    }
+    button.refresh {
+        position: absolute;
+        right: 0;
+        bottom: -5px;
     }
 }

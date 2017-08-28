@@ -10,7 +10,7 @@ const fetchBoard = (bid, page, type, order) => {
         // page minus 1 for the reason that the server-side page starts from 0
         [CALL_API]: {
             types: [GET_BOARD_REQUEST, GET_BOARD_SUCCESS, GET_BOARD_FAILURE],
-            apiPath: `board/${bid}/page/${page - 1}`
+            apiPath: `board/${bid}/page/${page - 1}?type=${type}&order=${order}`
         },
         bid: bid,
         page: page,

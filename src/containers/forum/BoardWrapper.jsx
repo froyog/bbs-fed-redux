@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Pagination } from 'react-bootstrap';
+import { Pagination, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getBoard } from '../../actions/board';
 import ThreadItem from '../../components/common/ThreadItem';
@@ -52,6 +52,8 @@ class BoardWrapper extends React.Component {
         };
 
         this.handleSelect = this.handleSelect.bind(this);
+        this.handleChangeType = this.handleChangeType.bind(this);
+        this.handleOrderChange = this.handleOrderChange.bind(this);
     }
 
     componentWillMount() {
@@ -78,47 +80,95 @@ class BoardWrapper extends React.Component {
         history.push(`/forum/board/${bid}/page/${eventKey}`);
     }
 
+    handleChangeType ({ target }) {
+        const { getBoard, match: { params: { bid } }, order } = this.props;
+        let type = target.id || '';
+        getBoard(bid, 1, type, order);
+    }
+
+    handleOrderChange ({ target }) {
+        const { getBoard, match: { params: { bid } }, type } = this.props;
+        let order = target.id || '';
+        getBoard(bid, 1, type, order);
+    }
+
     render () {
-        const { isFetching, boardInfo, threadList } = this.props;
+        const { isFetching, boardInfo, threadList, type, order } = this.props;
         if (isFetching || !boardInfo || !threadList) {
             return <FetchingOverlay fullPage />;
         }
 
-        const { name, cThread, info, moderator } = boardInfo;
-        const renderThreads = threadList.map(thread =>
-            <ThreadItem key={thread.id} thread={thread} />
-        );
+        const { name, cThread, cElite, info, moderator } = boardInfo;
+        const paginationItems = type === 'elite' ? cElite : cThread;
         const renderModerator = moderator.map(admin => {
             const { uid, name } = admin;
             return <Link className="admin-name" to={`/user/${uid}`}>name</Link>;
         });
+        let renderThreads;
+        if (paginationItems <= 0) {
+            renderThreads = <p className="no-data">暂无数据，快来抢沙发啊（哦精华贴你似乎抢不了）</p>;
+        } else {
+            renderThreads = threadList.map(thread =>
+                <ThreadItem key={thread.id} thread={thread} />
+            );
+        }
 
         return (
             <Card
+                className="no-padding"
                 title={name}
                 nopadding={
-                    <ul className="thread-list-withborder">
-                        {renderThreads}
-                    </ul>
-                }
-                action={
-                    <Pagination
-                        prev
-                        next
-                        first
-                        last
-                        ellipsis
-                        boundaryLinks
-                        maxButtons={6}
-                        bsSize="medium"
-                        items={Math.ceil(cThread / 50)}
-                        activePage={this.state.activePage}
-                        onSelect={this.handleSelect} />
+                    <div>
+                        <ul className="thread-list-withborder">
+                            {renderThreads}
+                        </ul>
+                        {
+                            paginationItems > 50 &&
+                            <Pagination
+                                prev
+                                next
+                                first
+                                last
+                                ellipsis
+                                boundaryLinks
+                                maxButtons={3}
+                                bsSize="medium"
+                                items={Math.ceil(paginationItems / 50)}
+                                activePage={this.state.activePage}
+                                onSelect={this.handleSelect} />
+                        }
+                    </div>
                 }
             >
                 <p>版主：暂无</p>
                 <p>帖数：{cThread}</p>
                 <p>简介：{info}</p>
+                <ul className="tabs">
+                    <li className={`tab ${type === '' ? 'active' : ''}`}>
+                        <a id="" onClick={this.handleChangeType}>全部</a>
+                    </li>
+                    <li className={`tab ${type === 'elite' ? 'active' : ''}`}>
+                        <a id="elite" onClick={this.handleChangeType}>精华</a>
+                    </li>
+                </ul>
+                <ul className="board-operation">
+                    <span>排序</span>
+                    <li
+                        className={`${order === '' ? 'active' : ''}`}
+                        id=""
+                        onClick={this.handleOrderChange}
+                    >
+                        按最新回复
+                    </li>
+                    <li
+                        className={`${order === 'create' ? 'active': ''}`}
+                        id="create"
+                        onClick={this.handleOrderChange}
+                    >
+                        按最新发布
+                    </li>
+                    <Button className="raised refresh" bsStyle="success">刷新</Button>
+                </ul>
             </Card>
         );
     }
