@@ -12,7 +12,7 @@ export const Card = ({ className, title, nopadding, action, children, ...restPro
             {...restProps}
         >
             <div className="card-content">
-                <h1 className="card-title">{title}</h1>
+                {title && <h1 className="card-title">{title}</h1>}
                 {children}
             </div>
             {nopadding}

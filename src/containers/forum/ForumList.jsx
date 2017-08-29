@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import { toJS } from '../../util.js';
 import FetchingOverlay from '../../components/common/FetchingOverlay';
 import Forum from './ForumWrapper';
+import FeelingLucky from '../../components/common/FeelingLucky';
 
-import { Row } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 
 class ForumListWrapper extends React.Component {
@@ -41,6 +42,9 @@ class ForumListWrapper extends React.Component {
         return (
             <Row>
                 {renderForumList}
+                <Col md={12}>
+                    <FeelingLucky />
+                </Col>
             </Row>
         );
     }

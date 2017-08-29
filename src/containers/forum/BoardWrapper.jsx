@@ -52,7 +52,7 @@ class BoardWrapper extends React.Component {
         };
 
         this.handleSelect = this.handleSelect.bind(this);
-        this.handleChangeType = this.handleChangeType.bind(this);
+        this.handleTypeChange = this.handleTypeChange.bind(this);
         this.handleOrderChange = this.handleOrderChange.bind(this);
     }
 
@@ -80,10 +80,10 @@ class BoardWrapper extends React.Component {
         history.push(`/forum/board/${bid}/page/${eventKey}`);
     }
 
-    handleChangeType ({ target }) {
-        const { getBoard, match: { params: { bid } }, order } = this.props;
+    handleTypeChange ({ target }) {
+        const { getBoard, match: { params: { bid } } } = this.props;
         let type = target.id || '';
-        getBoard(bid, 1, type, order);
+        getBoard(bid, 1, type, '');
     }
 
     handleOrderChange ({ target }) {
@@ -102,7 +102,7 @@ class BoardWrapper extends React.Component {
         const paginationItems = type === 'elite' ? cElite : cThread;
         const renderModerator = moderator.map(admin => {
             const { uid, name } = admin;
-            return <Link className="admin-name" to={`/user/${uid}`}>name</Link>;
+            return <Link className="admin-name" to={`/user/${uid}`}>{name}</Link>;
         });
         let renderThreads;
         if (paginationItems <= 0) {
@@ -140,15 +140,15 @@ class BoardWrapper extends React.Component {
                     </div>
                 }
             >
-                <p>版主：暂无</p>
+                <p>版主：{renderModerator.length ? renderModerator : '暂无' }</p>
                 <p>帖数：{cThread}</p>
                 <p>简介：{info}</p>
                 <ul className="tabs">
                     <li className={`tab ${type === '' ? 'active' : ''}`}>
-                        <a id="" onClick={this.handleChangeType}>全部</a>
+                        <a id="" onClick={this.handleTypeChange}>全部</a>
                     </li>
                     <li className={`tab ${type === 'elite' ? 'active' : ''}`}>
-                        <a id="elite" onClick={this.handleChangeType}>精华</a>
+                        <a id="elite" onClick={this.handleTypeChange}>精华</a>
                     </li>
                 </ul>
                 <ul className="board-operation">
