@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect} from 'react-redux';
+import { Pagination } from 'react-bootstrap';
 import { Card } from '../../components/common/Card';
+import FetchingOverlay from '../../components/common/FetchingOverlay';
 import { getThreadPage } from '../../actions/forum/thread';
 import { toJS } from '../../util';
+import ThreadHeader from './ThreadHeader';
 
 class ThreadWrapper extends React.Component {
     static propTypes = {
@@ -35,19 +38,58 @@ class ThreadWrapper extends React.Component {
             like: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
             content: PropTypes.string,
             id: PropTypes.number
-        }))
+        })),
+        boardInfo: PropTypes.shape({
+            id: PropTypes.number,
+            name: PropTypes.string,
+            forumId: PropTypes.number,
+            forumName: PropTypes.string
+        })
     };
+
+    constructor () {
+        super();
+        this.state = {
+            activePage: 1
+        };
+
+        this.handleSelect = this.handleSelect.bind(this);
+    }
 
     componentWillMount() {
         const { getThreadPage, match: { params: { tid } } } = this.props;
         getThreadPage(+tid, 1);
     }
 
+    handleSelect (eventKey) {
+        this.setState({
+            activePage: eventKey
+        });
+    }
+
     render () {
-        console.log(this.props);
+        const { threadInfo, postList, boardInfo, isFetching } = this.props;
+        if (!threadInfo || !postList || isFetching) return <FetchingOverlay fullPage />;
+
+        const { cPost } = threadInfo;
+
         return (
             <Card>
-
+                <ThreadHeader
+                    thread={threadInfo}
+                    board={boardInfo}/>
+                <Pagination
+                    prev
+                    next
+                    first
+                    last
+                    ellipsis
+                    boundaryLinks
+                    maxButtons={3}
+                    bsSize="medium"
+                    items={Math.ceil(cPost / 50)}
+                    activePage={this.state.activePage}
+                    onSelect={this.handleSelect} />
             </Card>
         );
     }
@@ -63,7 +105,8 @@ const mapStateToProps = (state, ownProps) => {
         isFetching: thread.get('isFetching'),
         tid: thread.get('tid'),
         threadInfo: thread.get('threadInfo'),
-        postList: thread.get('postList')
+        postList: thread.get('postList'),
+        boardInfo: thread.get('boardInfo')
     };
 };
 const mapDispatchToProps = dispatch => ({

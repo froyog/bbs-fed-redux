@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Image } from 'react-bootstrap';
 import defaultAvatar from '../../assests/avatar-default.png';
 import anonymousAvatar from '../../assests/anonymous.png';
 
@@ -61,9 +62,10 @@ class ImageFeed extends React.Component {
         }
         return (
             <Link to={`/user/${id}`}>
-                <img
+                <Image
                     src={src}
                     alt=""
+                    circle
                     onError={this.handleError}
                     {...restProps} />
             </Link>

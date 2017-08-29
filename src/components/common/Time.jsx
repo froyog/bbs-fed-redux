@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 
-const Time = ({ timestamp, absolute}) => {
+const Time = ({ timestamp, absolute, ...restProps }) => {
     const pad = val =>
         ('0' + val).substr(-2);
 
@@ -60,10 +60,10 @@ const Time = ({ timestamp, absolute}) => {
     let timeString = `${year}/${month}/${day} ${pad(hour)}:${pad(minute)}:${pad(second)}`;
     let relative = relativeTime(createDate);
 
-    if (absolute || !relative) return <span>{timeString}</span>;
+    if (absolute || !relative) return <span {...restProps}>{timeString}</span>;
     return (
         <OverlayTrigger placement="bottom" overlay={renderTooltip(timeString)}>
-            <span>{relativeTime(createDate)}</span>
+            <span {...restProps}>{relativeTime(createDate)}</span>
         </OverlayTrigger>
     );
 
