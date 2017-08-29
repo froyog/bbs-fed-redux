@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Media, Image } from 'react-bootstrap';
 import dice from '../../assests/dice.jpg';
 import { Card } from './Card';
@@ -22,7 +22,7 @@ const FeelingLucky = () => {
                 </Media.Body>
             </Media>
         </Card>
-    )
-}
+    );
+};
 
 export default FeelingLucky;

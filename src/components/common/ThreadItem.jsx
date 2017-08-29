@@ -25,7 +25,7 @@ const ThreadItem = ({ thread }) => {
                             [{boardName}]
                         </Link>
                     }
-                    <Link to={`/forum/thread/${id}`} className="title-link">{title}</Link>
+                    <Link to={`/forum/thread/${id}/page/1`} className="title-link">{title}</Link>
                 </Media.Heading>
                 <p>
                     {

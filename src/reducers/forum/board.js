@@ -2,7 +2,7 @@ import { fromJS, Map } from 'immutable';
 import * as ActionTypes from '../../actions/board';
 
 
-const defaultState = fromJS({
+const board = (state = fromJS({
     isFetching: false,
     boardInfo: {},
     threadList: [],
@@ -10,9 +10,7 @@ const defaultState = fromJS({
     order: '',
     type: '',
     error: ''
-});
-
-const board = (state = defaultState, action) => {
+}), action) => {
     switch (action.type) {
         case ActionTypes.GET_BOARD_REQUEST:
             return state.set('isFetching', true);

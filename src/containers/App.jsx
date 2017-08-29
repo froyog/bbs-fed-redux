@@ -7,6 +7,7 @@ import Header from './frame/Header';
 import Sidebar from './frame/Sidebar';
 import Forum from './forum/ForumList';
 import Board from './forum/BoardWrapper';
+import Thread from './forum/ThreadWrapper';
 import Home from './bbs-index/Home';
 import Me from './Me';
 import NoMatch from '../components/NoMatch';
@@ -111,6 +112,7 @@ class App extends React.Component {
                             <Route exact path='/' component={Home} />
                             <Route exact path='/forum' component={Forum} />
                             <Route path='/forum/board/:bid/page/:page' component={Board} />
+                            <Route path='/forum/thread/:tid/page/:page' component={Thread} />
                             <Route path='/user/me' component={Me} />
                             <Route component={NoMatch} />
                         </Switch>

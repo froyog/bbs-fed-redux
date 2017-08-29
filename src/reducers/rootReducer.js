@@ -6,7 +6,10 @@ import sidebar from './frame/sidebar';
 import bbsIndex from './bbsIndex';
 import auth from '../alpha/reducer/auth';
 import login from './passport/login';
+import thread from './forum/thread';
 
+
+// need refactoring
 const rootReducer = combineReducers({
     sidebar,
     forumList,
@@ -14,7 +17,8 @@ const rootReducer = combineReducers({
     board,
     bbsIndex,
     auth,
-    login
+    login,
+    thread
 });
 
 export default rootReducer;
