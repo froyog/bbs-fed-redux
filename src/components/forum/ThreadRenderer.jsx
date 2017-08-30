@@ -1,6 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactMarkdown from 'react-markdown';
+import marked from 'marked';
+
+let renderer = new marked.Renderer();
+renderer.image = (href, title, text) => {
+    let fullUri = `https://bbs.tju.edu.cn/api/img/${href.substring(7)}`;
+    return (`
+        <a href="${fullUri}" target="_blank">
+            <img src="${fullUri}" alt="" title="${title}" />
+        </a>
+    `);
+};
+marked.setOptions({
+    renderer: renderer,
+    sanitize: true
+});
 
 
 class ThreadRenderer extends React.PureComponent {
@@ -8,22 +22,15 @@ class ThreadRenderer extends React.PureComponent {
         content: PropTypes.string.isRequired
     };
 
-    constructor () {
-        super();
-        this.handleImageUri = this.handleImageUri.bind(this);
-    }
-
-    transformImageUri (uri) {
-        return `https://bbs.tju.edu.cn/api/img/${uri.substring(7)}`;
-    }
-
     render () {
         const { content } = this.props;
+        if (!content) return null;
+
+        const markdownContent = marked(content);
         return (
-            <ReactMarkdown
+            <article
                 className="thread-renderer"
-                source={content}
-                transformImageUri={this.transformImageUri} />
+                dangerouslySetInnerHTML={{__html: markdownContent}} />
         );
     }
 };
