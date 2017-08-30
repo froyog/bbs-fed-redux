@@ -13,7 +13,7 @@ class ThreadRenderer extends React.PureComponent {
         this.handleImageUri = this.handleImageUri.bind(this);
     }
 
-    handleImageUri (uri) {
+    transformImageUri (uri) {
         return `https://bbs.tju.edu.cn/api/img/${uri.substring(7)}`;
     }
 
@@ -23,7 +23,7 @@ class ThreadRenderer extends React.PureComponent {
             <ReactMarkdown
                 className="thread-renderer"
                 source={content}
-                transformImageUri={this.handleImageUri} />
+                transformImageUri={this.transformImageUri} />
         );
     }
 };
