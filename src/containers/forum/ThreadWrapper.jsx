@@ -6,7 +6,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Card } from '../../components/common/Card';
 import FetchingOverlay from '../../components/common/FetchingOverlay';
 import { getThreadPage } from '../../actions/forum/thread';
-import { toJS } from '../../util';
+import { toJS, isEqual } from '../../util';
 import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
 import ThreadHeader from './ThreadHeader';
 import ThreadPost from './ThreadPost';
@@ -60,19 +60,31 @@ class ThreadWrapper extends React.Component {
     }
 
     componentWillMount() {
-        const { getThreadPage, match: { params: { tid } } } = this.props;
-        getThreadPage(+tid, 1);
+        const { getThreadPage, match: { params: { tid, page } } } = this.props;
+        getThreadPage(+tid, page);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { match: { params, params: { tid, page } } } = nextProps;
+        const { getThreadPage, match: { params: oldParams } } = this.props;
+        if (!isEqual(params, oldParams)) {
+            this.setState({ activePage: +page });
+            getThreadPage(+tid, page);
+        }
     }
 
     handleSelect (eventKey) {
+        document.body.scrollTop = 0;
         this.setState({
             activePage: eventKey
         });
+        const { match: { params: { tid } }, history } = this.props;
+        history.push(`/forum/thread/${tid}/page/${eventKey}`);
     }
 
     render () {
         const { threadInfo, postList, boardInfo, isFetching } = this.props;
-        if (!threadInfo || !postList || isFetching) return <FetchingOverlay fullPage />;
+        if (!postList || isFetching) return <FetchingOverlay fullPage />;
 
         const { cPost, title } = threadInfo;
         const { id: boardId, name } = boardInfo;
@@ -88,13 +100,15 @@ class ThreadWrapper extends React.Component {
                         {name}
                     </BreadcrumbItem>
                     <BreadcrumbItem to='./1' active>
-                        {title}
+                        主题贴
                     </BreadcrumbItem>
                 </Breadcrumb>
                 <Card>
-                    <ThreadHeader
-                        thread={threadInfo}
-                        board={boardInfo}/>
+                    {threadInfo.title &&
+                        // check whether we're on page one
+                        <ThreadHeader
+                            thread={threadInfo}
+                            board={boardInfo} /> }
                     {/*<Pagination
                         prev
                         next
@@ -129,7 +143,7 @@ class ThreadWrapper extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     const page = ownProps.match.params.page;
-    const thread = state.getIn(['thread', +page]);
+    const thread = state.getIn(['thread', page]);
     if (!thread) return {};
 
     return {

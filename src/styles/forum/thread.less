@@ -1,3 +1,5 @@
+@import '../universal';
+
 .thread-head {
     margin-bottom: 30px;
     .thread-meta { margin-bottom: 20px; }
@@ -38,4 +40,12 @@
 
 .thread-renderer {
     font-size: 16px;
+    img {
+        max-width: 42%;
+        padding: 20px 0;
+        display: block;
+        @media @phones {
+            max-width: 100%;
+        }
+    }
 }

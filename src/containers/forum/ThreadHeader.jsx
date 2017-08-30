@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Media, Button, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
 import Time from '../../components/common/Time';
 import Avatar from '../../components/common/Avatar';
+import ThreadRenderer from '../../components/forum/ThreadRenderer';
 
 import '../../styles/forum/thread.less';
 
@@ -12,11 +12,7 @@ import '../../styles/forum/thread.less';
 let ThreadHeader = ({ thread, board }) => {
     const { authorId, authorName, title, authorNickname, tCreate, content } = thread;
     const { id, name } = board;
-    console.log(content);
 
-    const handleImage = uri => {
-        return `https://bbs.tju.edu.cn/api/img/${uri.substring(7)}`;
-    };
     return (
         <div className="thread-head">
             <Media className="thread-meta">
@@ -39,10 +35,7 @@ let ThreadHeader = ({ thread, board }) => {
                     </p>
                 </Media.Body>
             </Media>
-            <ReactMarkdown
-                className="thread-renderer"
-                source={content}
-                transformImageUri={handleImage} />
+            <ThreadRenderer content={content} />
             {/*<ThreadRenderer />*/}
         </div>
     );

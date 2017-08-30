@@ -2,17 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Media } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
 import Avatar from '../../components/common/Avatar';
 import Time from '../../components/common/Time';
+import ThreadRenderer from '../../components/forum/ThreadRenderer';
 
 
 const ThreadPost = ({ post }) => {
     const { authorId, authorName, authorNickname, floor, anonymous, tCreate,
             tModify, like, content, id } = post;
-    const handleImage = (uri) => {
-
-    };
 
     return (
         <div className="thread-head">
@@ -27,13 +24,10 @@ const ThreadPost = ({ post }) => {
                     <p className="post-meta">
                         <Link to={`/user/${authorId}`}>{authorName}</Link>
                         <span className="text-muted">（{authorNickname}）</span>
-                        <span className="floor text-muted pull-right">#1</span>
+                        <span className="floor text-muted pull-right">#{floor}</span>
                         <Time className="text-muted pull-right" timestamp={tCreate} />
                     </p>
-                    <ReactMarkdown
-                        className="thread-renderer"
-                        source={content}
-                        transformImageUri={handleImage} />
+                    <ThreadRenderer content={content} />
                 </Media.Body>
             </Media>
             {/*<ThreadRenderer />*/}

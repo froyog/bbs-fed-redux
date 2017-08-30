@@ -22,10 +22,11 @@ const shouldFetchThreadPage = (threadNode, tid, page) => {
     }
     if (threadNode.get('isFetching')) {
         return false;
-    } else if (threadNode.getIn([page, tid]) === tid) {
+    } else if (threadNode.get('tid') === tid) {
         // cached
         return false;
     }
+    return true;
 };
 
 // Fetch thread page if needed, check page and thread id respectively to
@@ -36,5 +37,4 @@ export const getThreadPage = (tid, page) => (dispatch, getState) => {
     if (shouldFetchThreadPage(threadNode, tid, page)) {
         dispatch(fetchThreadPage(tid, page));
     }
-    return null;
 };
