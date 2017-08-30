@@ -12,7 +12,7 @@ const HomeWrapper = () =>
             <Latest />
             <Card title="还没看过瘾？"></Card>
         </Col>
-        <Col md={3}>
+        <Col md={3} smHidden xsHidden>
             <Card style={{ minHeight: '1000px' }}>
                 我是右边栏站位符 :)
             </Card>

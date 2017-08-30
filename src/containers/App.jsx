@@ -100,9 +100,7 @@ class App extends React.Component {
         return (
             <div
                 id="frame"
-                onTouchStart={this.handleTouchStart}
-                onTouchMove={this.handleTouchMove}
-                onTouchEnd={this.handleTouchEnd}
+                
             >
                 <Header />
                 <Sidebar />
