@@ -36,7 +36,6 @@ let ThreadHeader = ({ thread, board }) => {
                 </Media.Body>
             </Media>
             <ThreadRenderer content={content} />
-            {/*<ThreadRenderer />*/}
         </div>
     );
 };

@@ -5,6 +5,18 @@ button.raised {
     box-shadow: @shadow-material-raise;
 }
 
+button.flat {
+    color: #1976d2;
+    font-weight: 500;
+    font-size: 18px;
+    transition: color .3s ease;
+    outline: 0 !important;
+    &:hover, &:focus {
+        text-decoration: none;
+        color: rgba(25, 118, 210, .7);
+    }
+}
+
 .container {
     @media @phones {
         padding: 0

@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Pagination, Button } from 'react-bootstrap';
+import { Pagination, Button, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getBoard } from '../../actions/board';
 import ThreadItem from '../../components/common/ThreadItem';
 import { Card } from '../../components/common/Card';
 import FetchingOverlay from '../../components/common/FetchingOverlay';
 import { toJS, isEqual } from '../../util.js';
+import PostingEditor from './PostingEditor';
+import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
 
 import '../../styles/forum/board.less';
 
@@ -48,17 +50,21 @@ class BoardWrapper extends React.Component {
     constructor () {
         super();
         this.state = {
-            activePage: 1
+            activePage: 1,
+            postingModalOpen: false
         };
 
         this.handleSelect = this.handleSelect.bind(this);
         this.handleTypeChange = this.handleTypeChange.bind(this);
         this.handleOrderChange = this.handleOrderChange.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.handleOpenModal = this.handleOpenModal.bind(this)
     }
 
     componentWillMount() {
         const { getBoard, match: { params: { bid, page } } } = this.props;
         getBoard(bid, page, '', '');
+        this.setState({ activePage: +page });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -92,13 +98,25 @@ class BoardWrapper extends React.Component {
         getBoard(bid, 1, type, order);
     }
 
+    handleOpenModal () {
+        this.setState({
+            postingModalOpen: true
+        });
+    }
+
+    handleCloseModal () {
+        this.setState({
+            postingModalOpen: false
+        });
+    }
+
     render () {
         const { isFetching, boardInfo, threadList, type, order } = this.props;
         if (isFetching || !boardInfo || !threadList) {
             return <FetchingOverlay fullPage />;
         }
 
-        const { name, cThread, cElite, info, moderator } = boardInfo;
+        const { name, cThread, cElite, info, moderator, id } = boardInfo;
         const paginationItems = type === 'elite' ? cElite : cThread;
         const renderModerator = moderator.map(admin => {
             const { uid, name } = admin;
@@ -114,62 +132,92 @@ class BoardWrapper extends React.Component {
         }
 
         return (
-            <Card
-                className="no-padding"
-                title={name}
-                nopadding={
-                    <div>
-                        <ul className="thread-list-withborder">
-                            {renderThreads}
-                        </ul>
-                        {
-                            paginationItems > 50 &&
-                            <Pagination
-                                prev
-                                next
-                                first
-                                last
-                                ellipsis
-                                boundaryLinks
-                                maxButtons={3}
-                                bsSize="medium"
-                                items={Math.ceil(paginationItems / 50)}
-                                activePage={this.state.activePage}
-                                onSelect={this.handleSelect} />
-                        }
+            <div>
+                <Breadcrumb>
+                    <BreadcrumbItem to="/">首页</BreadcrumbItem>
+                    <BreadcrumbItem to="/forum">所有分区</BreadcrumbItem>
+                    <BreadcrumbItem to="/forum/board/${id}/page/1" active>
+                        {name}
+                    </BreadcrumbItem>
+                </Breadcrumb>
+                <Card
+                    className="no-padding"
+                    title={name}
+                    nopadding={
+                        <div>
+                            <ul className="thread-list-withborder">
+                                {renderThreads}
+                            </ul>
+                            {
+                                paginationItems > 50 &&
+                                <Pagination
+                                    prev
+                                    next
+                                    first
+                                    last
+                                    ellipsis
+                                    boundaryLinks
+                                    maxButtons={3}
+                                    bsSize="medium"
+                                    items={Math.ceil(paginationItems / 50)}
+                                    activePage={this.state.activePage}
+                                    onSelect={this.handleSelect} />
+                            }
+                        </div>
+                    }
+                >
+                    <div className="board-buttons">
+                        <Button className="flat" bsStyle="link">关注</Button>
+                        <Button
+                            className="flat"
+                            bsStyle="link"
+                            onClick={this.handleOpenModal}
+                        >
+                            发帖
+                        </Button>
                     </div>
-                }
-            >
-                <p>版主：{renderModerator.length ? renderModerator : '暂无' }</p>
-                <p>帖数：{cThread}</p>
-                <p>简介：{info}</p>
-                <ul className="tabs">
-                    <li className={`tab ${type === '' ? 'active' : ''}`}>
-                        <a id="" onClick={this.handleTypeChange}>全部</a>
-                    </li>
-                    <li className={`tab ${type === 'elite' ? 'active' : ''}`}>
-                        <a id="elite" onClick={this.handleTypeChange}>精华</a>
-                    </li>
-                </ul>
-                <ul className="board-operation">
-                    <span>排序</span>
-                    <li
-                        className={`${order === '' ? 'active' : ''}`}
-                        id=""
-                        onClick={this.handleOrderChange}
-                    >
-                        按最新回复
-                    </li>
-                    <li
-                        className={`${order === 'create' ? 'active': ''}`}
-                        id="create"
-                        onClick={this.handleOrderChange}
-                    >
-                        按最新发布
-                    </li>
-                    <Button className="raised refresh" bsStyle="success">刷新</Button>
-                </ul>
-            </Card>
+                    <p>版主：{renderModerator.length ? renderModerator : '暂无' }</p>
+                    <p>帖数：{cThread}</p>
+                    <p>简介：{info}</p>
+                    <ul className="tabs">
+                        <li className={`tab ${type === '' ? 'active' : ''}`}>
+                            <a id="" onClick={this.handleTypeChange}>全部</a>
+                        </li>
+                        <li className={`tab ${type === 'elite' ? 'active' : ''}`}>
+                            <a id="elite" onClick={this.handleTypeChange}>精华</a>
+                        </li>
+                    </ul>
+                    <ul className="board-operation">
+                        <span>排序</span>
+                        <li
+                            className={`${order === '' ? 'active' : ''}`}
+                            id=""
+                            onClick={this.handleOrderChange}
+                        >
+                            按最新回复
+                        </li>
+                        <li
+                            className={`${order === 'create' ? 'active': ''}`}
+                            id="create"
+                            onClick={this.handleOrderChange}
+                        >
+                            按最新发布
+                        </li>
+                        <Button className="raised refresh" bsStyle="success">刷新</Button>
+                    </ul>
+                </Card>
+                <Modal
+                    bsSize="large"
+                    show={this.state.postingModalOpen}
+                    onHide={this.handleCloseModal}
+                    backdrop="static"
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>发表帖子</Modal.Title>
+                    </Modal.Header>
+                    <PostingEditor />
+                </Modal>
+            </div>
         );
     }
 }

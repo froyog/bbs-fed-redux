@@ -62,6 +62,7 @@ class ThreadWrapper extends React.Component {
     componentWillMount() {
         const { getThreadPage, match: { params: { tid, page } } } = this.props;
         getThreadPage(+tid, page);
+        this.setState({ activePage: +page });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -95,6 +96,7 @@ class ThreadWrapper extends React.Component {
         return (
             <div>
                 <Breadcrumb>
+                    <BreadcrumbItem to="/">首页</BreadcrumbItem>
                     <BreadcrumbItem to="/forum">所有分区</BreadcrumbItem>
                     <BreadcrumbItem to={`/forum/board/${boardId}/page/1`}>
                         {name}
