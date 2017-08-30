@@ -16,10 +16,10 @@ let ThreadHeader = ({ thread, board }) => {
 
     const handleImage = uri => {
         return `https://bbs.tju.edu.cn/api/img/${uri.substring(7)}`;
-    }
+    };
     return (
-        <div>
-            <Media className="thread-head">
+        <div className="thread-head">
+            <Media className="thread-meta">
                 <Media.Left>
                     <Avatar
                         className="author-avatar"
@@ -28,7 +28,7 @@ let ThreadHeader = ({ thread, board }) => {
                 </Media.Left>
                 <Media.Body>
                     <Media.Heading className="thread-title">
-                        <Link to={`/forum/board/${id}`}>[{name}]</Link>
+                        <Link to={`/forum/board/${id}/page/1`}>[{name}]</Link>
                         {title}
                     </Media.Heading>
                     <p>
@@ -40,6 +40,7 @@ let ThreadHeader = ({ thread, board }) => {
                 </Media.Body>
             </Media>
             <ReactMarkdown
+                className="thread-renderer"
                 source={content}
                 transformImageUri={handleImage} />
             {/*<ThreadRenderer />*/}

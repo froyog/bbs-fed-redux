@@ -2,11 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect} from 'react-redux';
 import { Pagination } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Card } from '../../components/common/Card';
 import FetchingOverlay from '../../components/common/FetchingOverlay';
 import { getThreadPage } from '../../actions/forum/thread';
 import { toJS } from '../../util';
+import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
 import ThreadHeader from './ThreadHeader';
+import ThreadPost from './ThreadPost';
 
 class ThreadWrapper extends React.Component {
     static propTypes = {
@@ -71,26 +74,54 @@ class ThreadWrapper extends React.Component {
         const { threadInfo, postList, boardInfo, isFetching } = this.props;
         if (!threadInfo || !postList || isFetching) return <FetchingOverlay fullPage />;
 
-        const { cPost } = threadInfo;
+        const { cPost, title } = threadInfo;
+        const { id: boardId, name } = boardInfo;
+        const renderPostList = postList.map(post =>
+            <ThreadPost key={post.id} post={post} />
+        );
 
         return (
-            <Card>
-                <ThreadHeader
-                    thread={threadInfo}
-                    board={boardInfo}/>
-                <Pagination
-                    prev
-                    next
-                    first
-                    last
-                    ellipsis
-                    boundaryLinks
-                    maxButtons={3}
-                    bsSize="medium"
-                    items={Math.ceil(cPost / 50)}
-                    activePage={this.state.activePage}
-                    onSelect={this.handleSelect} />
-            </Card>
+            <div>
+                <Breadcrumb>
+                    <BreadcrumbItem to="/forum">所有分区</BreadcrumbItem>
+                    <BreadcrumbItem to={`/forum/board/${boardId}/page/1`}>
+                        {name}
+                    </BreadcrumbItem>
+                    <BreadcrumbItem to='./1' active>
+                        {title}
+                    </BreadcrumbItem>
+                </Breadcrumb>
+                <Card>
+                    <ThreadHeader
+                        thread={threadInfo}
+                        board={boardInfo}/>
+                    {/*<Pagination
+                        prev
+                        next
+                        first
+                        last
+                        ellipsis
+                        boundaryLinks
+                        maxButtons={3}
+                        bsSize="medium"
+                        items={Math.ceil(cPost / 50)}
+                        activePage={this.state.activePage}
+                        onSelect={this.handleSelect} />*/}
+                    {renderPostList}
+                    <Pagination
+                            prev
+                            next
+                            first
+                            last
+                            ellipsis
+                            boundaryLinks
+                            maxButtons={3}
+                            bsSize="medium"
+                            items={Math.ceil(cPost / 50)}
+                            activePage={this.state.activePage}
+                            onSelect={this.handleSelect} />
+                </Card>
+            </div>
         );
     }
 }
