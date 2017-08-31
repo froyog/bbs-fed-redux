@@ -8,7 +8,7 @@ import ThreadItem from '../../components/common/ThreadItem';
 import { Card } from '../../components/common/Card';
 import FetchingOverlay from '../../components/common/FetchingOverlay';
 import { toJS, isEqual } from '../../util.js';
-import PostingEditor from './PostingEditor';
+import PostingEditor from '../../components/forum/PostingEditor';
 import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
 
 import '../../styles/forum/board.less';
@@ -51,14 +51,14 @@ class BoardWrapper extends React.Component {
         super();
         this.state = {
             activePage: 1,
-            postingModalOpen: false
+            postingModalOpen: true
         };
 
         this.handleSelect = this.handleSelect.bind(this);
         this.handleTypeChange = this.handleTypeChange.bind(this);
         this.handleOrderChange = this.handleOrderChange.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
-        this.handleOpenModal = this.handleOpenModal.bind(this)
+        this.handleOpenModal = this.handleOpenModal.bind(this);
     }
 
     componentWillMount() {
@@ -179,7 +179,7 @@ class BoardWrapper extends React.Component {
                     <p>版主：{renderModerator.length ? renderModerator : '暂无' }</p>
                     <p>帖数：{cThread}</p>
                     <p>简介：{info}</p>
-                    <ul className="tabs">
+                    <ul className="tabs board">
                         <li className={`tab ${type === '' ? 'active' : ''}`}>
                             <a id="" onClick={this.handleTypeChange}>全部</a>
                         </li>
@@ -212,10 +212,17 @@ class BoardWrapper extends React.Component {
                     onHide={this.handleCloseModal}
                     backdrop="static"
                 >
-                    <Modal.Header closeButton>
-                        <Modal.Title>发表帖子</Modal.Title>
-                    </Modal.Header>
-                    <PostingEditor />
+                    <Modal.Body>
+                        <PostingEditor />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button
+                            bsStyle="danger"
+                            onClick={this.handleCloseModal}
+                            >
+                            关闭
+                        </Button>
+                    </Modal.Footer>
                 </Modal>
             </div>
         );
