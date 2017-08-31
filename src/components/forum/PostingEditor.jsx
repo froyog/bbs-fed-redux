@@ -37,7 +37,8 @@ class PostingEditor extends React.Component {
     constructor () {
         super();
         this.state = {
-            editorState: EditorState.createEmpty()
+            editorState: EditorState.createEmpty(),
+            focused: false
         };
 
         this.handleEditorStateChange = this.handleEditorStateChange.bind(this);
@@ -50,11 +51,9 @@ class PostingEditor extends React.Component {
     }
 
     render () {
-        const { editorState } = this.state;
+        const { editorState, focused } = this.state;
         return (
             <Editor
-                wrapperClassName="my-editor"
-                editorClassName=""
                 toolbar={customToolbar}
                 editorState={editorState}
                 onEditorStateChange={this.handleEditorStateChange}

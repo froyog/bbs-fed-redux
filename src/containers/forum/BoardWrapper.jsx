@@ -10,6 +10,7 @@ import FetchingOverlay from '../../components/common/FetchingOverlay';
 import { toJS, isEqual } from '../../util.js';
 import PostingEditor from '../../components/forum/PostingEditor';
 import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
+import InputField from '../../components/common/Input';
 
 import '../../styles/forum/board.less';
 
@@ -211,8 +212,15 @@ class BoardWrapper extends React.Component {
                     show={this.state.postingModalOpen}
                     onHide={this.handleCloseModal}
                     backdrop="static"
+                    className="posting-modal"
                 >
                     <Modal.Body>
+                        <InputField
+                            id="title"
+                            text="标题"
+                            placeholder="标题必须超过三个字"
+                            fullWidth
+                            />
                         <PostingEditor />
                     </Modal.Body>
                     <Modal.Footer>
