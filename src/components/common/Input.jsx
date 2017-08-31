@@ -67,7 +67,7 @@ class InputField extends React.Component {
     }
 
     render () {
-        const { id, text, type, placeholder, fullWidth, color } = this.props;
+        const { id, text, type, placeholder, fullWidth } = this.props;
         const { focused, hasContent } = this.state;
 
         return (

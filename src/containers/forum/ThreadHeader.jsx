@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Media, Button, Image } from 'react-bootstrap';
+import { Media } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Time from '../../components/common/Time';
 import Avatar from '../../components/common/Avatar';

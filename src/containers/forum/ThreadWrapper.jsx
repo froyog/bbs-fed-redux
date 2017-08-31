@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect} from 'react-redux';
 import { Pagination } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 import { Card } from '../../components/common/Card';
 import FetchingOverlay from '../../components/common/FetchingOverlay';
 import { getThreadPage } from '../../actions/forum/thread';
@@ -106,7 +105,7 @@ class ThreadWrapper extends React.Component {
                     </BreadcrumbItem>
                 </Breadcrumb>
                 <Card>
-                    {threadInfo.title &&
+                    {title &&
                         // check whether we're on page one
                         <ThreadHeader
                             thread={threadInfo}

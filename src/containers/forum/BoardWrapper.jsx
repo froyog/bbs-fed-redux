@@ -117,7 +117,7 @@ class BoardWrapper extends React.Component {
             return <FetchingOverlay fullPage />;
         }
 
-        const { name, cThread, cElite, info, moderator, id } = boardInfo;
+        const { name, cThread, cElite, info, moderator } = boardInfo;
         const paginationItems = type === 'elite' ? cElite : cThread;
         const renderModerator = moderator.map(admin => {
             const { uid, name } = admin;
@@ -137,7 +137,7 @@ class BoardWrapper extends React.Component {
                 <Breadcrumb>
                     <BreadcrumbItem to="/">首页</BreadcrumbItem>
                     <BreadcrumbItem to="/forum">所有分区</BreadcrumbItem>
-                    <BreadcrumbItem to="/forum/board/${id}/page/1" active>
+                    <BreadcrumbItem to="./1" active>
                         {name}
                     </BreadcrumbItem>
                 </Breadcrumb>

@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
-import draftToMarkDown from 'draftjs-to-markdown';
+// import draftToMarkDown from 'draftjs-to-markdown';
 
 import '../../styles/forum/editor.less';
 
@@ -37,8 +37,7 @@ class PostingEditor extends React.Component {
     constructor () {
         super();
         this.state = {
-            editorState: EditorState.createEmpty(),
-            focused: false
+            editorState: EditorState.createEmpty()
         };
 
         this.handleEditorStateChange = this.handleEditorStateChange.bind(this);
@@ -51,7 +50,7 @@ class PostingEditor extends React.Component {
     }
 
     render () {
-        const { editorState, focused } = this.state;
+        const { editorState } = this.state;
         return (
             <Editor
                 toolbar={customToolbar}
