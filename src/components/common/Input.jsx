@@ -11,10 +11,11 @@ const labelFocusedStyle = {
     color: '#2565ac'
 };
 
-class InputField extends React.Component {
+class InputField extends React.PureComponent {
     static propTypes = {
         text: PropTypes.string.isRequired,
         id: PropTypes.string.isRequired,
+        onChange: PropTypes.func.isRequired,
         placeholder: PropTypes.string,
         type: PropTypes.string,
         fullWidth: PropTypes.bool,
@@ -55,6 +56,8 @@ class InputField extends React.Component {
     }
 
     handleInputChange ({ target }) {
+        const { onChange } = this.props;
+        onChange && onChange({ target });
         if (target.value.length === 0) {
             this.setState({
                 hasContent: false
@@ -67,6 +70,7 @@ class InputField extends React.Component {
     }
 
     render () {
+        console.log('reinput');
         const { id, text, type, placeholder, fullWidth } = this.props;
         const { focused, hasContent } = this.state;
 

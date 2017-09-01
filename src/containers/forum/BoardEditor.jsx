@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button } from 'react-bootstrap';
 import InputField from '../../components/common/Input';
@@ -80,7 +80,7 @@ class BoardEditor extends React.Component {
                         placeholder="标题必须超过三个字"
                         fullWidth
                     />
-                <Editor
+                    <Editor
                         toolbar={customToolbar}
                         editorState={editorState}
                         onEditorStateChange={this.handleEditorStateChange}
@@ -107,7 +107,7 @@ class BoardEditor extends React.Component {
                     </Button>
                 </Modal.Footer>
             </div>
-        )
+        );
     }
 }
 

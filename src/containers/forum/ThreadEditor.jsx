@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import { Card } from '../../components/common/Card';
 import { Editor } from 'react-draft-wysiwyg';
@@ -43,7 +43,7 @@ class ThreadEditor extends React.Component {
         };
 
         this.handleEditorStateChange = this.handleEditorStateChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleEditorStateChange (editorState) {
@@ -81,7 +81,7 @@ class ThreadEditor extends React.Component {
                     发表回复
                 </Button>
             </Card>
-        )
+        );
     }
 }
 

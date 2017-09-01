@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { toggleSidebar } from '../../actions/frame/sidebar';
 import Sidebar from '../../components/frame/Sidebar';
 
@@ -40,6 +41,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus))
 });
-SidebarWrapper = connect(mapStateToProps, mapDispatchToProps)(SidebarWrapper);
+SidebarWrapper = withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarWrapper));
 
 export default SidebarWrapper;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import '../../styles/frame/sidebar.less';
 
 
@@ -17,8 +17,9 @@ const Sidebar = props => {
             style={sidebarOpenStyle}
         >
             <ul>
-                <li><Link to='/'>Home</Link></li>
-                <li><Link to='/forum'>Forum</Link></li>
+                <li><NavLink to='/passport' activeClassName="active">登录</NavLink></li>
+                <li><NavLink exact to='/' activeClassName="active">首页</NavLink></li>
+                <li><NavLink to='/forum' activeClassName="active">论坛</NavLink></li>
             </ul>
         </nav>
     );
