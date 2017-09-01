@@ -1,3 +1,5 @@
+@import '../universal';
+
 .input-wrapper {
     display: inline-block;
     position: relative;
@@ -6,28 +8,28 @@
     font-size: 16px;
     line-height: 24px;
     background-color: transparent;
-    transition: height .2s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    .transition-material(.2s, height);
     cursor: auto;
     overflow: hidden;
 
     label {
         position: absolute;
-        line-height: 22px;
         top: 38px;
-        transition: all .45s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
         z-index: 1;
-        transform-origin: left top 0px;
+        font-weight: normal;
+        line-height: 22px;
         pointer-events: none;
         user-select: none;
-        font-weight: normal;
+        transform-origin: left top 0px;
+        .transition-material(.45s);
     }
 
     .placeholder {
         position: absolute;
-        color: rgba(0, 0, 0, .4);
-        transition: all .45s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
         bottom: 11px;
         font-size: .9em;
+        color: rgba(0, 0, 0, .4);
+        .transition-material(.45s);
     }
 
 
@@ -45,21 +47,21 @@
         &.border-colored {
             border-bottom: 2px solid #2565ac;
             transform: scaleX(0);
-            transition: all .45s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+            .transition-material(.45s);
         }
     }
 
     input {
-        padding: 0;
         position: relative;
         width: 100%;
+        height: 100%;
+        padding: 0;
         border: none;
+        margin-top: 14px;
         outline: none;
         color: rgba(0, 0, 0, .87);
         cursor: inherit;
         opacity: 1;
-        height: 100%;
-        margin-top: 14px;
         overflow: hidden;
     }
 }
