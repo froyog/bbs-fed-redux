@@ -9,6 +9,8 @@ import { toJS, isEqual } from '../../util';
 import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
 import ThreadHeader from './ThreadHeader';
 import ThreadPost from './ThreadPost';
+import ThreadEditor from './ThreadEditor';
+
 
 class ThreadWrapper extends React.Component {
     static propTypes = {
@@ -124,18 +126,19 @@ class ThreadWrapper extends React.Component {
                         onSelect={this.handleSelect} />*/}
                     {renderPostList}
                     <Pagination
-                            prev
-                            next
-                            first
-                            last
-                            ellipsis
-                            boundaryLinks
-                            maxButtons={3}
-                            bsSize="medium"
-                            items={Math.ceil(cPost / 50)}
-                            activePage={this.state.activePage}
-                            onSelect={this.handleSelect} />
+                        prev
+                        next
+                        first
+                        last
+                        ellipsis
+                        boundaryLinks
+                        maxButtons={3}
+                        bsSize="medium"
+                        items={Math.ceil(cPost / 50)}
+                        activePage={this.state.activePage}
+                        onSelect={this.handleSelect} />
                 </Card>
+                <ThreadEditor />
             </div>
         );
     }

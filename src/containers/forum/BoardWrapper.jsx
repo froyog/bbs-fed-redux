@@ -8,9 +8,8 @@ import ThreadItem from '../../components/common/ThreadItem';
 import { Card } from '../../components/common/Card';
 import FetchingOverlay from '../../components/common/FetchingOverlay';
 import { toJS, isEqual } from '../../util.js';
-import PostingEditor from '../../components/forum/PostingEditor';
 import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
-import InputField from '../../components/common/Input';
+import BoardEditor from './BoardEditor';
 
 import '../../styles/forum/board.less';
 
@@ -52,7 +51,7 @@ class BoardWrapper extends React.Component {
         super();
         this.state = {
             activePage: 1,
-            postingModalOpen: true
+            postingModalOpen: false
         };
 
         this.handleSelect = this.handleSelect.bind(this);
@@ -214,7 +213,9 @@ class BoardWrapper extends React.Component {
                     backdrop="static"
                     className="posting-modal"
                 >
-                    <Modal.Body>
+                    <BoardEditor
+                        onCloseModal={this.handleCloseModal} />
+                    {/*<Modal.Body>
                         <InputField
                             id="title"
                             text="标题"
@@ -230,7 +231,7 @@ class BoardWrapper extends React.Component {
                             >
                             关闭
                         </Button>
-                    </Modal.Footer>
+                    </Modal.Footer>*/}
                 </Modal>
             </div>
         );

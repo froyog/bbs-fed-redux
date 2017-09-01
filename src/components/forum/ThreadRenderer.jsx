@@ -7,7 +7,7 @@ renderer.image = (href, title, text) => {
     let fullUri = `https://bbs.tju.edu.cn/api/img/${href.substring(7)}`;
     return (`
         <a href="${fullUri}" target="_blank">
-            <img src="${fullUri}" alt="" title="${title}" />
+            <img src="${fullUri}" alt="Thread Image" />
         </a>
     `);
 };

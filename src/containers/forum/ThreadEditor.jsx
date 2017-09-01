@@ -1,8 +1,10 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { Button } from 'react-bootstrap';
+import { Card } from '../../components/common/Card';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
-// import draftToMarkDown from 'draftjs-to-markdown';
+import draftToMarkdown from 'draftjs-to-markdown';
 
 import '../../styles/forum/editor.less';
 
@@ -33,7 +35,7 @@ const customAt = {
 };
 
 
-class PostingEditor extends React.Component {
+class ThreadEditor extends React.Component {
     constructor () {
         super();
         this.state = {
@@ -41,6 +43,7 @@ class PostingEditor extends React.Component {
         };
 
         this.handleEditorStateChange = this.handleEditorStateChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleEditorStateChange (editorState) {
@@ -49,20 +52,37 @@ class PostingEditor extends React.Component {
         });
     }
 
+    handleSubmit () {
+        // fetch goes here;
+        const { editorState } = this.state;
+        const rawMd = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
+        console.log(rawMd);
+    }
+
     render () {
         const { editorState } = this.state;
         return (
-            <Editor
-                toolbar={customToolbar}
-                editorState={editorState}
-                onEditorStateChange={this.handleEditorStateChange}
-                localization={{
-                    locale: 'zh'
-                }}
-                mention={customAt}
-            />
-        );
+            <Card>
+                <Editor
+                    toolbar={customToolbar}
+                    editorState={editorState}
+                    onEditorStateChange={this.handleEditorStateChange}
+                    localization={{
+                        locale: 'zh'
+                    }}
+                    mention={customAt}
+                />
+                <Button
+                    type="submit"
+                    className="raised"
+                    bsStyle="primary"
+                    onClick={this.handleSubmit}
+                >
+                    发表回复
+                </Button>
+            </Card>
+        )
     }
 }
 
-export default PostingEditor;
+export default ThreadEditor;
