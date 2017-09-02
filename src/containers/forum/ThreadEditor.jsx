@@ -52,8 +52,9 @@ class ThreadEditor extends React.Component {
         });
     }
 
-    handleSubmit () {
+    handleSubmit (e) {
         // fetch goes here;
+        e.preventDefault();
         const { editorState } = this.state;
         const rawMd = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
         console.log(rawMd);

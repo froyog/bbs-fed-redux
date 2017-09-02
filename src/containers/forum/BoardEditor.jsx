@@ -5,12 +5,14 @@ import InputField from '../../components/common/Input';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import draftToMarkdown from 'draftjs-to-markdown';
+import { fetchNewThread } from '../../actions/forum/board';
+import { connect } from 'react-redux';
 
 import '../../styles/forum/editor.less';
 
 
 const customToolbar = {
-    options: ['inline', 'blockType', 'list', 'link', 'emoji', 'history'],
+    options: ['inline', 'blockType', 'list', 'emoji', 'history'],
     inline: {
         options: ['bold', 'italic', 'underline', 'strikethrough', 'monospace']
     },
@@ -37,7 +39,9 @@ const customAt = {
 
 class BoardEditor extends React.Component {
     static propTypes = {
-        onCloseModal: PropTypes.func.isRequired
+        onCloseModal: PropTypes.func.isRequired,
+        newThread: PropTypes.func.isRequired,
+        bid: PropTypes.number.isRequired
     };
 
     constructor () {
@@ -49,6 +53,7 @@ class BoardEditor extends React.Component {
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleEditorStateChange = this.handleEditorStateChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleTitleChange = this.handleTitleChange.bind(this);
     }
 
     handleCloseModal () {
@@ -62,15 +67,24 @@ class BoardEditor extends React.Component {
         });
     }
 
-    handleSubmit () {
-        // fetch goes here
-        const { editorState } = this.state;
-        const rawMd = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
-        console.log(rawMd);
+    handleTitleChange ({ target }) {
+        this.setState({
+            title: target.value
+        });
+    }
+
+    handleSubmit (e) {
+        e.preventDefault();
+        const { newThread, bid } = this.props;
+        const { editorState, title } = this.state;
+        const mdContent = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
+
+
+        newThread(bid, title, mdContent);
     }
 
     render () {
-        const { editorState } = this.state;
+        const { editorState, title } = this.state;
         return (
             <div>
                 <Modal.Body>
@@ -78,7 +92,9 @@ class BoardEditor extends React.Component {
                         id="title"
                         text="标题"
                         placeholder="标题必须超过三个字"
+                        value={title}
                         fullWidth
+                        onChange={this.handleTitleChange}
                     />
                     <Editor
                         toolbar={customToolbar}
@@ -95,6 +111,7 @@ class BoardEditor extends React.Component {
                         bsStyle="primary"
                         onClick={this.handleSubmit}
                         className="raised pull-left"
+                        type="submit"
                     >
                         发表
                     </Button>
@@ -111,4 +128,10 @@ class BoardEditor extends React.Component {
     }
 }
 
+const mapStateToProps = null;
+const mapDispatchToProps = dispatch => ({
+    newThread: (bid, title, content) => dispatch(fetchNewThread(bid, title, content))
+});
+
+BoardEditor = connect(mapStateToProps, mapDispatchToProps)(BoardEditor);
 export default BoardEditor;

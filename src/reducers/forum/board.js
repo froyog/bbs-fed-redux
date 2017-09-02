@@ -1,4 +1,4 @@
-import { fromJS, Map, List } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import * as ActionTypes from '../../actions/forum/board';
 
 
@@ -33,7 +33,7 @@ const board = (state = fromJS({
     }
 };
 
-const boardByBid = (state = List(), action) => {
+const boardByBid = (state = Map(), action) => {
     switch (action.type) {
         case ActionTypes.GET_BOARD_REQUEST:
         case ActionTypes.GET_BOARD_SUCCESS:

@@ -116,7 +116,7 @@ class BoardWrapper extends React.Component {
             return <FetchingOverlay fullPage />;
         }
 
-        const { name, cThread, cElite, info, moderator } = boardInfo;
+        const { name, cThread, cElite, info, moderator, id } = boardInfo;
         const paginationItems = type === 'elite' ? cElite : cThread;
         const renderModerator = moderator.map(admin => {
             const { uid, name } = admin;
@@ -214,6 +214,7 @@ class BoardWrapper extends React.Component {
                     className="posting-modal"
                 >
                     <BoardEditor
+                        bid={id}
                         onCloseModal={this.handleCloseModal} />
                     {/*<Modal.Body>
                         <InputField

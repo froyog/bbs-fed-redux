@@ -7,6 +7,7 @@ import bbsIndex from './bbsIndex';
 import auth from '../alpha/reducer/auth';
 import login from './passport/login';
 import thread from './forum/thread';
+import newThread from './forum/newThread';
 
 
 // need refactoring
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
     bbsIndex,
     auth,
     login,
-    thread
+    thread,
+    newThread
 });
 
 export default rootReducer;
