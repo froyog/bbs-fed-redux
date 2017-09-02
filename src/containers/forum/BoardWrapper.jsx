@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Pagination, Button, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { getBoard } from '../../actions/board';
+import { getBoard } from '../../actions/forum/board';
 import ThreadItem from '../../components/common/ThreadItem';
 import { Card } from '../../components/common/Card';
 import FetchingOverlay from '../../components/common/FetchingOverlay';

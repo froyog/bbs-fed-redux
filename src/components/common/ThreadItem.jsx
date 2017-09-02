@@ -42,7 +42,7 @@ const ThreadItem = ({ thread }) => {
                     id={authorId}
                     name={authorName}
                     className="avatar" />
-                <Link to={`/forum/thread/${id}`} className="comments-count">
+                <Link to={`/forum/thread/${id}/page/1`} className="comments-count">
                     <i className="iconfont icon-comment"></i>{cPost}
                 </Link>
             </Media.Right>

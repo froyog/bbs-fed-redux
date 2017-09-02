@@ -1,4 +1,4 @@
-import { CALL_API } from '../middlewares/callApi';
+import { CALL_API } from '../../middlewares/callApi';
 
 
 export const GET_BOARD_REQUEST = 'GET_BOARD_REQUEST';
