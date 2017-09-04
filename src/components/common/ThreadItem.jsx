@@ -41,7 +41,8 @@ const ThreadItem = ({ thread }) => {
                 <Avatar
                     id={authorId}
                     name={authorName}
-                    className="avatar" />
+                    className="avatar"
+                    anonymous={anonymous} />
                 <Link to={`/forum/thread/${id}/page/1`} className="comments-count">
                     <i className="iconfont icon-comment"></i>{cPost}
                 </Link>
