@@ -38,4 +38,4 @@ export const fetchNewThread = (bid, title, content) => dispatch => {
             }
         }
     });
-}
+};

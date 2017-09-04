@@ -25,6 +25,6 @@ const newThread = (state = fromJS({
         default:
             return state;
     }
-}
+};
 
 export default newThread;

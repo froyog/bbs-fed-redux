@@ -1,9 +1,10 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import { Card } from '../../components/common/Card';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
+import ThreadRenderer from '../../components/forum/ThreadRenderer';
 import draftToMarkdown from 'draftjs-to-markdown';
 
 import '../../styles/forum/editor.less';
@@ -36,6 +37,11 @@ const customAt = {
 
 
 class ThreadEditor extends React.Component {
+    static propTypes = {
+        replyContent: PropTypes.string.isRequired,
+        onCancelReply: PropTypes.func.isRequired
+    };
+
     constructor () {
         super();
         this.state = {
@@ -44,6 +50,7 @@ class ThreadEditor extends React.Component {
 
         this.handleEditorStateChange = this.handleEditorStateChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleCancelReply = this.handleCancelReply.bind(this);
     }
 
     handleEditorStateChange (editorState) {
@@ -60,10 +67,17 @@ class ThreadEditor extends React.Component {
         console.log(rawMd);
     }
 
+    handleCancelReply () {
+        const { onCancelReply } = this.props;
+        onCancelReply && onCancelReply();
+    }
+
     render () {
         const { editorState } = this.state;
+        const { replyContent } = this.props;
+
         return (
-            <Card>
+            <Card className="card-thread-editor">
                 <Editor
                     toolbar={customToolbar}
                     editorState={editorState}
@@ -73,6 +87,18 @@ class ThreadEditor extends React.Component {
                     }}
                     mention={customAt}
                 />
+                { replyContent &&
+                    <div className="reply">
+                        <Button
+                            bsStyle="link"
+                            className="flat"
+                            onClick={this.handleCancelReply}
+                        >
+                            取消回复
+                        </Button>
+                        <ThreadRenderer content={replyContent} />
+                    </div>
+                }
                 <Button
                     type="submit"
                     className="raised"

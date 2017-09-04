@@ -1,15 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Media } from 'react-bootstrap';
+import { Media, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Avatar from '../../components/common/Avatar';
 import Time from '../../components/common/Time';
 import ThreadRenderer from '../../components/forum/ThreadRenderer';
 
 
-const ThreadPost = ({ post }) => {
-    const { authorId, authorName, authorNickname, floor, anonymous, tCreate,
-            tModify, like, content, id } = post;
+const ThreadPost = ({ post, onClickReply }) => {
+    const { authorId, authorName, authorNickname, floor, anonymous, tCreate, content } = post;
+
+    const processContent = (content) => {
+        let processedContent = content.replace(/^(?:>[ ]*){2}.*/gm, '');
+        processedContent = processedContent.replace(/^(?:>[ ]*)+[ ]*(\n|$)/gm, '');
+        processedContent = processedContent.substr(0, 200).trim();
+        return processedContent;
+    };
+
+    const handleClickReply = () => {
+        // process content fit length and add blockquote
+        const processedContent = processContent(content);
+        const replyContent = `回复 #${floor} ${authorName}：\n\n${processedContent}`.replace(/^/gm, '> ').trim();
+        onClickReply(replyContent);
+        // scroll to the bottom of the page
+        window.scrollTo(0, document.body.scrollHeight);
+    };
 
     return (
         <div className="thread-head">
@@ -18,19 +33,36 @@ const ThreadPost = ({ post }) => {
                     <Avatar
                         className="author-avatar post"
                         id={authorId}
-                        name={authorName} />
+                        name={authorName}
+                        anonymous={anonymous} />
                 </Media.Left>
                 <Media.Body>
                     <p className="post-meta">
-                        <Link to={`/user/${authorId}`}>{authorName}</Link>
-                        <span className="text-muted">（{authorNickname}）</span>
+                        {
+                            anonymous
+                                ? <span>匿名用户</span>
+                                : <span className="text-muted">
+                                    <Link to={`/user/${authorId}`}>{authorName}</Link>
+                                    （{authorNickname}）
+                                  </span>
+                        }
                         <span className="floor text-muted pull-right">#{floor}</span>
                         <Time className="text-muted pull-right" timestamp={tCreate} />
                     </p>
                     <ThreadRenderer content={content} />
                 </Media.Body>
+                <footer>
+                    <Button
+                        bsStyle="link"
+                        className="flat"
+                        onClick={handleClickReply}
+                    >
+                        回复
+                    </Button>
+                    <Button bsStyle="link" className="flat">编辑</Button>
+                    <Button bsStyle="link" className="flat">删除</Button>
+                </footer>
             </Media>
-            {/*<ThreadRenderer />*/}
         </div>
     );
 };
@@ -47,6 +79,7 @@ ThreadPost.propTypes = {
         like: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired,
         content: PropTypes.string.isRequired,
         id: PropTypes.number.isRequired
-    }).isRequired
+    }).isRequired,
+    onClickReply: PropTypes.func.isRequired
 };
 export default ThreadPost;

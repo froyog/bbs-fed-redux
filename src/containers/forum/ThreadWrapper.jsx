@@ -54,10 +54,13 @@ class ThreadWrapper extends React.Component {
     constructor () {
         super();
         this.state = {
-            activePage: 1
+            activePage: 1,
+            replyContent: ''
         };
 
         this.handleSelect = this.handleSelect.bind(this);
+        this.handleClickReply = this.handleClickReply.bind(this);
+        this.handleCancelReply = this.handleCancelReply.bind(this);
     }
 
     componentWillMount() {
@@ -84,14 +87,26 @@ class ThreadWrapper extends React.Component {
         history.push(`/forum/thread/${tid}/page/${eventKey}`);
     }
 
+    handleClickReply (replyContent) {
+        this.setState({ replyContent: replyContent });
+    }
+
+    handleCancelReply () {
+        this.setState({ replyContent: '' });
+    }
+
     render () {
         const { threadInfo, postList, boardInfo, isFetching } = this.props;
+        const { replyContent } = this.state;
         if (!postList || isFetching) return <FetchingOverlay fullPage />;
 
         const { cPost, title } = threadInfo;
         const { id: boardId, name } = boardInfo;
         const renderPostList = postList.map(post =>
-            <ThreadPost key={post.id} post={post} />
+            <ThreadPost
+                key={post.id}
+                post={post}
+                onClickReply={this.handleClickReply} />
         );
 
         return (
@@ -111,7 +126,8 @@ class ThreadWrapper extends React.Component {
                         // check whether we're on page one
                         <ThreadHeader
                             thread={threadInfo}
-                            board={boardInfo} /> }
+                            board={boardInfo}
+                            onClickReply={this.handleClickReply} /> }
                     {/*<Pagination
                         prev
                         next
@@ -138,7 +154,9 @@ class ThreadWrapper extends React.Component {
                         activePage={this.state.activePage}
                         onSelect={this.handleSelect} />
                 </Card>
-                <ThreadEditor />
+                <ThreadEditor
+                    replyContent={replyContent}
+                    onCancelReply={this.handleCancelReply} />
             </div>
         );
     }

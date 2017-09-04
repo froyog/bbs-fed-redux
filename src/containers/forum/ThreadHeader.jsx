@@ -5,12 +5,14 @@ import { Link } from 'react-router-dom';
 import Time from '../../components/common/Time';
 import Avatar from '../../components/common/Avatar';
 import ThreadRenderer from '../../components/forum/ThreadRenderer';
+import Sharing from '../../components/common/Sharing';
 
 import '../../styles/forum/thread.less';
 
 
 let ThreadHeader = ({ thread, board }) => {
-    const { authorId, authorName, title, authorNickname, tCreate, content } = thread;
+    const { authorId, authorName, title, anonymous,
+            authorNickname, tCreate, content } = thread;
     const { id, name } = board;
 
     return (
@@ -20,7 +22,8 @@ let ThreadHeader = ({ thread, board }) => {
                     <Avatar
                         className="author-avatar"
                         id={authorId}
-                        name={authorName} />
+                        name={authorName}
+                        anonymous={anonymous} />
                 </Media.Left>
                 <Media.Body>
                     <Media.Heading className="thread-title">
@@ -28,14 +31,24 @@ let ThreadHeader = ({ thread, board }) => {
                         {title}
                     </Media.Heading>
                     <p>
-                        <Link to={`/user/${authorId}`}>{authorName}</Link>
-                        <span className="text-muted">（{authorNickname}）</span>
+                        {
+                            anonymous
+                                ? <span>匿名用户</span>
+                                : <span className="text-muted">
+                                    <Link to={`/user/${authorId}`}>{authorName}</Link>
+                                    （{authorNickname}）
+                                  </span>
+                        }
                         <span className="floor text-muted pull-right">#1</span>
                         <Time className="text-muted pull-right" timestamp={tCreate} />
                     </p>
                 </Media.Body>
             </Media>
             <ThreadRenderer content={content} />
+            <Sharing
+                title={title}
+                url={window.location.href}
+                sites={['wechat', 'qq', 'douban', 'weibo']} />
         </div>
     );
 };
@@ -61,7 +74,8 @@ ThreadHeader.propTypes = {
         name: PropTypes.string,
         forumId: PropTypes.number,
         forumName: PropTypes.string
-    })
+    }),
+    onClickReply: PropTypes.func.isRequired
 };
 
 export default ThreadHeader;

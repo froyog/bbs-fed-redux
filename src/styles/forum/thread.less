@@ -32,14 +32,22 @@
     }
     .text-muted { color: #999; }
     .post-meta {
-        margin-bottom: 5px;
+        margin-bottom: 10px;
         border-bottom: 1px dashed #ccc;
         padding-bottom: 5px;
+    }
+    footer {
+        text-align: right;
+        button {
+            font-size: 14px;
+            padding: 6px 8px;
+        }
     }
 }
 
 .thread-renderer {
     font-size: 16px;
+    margin-bottom: 15px;
     img {
         max-width: 42%;
         margin: 20px 0;
@@ -47,6 +55,24 @@
         box-shadow: @shadow-normal;
         @media @phones {
             max-width: 100%;
+        }
+    }
+}
+
+.card-thread-editor {
+    .rdw-editor-main {
+        min-height: 200px;
+    }
+    blockquote {
+        font-size: 15px;
+    }
+    .reply {
+        position: relative;
+        button {
+            position: absolute;
+            font-size: 15px;
+            right: 8px;
+            top: 5px;
         }
     }
 }
