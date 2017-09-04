@@ -11,11 +11,13 @@ class ImageFeed extends React.Component {
     static propTypes = {
         id: PropTypes.number.isRequired,
         name: PropTypes.string,
-        type: PropTypes.string
+        type: PropTypes.string,
+        anonymous: PropTypes.bool
     };
 
     static defaultProps = {
-        type: 'user'
+        type: 'user',
+        anonymous: false
     };
 
     constructor (props) {
@@ -30,11 +32,11 @@ class ImageFeed extends React.Component {
     }
 
     handleError () {
-        const { type, name, id } = this.props;
+        const { type, name, id, anonymous } = this.props;
         if (type === 'user') {
             if (!name) {
                 this.setState({ src: defaultAvatar });
-            } else if (id === 0) {
+            } else if (anonymous) {
                 this.setState({ src: anonymousAvatar });
             } else {
                 this.setState({ generateAvatar: true });
@@ -44,7 +46,7 @@ class ImageFeed extends React.Component {
 
     render () {
         const { src, generateAvatar } = this.state;
-        const { name, id, ...restProps } = this.props;
+        const { name, id, anonymous, type, ...restProps } = this.props;
 
         if (generateAvatar) {
             const randomColor = COLOR_ARRAY[Math.floor(Math.random() * COLOR_ARRAY.length)];
