@@ -5,8 +5,10 @@ import marked from 'marked';
 let renderer = new marked.Renderer();
 renderer.image = (href, title, text) => {
     let fullUri = `https://bbs.tju.edu.cn/api/img/${href.substring(7)}`;
+    // be careful with the "class" property.
+    // it's not jsx
     return (`
-        <a href="${fullUri}" target="_blank">
+        <a class="img-link" href="${fullUri}" target="_blank">
             <img src="${fullUri}" alt="Thread Image" />
         </a>
     `);
