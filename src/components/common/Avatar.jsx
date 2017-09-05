@@ -12,7 +12,7 @@ class ImageFeed extends React.Component {
         id: PropTypes.number.isRequired,
         name: PropTypes.string,
         type: PropTypes.string,
-        anonymous: PropTypes.bool
+        anonymous: PropTypes.oneOfType([PropTypes.bool, PropTypes.number])
     };
 
     static defaultProps = {
