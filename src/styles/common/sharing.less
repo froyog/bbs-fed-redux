@@ -1,0 +1,36 @@
+.share-button a {
+    font-size: 22px;
+    padding: 0 5px;
+    transition: .3s all;
+    color: #999;
+}
+
+.icon-wechat:hover {
+    color: #4aaa26;
+    .wechat-qrcode {
+        display: block;
+    }
+}
+.icon-qq:hover {color: #00a1e9;}
+.icon-weibo:hover {color: #e6162d;}
+.icon-qzone:hover {color: #fdbe3d;}
+.icon-douban:hover{color: #2e963d;}
+
+.wechat-qrcode {
+    display: none;
+    position: absolute;
+    right: 15px;
+    width: 200px;
+    color: #444;
+    text-align: center;
+    font-size: 12px;
+    background-color: #fff;
+    z-index: 99;
+    box-shadow: 0 2px 10px #3e8c20;
+    h4 {
+        color: #fff;
+        margin-top: 0;
+        padding: 5px 0;
+        background-color: #4aaa26;
+    }
+}

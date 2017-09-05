@@ -29,6 +29,7 @@
     "marked": "^0.3.6",
     "object-assign": "4.1.1",
     "promise": "7.1.1",
+    "qrcode.react": "^0.7.1",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.0",
     "react-dev-utils": "^3.0.2",
