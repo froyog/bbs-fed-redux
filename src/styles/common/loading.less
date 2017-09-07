@@ -80,3 +80,61 @@
 		transform: rotate(360deg);
 	}
 }
+
+// A much smaller spinner. Usaully used for POST/PUT request
+.cp-spinner {
+	position: relative;
+	display: inline-block;
+	box-sizing: border-box;
+	width: 3pc;
+	height: 3pc;
+}
+
+.cp-hue {
+	width: 24px;
+	border-radius: 50%;
+	background: #f56151;
+	animation: cp-hue-animate 1s ease-in-out infinite;
+}
+
+.cp-hue,.cp-hue:before {
+	display: inline-block;
+	box-sizing: border-box;
+	height: 24px;
+}
+
+.cp-hue:before {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 9pt;
+	border-radius: 0 9pt 9pt 0;
+	background: #fff;
+	content: " ";
+	animation: cp-hue-animate-before 1s ease-in-out infinite;
+}
+
+@keyframes cp-hue-animate {
+	0% { background: #f56151; }
+	25% { background: #58bd55; }
+	50% { background: #eb68a1; }
+	75% { background: #f3d53f; }
+	to { background: #f56151; }
+}
+
+@keyframes cp-hue-animate-before {
+	0% {
+		opacity: .5;
+		transform: rotateY(0);
+		transform-origin: left center;
+	}
+	30%,70% {
+		opacity: .2;
+		transform: rotateY(180deg);
+		transform-origin: left center;
+	}
+	to {
+		opacity: .5;
+		transform: rotateY(0);
+	}
+}

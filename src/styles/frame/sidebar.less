@@ -8,7 +8,7 @@
     z-index: 100;
     background-color: @bbs-blue;
     transition: transform .3s;
-    padding: 100px 0;
+    padding: 50px 0;
 }
 
 .sidebar-overlay {
@@ -26,6 +26,32 @@
 }
 
 #sidebar {
+    .avatar {
+        background: url(../../assests/material2.jpg) no-repeat fixed;
+        background-size: 28% 38%;
+        width: 200px;
+        height: 160px;
+        padding: 20px 10px 0 20px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        img {
+            width: 39%;
+            margin-bottom: 20px;
+        }
+        p {
+            color: white;
+            margin-bottom: 0;
+            padding-left: 5px;
+            word-break: break-all;
+            opacity: .9;
+        }
+        p.username {
+            opacity: 1;
+            font-weight: bold;
+            font-size: 15px;
+        }
+    }
+
     ul {
         padding: 0;
 
