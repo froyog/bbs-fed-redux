@@ -19,4 +19,4 @@ export const uploadAttach = fileData => dispatch => {
             }
         }
     });
-}
+};

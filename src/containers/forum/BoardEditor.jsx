@@ -7,6 +7,7 @@ import { convertToRaw, EditorState } from 'draft-js';
 import draftToMarkdown from 'draftjs-to-markdown';
 import { fetchNewThread } from '../../actions/forum/board';
 import { connect } from 'react-redux';
+import Attach from './Attach';
 
 import '../../styles/forum/editor.less';
 
@@ -82,7 +83,7 @@ class BoardEditor extends React.Component {
 
         newThread(bid, title, mdContent);
     }
-
+    
     render () {
         const { editorState, title } = this.state;
         return (
@@ -98,6 +99,7 @@ class BoardEditor extends React.Component {
                     />
                     <Editor
                         toolbar={customToolbar}
+                        toolbarCustomButtons={[<Attach />]}
                         editorState={editorState}
                         onEditorStateChange={this.handleEditorStateChange}
                         localization={{

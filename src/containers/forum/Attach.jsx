@@ -7,7 +7,7 @@ import { toJS, compressImage } from '../../util';
 import { uploadAttach } from '../../actions/forum/attach';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
-const MAX_ACCEPT_SIZE = 2097152 // 2 MiB
+const MAX_ACCEPT_SIZE = 2097152; // 2 MiB
 
 
 class Attach extends React.Component {
@@ -29,7 +29,7 @@ class Attach extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { imgId, isFetching } = nextProps;
+        const { imgId } = nextProps;
         const { imgId: oldImgId } = this.props;
         if (oldImgId !== imgId && imgId !== 0) {
             this._insertImage(imgId);
@@ -59,17 +59,17 @@ class Attach extends React.Component {
                 compressImage(file, file => {
                     if (file.size > MAX_ACCEPT_SIZE) {
                         // still larger than max size after comporess
-                        this.setState({ localError: '图片过大，请不要超过2MB' })
+                        this.setState({ localError: '图片过大，请不要超过2MB' });
                     } else {
                         this._uploadFile(file);
                     }
                 });
             } else {
                 // larger than max size AND uncompressable
-                this.setState({ localError: '图片过大，请不要超过2MB' })
+                this.setState({ localError: '图片过大，请不要超过2MB' });
             }
         } else {
-            this._uploadFile(file)
+            this._uploadFile(file);
         }
     }
 

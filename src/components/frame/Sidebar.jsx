@@ -23,9 +23,10 @@ const Sidebar = props => {
                 <p>scarlet0345@gmail.com</p>
             </div>
             <ul>
-                <li><NavLink to='/passport' activeClassName="active">登录</NavLink></li>
                 <li><NavLink exact to='/' activeClassName="active">首页</NavLink></li>
                 <li><NavLink to='/forum' activeClassName="active">论坛</NavLink></li>
+                <li><NavLink to='#'>排行榜</NavLink></li>
+                <li><NavLink to='#'>个人中心</NavLink></li>
             </ul>
         </nav>
     );
