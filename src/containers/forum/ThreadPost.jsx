@@ -13,7 +13,7 @@ const ThreadPost = ({ post, onClickReply }) => {
     const processContent = (content) => {
         let processedContent = content.replace(/^(?:>[ ]*){2}.*/gm, '');
         processedContent = processedContent.replace(/^(?:>[ ]*)+[ ]*(\n|$)/gm, '');
-        processedContent = processedContent.substr(0, 200).trim();
+        processedContent = processedContent.substr(0, 180).trim();
         return processedContent;
     };
 

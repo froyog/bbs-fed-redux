@@ -57,7 +57,8 @@ class InputField extends React.PureComponent {
 
     handleInputChange ({ target }) {
         const { onChange } = this.props;
-        onChange && onChange({ target });
+        if (onChange) onChange({ target });
+        
         if (target.value.length === 0) {
             this.setState({
                 hasContent: false
@@ -70,7 +71,6 @@ class InputField extends React.PureComponent {
     }
 
     render () {
-        console.log('reinput');
         const { id, text, type, placeholder, fullWidth } = this.props;
         const { focused, hasContent } = this.state;
 

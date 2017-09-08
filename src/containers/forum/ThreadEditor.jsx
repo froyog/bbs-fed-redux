@@ -6,6 +6,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import ThreadRenderer from '../../components/forum/ThreadRenderer';
 import draftToMarkdown from 'draftjs-to-markdown';
+import Attach from './Attach';
 
 import '../../styles/forum/editor.less';
 
@@ -17,6 +18,9 @@ const customToolbar = {
     },
     list: {
         options: ['unordered', 'ordered']
+    },
+    image: {
+        alignmentEnabled: false
     }
 };
 
@@ -69,7 +73,7 @@ class ThreadEditor extends React.Component {
 
     handleCancelReply () {
         const { onCancelReply } = this.props;
-        onCancelReply && onCancelReply();
+        if (onCancelReply) onCancelReply();
     }
 
     render () {
@@ -80,6 +84,7 @@ class ThreadEditor extends React.Component {
             <Card className="card-thread-editor">
                 <Editor
                     toolbar={customToolbar}
+                    toolbarCustomButtons={[<Attach />]}
                     editorState={editorState}
                     onEditorStateChange={this.handleEditorStateChange}
                     localization={{

@@ -1,7 +1,7 @@
 // custom style for editor
 // no raw style
 // everything on editor is here
-
+@import '../universal';
 
 .rdw-editor-toolbar {
     overflow: hidden;
@@ -9,7 +9,7 @@
     & > div {
         // inline-wrapper, block-wrapper, list-wrapper...
         display: inline-block;
-        & > div {
+        & > .rdw-option-wrapper {
             // option...
             padding: 5px 6px;
             display: inline-block;
@@ -21,8 +21,44 @@
                 background-color: #eee;
             }
         }
+
     }
 
+    .rdw-emoji-modal {
+        position: absolute;
+        width: 200px;
+        max-height: 200px;
+        overflow: auto;
+        padding: 0 5px;
+        background-color: #fff;
+        box-shadow: @shadow-normal;
+        & > span {
+            cursor: pointer;
+            font-size: 15px;
+        }
+    }
+
+    ul.rdw-dropdown-optionwrapper {
+        position: absolute;
+        padding: 0;
+        list-style: none;
+        & > li {
+            cursor: pointer;
+            background-color: #fff;
+        }
+    }
+
+    a.rdw-dropdown-selectedtext {
+        color: #333;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+
+    .error-message {
+        color: @red-danger;
+        margin-left: 8px;
+    }
 }
 
 .rdw-editor-main {
@@ -32,4 +68,20 @@
     margin-top: 10px;
     font-size: 16px;
     cursor: text;
+    img {
+        max-width: 42%;
+    }
+
+    .rdw-suggestion-dropdown {
+        // at dropdown
+        background-color: rgba(255, 255, 255, .7);
+        & > span {
+            display: block;
+            cursor: pointer;
+            padding: 2px 5px;
+            &:hover {
+                background-color: #eee;
+            }
+        }
+    }
 }

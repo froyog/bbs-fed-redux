@@ -47,3 +47,47 @@ export const toJS = WrappedComponent => wrappedComponentProps => {
 
     return <WrappedComponent {...propsJS} />;
 };
+
+// compress image to minimize the size
+const dataURItoBlob = dataURI => {
+    const byteString = atob(dataURI.split(',')[1]);
+
+    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    const ab = new ArrayBuffer(byteString.length);
+    let ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    const bb = new Blob([ab], { 'type': mimeString });
+    return bb;
+};
+
+export const compressImage = (file, callback) => {
+    let img = new Image();
+    img.onload = () => {
+        let canvas = document.createElement('canvas');
+        let w, h;
+        if (img.width > img.height) {
+            w = 1280;
+            h = w * (img.height / img.width);
+        } else {
+            h = 1280;
+            w = h * (img.width / img.height);
+        }
+
+        canvas.width = w;
+        canvas.height = h;
+
+        let ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, w, h);
+        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, w, h);
+
+        let newFile;
+        newFile = dataURItoBlob(canvas.toDataURL('image/jpeg'));
+        newFile.name = file.name.substr(0, file.name.lastIndexOf('.')) + '.jpg';
+        if (callback) callback(file);
+    };
+    img.src = URL.createObjectURL(file);
+};

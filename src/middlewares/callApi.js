@@ -17,17 +17,17 @@ const fetchApi = (apiPath, request = {}) => {
         customRequest.method = method.toUpperCase();
     }
     if (body) {
-        customRequest.body = JSON.stringify(body);
+        customRequest.body = body;
     }
     if (headers) {
         const { contentType, auth } = headers;
         customRequest.headers = {};
 
         if (contentType) {
-            customRequest.headers['Content-Type'] = contentType || 'application/json';
+            customRequest.headers['Content-Type'] = contentType;
         }
         if (auth) {
-            customRequest.headers['Authentication'] = `${auth.uid}|${auth.token}`;
+            customRequest.headers['Authentication'] = `18480|kievGTa_TSs5mObjCYZPAvEa86zAaWV76hN662p7uEo`;
         }
     }
 

@@ -58,7 +58,7 @@ class BoardEditor extends React.Component {
 
     handleCloseModal () {
         const { onCloseModal } = this.props;
-        onCloseModal && onCloseModal();
+        if (onCloseModal) onCloseModal();
     }
 
     handleEditorStateChange (editorState) {
