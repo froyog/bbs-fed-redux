@@ -1,15 +1,25 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "192x192",
-      "type": "image/png"
-    }
-  ],
-  "start_url": "./index.html",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+    "short_name": "求实BBS",
+    "name": "求实BBS",
+    "description": "结识天大人，畅仪天下事",
+    "dir": "ltr",
+    "lang": "zh-cmn-Hans",
+    "icons": [
+        {
+            "src": "favicon.ico",
+            "sizes": "100x100",
+            "type": "image/ico"
+        }
+    ],
+    "start_url": "./index.html",
+    "display": "standalone",
+    "theme_color": "#2565ac",
+    "background_color": "#ddd",
+    "related_applications": [
+        {
+            "platform": "itunes",
+            "url": "https://"
+        }
+    ],
+    "orientation": "portrait-primary"
 }
