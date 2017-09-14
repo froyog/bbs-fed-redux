@@ -10,7 +10,7 @@ const postLoginInfo = loginInfo => ({
         apiPath: `passport/login`,
         request: {
             method: 'POST',
-            body: loginInfo,
+            body: JSON.stringify(loginInfo),
             headers: {
                 contentType: 'application/json'
             }

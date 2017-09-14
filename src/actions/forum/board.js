@@ -34,7 +34,10 @@ export const fetchNewThread = (bid, title, content) => dispatch => {
             apiPath: `board/${bid}`,
             request: {
                 method: 'POST',
-                body: { title, content }
+                body: JSON.stringify({title, content}),
+                headers: {
+                    contentType: 'application/json'
+                }
             }
         }
     });
