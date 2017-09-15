@@ -40,7 +40,7 @@ class ForumListWrapper extends React.Component {
 
         if (isFetching) return <FetchingOverlay fullPage />;
         return (
-            <Row>
+            <Row className="forum-list">
                 {renderForumList}
                 <Col md={12}>
                     <FeelingLucky />

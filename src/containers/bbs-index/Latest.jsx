@@ -7,6 +7,7 @@ import { toJS } from '../../util.js';
 import { Card } from '../../components/common/Card';
 import FetchingOverlay from '../../components/common/FetchingOverlay';
 import ThreadItem from '../../components/common/ThreadItem';
+import RefreshButton from '../../components/common/RefreshButton';
 
 
 class Latest extends React.Component {
@@ -26,6 +27,11 @@ class Latest extends React.Component {
         })),
         isFetching: PropTypes.bool,
     };
+
+    constructor () {
+        super();
+        this.handleRefresh = this.handleRefresh.bind(this);
+    }
 
     componentWillMount() {
         this.props.getLatest();
@@ -48,13 +54,10 @@ class Latest extends React.Component {
 
         return (
             <Card title="最新" className="card-home">
-                <Button
-                    onClick={this.handleRefresh.bind(this)}
-                    className="refresh-button raised"
-                    bsStyle="success"
-                >
-                    刷新
-                </Button>
+                <RefreshButton 
+                    className="refresh-button"
+                    isFetching={isFetching}
+                    onClick={this.handleRefresh} />
                 {isFetching && <FetchingOverlay />}
                 {renderThreads}
             </Card>

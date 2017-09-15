@@ -27,7 +27,7 @@ const fetchApi = (apiPath, request = {}) => {
             customRequest.headers['Content-Type'] = contentType;
         }
         if (auth) {
-            customRequest.headers['Authentication'] = `18480|kievGTa_TSs5mObjCYZPAvEa86zAaWV76hN662p7uEo`;
+            customRequest.headers['Authentication'] = `18480|9IQKsf5ZYQc1IuoSTDhKfMuW7H4YUz4bPlLFn5VwmFo`;
         }
     }
 

@@ -10,6 +10,7 @@ import FetchingOverlay from '../../components/common/FetchingOverlay';
 import { toJS, isEqual } from '../../util.js';
 import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
 import BoardEditor from './BoardEditor';
+import RefreshButton from '../../components/common/RefreshButton';
 
 import '../../styles/forum/board.less';
 
@@ -203,7 +204,8 @@ class BoardWrapper extends React.Component {
                         >
                             按最新发布
                         </li>
-                        <Button className="raised refresh" bsStyle="success">刷新</Button>
+                        <RefreshButton />
+                        {/* <Button className="raised refresh" bsStyle="success">刷新</Button> */}
                     </ul>
                 </Card>
                 <Modal
