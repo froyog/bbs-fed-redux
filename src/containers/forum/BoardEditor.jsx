@@ -106,6 +106,7 @@ class BoardEditor extends React.Component {
                             locale: 'zh'
                         }}
                         mention={customAt}
+                        placeholder="与天大分享你刚编的故事"
                     />
                 </Modal.Body>
                 <Modal.Footer>
