@@ -38,3 +38,25 @@ export const getThreadPage = (tid, page) => (dispatch, getState) => {
         dispatch(fetchThreadPage(tid, page));
     }
 };
+
+export const NEW_COMMENT_REQUEST = 'NEW_COMMENT_REQUEST';
+export const NEW_COMMENT_SUCCESS = 'NEW_COMMENT_SUCCESS';
+export const NEW_COMMENT_FAILURE = 'NEW_COMMENT_FAILURE';
+
+export const sendNewComment = (tid, content) => (dispatch, getState) => {
+    const userInfo = getState().get('user');
+    dispatch({
+        [CALL_API]: {
+            types: [NEW_COMMENT_REQUEST, NEW_COMMENT_SUCCESS, NEW_COMMENT_FAILURE],
+            apiPath: `thread/${tid}`,
+            request: {
+                method: 'POST',
+                body: JSON.stringify({content}),
+                headers: {
+                    contentType: 'application/json',
+                    auth: user
+                }
+            }
+        }
+    });
+};
