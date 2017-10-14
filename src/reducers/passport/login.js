@@ -8,24 +8,25 @@ const defaultState = fromJS({
     'error': ''
 });
 
-const Login = (state = defaultState, action) => {
+const Login = (state = defaultState, action, allState) => {
+    console.log(allState);
     switch (action.type) {
-    case ActionTypes.LOGIN_REQUEST:
-        return state.set('isFetching', true);
-    case ActionTypes.LOGIN_SUCCESS:
-        return Map({
-            'isFetching': false,
-            'userInfo': fromJS(action.json.data),
-            'error': ''
-        });
-    case ActionTypes.LOGIN_FAILURE:
-        return Map({
-            'isFetching': false,
-            'userInfo': {},
-            'error': fromJS(action.error)
-        });
-    default:
-        return state;
+        case ActionTypes.LOGIN_REQUEST:
+            return state.set('isFetching', true);
+        case ActionTypes.LOGIN_SUCCESS:
+            return Map({
+                'isFetching': false,
+                'userInfo': fromJS(action.json.data),
+                'error': ''
+            });
+        case ActionTypes.LOGIN_FAILURE:
+            return Map({
+                'isFetching': false,
+                'userInfo': {},
+                'error': fromJS(action.error)
+            });
+        default:
+            return state;
     }
 };
 

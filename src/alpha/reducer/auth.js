@@ -7,12 +7,12 @@ const defaultState = fromJS({
 
 const auth = (state = defaultState, action) => {
     switch (action.type) {
-    case 'AUTH_PASS':
-        return state.set('isAuthenticated', true);
-    case 'AUTH_FAIL':
-        return state.set('isAuthenticated', false);
-    default:
-        return state;
+        case 'AUTH_PASS':
+            return state.set('isAuthenticated', true);
+        case 'AUTH_FAIL':
+            return state.set('isAuthenticated', false);
+        default:
+            return state;
     }
 };
 

@@ -1,48 +1,49 @@
 {
-    root: true,
+    "root": true,
 
-    parser: "babel-eslint",
+    "parser": "babel-eslint",
 
-    plugins: ["react", "import"],
+    "plugins": ["react", "import"],
 
-    env: {
-        es6: true,
-        commonjs: true,
-        browser: true
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
     },
 
-    parserOptions: {
-        ecmaVersion: 6,
-        sourceType: "module",
-        ecmaFeatures: {
-            jsx: true,
-            generators: true,
-            experimentalObjectRestSpread: true
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "generators": true,
+            "experimentalObjectRestSpread": true
         }
     },
 
-    settings: {
+    "settings": {
         "import/ignore": [
             "node_modules",
             "\\.(json|css|jpg|png|gif|eot|svg|ttf|woff|woff2|mp4|webm)$"
         ],
         "import/extensions": [".js"],
         "import/resolver": {
-            node: {
-                extensions: [".js", ".json"]
+            "node": {
+                "extensions": [".js", ".json"]
             }
         }
     },
 
-    rules: {
-        "indent": [1, 4],
+    "rules": {
+        "indent": [1, 4, { "SwitchCase": 1 }],
         "semi": [1, "always"],
         "array-callback-return": 1,
-        "default-case": [1, { commentPattern: "^no default$" }],
+        "default-case": [1, { "commentPattern": "^no default$" }],
         "dot-location": [1, "property"],
         "eqeqeq": [1, "allow-null"],
         "guard-for-in": 1,
-        "new-cap": [1, { newIsCap: true }],
+        "new-cap": 0,
         "new-parens": 1,
         "no-array-constructor": 1,
         "no-caller": 1,
@@ -67,20 +68,20 @@
         "no-invalid-regexp": 1,
         "no-iterator": 1,
         "no-label-var": 1,
-        "no-labels": [1, { allowLoop: false, allowSwitch: false }],
+        "no-labels": [1, { "allowLoop": false, "allowSwitch": false }],
         "no-lone-blocks": 1,
         "no-loop-func": 1,
         "no-mixed-operators": [
             1,
             {
-                groups: [
+                "groups": [
                     ["+", "-", "*", "/", "%", "**"],
                     ["&", "|", "^", "~", "<<", ">>", ">>>"],
                     ["==", "!=", "===", "!==", ">", ">=", "<", "<="],
                     ["&&", "||"],
                     ["in", "instanceof"]
                 ],
-                allowSamePrecedence: false
+                "allowSamePrecedence": false
             }
         ],
         "no-multi-str": 1,
@@ -110,7 +111,7 @@
         "no-unreachable": 1,
         "no-unused-expressions": 1,
         "no-unused-labels": 1,
-        "no-unused-vars": [1, { vars: "local", args: "none" }],
+        "no-unused-vars": [1, { "vars": "local", "args": "none" }],
         "no-use-before-define": [1, "nofunc"],
         "no-useless-computed-key": 1,
         "no-useless-concat": 1,
@@ -119,18 +120,18 @@
         "no-useless-rename": [
             1,
             {
-                ignoreDestructuring: false,
-                ignoreImport: false,
-                ignoreExport: false
+                "ignoreDestructuring": false,
+                "ignoreImport": false,
+                "ignoreExport": false
             }
         ],
         "no-with": 1,
         "no-whitespace-before-property": 1,
         "operator-assignment": [1, "always"],
-        radix: 1,
+        "radix": 1,
         "require-yield": 1,
         "rest-spread-spacing": [1, "never"],
-        strict: [1, "never"],
+        "strict": [1, "never"],
         "unicode-bom": [1, "never"],
         "use-isnan": 1,
         "valid-typeof": 1,
@@ -138,18 +139,18 @@
         "react/jsx-handler-names": [
             1,
             {
-                eventHandlerPrefix: "handle",
-                eventHandlerPropPrefix: "on"
+                "eventHandlerPrefix": "handle",
+                "eventHandlerPropPrefix": "on"
             }
         ],
         "react/jsx-indent": [1, 4],
-        "react/jsx-no-duplicate-props": [1, { ignoreCase: true }],
+        "react/jsx-no-duplicate-props": [1, { "ignoreCase": true }],
         "react/jsx-no-undef": 1,
         "react/jsx-pascal-case": [
             1,
             {
-                allowAllCaps: true,
-                ignore: []
+                "allowAllCaps": true,
+                "ignore": []
             }
         ],
         "react/jsx-uses-react": 1,

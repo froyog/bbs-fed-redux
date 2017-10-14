@@ -11,8 +11,11 @@ import newThread from './forum/newThread';
 import attach from './forum/attach';
 
 
-// need refactoring
-const rootReducer = combineReducers({
+// TODO: need refactoring
+// const rootReducer = combineReducers({
+// });
+    
+const combinedReducer = combineReducers({
     sidebar,
     forumList,
     boardList,
@@ -24,5 +27,20 @@ const rootReducer = combineReducers({
     newThread,
     attach
 });
+
+const crossSliceReducer = (state, action) => {
+    switch (action.type) {
+        case 'LOGIN_SUCCESS':
+            return state.set('login', login(state.get('login'), action, state));
+        default:
+            return state;
+    }
+};
+
+const rootReducer = (state, action) => {
+    const intermediateState = combinedReducer(state, action);
+    const finalState = crossSliceReducer(intermediateState, action);
+    return finalState;
+};
 
 export default rootReducer;

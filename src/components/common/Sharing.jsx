@@ -18,7 +18,8 @@ const Sharing = ({ sites, url, title, source, description, className }) => {
     let sharingButtons = sites.map((site, i) => {
         if (site === 'wechat') {
             return (
-                <a key={i} className='icon iconfont icon-wechat' target='_blank' href='javascript:'>
+                // eslint-disable-next-line
+                <a key={i} className='icon iconfont icon-wechat' target='_blank' href='javascript:void(0)'>
                     <div className="wechat-qrcode">
                         <h4>微信扫一扫：分享</h4>
                         <div className="qrcode">
