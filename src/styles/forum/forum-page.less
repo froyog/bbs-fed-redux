@@ -1,0 +1,69 @@
+@import '../universal.less';
+
+
+.row.forum-list {
+    margin: 0 10px;
+
+    @media @phones {
+        margin: 0 -15px;
+    }
+}
+
+.card-forum {
+    cursor: pointer;
+    transition: all .4s;
+
+    .card {
+        height: 260px;
+        @media @tablets {
+            height: 200px;
+        }
+    }
+
+    &.active {
+        width: 100%;
+        height: auto;
+        cursor: auto;
+
+        .card {
+            height: auto;
+            box-shadow: @shadow-deep;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .card-image {
+            img, h1 { display: none; }
+        }
+    }
+}
+
+.forum-detail {
+    margin-bottom: 20px;
+
+    .admin-name {
+        margin-right: 4px;
+    }
+    .media-heading {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    .media-left { padding-right: 20px; }
+    p { margin-bottom: 5px; }
+
+    @media @phones {
+        .media-left { display: none; }
+    }
+}
+
+.card-feeling-lucky {
+    .dice-image {
+        width: 80px;
+        height: 80px;
+        margin-right: 14px;
+    }
+    h4.media-heading {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    p { margin-bottom: 3px; }
+}

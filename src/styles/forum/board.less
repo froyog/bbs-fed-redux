@@ -1,0 +1,77 @@
+@import '../universal.less';
+
+.card.no-padding .card-content {
+    padding-bottom: 6px;
+}
+
+ul.thread-list-withborder {
+    padding: 0;
+    & > div {
+        padding: 12px 24px;
+        border-bottom: 1px solid #eee;
+        margin: 0;
+
+        @media @phones {
+            padding: 9px 18px;
+        }
+
+        &:hover {
+            background-color: #eee;
+        }
+    }
+
+    p.no-data {
+        text-align: center;
+        padding-bottom: 24px;
+        font-size: 16px;
+        margin-top: 30px;
+    }
+
+}
+
+ul.board-operation {
+    margin: 10px 0;
+    padding-left: 0;
+    position: relative;
+    & > span {
+        padding-left: 24px;
+        font-weight: bold;
+    }
+    & > li {
+        display: inline;
+        padding-left: 24px;
+        cursor: pointer;
+        transition: color .3s ease;
+        &:hover, &.active {
+            color: #e77574;
+        }
+    }
+    button.refresh {
+        position: absolute;
+        right: 0;
+        bottom: -5px;
+        .icon-refresh {
+            font-size: 14px;
+        }
+    }
+}
+
+.board-buttons {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+
+    button {
+        font-size: 18px;
+    }
+}
+
+.board.tabs {
+    margin-top: 30px;
+}
+
+.posting-modal {
+    .modal-body, .modal-footer {
+        padding: 15px 30px;
+    }
+}

@@ -1,0 +1,35 @@
+{
+  "short_name": "求实BBS",
+  "name": "求实BBS",
+  "description": "结识天大人，畅仪天下事",
+  "dir": "ltr",
+  "lang": "zh-cmn-Hans",
+  "icons": [
+    {
+        "src": "bbs-icon-96.png",
+        "type": "image/png",
+        "sizes": "96x96"
+    },
+    {
+        "src": "bbs-icon-144.png",
+        "type": "image/png",
+        "sizes": "144x144"
+    },
+    {
+        "src": "bbs-icon-196.png",
+        "type": "image/png",
+        "sizes": "196x196"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#2565ac",
+  "background_color": "#dddddd",
+  "related_applications": [
+      {
+          "platform": "itunes",
+          "url": "https://"
+      }
+  ],
+  "orientation": "portrait-primary"
+}

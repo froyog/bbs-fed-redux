@@ -1,0 +1,76 @@
+@import '../universal.less';
+
+#sidebar {
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    left: 0;
+    z-index: 100;
+    background-color: @bbs-blue;
+    transition: transform .3s;
+    padding: 50px 0;
+}
+
+.sidebar-overlay {
+    // no overlays on bigger screen
+    display: none;
+
+    background-color: #000;
+    .screen;
+    z-index: 10;
+    transition: opacity .3s ease-out, visibility .3s ease-out;
+
+    @media @phones {
+        display: block;
+    }
+}
+
+#sidebar {
+    .avatar {
+        background: url(../../assests/material2.jpg) no-repeat fixed;
+        background-size: 400px;
+        width: 200px;
+        height: 160px;
+        padding: 20px 10px 0 20px;
+        margin-bottom: 10px;
+        overflow: hidden;
+        img {
+            width: 39%;
+            margin-bottom: 20px;
+        }
+        p {
+            color: white;
+            margin-bottom: 0;
+            padding-left: 5px;
+            word-break: break-all;
+            opacity: .9;
+        }
+        p.username {
+            opacity: 1;
+            font-weight: bold;
+            font-size: 15px;
+        }
+    }
+
+    ul {
+        padding: 0;
+
+        & > li {
+            display: block;
+            text-align: center;
+            transition: background-color .3s ease;
+            a {
+                display: inline-block;
+                width: 100%;
+                height: 100%;
+                padding: 10px 0;
+                text-decoration: none;
+                color: #fff;
+                font-size: 16px;
+            }
+            &:hover, a.active {
+                background-color: #005395;
+            }
+        }
+    }
+}

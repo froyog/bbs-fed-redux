@@ -1,0 +1,23 @@
+button.refresh {
+    padding-left: 0;
+    padding-right: 0;
+
+    .icon-refresh {
+        display: inline-block;
+        transform-origin: center;
+        margin-right: 3px;
+
+        &.animating {
+            animation: 1s rotating infinite linear;
+        }
+    }
+}
+
+@keyframes rotating {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

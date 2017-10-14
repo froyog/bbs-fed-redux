@@ -1,0 +1,82 @@
+@import '../universal.less';
+
+.thread-head {
+    margin-bottom: 30px;
+    .thread-meta { margin-bottom: 20px; }
+    .media-left { padding-right: 20px; }
+
+    .author-avatar {
+        border-radius: 50%;
+        width: 65px;
+        height: 65px;
+        line-height: 65px;
+        font-size: 40px;
+
+        &.post {
+            width: 52px;
+            height: 52px;
+            line-height: 52px;
+            font-size: 35px;
+        }
+    }
+
+    .thread-title {
+        padding: 7px 0 10px;
+        border-bottom: 1px dashed #ccc;
+        a { padding-right: 5px; }
+    }
+
+    .floor {
+        font-weight: bold;
+        margin-left: 15px;
+    }
+    .text-muted { color: #999; }
+    .post-meta {
+        margin-bottom: 10px;
+        border-bottom: 1px dashed #ccc;
+        padding-bottom: 5px;
+    }
+    footer {
+        text-align: right;
+        button {
+            font-size: 14px;
+            padding: 6px 8px;
+        }
+    }
+}
+
+.thread-renderer {
+    font-size: 16px;
+    margin-bottom: 15px;
+    a.img-link {
+        max-width: 42%;
+        display: block;
+    }
+    img {
+        max-width: 100%;
+        margin: 20px 0;
+        display: block;
+        box-shadow: @shadow-normal;
+        @media @phones {
+            max-width: 100%;
+        }
+    }
+}
+
+.card-thread-editor {
+    .rdw-editor-main {
+        min-height: 200px;
+    }
+    blockquote {
+        font-size: 15px;
+    }
+    .reply {
+        position: relative;
+        button {
+            position: absolute;
+            font-size: 15px;
+            right: 8px;
+            top: 5px;
+        }
+    }
+}
