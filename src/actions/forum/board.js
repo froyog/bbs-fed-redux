@@ -1,4 +1,5 @@
 import { CALL_API } from '../../middlewares/callApi';
+import { parseUser } from '../../util';
 
 
 export const GET_BOARD_REQUEST = 'GET_BOARD_REQUEST';
@@ -27,7 +28,8 @@ export const NEW_THREAD_REQUEST = 'NEW_THREAD_REQUEST';
 export const NEW_THREAD_SUCCESS = 'NEW_THREAD_SUCCESS';
 export const NEW_THREAD_FAILURE = 'NEW_THREAD_FAILURE';
 
-export const fetchNewThread = (bid, title, content) => dispatch => {
+export const fetchNewThread = (bid, title, content) => (dispatch, getState) => {
+    const authentication = parseUser(getState());
     dispatch({
         [CALL_API]: {
             types: [NEW_THREAD_REQUEST, NEW_THREAD_SUCCESS, NEW_THREAD_FAILURE],
@@ -36,7 +38,8 @@ export const fetchNewThread = (bid, title, content) => dispatch => {
                 method: 'POST',
                 body: JSON.stringify({title, content}),
                 headers: {
-                    contentType: 'application/json'
+                    contentType: 'application/json',
+                    auth: authentication
                 }
             }
         }

@@ -49,6 +49,7 @@ export const toJS = WrappedComponent => wrappedComponentProps => {
 };
 
 // compress image to minimize the size
+// by zhuyupe
 const dataURItoBlob = dataURI => {
     const byteString = atob(dataURI.split(',')[1]);
 
@@ -90,4 +91,16 @@ export const compressImage = (file, callback) => {
         if (callback) callback(file);
     };
     img.src = URL.createObjectURL(file);
+};
+
+// get user info from state
+export const parseUser = (state) => {
+    const user = state.get('user');
+    if (!user) {
+        return false;
+    }
+
+    const uid = user.get('uid');
+    const token = user.get('token');
+    return `${uid}|${token}`;
 };

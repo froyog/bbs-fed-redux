@@ -8,7 +8,7 @@ export const CALL_API = 'Call API';
 
 const API_ROOT = 'http://bbs.tju.edu.cn:8080/api';
 
-const fetchApi = (apiPath, request = {}) => {
+const fetchApi = (apiPath, request = {}, state = {}) => {
     const fullUrl = `${API_ROOT}/${apiPath}`;
     const { headers, body, method } = request;
     let customRequest = {};
@@ -27,7 +27,7 @@ const fetchApi = (apiPath, request = {}) => {
             customRequest.headers['Content-Type'] = contentType;
         }
         if (auth) {
-            customRequest.headers['Authentication'] = `18480|9IQKsf5ZYQc1IuoSTDhKfMuW7H4YUz4bPlLFn5VwmFo`;
+            customRequest.headers['Authentication'] = auth;
         }
     }
 
@@ -71,9 +71,10 @@ export default store => next => action => {
     };
 
     const [ requestType, successType, failureType ] = types;
+
     next(actionWith({ type: requestType }));
 
-    return fetchApi(apiPath, request).then(
+    return fetchApi(apiPath, request, store.getState()).then(
         response => next(actionWith({
             json: response,
             type: successType

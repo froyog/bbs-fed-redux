@@ -1,4 +1,5 @@
 import { CALL_API } from '../../middlewares/callApi';
+import { parseUser } from '../../util';
 
 
 // call thread/:tid to get everything on a thread page
@@ -44,7 +45,7 @@ export const NEW_COMMENT_SUCCESS = 'NEW_COMMENT_SUCCESS';
 export const NEW_COMMENT_FAILURE = 'NEW_COMMENT_FAILURE';
 
 export const sendNewComment = (tid, content) => (dispatch, getState) => {
-    const userInfo = getState().get('user');
+    const authentication = parseUser(getState());
     dispatch({
         [CALL_API]: {
             types: [NEW_COMMENT_REQUEST, NEW_COMMENT_SUCCESS, NEW_COMMENT_FAILURE],
@@ -54,7 +55,7 @@ export const sendNewComment = (tid, content) => (dispatch, getState) => {
                 body: JSON.stringify({content}),
                 headers: {
                     contentType: 'application/json',
-                    auth: user
+                    auth: authentication
                 }
             }
         }

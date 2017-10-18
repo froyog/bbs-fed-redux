@@ -13,13 +13,11 @@ const newThread = (state = fromJS({
         case ActionTypes.NEW_THREAD_SUCCESS:
             return Map({
                 'isFetching': true,
-                'success': true,
                 'error': ''
             });
         case ActionTypes.NEW_THREAD_FAILURE:
             return Map({
                 'isFetching': false,
-                'success': false,
                 'error': action.error
             });
         default:

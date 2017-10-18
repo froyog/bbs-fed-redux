@@ -11,7 +11,7 @@ class WelcomeLogin extends React.PureComponent {
     static propTypes = {
         login: PropTypes.func.isRequired,
         isFetching: PropTypes.bool.isRequired,
-        userInfo: PropTypes.shape({
+        user: PropTypes.shape({
             uid: PropTypes.number,
             token: PropTypes.string,
             group: PropTypes.number
@@ -32,8 +32,8 @@ class WelcomeLogin extends React.PureComponent {
     }
 
     componentWillReceiveProps(nextProps) {
-        const adminGroup = nextProps.userInfo.group;
-        if (adminGroup) {
+        if (typeof nextProps.user !== "undefined") {
+            const adminGroup = nextProps.user.group;
             if (adminGroup === 2) {
                 // manager
                 const { toggleAuth, onAuthPass } = this.props;
@@ -48,7 +48,7 @@ class WelcomeLogin extends React.PureComponent {
                 fetch('/signin', {
                     method: 'POST',
                     body: JSON.stringify({
-                        uid: nextProps.userInfo.uid
+                        uid: nextProps.user.uid
                     }),
                     headers: {
                         'Content-Type': 'application/json'
@@ -135,14 +135,15 @@ class WelcomeLogin extends React.PureComponent {
 
 const mapStateToProps = state => {
     const login = state.get('login');
+    if (!login || ! state) return {};
     return {
         isFetching: login.get('isFetching'),
-        userInfo: login.get('userInfo'),
+        user: state.get('user'),
         error: login.get('error')
     };
 };
 const mapDispatchToProps = dispatch => ({
-    login: userInfo => dispatch(login(userInfo)),
+    login: loginInfo => dispatch(login(loginInfo)),
     toggleAuth: authStatus => dispatch(toggleAuth(authStatus))
 });
 WelcomeLogin = connect(mapStateToProps, mapDispatchToProps)(toJS(WelcomeLogin));
