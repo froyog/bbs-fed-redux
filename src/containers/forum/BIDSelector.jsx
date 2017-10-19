@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { SelectField } from '../../components/common/Input';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
-import { getForumList, getBoardList } from '../../actions/forumList'
+import { getForumList, getBoardList } from '../../actions/forumList';
 
 
 class BIDSelector extends React.Component {
@@ -67,7 +67,7 @@ class BIDSelector extends React.Component {
                     onSelect={this.handleSelectBoard}
                 />
             </div>
-        )
+        );
     }
 }
 

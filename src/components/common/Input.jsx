@@ -10,7 +10,7 @@ const labelDefaultStyle = {
 const selectLabelDefaultStyle = {
     transform: 'scale(.75) translate(0, -28px)',
     color: 'rgba(0, 0, 0, .5)'
-}
+};
 const labelFocusedStyle = {
     transform: 'scale(.75) translate(0, -28px)',
     color: '#2565ac'

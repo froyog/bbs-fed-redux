@@ -58,7 +58,7 @@ class SelectField extends React.PureComponent {
     render () {
         const { id, text, placeholder, fullWidth, options } = this.props;
         const { focused, selectedValue } = this.state;
-        const optionItem = options.map(option => <li onMouseDown={this.handleSelect}>{option}</li>)
+        const optionItem = options.map(option => <li onMouseDown={this.handleSelect}>{option}</li>);
 
         return (
             <div className="input-wrapper select" style={{ width: `${fullWidth ? '100%' : '256px'}` }}>

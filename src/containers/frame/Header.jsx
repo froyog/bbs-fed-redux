@@ -16,7 +16,7 @@ class Header extends React.Component {
         super();
         this.state = {
             postingModalOpen: false
-        }
+        };
 
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
