@@ -52,7 +52,7 @@ class BoardWrapper extends React.Component {
         super();
         this.state = {
             activePage: 1,
-            postingModalOpen: false
+            postingModalOpen: true
         };
 
         this.handleSelect = this.handleSelect.bind(this);
@@ -218,23 +218,6 @@ class BoardWrapper extends React.Component {
                     <BoardEditor
                         bid={id}
                         onCloseModal={this.handleCloseModal} />
-                    {/*<Modal.Body>
-                        <InputField
-                            id="title"
-                            text="标题"
-                            placeholder="标题必须超过三个字"
-                            fullWidth
-                            />
-                        <PostingEditor />
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button
-                            bsStyle="danger"
-                            onClick={this.handleCloseModal}
-                            >
-                            关闭
-                        </Button>
-                    </Modal.Footer>*/}
                 </Modal>
             </div>
         );

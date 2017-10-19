@@ -28,7 +28,7 @@
         position: absolute;
         bottom: 11px;
         font-size: .9em;
-        color: rgba(0, 0, 0, .4);
+        color: rgba(0, 0, 0, .5);
         .transition-material(.45s);
     }
 
@@ -43,6 +43,7 @@
 
         &.border-muted {
             border-bottom: 1px solid rgb(224, 224, 224);
+            .transition-material(.45s);
         }
         &.border-colored {
             border-bottom: 2px solid #2565ac;
@@ -63,5 +64,69 @@
         cursor: inherit;
         opacity: 1;
         overflow: hidden;
+    }
+
+    &.select {
+        margin-right: 30px;
+        overflow: initial;
+
+        &:hover {
+            hr.border-muted {
+                border-bottom: 2px solid #333;
+            }
+        }
+
+        .options {
+            position: absolute;
+            top: 0;
+            min-width: 256px;
+            padding: 0;
+            margin-top: 18px;
+            box-shadow: @shadow-material-deep;
+            z-index: 1000;
+            overflow: hidden;
+            transition: .5s height;
+
+            .card-content {
+                padding: 0;
+            }
+            ul {
+                padding: 0;
+                margin: 10px 0;
+            }
+            li {
+                list-style: none;
+                height: 24px;
+                line-height: 1.5em;
+                font-weight: 400;
+                font-size: 1em;
+                white-space: nowrap;
+                padding: 12px 16px;
+                box-sizing: content-box;
+                &:hover {
+                    background-color: rgba(0, 0, 0, .12);
+                }
+                cursor: pointer;
+            }
+        }
+        input.select-button {
+            height: 30px;
+            line-height: 30px;
+            margin-top: 18px;
+            padding-bottom: 2px;
+            cursor: pointer;
+        }
+        svg.select-icon {
+            display: inline-block;
+            position: absolute;
+            top: 20px;
+            right: 0;
+            color: rgba(0, 0, 0, .54);
+            fill: currentColor;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
     }
 }

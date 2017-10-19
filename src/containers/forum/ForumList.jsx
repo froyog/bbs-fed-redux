@@ -51,7 +51,7 @@ class ForumListWrapper extends React.Component {
 }
 
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {
         isFetching: state.getIn(['forumList', 'isFetching']),
         items: state.getIn(['forumList', 'items']),

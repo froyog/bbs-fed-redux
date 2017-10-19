@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import InputField from '../../components/common/Input';
+import { InputField } from '../../components/common/Input';
 import { Button } from 'react-bootstrap';
 
 

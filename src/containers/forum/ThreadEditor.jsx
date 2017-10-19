@@ -24,21 +24,6 @@ const customToolbar = {
     }
 };
 
-const customAt = {
-    separator: ' ',
-    trigger: '@',
-    suggestions: [
-        { text: 'APPLE', value: 'apple', url: 'apple' },
-        { text: 'BANANA', value: 'banana', url: 'banana' },
-        { text: 'CHERRY', value: 'cherry', url: 'cherry' },
-        { text: 'DURIAN', value: 'durian', url: 'durian' },
-        { text: 'EGGFRUIT', value: 'eggfruit', url: 'eggfruit' },
-        { text: 'FIG', value: 'fig', url: 'fig' },
-        { text: 'GRAPEFRUIT', value: 'grapefruit', url: 'grapefruit' },
-        { text: 'HONEYDEW', value: 'honeydew', url: 'honeydew' },
-    ]
-};
-
 
 class ThreadEditor extends React.Component {
     static propTypes = {
@@ -49,7 +34,7 @@ class ThreadEditor extends React.Component {
     constructor () {
         super();
         this.state = {
-            editorState: EditorState.createEmpty()
+            editorState: EditorState.createEmpty(),
         };
 
         this.handleEditorStateChange = this.handleEditorStateChange.bind(this);
@@ -87,10 +72,8 @@ class ThreadEditor extends React.Component {
                     toolbarCustomButtons={[<Attach />]}
                     editorState={editorState}
                     onEditorStateChange={this.handleEditorStateChange}
-                    localization={{
-                        locale: 'zh'
-                    }}
-                    mention={customAt}
+                    localization={{ locale: 'zh' }}
+                    customDecorators={[]}
                 />
                 { replyContent &&
                     <div className="reply">

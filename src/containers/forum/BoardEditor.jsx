@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button } from 'react-bootstrap';
-import InputField from '../../components/common/Input';
+import { Modal, Button, Form, FormControl, FormGroup, ControlLabel } from 'react-bootstrap';
+import { InputField, SelectField } from '../../components/common/Input';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import draftToMarkdown from 'draftjs-to-markdown';
 import { fetchNewThread } from '../../actions/forum/board';
 import { connect } from 'react-redux';
 import Attach from './Attach';
+import BIDSelector from './BIDSelector';
 
 import '../../styles/forum/editor.less';
 
@@ -22,21 +23,6 @@ const customToolbar = {
     }
 };
 
-const customAt = {
-    separator: ' ',
-    trigger: '@',
-    suggestions: [
-        { text: 'APPLE', value: 'apple', url: 'apple' },
-        { text: 'BANANA', value: 'banana', url: 'banana' },
-        { text: 'CHERRY', value: 'cherry', url: 'cherry' },
-        { text: 'DURIAN', value: 'durian', url: 'durian' },
-        { text: 'EGGFRUIT', value: 'eggfruit', url: 'eggfruit' },
-        { text: 'FIG', value: 'fig', url: 'fig' },
-        { text: 'GRAPEFRUIT', value: 'grapefruit', url: 'grapefruit' },
-        { text: 'HONEYDEW', value: 'honeydew', url: 'honeydew' },
-    ]
-};
-
 
 class BoardEditor extends React.Component {
     static propTypes = {
@@ -48,13 +34,15 @@ class BoardEditor extends React.Component {
     constructor () {
         super();
         this.state = {
-            editorState: EditorState.createEmpty()
+            editorState: EditorState.createEmpty(),
+            bid: 0
         };
 
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleEditorStateChange = this.handleEditorStateChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
+        this.handleSelectBID = this.handleSelectBID.bind(this);
     }
 
     handleCloseModal () {
@@ -74,14 +62,20 @@ class BoardEditor extends React.Component {
         });
     }
 
+    handleSelectBID (bid) {
+        this.setState({
+            bid: bid
+        });
+    }
+
     handleSubmit (e) {
         e.preventDefault();
-        const { newThread, bid } = this.props;
+        const { newThread } = this.props;
         const { editorState, title } = this.state;
         const mdContent = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
 
-
-        newThread(bid, title, mdContent);
+        const { bid } = this.state;
+        // newThread(bid, title, mdContent);
     }
     
     render () {
@@ -97,6 +91,7 @@ class BoardEditor extends React.Component {
                         fullWidth
                         onChange={this.handleTitleChange}
                     />
+                    <BIDSelector onBIDSelect={this.handleSelectBID}/>
                     <Editor
                         toolbar={customToolbar}
                         toolbarCustomButtons={[<Attach />]}
@@ -105,7 +100,6 @@ class BoardEditor extends React.Component {
                         localization={{
                             locale: 'zh'
                         }}
-                        mention={customAt}
                         placeholder="与天大分享你刚编的故事"
                     />
                 </Modal.Body>
