@@ -17,14 +17,14 @@ class Welcome extends React.Component {
     }
 
     componentWillMount() {
-        const targetDate = new Date(2017, 8, 26).getTime();
+        const targetDate = new Date(2017, 12, 25).getTime();
         this.setState({
             targetDate: targetDate,
             countdown: targetDate - Date.now()
         });
         this.timer = setInterval(() => {
             this.updateCountdown();
-        }, 233);
+        }, 100);
     }
 
     componentWillUnmount() {
@@ -45,12 +45,12 @@ class Welcome extends React.Component {
     render () {
         const { countdown } = this.state;
         const second = countdown.toString().slice(0, -3);
-        const milisecond = countdown.toString().slice(-3);
+        const milisecond = countdown.toString().slice(-3, -2);
         return (
             <div id="welcome">
                 <h1>求实BBS</h1>
                 <h2>抢先体验</h2>
-                <p className="version-info">ALPHA 0.1.5</p>
+                <p className="version-info">ALPHA 0.1.7</p>
                 <h1 className="countdown">
                     {second}.
                     <small>{milisecond}</small>
