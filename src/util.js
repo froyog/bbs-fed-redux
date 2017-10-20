@@ -5,7 +5,6 @@ export const isEqual = (a, b) => {
     if (aProps.length !== bProps.length) {
         return false;
     }
-
     for (let i of aProps) {
         if (a[i] !== b[i]) {
             return false;

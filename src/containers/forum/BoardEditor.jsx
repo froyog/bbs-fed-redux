@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button, Form, FormControl, FormGroup, ControlLabel } from 'react-bootstrap';
-import { InputField, SelectField } from '../../components/common/Input';
+import { withRouter } from 'react-router-dom';
+import { Modal, Button } from 'react-bootstrap';
+import { InputField } from '../../components/common/Input';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import draftToMarkdown from 'draftjs-to-markdown';
@@ -28,7 +29,7 @@ class BoardEditor extends React.Component {
     static propTypes = {
         onCloseModal: PropTypes.func.isRequired,
         newThread: PropTypes.func.isRequired,
-        bid: PropTypes.number.isRequired
+        bid: PropTypes.number
     };
 
     constructor () {
@@ -43,6 +44,16 @@ class BoardEditor extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleSelectBID = this.handleSelectBID.bind(this);
+    }
+
+    componentWillReceiveProps (nextProps) {
+        const { tid, error, isFetching, history } = nextProps;
+
+        if (tid && !error && !isFetching) {
+            // success
+            this.handleCloseModal();
+            history.push(`/forum/thread/${tid}/page/1`);
+        }
     }
 
     handleCloseModal () {
@@ -75,11 +86,13 @@ class BoardEditor extends React.Component {
         const mdContent = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
 
         const { bid } = this.state;
-        // newThread(bid, title, mdContent);
+        newThread(bid, title, mdContent);
     }
     
     render () {
         const { editorState, title } = this.state;
+        const { isFetching } = this.props;
+
         return (
             <div>
                 <Modal.Body>
@@ -109,6 +122,7 @@ class BoardEditor extends React.Component {
                         onClick={this.handleSubmit}
                         className="raised pull-left"
                         type="submit"
+                        disabled={isFetching}
                     >
                         发表
                     </Button>
@@ -125,10 +139,19 @@ class BoardEditor extends React.Component {
     }
 }
 
-const mapStateToProps = null;
+const mapStateToProps = state => {
+    const newThread = state.get('newThread');
+    if (!newThread) return {};
+
+    return {
+        isFetching: newThread.get('isFetching'),
+        tid: newThread.get('tid'),
+        error: newThread.get('error')
+    };
+};
 const mapDispatchToProps = dispatch => ({
     newThread: (bid, title, content) => dispatch(fetchNewThread(bid, title, content))
 });
 
-BoardEditor = connect(mapStateToProps, mapDispatchToProps)(BoardEditor);
+BoardEditor = withRouter(connect(mapStateToProps, mapDispatchToProps)(BoardEditor));
 export default BoardEditor;

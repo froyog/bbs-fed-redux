@@ -43,6 +43,7 @@ class ThreadEditor extends React.Component {
     }
 
     handleEditorStateChange (editorState) {
+        console.log(editorState);
         this.setState({
             editorState
         });
@@ -73,7 +74,6 @@ class ThreadEditor extends React.Component {
                     editorState={editorState}
                     onEditorStateChange={this.handleEditorStateChange}
                     localization={{ locale: 'zh' }}
-                    customDecorators={[]}
                 />
                 { replyContent &&
                     <div className="reply">

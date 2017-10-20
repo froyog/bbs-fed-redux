@@ -4,7 +4,7 @@ import * as ActionTypes from '../../actions/forum/board';
 
 const newThread = (state = fromJS({
     isFetching: false,
-    success: false,
+    tid: 0,
     error: ''
 }), action) => {
     switch (action.type) {
@@ -12,7 +12,8 @@ const newThread = (state = fromJS({
             return state.set('isFetching', true);
         case ActionTypes.NEW_THREAD_SUCCESS:
             return Map({
-                'isFetching': true,
+                'isFetching': false,
+                'tid': fromJS(action.json.data.id),
                 'error': ''
             });
         case ActionTypes.NEW_THREAD_FAILURE:

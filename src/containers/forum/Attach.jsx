@@ -14,7 +14,7 @@ class Attach extends React.Component {
     static propTypes = {
         uploadAttach: PropTypes.func.isRequired,
         isFetching: PropTypes.bool,
-        imgId: PropTypes.number,
+        imgId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         error: PropTypes.string
     };
 
@@ -126,7 +126,7 @@ class Attach extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     const attach = state.get('attach');
     if (!attach) return {};
 

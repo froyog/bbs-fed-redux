@@ -17,7 +17,8 @@ class BIDSelector extends React.Component {
     constructor () {
         super();
         this.state = {
-            selectedForumId: 0
+            selectedForumId: 0,
+            selectedBoardId: 0
         };
 
         this.handleSelectForum = this.handleSelectForum.bind(this);
@@ -42,7 +43,8 @@ class BIDSelector extends React.Component {
     render () {
         const { forumList, boardList } = this.props;
         const { selectedForumId } = this.state;
-        const options = forumList.map(forum => ({
+        let forumOptions;
+        forumOptions = forumList && forumList.map(forum => ({
             name: forum.name,
             id: forum.id
         }));
@@ -58,7 +60,7 @@ class BIDSelector extends React.Component {
             <div>
                 <SelectField
                     labelText="选择分区"
-                    options={options}
+                    options={forumOptions}
                     onSelect={this.handleSelectForum}
                 />
                 <SelectField

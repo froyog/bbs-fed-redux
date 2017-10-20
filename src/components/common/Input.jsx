@@ -103,7 +103,8 @@ export class InputField extends React.PureComponent {
                     id={id}
                     onFocus={this.handleInputFocused}
                     onBlur={this.handleInputBlur}
-                    onChange={this.handleInputChange}/>
+                    onChange={this.handleInputChange}
+                />
                 <div>
                     <hr aria-hidden="true" className="border-muted" />
                     <hr
@@ -111,7 +112,8 @@ export class InputField extends React.PureComponent {
                             transform: `scaleX(${focused ? '1' : '0'})`
                         }}
                         aria-hidden="true"
-                        className="border-colored" />
+                        className="border-colored" 
+                    />
                 </div>
             </div>
         );
@@ -134,7 +136,8 @@ export class SelectField extends React.PureComponent {
     constructor () {
         super();
         this.state = {
-            focused: false
+            focused: false,
+            hasContent: false
         };
 
         this.handleInputFocused = this.handleInputFocused.bind(this);
@@ -142,12 +145,22 @@ export class SelectField extends React.PureComponent {
         this.handleSelect = this.handleSelect.bind(this);
     }
 
+    componentWillReceiveProps (nextProps) {
+        const { options } = this.props;
+        const { options: nextOptions } = nextProps;
+        if (typeof options === 'undefined' && nextOptions) {
+            this.setState({
+                selectedValue: ''
+            });
+        }
+    }
+
     handleInputFocused () {
         this.setState({
             focused: true
         });
     }
-
+    
     handleInputBlur () {
         this.setState({
             focused: false
@@ -156,15 +169,17 @@ export class SelectField extends React.PureComponent {
 
     handleSelect (e) {
         const { id, innerText } = e.target;
+        // eslint-disable-next-line
         this.props.onSelect && this.props.onSelect(id);
         this.setState({
-            selectedValue: innerText
+            selectedValue: innerText,
+            hasContent: true
         });
     }
 
     render () {
         const { id, labelText, fullWidth, options } = this.props;
-        const { focused, selectedValue } = this.state;
+        const { focused, selectedValue, hasContent } = this.state;
         let optionItem;
         if (options) {
             optionItem = options.map(option => 
@@ -182,19 +197,21 @@ export class SelectField extends React.PureComponent {
             <div className="input-wrapper select" style={{ width: `${fullWidth ? '100%' : '256px'}` }}>
                 <label
                     htmlFor={id}
-                    style={focused ? labelFocusedStyle : selectLabelDefaultStyle}
+                    style={(focused || hasContent) ? labelFocusedStyle : selectLabelDefaultStyle}
                 >
                     {labelText}
                 </label>
                 <div>
-                    <Card 
-                        className="options"
-                        style={{ display: `${focused ? 'block' : 'none'}` }}
-                    >
-                        <ul>
-                            {optionItem}
-                        </ul>
-                    </Card>
+                    { optionItem && 
+                        <Card 
+                            className="options"
+                            style={{ display: `${focused ? 'block' : 'none'}` }}
+                        >
+                            <ul>
+                                {optionItem}
+                            </ul>
+                        </Card>
+                    }
                     <input
                         type="select"
                         value={selectedValue}
@@ -210,7 +227,7 @@ export class SelectField extends React.PureComponent {
                     <hr aria-hidden="true" className="border-muted" />
                     <hr
                         style={{
-                            transform: `scaleX(${focused ? '1' : '0'})`
+                            transform: `scaleX(${(focused || hasContent) ? '1' : '0'})`
                         }}
                         aria-hidden="true"
                         className="border-colored"
