@@ -72,8 +72,19 @@
         max-width: 42%;
     }
 
+    .rdw-suggestion-wrapper {
+        position: relative;
+    }
+
     .rdw-suggestion-dropdown {
         // at dropdown
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #f1f1f1;
+        min-width: 150px;
+        max-height: 200px;
+        overflow: auto;
         background-color: rgba(255, 255, 255, .7);
         & > span {
             display: block;

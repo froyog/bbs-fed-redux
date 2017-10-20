@@ -114,6 +114,20 @@ class BoardEditor extends React.Component {
                             locale: 'zh'
                         }}
                         placeholder="与天大分享你刚编的故事"
+                        mention={{
+                            separator: ' ',
+                            trigger: '@',
+                            suggestions: [
+                                { text: 'AbsC', value: 'AbsC', url: 'AbsC' },
+                                { text: 'admin', value: 'admin', url: 'admin' },
+                                { text: 'EasonK', value: 'EasonK', url: 'EasonK' },
+                                { text: 'Halcao', value: 'Halcao', url: 'Halcao' },
+                                { text: 'testuser', value: 'testuser', url: 'testuser' },
+                                { text: 'ttt', value: 'ttt', url: 'ttt' },
+                                { text: 'wxson', value: 'wxson', url: 'wxson' },
+                                { text: 'zxwwwwww', value: 'zxwwwwww', url: 'zxwwwwww' },
+                            ],
+                        }}
                     />
                 </Modal.Body>
                 <Modal.Footer>
