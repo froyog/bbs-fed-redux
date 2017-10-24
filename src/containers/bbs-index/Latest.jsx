@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { getLatest, refreshLatest } from '../../actions/bbsIndex';
 import { toJS } from '../../util.js';
+import LoadingDots from '../../components/common/LoadingDots';
 import { Card } from '../../components/common/Card';
 import FetchingOverlay from '../../components/common/FetchingOverlay';
 import ThreadItem from '../../components/common/ThreadItem';
@@ -30,16 +31,29 @@ class Latest extends React.Component {
 
     constructor () {
         super();
+        this.state = {
+            page: 0
+        };
+
         this.handleRefresh = this.handleRefresh.bind(this);
+        this.handleLoadMore = this.handleLoadMore.bind(this);
     }
 
     componentWillMount() {
-        this.props.getLatest();
+        this.props.getLatest(0);
     }
 
     handleRefresh () {
         this.props.refresh();
-        this.props.getLatest();
+        this.props.getLatest(0);
+    }
+
+    handleLoadMore () {
+        const { page } = this.state;
+        this.props.getLatest(page + 1);
+        this.setState({
+            page: page + 1
+        });
     }
 
     render () {
@@ -47,20 +61,36 @@ class Latest extends React.Component {
         if (!latestThreads) {
             return null;
         }
-
-        const renderThreads = latestThreads.map(latestThread =>
-            <ThreadItem key={latestThread.id} thread={latestThread} />
-        );
+        
+        const renderThreads = latestThreads.map(latestThread => {
+            console.log(latestThread.id);
+            return <ThreadItem key={latestThread.id} thread={latestThread} />
+        });
 
         return (
-            <Card title="最新" className="card-home">
-                <RefreshButton 
-                    className="refresh-button"
-                    isFetching={isFetching}
-                    onClick={this.handleRefresh} />
-                {isFetching && <FetchingOverlay />}
-                {renderThreads}
-            </Card>
+            <div>
+                <Card title="最新" className="card-home">
+                    <RefreshButton 
+                        className="refresh-button"
+                        isFetching={isFetching}
+                        onClick={this.handleRefresh} />
+                    {isFetching && <FetchingOverlay />}
+                    {renderThreads}
+                </Card>
+                <Card className="card-load-more">
+                    <Button
+                        block
+                        bsStyle="link"
+                        onClick={this.handleLoadMore}
+                        disabled={isFetching}
+                    >
+                        { isFetching 
+                            ? <LoadingDots /> 
+                            : '加载更多帖子'
+                        }
+                    </Button>
+                </Card>
+            </div>
         );
     }
 }
@@ -75,7 +105,7 @@ const mapStateToProps = state => {
     };
 };
 const mapDispatchToProps = dispatch => ({
-    getLatest: () => dispatch(getLatest()),
+    getLatest: page => dispatch(getLatest(page)),
     refresh: () => dispatch(refreshLatest())
 });
 Latest = connect(mapStateToProps, mapDispatchToProps)(toJS(Latest));

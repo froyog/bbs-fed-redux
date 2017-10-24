@@ -44,13 +44,13 @@ const shouldFetchLatest = (latestNode) => {
 };
 
 // No cache for latest
-export const getLatest = () => (dispatch, getState) => {
-    const latest = getState().get('latest');
-    if (shouldFetchLatest(latest)) {
+export const getLatest = page => (dispatch, getState) => {
+    if (shouldFetchLatest(getState().get('latest'))) {
         return dispatch({
             [CALL_API]: {
                 types: [GET_LATEST_REQUEST, GET_LATEST_SUCCESS, GET_LATEST_FAILURE],
-                apiPath: 'index/latest'
+                page: page,
+                apiPath: `index/latest?p=${page}`
             }
         });
     }

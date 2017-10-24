@@ -138,3 +138,33 @@
 		transform: rotateY(0);
 	}
 }
+
+// three dots loader
+
+.three-dots-loader {
+	margin: 0 auto;
+	width: 5.6em;
+}
+
+.three-dots-loader .dot {
+	width: 15px;
+	height: 15px;
+	border-radius: 15px;
+	background-color: #bbdefb;
+	margin: 0 3px;
+	transform: scale(0);
+	display: inline-block;
+	animation: dotanim 1s infinite ease-in-out;
+}
+
+.three-dots-loader .dot:nth-child(1) { animation-delay: 0s; }
+.three-dots-loader .dot:nth-child(2) { animation-delay: 0.3s; }
+.three-dots-loader .dot:nth-child(3) { animation-delay: 0.6s; }
+.three-dots-loader .dot:nth-child(4) { animation-delay: 0.9s; }
+
+@keyframes dotanim {
+	0% { transform: scale(0.5); }
+	50% { transform: scale(1); }
+	90% { transform: scale(0.5); }
+	100% { transform: scale(0.5); }
+}

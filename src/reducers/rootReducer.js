@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux-immutable';
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import forumList from './forum/forumList';
 import boardList from './forum/boardList';
 import board from './forum/board';
@@ -26,7 +26,8 @@ const combinedReducer = combineReducers({
     login,
     thread,
     newThread,
-    attach
+    attach,
+    user: (state=Map()) => state
 });
 
 const crossSliceReducer = (state, action) => {

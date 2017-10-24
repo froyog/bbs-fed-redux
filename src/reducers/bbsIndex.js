@@ -1,4 +1,4 @@
-import { fromJS, Map } from 'immutable';
+import { fromJS, Map, List } from 'immutable';
 import * as ActionTypes from '../actions/bbsIndex';
 
 const topTenDefaultState = fromJS({
@@ -40,8 +40,8 @@ const latest = (state = latestDefaultState, action) => {
         case ActionTypes.GET_LATEST_SUCCESS:
             return Map({
                 'isFetching': false,
-                'didInvaildate': false,
-                'items': fromJS(action.json.data)
+                'didInvalidate': false,
+                'items': state.get('items').concat(fromJS(action.json.data))
             });
         case ActionTypes.GET_LATEST_FAILURE:
             return Map({
@@ -50,7 +50,7 @@ const latest = (state = latestDefaultState, action) => {
                 'error': fromJS(action.json.data)
             });
         case ActionTypes.INVAILDATE_LATEST:
-            return state.set('didInvaildate', true);
+            return state.set('didInvaildate', 'false').set('items', List());
         default:
             return state;
     }

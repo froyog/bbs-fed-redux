@@ -10,7 +10,6 @@ const HomeWrapper = () =>
         <Col md={9}>
             <TopTen />
             <Latest />
-            <Card title="还没看过瘾？"></Card>
         </Col>
         <Col md={3} smHidden xsHidden>
             <Card style={{ minHeight: '1000px' }}>
