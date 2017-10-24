@@ -52,14 +52,14 @@ class BoardWrapper extends React.Component {
         super();
         this.state = {
             activePage: 1,
-            postingModalOpen: true
+            postingModalOpen: false
         };
 
         this.handleSelect = this.handleSelect.bind(this);
         this.handleTypeChange = this.handleTypeChange.bind(this);
         this.handleOrderChange = this.handleOrderChange.bind(this);
-        this.handleCloseModal = this.handleCloseModal.bind(this);
-        this.handleOpenModal = this.handleOpenModal.bind(this);
+        // this.handleCloseModal = this.handleCloseModal.bind(this);
+        // this.handleOpenModal = this.handleOpenModal.bind(this);
     }
 
     componentWillMount() {
@@ -99,20 +99,21 @@ class BoardWrapper extends React.Component {
         getBoard(bid, 1, type, order);
     }
 
-    handleOpenModal () {
-        this.setState({
-            postingModalOpen: true
-        });
-    }
+    // handleOpenModal () {
+    //     this.setState({
+    //         postingModalOpen: true
+    //     });
+    // }
 
-    handleCloseModal () {
-        this.setState({
-            postingModalOpen: false
-        });
-    }
+    // handleCloseModal () {
+    //     this.setState({
+    //         postingModalOpen: false
+    //     });
+    // }
 
     render () {
         const { isFetching, boardInfo, threadList, type, order } = this.props;
+        const { activePage } = this.state;
         if (isFetching || !boardInfo || !threadList) {
             return <FetchingOverlay fullPage />;
         }
@@ -137,7 +138,7 @@ class BoardWrapper extends React.Component {
                 <Breadcrumb>
                     <BreadcrumbItem to="/">首页</BreadcrumbItem>
                     <BreadcrumbItem to="/forum">所有分区</BreadcrumbItem>
-                    <BreadcrumbItem to="./1" active>
+                    <BreadcrumbItem to={`/forum/board/${id}/page/${activePage}`} active>
                         {name}
                     </BreadcrumbItem>
                 </Breadcrumb>
@@ -169,13 +170,13 @@ class BoardWrapper extends React.Component {
                 >
                     <div className="board-buttons">
                         <Button className="flat" bsStyle="link">关注</Button>
-                        <Button
+                        {/* <Button
                             className="flat"
                             bsStyle="link"
                             onClick={this.handleOpenModal}
                         >
                             发帖
-                        </Button>
+                        </Button> */}
                     </div>
                     <p>版主：{renderModerator.length ? renderModerator : '暂无' }</p>
                     <p>帖数：{cThread}</p>
@@ -208,7 +209,7 @@ class BoardWrapper extends React.Component {
                         {/* <Button className="raised refresh" bsStyle="success">刷新</Button> */}
                     </ul>
                 </Card>
-                <Modal
+                {/* <Modal
                     bsSize="large"
                     show={this.state.postingModalOpen}
                     onHide={this.handleCloseModal}
@@ -218,7 +219,7 @@ class BoardWrapper extends React.Component {
                     <BoardEditor
                         bid={id}
                         onCloseModal={this.handleCloseModal} />
-                </Modal>
+                </Modal> */}
             </div>
         );
     }
