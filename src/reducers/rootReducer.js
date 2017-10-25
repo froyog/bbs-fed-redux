@@ -10,7 +10,7 @@ import login from './passport/login';
 import thread from './forum/thread';
 import newThread from './forum/newThread';
 import attach from './forum/attach';
-
+import newComment from './forum/newComment';
 
 // TODO: need refactoring
 // const rootReducer = combineReducers({
@@ -26,6 +26,7 @@ const combinedReducer = combineReducers({
     login,
     thread,
     newThread,
+    newComment,
     attach,
     user: (state=Map()) => state
 });

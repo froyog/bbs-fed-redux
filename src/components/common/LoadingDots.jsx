@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../../styles/common/loading.less'
+import '../../styles/common/loading.less';
 
 
 const LoadingDots = () => 
@@ -8,6 +8,6 @@ const LoadingDots = () =>
         <div className="dot"></div>
         <div className="dot"></div>
         <div className="dot"></div>
-    </div>
+    </div>;
 
 export default LoadingDots;

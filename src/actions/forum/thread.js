@@ -6,6 +6,7 @@ import { parseUser } from '../../util';
 export const GET_THREAD_REQUEST = 'GET_THREAD_REQUEST';
 export const GET_THREAD_SUCCESS = 'GET_THREAD_SUCCESS';
 export const GET_THREAD_FAILURE = 'GET_THREAD_FAILURE';
+export const INVAILDATE_THREAD_PAGE = 'INVAILDATE_THREAD_PAGE';
 
 const fetchThreadPage = (tid, page) => ({
     [CALL_API]: {
@@ -23,11 +24,11 @@ const shouldFetchThreadPage = (threadNode, tid, page) => {
     }
     if (threadNode.get('isFetching')) {
         return false;
-    } else if (threadNode.get('tid') === tid) {
-        // cached
-        return false;
+    } else if (threadNode.get('didInvaildate')) {
+        return true;
     }
-    return true;
+    // check if cached 
+    return threadNode.get('tid') !== tid;
 };
 
 // Fetch thread page if needed, check page and thread id respectively to
@@ -40,11 +41,18 @@ export const getThreadPage = (tid, page) => (dispatch, getState) => {
     }
 };
 
+export const refreshThread = page => dispatch => {
+    return dispatch({ 
+        type: INVAILDATE_THREAD_PAGE,
+        page: page
+    });
+};
+
 export const NEW_COMMENT_REQUEST = 'NEW_COMMENT_REQUEST';
 export const NEW_COMMENT_SUCCESS = 'NEW_COMMENT_SUCCESS';
 export const NEW_COMMENT_FAILURE = 'NEW_COMMENT_FAILURE';
 
-export const sendNewComment = (tid, content) => (dispatch, getState) => {
+export const fetchNewComment = (tid, content) => (dispatch, getState) => {
     const authentication = parseUser(getState());
     dispatch({
         [CALL_API]: {

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { Card } from '../../components/common/Card';
 import { Editor } from 'react-draft-wysiwyg';
@@ -7,6 +8,8 @@ import { convertToRaw, EditorState } from 'draft-js';
 import ThreadRenderer from '../../components/forum/ThreadRenderer';
 import draftToMarkdown from 'draftjs-to-markdown';
 import Attach from './Attach';
+import { toJS } from '../../util';
+import { fetchNewComment } from '../../actions/forum/thread';
 
 import '../../styles/forum/editor.less';
 
@@ -42,19 +45,27 @@ class ThreadEditor extends React.Component {
         this.handleCancelReply = this.handleCancelReply.bind(this);
     }
 
+    componentWillReceiveProps (nextProps) {
+        const { pid, onCommentSuccess } = nextProps;
+        const { pid: oldPid } = this.props;
+        if (pid && pid !== oldPid) {
+            onCommentSuccess();
+        }
+    }
+
     handleEditorStateChange (editorState) {
-        console.log(editorState);
         this.setState({
             editorState
         });
     }
 
     handleSubmit (e) {
-        // fetch goes here;
         e.preventDefault();
         const { editorState } = this.state;
-        const rawMd = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
-        console.log(rawMd);
+        const { tid, fetchNewComment } = this.props;
+        const content = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
+
+        fetchNewComment(tid, content);
     }
 
     handleCancelReply () {
@@ -64,7 +75,7 @@ class ThreadEditor extends React.Component {
 
     render () {
         const { editorState } = this.state;
-        const { replyContent } = this.props;
+        const { replyContent, error, isFetching } = this.props;
 
         return (
             <Card className="card-thread-editor">
@@ -92,12 +103,28 @@ class ThreadEditor extends React.Component {
                     className="raised"
                     bsStyle="primary"
                     onClick={this.handleSubmit}
+                    disabled={isFetching}
                 >
                     发表回复
                 </Button>
+                <span className="error-message">{error}</span>
             </Card>
         );
     }
 }
 
+const mapStateToProps = state => {
+    const newComment = state.get('newComment');
+    if (!newComment) return {};
+
+    return {
+        isFetching: newComment.get('isFetching'),
+        pid: newComment.get('pid'),
+        error: newComment.get('error')
+    };
+};
+const mapDispatchToProps = dispatch => ({
+    fetchNewComment: (tid, content) => dispatch(fetchNewComment(tid, content))
+});
+ThreadEditor = connect(mapStateToProps, mapDispatchToProps)(toJS(ThreadEditor));
 export default ThreadEditor;

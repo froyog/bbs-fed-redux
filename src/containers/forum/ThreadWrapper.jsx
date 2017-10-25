@@ -4,7 +4,7 @@ import { connect} from 'react-redux';
 import { Pagination } from 'react-bootstrap';
 import { Card } from '../../components/common/Card';
 import FetchingOverlay from '../../components/common/FetchingOverlay';
-import { getThreadPage } from '../../actions/forum/thread';
+import { getThreadPage, refreshThread } from '../../actions/forum/thread';
 import { toJS, isEqual } from '../../util';
 import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
 import ThreadHeader from './ThreadHeader';
@@ -61,6 +61,7 @@ class ThreadWrapper extends React.Component {
         this.handleSelect = this.handleSelect.bind(this);
         this.handleClickReply = this.handleClickReply.bind(this);
         this.handleCancelReply = this.handleCancelReply.bind(this);
+        this.handleCommentSuccess = this.handleCommentSuccess.bind(this);
     }
 
     componentWillMount() {
@@ -95,8 +96,19 @@ class ThreadWrapper extends React.Component {
         this.setState({ replyContent: '' });
     }
 
+    handleCommentSuccess () {
+        const { threadInfo: { cPost }, 
+            getThreadPage,
+            refreshThread, 
+            match: { params: { tid } } } = this.props;
+        const lastPage = Math.ceil(cPost / 50);
+
+        refreshThread(lastPage + '');
+        getThreadPage(+tid, lastPage + '');
+    }
+
     render () {
-        const { threadInfo, postList, boardInfo, isFetching } = this.props;
+        const { threadInfo, postList, boardInfo, isFetching, match: { params: { tid } } } = this.props;
         const { replyContent } = this.state;
         if (!postList || isFetching) return <FetchingOverlay fullPage />;
 
@@ -156,7 +168,9 @@ class ThreadWrapper extends React.Component {
                 </Card>
                 <ThreadEditor
                     replyContent={replyContent}
-                    onCancelReply={this.handleCancelReply} />
+                    onCancelReply={this.handleCancelReply}
+                    tid={tid} 
+                    onCommentSuccess={this.handleCommentSuccess} />
             </div>
         );
     }
@@ -177,7 +191,8 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 const mapDispatchToProps = dispatch => ({
-    getThreadPage: (tid, page) => dispatch(getThreadPage(tid, page))
+    getThreadPage: (tid, page) => dispatch(getThreadPage(tid, page)),
+    refreshThread: page => dispatch(refreshThread(page))
 });
 ThreadWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(ThreadWrapper));
 export default ThreadWrapper;

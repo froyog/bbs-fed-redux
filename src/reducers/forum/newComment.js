@@ -1,22 +1,22 @@
 import { fromJS, Map } from 'immutable';
-import * as ActionTypes from '../../actions/forum/board';
+import * as ActionTypes from '../../actions/forum/thread';
 
 
-const newThread = (state = fromJS({
+const newComment = (state = fromJS({
     isFetching: false,
-    tid: 0,
+    pid: 0,
     error: ''
 }), action) => {
     switch (action.type) {
-        case ActionTypes.NEW_THREAD_REQUEST:
+        case ActionTypes.NEW_COMMENT_REQUEST:
             return state.set('isFetching', true).set('error', '');
-        case ActionTypes.NEW_THREAD_SUCCESS:
+        case ActionTypes.NEW_COMMENT_SUCCESS:
             return Map({
                 'isFetching': false,
-                'tid': fromJS(action.json.data.id),
+                'pid': fromJS(action.json.data.id),
                 'error': ''
             });
-        case ActionTypes.NEW_THREAD_FAILURE:
+        case ActionTypes.NEW_COMMENT_FAILURE:
             return Map({
                 'isFetching': false,
                 'error': action.error
@@ -26,4 +26,4 @@ const newThread = (state = fromJS({
     }
 };
 
-export default newThread;
+export default newComment;

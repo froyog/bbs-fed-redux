@@ -5,7 +5,8 @@ const thread = (state = fromJS({
     isFetching: false,
     tid: 0,
     threadInfo: {},
-    postList: []
+    postList: [],
+    didInvaildate: true
 }), action) => {
     switch (action.type) {
         case ActionTypes.GET_THREAD_REQUEST:
@@ -17,12 +18,19 @@ const thread = (state = fromJS({
                 'tid': action.tid,
                 'threadInfo': fromJS(data.thread),
                 'boardInfo': fromJS(data.board),
-                'postList': fromJS(data.post)
+                'postList': fromJS(data.post),
+                'didInvaildate': false
             });
         case ActionTypes.GET_THREAD_FAILURE:
             return Map({
                 'isFetching': false,
-                'error': fromJS(action.error)
+                'error': fromJS(action.error),
+                'didInvaildate': false
+            });
+        case ActionTypes.INVAILDATE_THREAD_PAGE:
+            return Map({
+                'isFetching': false,
+                'didInvaildate': true,
             });
         default:
             return state;
@@ -36,6 +44,7 @@ const threadByPage = (state = Map(), action) => {
         case ActionTypes.GET_THREAD_REQUEST:
         case ActionTypes.GET_THREAD_SUCCESS:
         case ActionTypes.GET_THREAD_FAILURE:
+        case ActionTypes.INVAILDATE_THREAD_PAGE:
             return state.set(
                 action.page, thread(state.get(action['page']), action)
             );
