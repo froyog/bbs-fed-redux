@@ -50,7 +50,7 @@ class Welcome extends React.Component {
             <div id="welcome">
                 <h1>求实BBS</h1>
                 <h2>抢先体验</h2>
-                <p className="version-info">ALPHA 0.1.7</p>
+                <p className="version-info">ALPHA 0.1.9</p>
                 <h1 className="countdown">
                     {second}.
                     <small>{milisecond}</small>
