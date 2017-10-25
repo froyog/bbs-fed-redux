@@ -63,34 +63,30 @@ class Latest extends React.Component {
         }
         
         const renderThreads = latestThreads.map(latestThread => {
-            console.log(latestThread.id);
-            return <ThreadItem key={latestThread.id} thread={latestThread} />
+            return <ThreadItem key={latestThread.id} thread={latestThread} />;
         });
 
         return (
-            <div>
-                <Card title="最新" className="card-home">
-                    <RefreshButton 
-                        className="refresh-button"
-                        isFetching={isFetching}
-                        onClick={this.handleRefresh} />
-                    {isFetching && <FetchingOverlay />}
-                    {renderThreads}
-                </Card>
-                <Card className="card-load-more">
-                    <Button
-                        block
-                        bsStyle="link"
-                        onClick={this.handleLoadMore}
-                        disabled={isFetching}
-                    >
-                        { isFetching 
-                            ? <LoadingDots /> 
-                            : '加载更多帖子'
-                        }
-                    </Button>
-                </Card>
-            </div>
+            <Card title="最新" className="card-home card-latest">
+                <RefreshButton 
+                    className="refresh-button"
+                    isFetching={isFetching}
+                    onClick={this.handleRefresh} />
+                {isFetching && <FetchingOverlay />}
+                {renderThreads}
+                <Button
+                    className="load-more"
+                    block
+                    bsStyle="link"
+                    onClick={this.handleLoadMore}
+                    disabled={isFetching}
+                >
+                    { isFetching 
+                        ? <LoadingDots /> 
+                        : '加载更多帖子'
+                    }
+                </Button>
+            </Card>
         );
     }
 }
