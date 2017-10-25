@@ -50,7 +50,7 @@ const latest = (state = latestDefaultState, action) => {
                 'error': fromJS(action.json.data)
             });
         case ActionTypes.INVAILDATE_LATEST:
-            return state.set('didInvaildate', 'false').set('items', List());
+            return state.set('didInvaildate', true).set('items', List());
         default:
             return state;
     }
