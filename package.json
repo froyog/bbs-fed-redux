@@ -23,6 +23,7 @@
     "dotenv": "4.0.0",
     "draft-js": "^0.10.3",
     "draftjs-to-markdown": "^0.4.5",
+    "draftjs-utils": "^0.8.8",
     "humps": "^2.0.1",
     "immutable": "^3.8.2",
     "less": "^3.0.0-alpha.3",

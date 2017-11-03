@@ -11,6 +11,7 @@ import thread from './forum/thread';
 import newThread from './forum/newThread';
 import attach from './forum/attach';
 import newComment from './forum/newComment';
+import searchUser from './common/searchUser';
 
 // TODO: need refactoring
 // const rootReducer = combineReducers({
@@ -28,6 +29,7 @@ const combinedReducer = combineReducers({
     newThread,
     newComment,
     attach,
+    searchUser,
     user: (state=Map()) => state
 });
 

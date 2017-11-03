@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { AtomicBlockUtils } from 'draft-js';
 import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { toJS, compressImage } from '../../util';
-import { uploadAttach } from '../../actions/forum/attach';
-import LoadingSpinner from '../../components/common/LoadingSpinner';
+import { toJS, compressImage } from '../../../util';
+import { uploadAttach } from '../../../actions/forum/attach';
+import LoadingSpinner from '../../../components/common/LoadingSpinner';
 
 const MAX_ACCEPT_SIZE = 2097152; // 2 MiB
 
