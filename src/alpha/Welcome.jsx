@@ -17,7 +17,7 @@ class Welcome extends React.Component {
     }
 
     componentWillMount() {
-        const targetDate = new Date(2017, 12, 25).getTime();
+        const targetDate = new Date(2017, 11, 18).getTime();
         this.setState({
             targetDate: targetDate,
             countdown: targetDate - Date.now()
@@ -50,7 +50,7 @@ class Welcome extends React.Component {
             <div id="welcome">
                 <h1>求实BBS</h1>
                 <h2>抢先体验</h2>
-                <p className="version-info">ALPHA 0.1.9</p>
+                <p className="version-info">ALPHA 0.3.0</p>
                 <h1 className="countdown">
                     {second}.
                     <small>{milisecond}</small>
