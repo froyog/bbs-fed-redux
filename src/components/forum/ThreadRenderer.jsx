@@ -5,10 +5,11 @@ import marked from 'marked';
 let renderer = new marked.Renderer();
 renderer.image = (href, title, text) => {
     let fullUri;
+    console.log(href);
     if (href.substring(0, 5) === 'https') {
         fullUri = href
     } else {
-        fullUri = href.substring(7)
+        fullUri = `https://bbs.tju.edu.cn/api/img/${href.substring(7)}`
     }
     // be careful with the "class" property.
     // this is not jsx

@@ -8,7 +8,8 @@ import { convertToRaw, EditorState } from 'draft-js';
 import draftToMarkdown from 'draftjs-to-markdown';
 import { fetchNewThread } from '../../actions/forum/board';
 import { connect } from 'react-redux';
-import Attach from './Attach';
+import { getDecorator } from './editor/mention.js';
+import Attach from './editor/Attach';
 import BIDSelector from './BIDSelector';
 
 import '../../styles/forum/editor.less';
@@ -21,7 +22,8 @@ const customToolbar = {
     },
     list: {
         options: ['unordered', 'ordered']
-    }
+    },
+    image: { alignmentEnabled: false }
 };
 
 
@@ -44,6 +46,7 @@ class BoardEditor extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleSelectBID = this.handleSelectBID.bind(this);
+        this.getEditorState = this.getEditorState.bind(this);
     }
 
     componentWillReceiveProps (nextProps) {
@@ -88,6 +91,10 @@ class BoardEditor extends React.Component {
         const { bid } = this.state;
         newThread(bid, title, mdContent);
     }
+
+    getEditorState () {
+        return this.state.editorState;
+    }
     
     render () {
         const { editorState, title } = this.state;
@@ -114,20 +121,9 @@ class BoardEditor extends React.Component {
                             locale: 'zh'
                         }}
                         placeholder="与天大分享你刚编的故事"
-                        mention={{
-                            separator: ' ',
-                            trigger: '@',
-                            suggestions: [
-                                { text: 'AbsC', value: 'AbsC', url: 'AbsC' },
-                                { text: 'admin', value: 'admin', url: 'admin' },
-                                { text: 'EasonK', value: 'EasonK', url: 'EasonK' },
-                                { text: 'Halcao', value: 'Halcao', url: 'Halcao' },
-                                { text: 'testuser', value: 'testuser', url: 'testuser' },
-                                { text: 'ttt', value: 'ttt', url: 'ttt' },
-                                { text: 'wxson', value: 'wxson', url: 'wxson' },
-                                { text: 'zxwwwwww', value: 'zxwwwwww', url: 'zxwwwwww' },
-                            ],
-                        }}
+                        customDecorators={getDecorator(
+                            this.getEditorState, 
+                            this.handleEditorStateChange)}
                     />
                 </Modal.Body>
                 <Modal.Footer>

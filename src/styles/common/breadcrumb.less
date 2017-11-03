@@ -1,7 +1,8 @@
 @import '../universal.less';
 
 .card-breadcrumb {
-    background-color: @material-blue;
+    margin-bottom: 0;
+    background-color: rgba(255, 255, 255, .8);
     .card-content {
         padding: 16px 12px;
     }
@@ -9,16 +10,12 @@
     a.breadcrumb {
         // display: inline-block;
         background-color: transparent;
-        color: rgba(255, 255, 255, .7);
+        color: rgba(0, 0, 0, .6);
         text-decoration: none;
         font-size: 16px;
         transition: color .3s ease;
-        // max-width: 200px;
-        // text-overflow: ellipsis;
-        // line-height: 16px;
-        // height: 16px;
         &:hover, &.active {
-            color: #fff;
+            color: #000;
         }
     }
 

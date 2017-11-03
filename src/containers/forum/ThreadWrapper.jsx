@@ -105,6 +105,9 @@ class ThreadWrapper extends React.Component {
 
         refreshThread(lastPage + '');
         getThreadPage(+tid, lastPage + '');
+        this.setState({
+            replyContent: ''
+        });
     }
 
     render () {

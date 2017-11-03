@@ -7,7 +7,8 @@ import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import ThreadRenderer from '../../components/forum/ThreadRenderer';
 import draftToMarkdown from 'draftjs-to-markdown';
-import Attach from './Attach';
+import Attach from './editor/Attach';
+import { getDecorator } from './editor/mention.js';
 import { toJS } from '../../util';
 import { fetchNewComment } from '../../actions/forum/thread';
 
@@ -43,6 +44,7 @@ class ThreadEditor extends React.Component {
         this.handleEditorStateChange = this.handleEditorStateChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCancelReply = this.handleCancelReply.bind(this);
+        this.getEditorState = this.getEditorState.bind(this);
     }
 
     componentWillReceiveProps (nextProps) {
@@ -62,15 +64,21 @@ class ThreadEditor extends React.Component {
     handleSubmit (e) {
         e.preventDefault();
         const { editorState } = this.state;
-        const { tid, fetchNewComment } = this.props;
-        const content = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
-
+        const { tid, fetchNewComment, replyContent } = this.props;
+        let content = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
+        if (replyContent.trim()) {
+            content = `${content}\n\n${replyContent}`;
+        }
         fetchNewComment(tid, content);
     }
 
     handleCancelReply () {
         const { onCancelReply } = this.props;
         if (onCancelReply) onCancelReply();
+    }
+
+    getEditorState () {
+        return this.state.editorState;
     }
 
     render () {
@@ -85,6 +93,9 @@ class ThreadEditor extends React.Component {
                     editorState={editorState}
                     onEditorStateChange={this.handleEditorStateChange}
                     localization={{ locale: 'zh' }}
+                    customDecorators={getDecorator(
+                        this.getEditorState, 
+                        this.handleEditorStateChange)}
                 />
                 { replyContent &&
                     <div className="reply">
