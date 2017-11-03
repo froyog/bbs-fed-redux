@@ -49,7 +49,7 @@ class ImageFeed extends React.Component {
         const { name, id, anonymous, type, ...restProps } = this.props;
 
         if (generateAvatar) {
-            const randomColor = COLOR_ARRAY[Math.floor(Math.random() * COLOR_ARRAY.length)];
+            const randomColor = COLOR_ARRAY[Math.floor(name.charCodeAt(0) % COLOR_ARRAY.length)];
             return (
                 <Link to={`/user/${id}`}>
                     <span
