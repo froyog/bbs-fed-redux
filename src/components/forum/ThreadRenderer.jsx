@@ -5,7 +5,6 @@ import marked from 'marked';
 let renderer = new marked.Renderer();
 renderer.image = (href, title, text) => {
     let fullUri;
-    console.log(href);
     if (href.substring(0, 5) === 'https') {
         fullUri = href;
     } else {
