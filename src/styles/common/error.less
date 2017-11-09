@@ -1,12 +1,35 @@
 @import '../universal.less';
 
 
-.error-control-alert {
-    overflow: hidden;
-    z-index: 9;
+.error-modal {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    width: 500px;
+    padding: 20px 25px;
+    margin-left: -250px;
+    border-radius: 5px;
+    background-color: #f2dede;
+    color: #b71c1c ;
+    z-index: 1000;
+    box-shadow: @shadow-material;
+    transform-origin: top;
+    animation: .5s showUp cubic-bezier(.23, 1, .32, 1) forwards;
 
-    &.alert {
-        position: absolute;
-        margin: auto;
+    h4 {
+        margin-top: 0;
     }
+    
+    p:last-child {
+        margin-bottom: 0;
+    }
+
+    .divider {
+        padding: 0 5px;
+    }
+}
+
+@keyframes showUp {
+    0% { transform: scale(0, 0); }
+    100% { transform: scale(1, 1); }
 }

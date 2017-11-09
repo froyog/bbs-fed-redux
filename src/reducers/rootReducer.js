@@ -12,13 +12,14 @@ import newThread from './forum/newThread';
 import attach from './forum/attach';
 import newComment from './forum/newComment';
 import searchUser from './common/searchUser';
+import errorModal from './common/errorModal';
 
 // TODO: need refactoring
 // const rootReducer = combineReducers({
 // });
     
 const combinedReducer = combineReducers({
-    sidebar,
+    sidebarIsOpen: sidebar,
     forumList,
     boardList,
     board,
@@ -30,6 +31,7 @@ const combinedReducer = combineReducers({
     newComment,
     attach,
     searchUser,
+    errorModalIsShow: errorModal,
     user: (state=Map()) => state
 });
 
