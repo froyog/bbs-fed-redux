@@ -36,7 +36,7 @@ Sidebar.propTypes = {
 
 
 const mapStateToProps = state => ({
-    isOpen: state.get('sidebar')
+    isOpen: state.get('sidebarIsOpen')
 });
 const mapDispatchToProps = dispatch => ({
     onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus))

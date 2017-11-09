@@ -5,6 +5,7 @@ import { Grid } from 'react-bootstrap';
 
 import Header from './frame/Header';
 import Sidebar from './frame/Sidebar';
+import ErrorModal from './common/ErrorModal';
 import Forum from './forum/ForumList';
 import Board from './forum/BoardWrapper';
 import Thread from './forum/ThreadWrapper';
@@ -46,11 +47,16 @@ class App extends React.Component {
         this.handleTouchStart = this.handleTouchStart.bind(this);
         this.handleTouchEnd = this.handleTouchEnd.bind(this);
         this.handleTouchMove = this.handleTouchMove.bind(this);
+        this.handlePageScroll = this.handlePageScroll.bind(this);
     }
 
     componentWillMount() {
         const { onToggleSidebar } = this.props;
         onToggleSidebar(!isMobile());
+    }
+
+    handlePageScroll () {
+        console.log(document.body.scrollTop);
     }
 
     handleTouchStart (e) {
@@ -96,14 +102,11 @@ class App extends React.Component {
         const mainStyle = {
             [isMobile() ? 'left' : 'marginLeft']: `${isOpen ? '200px' : '0'}`
         };
-
         return (
-            <div
-                id="frame"
-                
-            >
+            <div id="frame" onScroll={this.handlePageScroll}>
                 <Header />
                 <Sidebar />
+                <ErrorModal />
                 <div id="main" style={mainStyle}>
                     <Grid>
                         <Switch>
@@ -122,7 +125,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    isOpen: state.get('sidebar')
+    isOpen: state.get('sidebarIsOpen')
 });
 const mapDispatchToProps = dispatch => ({
     onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus))

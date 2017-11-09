@@ -11,8 +11,7 @@ import ThreadHeader from './ThreadHeader';
 import ThreadPost from './ThreadPost';
 import ThreadEditor from './ThreadEditor';
 
-
-class ThreadWrapper extends React.Component {
+class ThreadWrapper extends React.PureComponent {
     static propTypes = {
         getThreadPage: PropTypes.func.isRequired,
         isFetching: PropTypes.bool,
@@ -62,6 +61,7 @@ class ThreadWrapper extends React.Component {
         this.handleClickReply = this.handleClickReply.bind(this);
         this.handleCancelReply = this.handleCancelReply.bind(this);
         this.handleCommentSuccess = this.handleCommentSuccess.bind(this);
+        this.handlePageScroll = this.handlePageScroll.bind(this);
     }
 
     componentWillMount() {
@@ -110,6 +110,10 @@ class ThreadWrapper extends React.Component {
         });
     }
 
+    handlePageScroll () {
+        console.log(document.body.scrollTop);
+    }
+
     render () {
         const { threadInfo, postList, boardInfo, isFetching, match: { params: { tid } } } = this.props;
         const { replyContent } = this.state;
@@ -123,9 +127,9 @@ class ThreadWrapper extends React.Component {
                 post={post}
                 onClickReply={this.handleClickReply} />
         );
-
+        
         return (
-            <div>
+            <div onScroll={this.handlePageScroll}>
                 <Breadcrumb>
                     <BreadcrumbItem to="/">首页</BreadcrumbItem>
                     <BreadcrumbItem to="/forum">所有分区</BreadcrumbItem>

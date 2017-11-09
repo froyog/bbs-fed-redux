@@ -108,8 +108,10 @@ class Attach extends React.Component {
         );
 
         return (
-            <div className="pull-right">
+            <div className="rdw-attach pull-right">
                 <Button
+                    bsStyle="link"
+                    className="flat"
                     disabled={isFetching}
                     onClick={this.handleClickUpload}
                 >
