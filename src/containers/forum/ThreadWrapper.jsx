@@ -70,6 +70,16 @@ class ThreadWrapper extends React.PureComponent {
         this.setState({ activePage: +page });
     }
 
+    componentDidMount () {
+        window.addEventListener('scroll', this._debounce(() => {
+            console.log(document.documentElement.scrollTop);
+        }, 100));
+    }
+
+    componentWillUnmount () {
+        window.removeEventListener('scroll', this.handlePageScroll);
+    }
+
     componentWillReceiveProps(nextProps) {
         const { match: { params, params: { tid, page } } } = nextProps;
         const { getThreadPage, match: { params: oldParams } } = this.props;
@@ -111,7 +121,17 @@ class ThreadWrapper extends React.PureComponent {
     }
 
     handlePageScroll () {
-        console.log(document.body.scrollTop);
+        this._debounce(() => {
+            // console.log(document.documentElement.scrollTop);
+        }, 500);
+    }
+
+    _debounce (func, wait) {
+        let timeout;
+        return function () {
+            clearTimeout(timeout);
+            timeout = setTimeout(func, wait);
+        };
     }
 
     render () {
@@ -127,9 +147,9 @@ class ThreadWrapper extends React.PureComponent {
                 post={post}
                 onClickReply={this.handleClickReply} />
         );
-        
+
         return (
-            <div onScroll={this.handlePageScroll}>
+            <div>
                 <Breadcrumb>
                     <BreadcrumbItem to="/">首页</BreadcrumbItem>
                     <BreadcrumbItem to="/forum">所有分区</BreadcrumbItem>

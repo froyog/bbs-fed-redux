@@ -8,25 +8,37 @@
     background-color: #fff;
     z-index: 500;
     box-shadow: @shadow-normal;
+    overflow: hidden;
+
+    .header-content {
+        height: 50px;
+        transition: transform .3s;
+        margin-left: 200px;
+        
+        section {
+            height: 50px;
+            padding-top: 12px;
+            font-size: 22px;
+        }
+    }
     
     .logo {
         height: 42px;
         margin: 4px 58px 4px 50px;
+        float: left;
     }
     
     .slogan {
         height: 18px;
-        margin-top: 10px;
-    
+        
         @media @phones {
             display: none;
         }
     }
 
     .quick-thread {
-        position: absolute;
-        top: 11px;
-        right: 40px;
+        float: right;
+        margin-right: 40px;
     }
     
     .menu-button-wrapper {

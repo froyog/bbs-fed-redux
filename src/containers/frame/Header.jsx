@@ -1,25 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { toggleSidebar } from '../../actions/frame/sidebar';
 import BoardEditor from '../forum/BoardEditor';
-
-import '../../styles/frame/header.less';
-import logo from '../../assests/logo.png';
-import slogan from '../../assests/slogan.jpg';
+import Header from '../../components/frame/Header';
 
 
-class Header extends React.Component {
+class HeaderWrapper extends React.PureComponent {
     constructor () {
         super();
         this.state = {
-            postingModalOpen: false
+            postingModalOpen: false,
+            headerContent: ''
         };
 
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
+    }
+
+    componentWillReceiveProps (nextProps) {
+        const { path, threadTitle } = nextProps;
+        if (nextProps.path.indexOf('/forum/thread') !== -1) {
+            this.setState({
+                headerContent: threadTitle
+            });
+        } else {
+            this.setState({
+                headerContent: ''
+            });
+        }
     }
 
     handleOpenModal () {
@@ -32,29 +43,16 @@ class Header extends React.Component {
 
     render () {
         const { isOpen, onToggleSidebar } = this.props;
-    
+        const { headerContent } = this.state;
+
         return (
             <header id="header" role="banner">
-                <div className="menu-button-wrapper">
-                    <i className="iconfont icon-menu"></i>
-                    <button
-                        role="button"
-                        onClick={() => onToggleSidebar(!isOpen)}
-                    >
-                        Open Meun
-                    </button>
-                </div>
-                <Link to="/">
-                    <img className="logo" src={logo} alt="logo" />
-                </Link>
-                <img className="slogan" src={slogan} alt="slogan" />
-                <Button 
-                    className="raised quick-thread" 
-                    bsStyle="primary"
-                    onClick={this.handleOpenModal}
-                >
-                    快速发帖
-                </Button>
+                <Header 
+                    isOpen={isOpen}
+                    onToggleSidebar={onToggleSidebar}
+                    onOpenModal={this.handleOpenModal}
+                    headerContent={this.state.headerContent}
+                />
                 <Modal
                     bsSize="large"
                     show={this.state.postingModalOpen}
@@ -62,28 +60,36 @@ class Header extends React.Component {
                     backdrop="static"
                     className="posting-modal"
                 >
-                    <BoardEditor
-                        onCloseModal={this.handleCloseModal} />
+                    <BoardEditor onCloseModal={this.handleCloseModal} />
                 </Modal>
             </header>
         );
     }
 };
 
-Header.propTypes = {
+HeaderWrapper.propTypes = {
     isOpen: PropTypes.bool.isRequired,
-    onToggleSidebar: PropTypes.func.isRequired
+    onToggleSidebar: PropTypes.func.isRequired,
+    path: PropTypes.string.isRequired
 };
 
-const mapStateToProps = state => ({
-    // current open state
-    isOpen: state.get('sidebarIsOpen')
-});
+const mapStateToProps = state => {
+    const thread = state.getIn(['thread', '1']);
+    let threadTitle;
+    if (thread && !thread.get('isFetching')) {
+        threadTitle = thread.getIn(['threadInfo', 'title']);
+    }
+
+    return {
+        isOpen: state.get('sidebarIsOpen'),
+        threadTitle: threadTitle
+    };
+};
 const mapDispatchToProps = (dispatch) => {
     return {
         onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus))
     };
 };
-Header = connect(mapStateToProps, mapDispatchToProps)(Header);
+HeaderWrapper = (connect(mapStateToProps, mapDispatchToProps)(HeaderWrapper));
 
-export default Header;
+export default HeaderWrapper;

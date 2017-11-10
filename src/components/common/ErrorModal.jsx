@@ -33,6 +33,6 @@ const ErrorModal = ({ className, onDismissErrorModal }) => {
 ErrorModal.propTypes = {
     onDismissErrorModal: PropTypes.func.isRequired,
     className: PropTypes.string
-}
+};
 
 export default ErrorModal;

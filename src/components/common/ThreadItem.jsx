@@ -13,7 +13,7 @@ const ThreadItem = ({ thread }) => {
         tReply, title, cPost, anonymous } = thread;
 
     return (
-        <Media className="thread-item">
+        <Media key={id} className="thread-item">
             <Media.Body>
                 <Media.Heading>
                     {

@@ -98,13 +98,13 @@ class App extends React.Component {
     }
 
     render () {
-        const { isOpen } = this.props;
+        const { isOpen, location } = this.props;
         const mainStyle = {
             [isMobile() ? 'left' : 'marginLeft']: `${isOpen ? '200px' : '0'}`
         };
         return (
             <div id="frame" onScroll={this.handlePageScroll}>
-                <Header />
+                <Header path={location.pathname}/>
                 <Sidebar />
                 <ErrorModal />
                 <div id="main" style={mainStyle}>
