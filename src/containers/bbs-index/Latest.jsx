@@ -61,11 +61,10 @@ class Latest extends React.Component {
         if (!latestThreads) {
             return null;
         }
-        
         const renderThreads = latestThreads.map(latestThread => {
             return <ThreadItem key={latestThread.id} thread={latestThread} />;
         });
-
+        
         return (
             <Card title="最新" className="card-home card-latest">
                 <RefreshButton 

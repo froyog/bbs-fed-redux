@@ -38,10 +38,14 @@ const latest = (state = latestDefaultState, action) => {
         case ActionTypes.GET_LATEST_REQUEST:
             return state.set('isFetching', true);
         case ActionTypes.GET_LATEST_SUCCESS:
+            const incomingItems = fromJS(action.json.data);
+            const finalItems = action.page === 0
+                ? incomingItems
+                : incomingItems.concat(state.get('items'));
             return Map({
                 'isFetching': false,
                 'didInvalidate': false,
-                'items': state.get('items').concat(fromJS(action.json.data))
+                'items': finalItems
             });
         case ActionTypes.GET_LATEST_FAILURE:
             return Map({

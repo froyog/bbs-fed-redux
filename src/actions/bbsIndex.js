@@ -49,9 +49,9 @@ export const getLatest = page => (dispatch, getState) => {
         return dispatch({
             [CALL_API]: {
                 types: [GET_LATEST_REQUEST, GET_LATEST_SUCCESS, GET_LATEST_FAILURE],
-                page: page,
                 apiPath: `index/latest?p=${page}`
-            }
+            },
+            page: page
         });
     }
 };
