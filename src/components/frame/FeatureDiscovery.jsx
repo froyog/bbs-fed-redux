@@ -56,23 +56,22 @@ class FeatureDiscovery extends React.Component {
                     <section className="version">
                         <h3>alpha 0.4.0</h3>
                         <ul>
-                            <li>responsive header in thread page</li>
-                            <li>friendly error message</li>
-                            <li>feature discovery</li>
+                            <li>header会动态响应帖子标题</li>
+                            <li>加入了错误处理</li>
+                            <li>加入了更新信息</li>
                         </ul>
                     </section>
                     <section className="version">
                         <h3>alpha 0.3.1</h3>
                         <ul>
-                            <li>minor bugs fixed</li>
+                            <li>修复了一些微小的bug</li>
                         </ul>
                     </section>
                     <section className="version">
                         <h3>alpha 0.3.0</h3>
                         <ul>
-                            <li>bugs fixed</li>
-                            <li>mention</li>
-                            <li>progreesive rich text editor</li>
+                            <li>修复bug</li>
+                            <li>加入mention功能</li>
                         </ul>
                     </section>
                     <footer>

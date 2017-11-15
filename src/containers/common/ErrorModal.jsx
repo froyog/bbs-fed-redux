@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ErrorModal from '../../components/common/ErrorModal';
-import { toggleErrorModal } from '../../actions/common/error-portal';
+import { hideErrorModal } from '../../actions/common/error-portal';
 
 
-let ErrorModalWrapper = ({ className, isShow, setErrorModal }) => {
+let ErrorModalWrapper = ({ className, isShow, hideErrorModal }) => {
     const handleDismissErrorModal = () => {
-        setErrorModal(false);
+        hideErrorModal();
     };
     const renderErrorModal = isShow 
         ? <ErrorModal 
@@ -27,7 +27,7 @@ const mapStateToProps = state => ({
     isShow: state.get('errorModalIsShow')
 });
 const mapDispatchToProps = dispatch => ({
-    setErrorModal: (isShow) => dispatch(toggleErrorModal(isShow))
+    hideErrorModal: dispatch(hideErrorModal)
 });
 ErrorModalWrapper = connect(mapStateToProps, mapDispatchToProps)(ErrorModalWrapper);
 export default ErrorModalWrapper;

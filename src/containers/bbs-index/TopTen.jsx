@@ -31,15 +31,22 @@ class TopTenWrapper extends React.Component {
         this.props.getTopTen();
     }
 
+
     render () {
         const { topTenThreads, isFetching } = this.props;
+        let renderThreads;
+
         if (!topTenThreads || isFetching) {
             return <FetchingOverlay fullPage />;
         }
+        if (!topTenThreads || !topTenThreads.length) {
+            renderThreads = <p className="text-center">您似乎来到了帖子的荒原 :(</p>;
+        } else {
+            renderThreads = topTenThreads.map(topTenThreads =>
+                <ThreadItem key={topTenThreads.id} thread={topTenThreads} />
+            );
+        }
 
-        const renderThreads = topTenThreads.map(topTenThreads =>
-            <ThreadItem key={topTenThreads.id} thread={topTenThreads} />
-        );
 
         return (
             <Card title="全站十大" className="card-home">
@@ -55,7 +62,8 @@ const mapStateToProps = state => {
     if (!topTen) return {};
     return {
         isFetching: topTen.get('isFetching'),
-        topTenThreads: topTen.get('items')
+        topTenThreads: topTen.get('items'),
+        error: topTen.get('error')
     };
 };
 const mapDispatchToProps = dispatch => ({

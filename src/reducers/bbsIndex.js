@@ -14,7 +14,8 @@ const topTen = (state = topTenDefaultState, action) => {
         case ActionTypes.GET_TOPTEN_SUCCESS:
             return Map({
                 'isFetching': false,
-                'items': fromJS(action.json.data)
+                'items': fromJS(action.json.data),
+                'error': ''
             });
         case ActionTypes.GET_TOPTEN_FAILURE:
             return Map({

@@ -1,6 +1,6 @@
 import * as ActionTypes from '../../actions/common/error-portal';
 
-const errorModal = (state = false, action) => {
+const errorModal = (state = true, action) => {
     switch (action.type) {
         case ActionTypes.SHOW_ERROR_MODAL:
             return true;
