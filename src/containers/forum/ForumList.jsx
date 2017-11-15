@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getForumList } from '../../actions/forumList';
 import { connect } from 'react-redux';
 import { toJS } from '../../util.js';
-import FetchingOverlay from '../../components/common/FetchingOverlay';
+import { FetchingOverlay } from '../../components/common/Loading';
 import Forum from './ForumWrapper';
 import FeelingLucky from '../../components/common/FeelingLucky';
 

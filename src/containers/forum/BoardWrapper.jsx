@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { getBoard } from '../../actions/forum/board';
 import ThreadItem from '../../components/common/ThreadItem';
 import { Card } from '../../components/common/Card';
-import FetchingOverlay from '../../components/common/FetchingOverlay';
+import { FetchingOverlay } from '../../components/common/Loading';
 import { toJS, isEqual } from '../../util.js';
 import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
 // import BoardEditor from './BoardEditor';

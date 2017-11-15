@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect} from 'react-redux';
 import { Pagination } from 'react-bootstrap';
 import { Card } from '../../components/common/Card';
-import FetchingOverlay from '../../components/common/FetchingOverlay';
+import { FetchingOverlay } from '../../components/common/Loading';
 import { getThreadPage, refreshThread } from '../../actions/forum/thread';
 import { toJS, isEqual } from '../../util';
 import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';

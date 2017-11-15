@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getTopTen } from '../../actions/bbsIndex';
 import { toJS } from '../../util.js';
 import { Card } from '../../components/common/Card';
-import FetchingOverlay from '../../components/common/FetchingOverlay';
+import { FetchingOverlay } from '../../components/common/Loading';
 import ThreadItem from '../../components/common/ThreadItem';
 
 import '../../styles/home.less';

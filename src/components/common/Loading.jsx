@@ -1,9 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import '../../styles/common/loading.less';
 
-const FetchingOverlay = ({ fullPage }) =>
+
+export const LoadingDots = () => 
+    <div className="three-dots-loader">
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+    </div>;
+
+export const LoadingSpinner = () =>
+    <div className="cp-spinner cp-hue"></div>;
+
+export const FetchingOverlay = ({ fullPage }) =>
     <div
         className="fetching-overlay"
         style={{'position': fullPage ? 'fixed' : 'absolute'}}
@@ -33,5 +43,3 @@ FetchingOverlay.propTypes = {
 FetchingOverlay.defaultProps = {
     fullPage: false
 };
-
-export default FetchingOverlay;

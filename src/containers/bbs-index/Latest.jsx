@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { getLatest, refreshLatest } from '../../actions/bbsIndex';
 import { toJS } from '../../util.js';
-import LoadingDots from '../../components/common/LoadingDots';
+import { LoadingDots, FetchingOverlay} from '../../components/common/Loading';
 import { Card } from '../../components/common/Card';
-import FetchingOverlay from '../../components/common/FetchingOverlay';
 import ThreadItem from '../../components/common/ThreadItem';
 import RefreshButton from '../../components/common/RefreshButton';
 

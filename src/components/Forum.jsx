@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { CardImage } from './common/Card';
-import FetchingOverlay from './common/FetchingOverlay';
-import ErrorControl from './common/ErrorControl';
+import { FetchingOverlay } from './common/Loading';
 import { Col, ListGroup, ListGroupItem,
     Media, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -121,7 +120,6 @@ class Forum extends React.Component {
                 sm={6}
                 onClick={this.handleExpand}
             >
-                {error && <ErrorControl />}
                 {isFetching ? <FetchingOverlay /> : null}
                 <CardImage
                     image={`http://bbs.tju.edu.cn:8080/api/forum/${id}/cover`}
