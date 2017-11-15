@@ -37,7 +37,7 @@ class FeatureDiscovery extends React.Component {
         });
         // spare some time for animation before unmount
         this.timer = setTimeout(() => {
-            onUnmountTap && onUnmountTap()
+            onUnmountTap && onUnmountTap();
         }, 800);
     }
 

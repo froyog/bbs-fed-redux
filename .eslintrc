@@ -109,7 +109,6 @@
         "no-undef": 1,
         "no-unexpected-multiline": 1,
         "no-unreachable": 1,
-        "no-unused-expressions": 1,
         "no-unused-labels": 1,
         "no-unused-vars": [1, { "vars": "local", "args": "none" }],
         "no-use-before-define": [1, "nofunc"],

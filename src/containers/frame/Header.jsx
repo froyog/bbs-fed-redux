@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toggleSidebar } from '../../actions/frame/sidebar';
 import BoardEditor from '../forum/BoardEditor';
@@ -16,7 +16,7 @@ class HeaderWrapper extends React.PureComponent {
             postingModalOpen: false,
             headerContent: '',
             tapIsShow: false,
-            updateDate: Date.parse('2017-11-16')
+            updateDate: Date.parse('2017-11-15')
         };
 
         this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -36,7 +36,7 @@ class HeaderWrapper extends React.PureComponent {
 
     componentWillReceiveProps (nextProps) {
         const { path, threadTitle } = nextProps;
-        if (nextProps.path.indexOf('/forum/thread') !== -1) {
+        if (path.indexOf('/forum/thread') !== -1) {
             this.setState({
                 headerContent: threadTitle
             });
@@ -118,6 +118,6 @@ const mapDispatchToProps = (dispatch) => {
         onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus))
     };
 };
-HeaderWrapper = (connect(mapStateToProps, mapDispatchToProps)(HeaderWrapper));
+HeaderWrapper = withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderWrapper));
 
 export default HeaderWrapper;
