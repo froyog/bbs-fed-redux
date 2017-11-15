@@ -15,7 +15,7 @@ export const toggleErrorModal = toggleStatus => (dispatch, getState) => {
     }
 };
 
-export const showErrorModal = (dispatch, getState) => {
+export const showErrorModal = () => (dispatch, getState) => {
     if (!getState().get('errorModalIsShow')) {
         return dispatch({
             type: SHOW_ERROR_MODAL
@@ -23,8 +23,8 @@ export const showErrorModal = (dispatch, getState) => {
     }
 };
 
-export const hideErrorModal = dispatch => {
-    dispatch({
+export const hideErrorModal = () => dispatch => {
+    return dispatch({
         type: HIDE_ERROR_MODAL
     });
 };

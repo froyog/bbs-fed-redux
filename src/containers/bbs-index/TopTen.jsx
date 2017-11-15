@@ -6,6 +6,7 @@ import { toJS } from '../../util.js';
 import { Card } from '../../components/common/Card';
 import { FetchingOverlay } from '../../components/common/Loading';
 import ThreadItem from '../../components/common/ThreadItem';
+import { showErrorModal } from '../../actions/common/error-portal';
 
 import '../../styles/home.less';
 
@@ -24,13 +25,20 @@ class TopTenWrapper extends React.Component {
             cPost: PropTypes.number,
             anonymous: PropTypes.number
         })),
-        isFetching: PropTypes.bool
+        isFetching: PropTypes.bool,
+        fireErrorModal: PropTypes.func
     };
 
     componentWillMount() {
         this.props.getTopTen();
     }
 
+    componentWillReceiveProps (nextProps) {
+        const { error, fireErrorModal } = nextProps;
+        if (error) {
+            fireErrorModal();
+        }
+    }
 
     render () {
         const { topTenThreads, isFetching } = this.props;
@@ -66,9 +74,10 @@ const mapStateToProps = state => {
         error: topTen.get('error')
     };
 };
-const mapDispatchToProps = dispatch => ({
-    getTopTen: () => dispatch(getTopTen())
-});
+const mapDispatchToProps = {
+    getTopTen,
+    fireErrorModal: showErrorModal
+};
 TopTenWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(TopTenWrapper));
 
 export default TopTenWrapper;

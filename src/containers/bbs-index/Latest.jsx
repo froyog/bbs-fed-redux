@@ -8,6 +8,7 @@ import { LoadingDots, FetchingOverlay} from '../../components/common/Loading';
 import { Card } from '../../components/common/Card';
 import ThreadItem from '../../components/common/ThreadItem';
 import RefreshButton from '../../components/common/RefreshButton';
+import { showErrorModal } from '../../actions/common/error-portal';
 
 
 class Latest extends React.Component {
@@ -26,6 +27,7 @@ class Latest extends React.Component {
             anonymous: PropTypes.number
         })),
         isFetching: PropTypes.bool,
+        fireErrorModal: PropTypes.func
     };
 
     constructor () {
@@ -42,9 +44,17 @@ class Latest extends React.Component {
         this.props.getLatest(0);
     }
 
+    componentWillReceiveProps (nextProps) {
+        const { error, fireErrorModal } = nextProps;
+        if (error) {
+            fireErrorModal();
+        }
+    }
+
     handleRefresh () {
-        this.props.refresh();
-        this.props.getLatest(0);
+        const { refresh, getLatest } = this.props;
+        refresh();
+        getLatest(0);
     }
 
     handleLoadMore () {
@@ -57,21 +67,15 @@ class Latest extends React.Component {
 
     render () {
         const { latestThreads, isFetching } = this.props;
-        if (!latestThreads) {
-            return null;
-        }
-        const renderThreads = latestThreads.map(latestThread => {
-            return <ThreadItem key={latestThread.id} thread={latestThread} />;
-        });
-        
-        return (
-            <Card title="最新" className="card-home card-latest">
-                <RefreshButton 
-                    className="refresh-button"
-                    isFetching={isFetching}
-                    onClick={this.handleRefresh} />
-                {isFetching && <FetchingOverlay />}
-                {renderThreads}
+        let renderThreads, renderLoadButton;
+
+        if (!latestThreads || !latestThreads.length) {
+            renderThreads = <p className="text-center">您似乎来到了没有帖子的荒原 =.=</p>;
+        } else {
+            renderThreads = latestThreads.map(latestThread => {
+                return <ThreadItem key={latestThread.id} thread={latestThread} />;
+            });
+            renderLoadButton = (
                 <Button
                     className="load-more"
                     block
@@ -84,6 +88,19 @@ class Latest extends React.Component {
                         : '加载更多帖子'
                     }
                 </Button>
+            );
+        }
+        
+        return (
+            <Card title="最新" className="card-home card-latest">
+                <RefreshButton 
+                    className="refresh-button"
+                    isFetching={isFetching}
+                    onClick={this.handleRefresh} 
+                />
+                { isFetching && <FetchingOverlay /> }
+                { renderThreads }
+                { renderLoadButton }
             </Card>
         );
     }
@@ -95,12 +112,14 @@ const mapStateToProps = state => {
     if (!latest) return {};
     return {
         isFetching: latest.get('isFetching'),
-        latestThreads: latest.get('items')
+        latestThreads: latest.get('items'),
+        error: latest.get('error')
     };
 };
 const mapDispatchToProps = dispatch => ({
     getLatest: page => dispatch(getLatest(page)),
-    refresh: () => dispatch(refreshLatest())
+    refresh: () => dispatch(refreshLatest()),
+    fireErrorModal: () => dispatch(showErrorModal())
 });
 Latest = connect(mapStateToProps, mapDispatchToProps)(toJS(Latest));
 

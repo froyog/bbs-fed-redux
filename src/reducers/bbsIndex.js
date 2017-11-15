@@ -52,7 +52,7 @@ const latest = (state = latestDefaultState, action) => {
             return Map({
                 'isFetching': false,
                 'didInvaildate': false,
-                'error': fromJS(action.json.data)
+                'error': fromJS(action.error)
             });
         case ActionTypes.INVAILDATE_LATEST:
             return state.set('didInvaildate', true).set('items', List());

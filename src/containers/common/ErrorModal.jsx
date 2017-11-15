@@ -12,7 +12,8 @@ let ErrorModalWrapper = ({ className, isShow, hideErrorModal }) => {
     const renderErrorModal = isShow 
         ? <ErrorModal 
             classname={className} 
-            onDismissErrorModal={handleDismissErrorModal}/>
+            onDismissErrorModal={handleDismissErrorModal} 
+        />
         : null;
     return renderErrorModal;
 };
@@ -26,8 +27,8 @@ ErrorModal.propTypes = {
 const mapStateToProps = state => ({
     isShow: state.get('errorModalIsShow')
 });
-const mapDispatchToProps = dispatch => ({
-    hideErrorModal: dispatch(hideErrorModal)
-});
+const mapDispatchToProps = {
+    hideErrorModal
+};
 ErrorModalWrapper = connect(mapStateToProps, mapDispatchToProps)(ErrorModalWrapper);
 export default ErrorModalWrapper;
