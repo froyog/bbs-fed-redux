@@ -36,15 +36,22 @@ class HeaderWrapper extends React.PureComponent {
 
     componentWillReceiveProps (nextProps) {
         const { path, threadTitle } = nextProps;
+        let headerContent;
         if (path.indexOf('/forum/thread') !== -1) {
-            this.setState({
-                headerContent: threadTitle
-            });
+            headerContent = threadTitle;
         } else {
-            this.setState({
-                headerContent: ''
-            });
+            headerContent = '';
         }
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+            this.setState({
+                headerContent: headerContent
+            });
+        }, 500);
+    }
+
+    componentWillUnmount () {
+        clearTimeout(this.timer);
     }
 
     handleOpenModal () {
