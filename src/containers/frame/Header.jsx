@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { toggleSidebar } from '../../actions/frame/sidebar';
 import BoardEditor from '../forum/BoardEditor';
 import Header from '../../components/frame/Header';
+import FeatureDiscovery from '../../components/frame/FeatureDiscovery';
 
 
 class HeaderWrapper extends React.PureComponent {
@@ -13,11 +14,24 @@ class HeaderWrapper extends React.PureComponent {
         super();
         this.state = {
             postingModalOpen: false,
-            headerContent: ''
+            headerContent: '',
+            tapIsShow: false,
+            updateDate: Date.parse('2017-11-16')
         };
 
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.handleUnmountTap = this.handleUnmountTap.bind(this);
+    }
+
+    componentDidMount () {
+        const readState = JSON.parse(localStorage.getItem('featureIsRead'));
+        const { updateDate } = this.state;
+        if (!readState || !readState.isRead || readState.readDate < updateDate) {
+            this.setState({
+                tapIsShow: true
+            });
+        }
     }
 
     componentWillReceiveProps (nextProps) {
@@ -41,21 +55,35 @@ class HeaderWrapper extends React.PureComponent {
         this.setState({ postingModalOpen: false });
     }
 
+    handleUnmountTap () {
+        localStorage.setItem('featureIsRead', JSON.stringify({
+            isRead: true,
+            readDate: new Date().getTime()
+        }));
+        this.setState({ tapIsShow: false });
+    }
+
     render () {
         const { isOpen, onToggleSidebar } = this.props;
-        const { headerContent } = this.state;
+        const { headerContent, postingModalOpen, tapIsShow } = this.state;
 
         return (
             <header id="header" role="banner">
                 <Header 
                     isOpen={isOpen}
                     onToggleSidebar={onToggleSidebar}
+                    headerContent={headerContent}
                     onOpenModal={this.handleOpenModal}
-                    headerContent={this.state.headerContent}
                 />
+                {
+                    tapIsShow &&
+                    <FeatureDiscovery 
+                        onUnmountTap={this.handleUnmountTap}
+                    />
+                }
                 <Modal
                     bsSize="large"
-                    show={this.state.postingModalOpen}
+                    show={postingModalOpen}
                     onHide={this.handleCloseModal}
                     backdrop="static"
                     className="posting-modal"
