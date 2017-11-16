@@ -20,7 +20,7 @@ const RefreshButton = ({ isFetching, className, ...restProps }) => {
 };
 
 RefreshButton.propTypes = {
-    isFetching: PropTypes.bool.isRequired,
+    isFetching: PropTypes.bool,
     className: PropTypes.string
 };
 

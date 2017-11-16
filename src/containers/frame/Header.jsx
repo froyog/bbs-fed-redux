@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { toggleSidebar } from '../../actions/frame/sidebar';
 import BoardEditor from '../forum/BoardEditor';
 import Header from '../../components/frame/Header';
+import { toJS } from '../../util';
 import FeatureDiscovery from '../../components/frame/FeatureDiscovery';
 
 
@@ -125,6 +126,6 @@ const mapDispatchToProps = (dispatch) => {
         onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus))
     };
 };
-HeaderWrapper = withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderWrapper));
+HeaderWrapper = withRouter(connect(mapStateToProps, mapDispatchToProps)(toJS(HeaderWrapper)));
 
 export default HeaderWrapper;

@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { getDecorator } from './editor/mention.js';
 import Attach from './editor/Attach';
 import BIDSelector from './BIDSelector';
+import { toJS } from '../../util';
 
 import '../../styles/forum/editor.less';
 
@@ -163,5 +164,5 @@ const mapDispatchToProps = dispatch => ({
     newThread: (bid, title, content) => dispatch(fetchNewThread(bid, title, content))
 });
 
-BoardEditor = withRouter(connect(mapStateToProps, mapDispatchToProps)(BoardEditor));
+BoardEditor = withRouter(connect(mapStateToProps, mapDispatchToProps)(toJS(BoardEditor)));
 export default BoardEditor;

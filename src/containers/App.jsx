@@ -10,7 +10,7 @@ import Forum from './forum/ForumList';
 import Board from './forum/BoardWrapper';
 import Thread from './forum/ThreadWrapper';
 import Home from './bbs-index/Home';
-import Me from './Me';
+import UserIndex from './profile/UserIndex';
 import NoMatch from '../components/NoMatch';
 import { connect } from 'react-redux';
 import { isMobile } from '../util.js';
@@ -23,78 +23,12 @@ import '../styles/global.less';
 class App extends React.Component {
     static propTypes = {
         isOpen: PropTypes.bool.isRequired,
-        onToggleSidebar: PropTypes.func.isRequired,
-        maxYoffset: PropTypes.number,
-        minXOffset: PropTypes.number,
-        minXDragDistance: PropTypes.number
+        onToggleSidebar: PropTypes.func.isRequired
     };
-
-    static defaultProps = {
-        maxYoffset: 150, // pixel
-        minXOffset: 60,
-        minXDragDistance: 100
-    };
-
-    constructor () {
-        super();
-        this.state = {
-            startX: 0,
-            lastX: 0,
-            startY: 0,
-            lastY: 0
-        };
-
-        this.handleTouchStart = this.handleTouchStart.bind(this);
-        this.handleTouchEnd = this.handleTouchEnd.bind(this);
-        this.handleTouchMove = this.handleTouchMove.bind(this);
-        this.handlePageScroll = this.handlePageScroll.bind(this);
-    }
 
     componentWillMount() {
         const { onToggleSidebar } = this.props;
         onToggleSidebar(!isMobile());
-    }
-
-    handlePageScroll () {
-        console.log(document.body.scrollTop);
-    }
-
-    handleTouchStart (e) {
-        this.setState({
-            startX: e.touches[0].clientX,
-            startY: e.touches[0].clientY
-        });
-    }
-
-    handleTouchMove (e) {
-        this.setState({
-            lastX: e.touches[0].clientX,
-            lastY: e.touches[0].clientY
-        });
-    }
-
-    handleTouchEnd () {
-        const { startX, lastX, startY, lastY } = this.state;
-        const { onToggleSidebar, maxYoffset, minXOffset, minXDragDistance } = this.props;
-
-        this.setState({
-            startX: 0,
-            lastX: 0,
-            startY: 0,
-            lastY: 0
-        });
-
-        if (Math.abs(startY - lastY) > maxYoffset) return;
-
-        if (lastX - startX > minXOffset && startX < minXDragDistance) {
-            // slide right (open)
-            // drag startX must be restricted
-            onToggleSidebar(true);
-        } else if (startX - lastX > minXOffset) {
-            // slide left (close)
-            onToggleSidebar(false);
-        }
-
     }
 
     render () {
@@ -114,7 +48,7 @@ class App extends React.Component {
                             <Route exact path='/forum' component={Forum} />
                             <Route path='/forum/board/:bid/page/:page' component={Board} />
                             <Route path='/forum/thread/:tid/page/:page' component={Thread} />
-                            <Route path='/user/me' component={Me} />
+                            <Route path='/user' component={UserIndex} />
                             <Route component={NoMatch} />
                         </Switch>
                     </Grid>
