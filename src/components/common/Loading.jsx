@@ -16,7 +16,10 @@ export const LoadingSpinner = () =>
 export const FetchingOverlay = ({ fullPage }) =>
     <div
         className="fetching-overlay"
-        style={{'position': fullPage ? 'fixed' : 'absolute'}}
+        style={{
+            position: fullPage ? 'fixed' : 'absolute',
+            backgroundColor: `rgba(255, 255, 255, ${fullPage ? 1 : .6})` 
+        }}
     >
         <div className="loader-inner">
             <div className="loader-line-wrap">

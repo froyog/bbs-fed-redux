@@ -12,12 +12,14 @@ class ImageFeed extends React.Component {
         id: PropTypes.number.isRequired,
         name: PropTypes.string,
         type: PropTypes.string,
-        anonymous: PropTypes.oneOfType([PropTypes.bool, PropTypes.number])
+        anonymous: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+        imageShape: PropTypes.string
     };
 
     static defaultProps = {
         type: 'user',
-        anonymous: false
+        anonymous: false,
+        imageShape: 'circle'
     };
 
     constructor (props) {
@@ -46,7 +48,7 @@ class ImageFeed extends React.Component {
 
     render () {
         const { src, generateAvatar } = this.state;
-        const { name, id, anonymous, type, ...restProps } = this.props;
+        const { name, id, anonymous, type, imageShape, ...restProps } = this.props;
 
         if (generateAvatar) {
             const randomColor = COLOR_ARRAY[Math.floor(name.charCodeAt(0) % COLOR_ARRAY.length)];
@@ -62,14 +64,18 @@ class ImageFeed extends React.Component {
                 </Link>
             );
         }
+        const shape = {
+            [imageShape]: true
+        };
         return (
             <Link to={`/user/${id}`}>
                 <Image
                     src={src}
                     alt=""
-                    circle
+                    {...shape}
                     onError={this.handleError}
-                    {...restProps} />
+                    {...restProps} 
+                />
             </Link>
         );
     }
