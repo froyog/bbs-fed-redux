@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 
 const MyStuff = () => {
-    return <h1>Hello</h1>
-}
+    return <h1>Hello</h1>;
+};
 
 export default MyStuff;

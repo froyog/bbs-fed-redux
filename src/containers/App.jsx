@@ -48,7 +48,7 @@ class App extends React.Component {
                             <Route exact path='/forum' component={Forum} />
                             <Route path='/forum/board/:bid/page/:page' component={Board} />
                             <Route path='/forum/thread/:tid/page/:page' component={Thread} />
-                            <Route path='/user' component={UserIndex} />
+                            <Route path='/user/:uid' component={UserIndex} />
                             <Route component={NoMatch} />
                         </Switch>
                     </Grid>

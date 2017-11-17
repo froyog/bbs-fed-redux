@@ -13,6 +13,7 @@ import attach from './forum/attach';
 import newComment from './forum/newComment';
 import searchUser from './common/searchUser';
 import errorModal from './common/errorModal';
+import profiles from './profile/profile';
 
 // TODO: need refactoring
 // const rootReducer = combineReducers({
@@ -32,6 +33,7 @@ const combinedReducer = combineReducers({
     attach,
     searchUser,
     errorModalIsShow: errorModal,
+    profiles,
     user: (state=Map()) => state
 });
 

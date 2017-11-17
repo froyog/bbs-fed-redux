@@ -39,7 +39,7 @@ const boardByBid = (state = Map(), action) => {
         case ActionTypes.GET_BOARD_SUCCESS:
         case ActionTypes.GET_BOARD_FAILURE:
             return state.set(
-                action.bid, board(state.get(action['bid']), action)
+                action.bid, board(state.get(action.bid), action)
             );
         default:
             return state;

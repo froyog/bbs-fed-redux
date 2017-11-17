@@ -17,20 +17,20 @@ const fetchProfile = (uid, authentication) => {
             headers: {
                 auth: authentication
             }
-        }
+        };
     }
 
-    return dispatchEvent({
+    return {
         [CALL_API]: callApiArgs,
         uid: uid
-    })
-}
+    };
+};
 
 export const getProfileIfNeeded = uid => (dispatch, getState) => {
-    const profileByUid = getState.getIn(['profile', uid]);
+    const profileByUid = getState().getIn(['profile', uid]);
     if (profileByUid) {
         return null;
     }
     const authentication = parseUser(getState());
-    return dispatch(fetchProfile(uid, authentication))
-}
+    return dispatch(fetchProfile(uid, authentication));
+};
