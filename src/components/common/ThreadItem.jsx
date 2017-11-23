@@ -13,7 +13,7 @@ const ThreadItem = ({ thread }) => {
         tReply, title, cPost, anonymous } = thread;
 
     return (
-        <Media key={id} className="thread-item">
+        <Media className="thread-item">
             <Media.Body>
                 <Media.Heading>
                     {
@@ -42,7 +42,8 @@ const ThreadItem = ({ thread }) => {
                     id={authorId}
                     name={authorName}
                     className="avatar"
-                    anonymous={anonymous} />
+                    anonymous={anonymous} 
+                />
                 <Link to={`/forum/thread/${id}/page/1`} className="comments-count">
                     <i className="iconfont icon-comment"></i>{cPost}
                 </Link>

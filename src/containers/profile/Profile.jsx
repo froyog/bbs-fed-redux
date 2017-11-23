@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { toJS } from '../../util';
 import { getProfileIfNeeded } from '../../actions/profile/profile';
 import { FetchingOverlay } from '../../components/common/Loading';
 import Profile from '../../components/profile/Profile';
+import { connect } from 'react-redux';
+import { toJS } from '../../util';
+
 
 class ProfileWrapper extends React.Component {
     static propTypes = {
@@ -51,7 +52,6 @@ class ProfileWrapper extends React.Component {
             return <FetchingOverlay fullPage />;
         }
 
-        delete profile.recent;
         return (
             <Profile 
                 uid={uid}
