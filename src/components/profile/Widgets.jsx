@@ -3,11 +3,19 @@ import PropTypes from 'prop-types';
 import { Card } from '../common/Card';
 import { Button, ProgressBar } from 'react-bootstrap';
 import medalVector from '../../assests/medal.jpg';
+import Chip from '../common/Chip';
+import Avatar from '../common/Avatar';
 
 import '../../styles/profile/widgets.less';
 
 
-export class Title extends React.Component {
+export class Title extends React.PureComponent {
+    static propTypes = {
+        cPost: PropTypes.number,
+        cThread: PropTypes.number,
+        points: PropTypes.number
+    }
+
     constructor () {
         super();
         this.state = {
@@ -17,6 +25,31 @@ export class Title extends React.Component {
         this.handleClickShowMore = this.handleClickShowMore.bind(this);
     }
 
+    componentWillReceiveProps (nextProps) {
+        if (typeof nextProps.points !== 'undefined') {
+            const { cPost, cThread, points } = nextProps;
+            const TITLE_ARRAY = ['新手上路', '一般站友', '中级站友', '高级站友', '老站友', '长老级', '本站元老', '开国大佬'],
+                  POINTS_ARRAY = [0, 100, 500, 1000, 2000, 4000, 8000, 10000];
+            
+            let eachTitleIndex = 0, currentTitleIndex, nextTitleIndex;
+            for (eachTitleIndex = 0; eachTitleIndex < POINTS_ARRAY.length; eachTitleIndex++) {
+                if (POINTS_ARRAY[eachTitleIndex] < points) {
+                    currentTitleIndex = eachTitleIndex;
+                } else {
+                    nextTitleIndex = eachTitleIndex;
+                    break;
+                }
+            }
+    
+            this.setState({
+                pointsOfCurrentTitle: POINTS_ARRAY[currentTitleIndex],
+                pointsOfNextTitle: POINTS_ARRAY[nextTitleIndex],
+                currentTitle: TITLE_ARRAY[currentTitleIndex],
+                nextTitleIndex: TITLE_ARRAY[nextTitleIndex]
+            });
+        }
+    }
+
     handleClickShowMore () {
         this.setState({
             isShowDetails: true
@@ -24,14 +57,16 @@ export class Title extends React.Component {
     }
 
     render () {
-        const { isShowDetails } = this.state;
+        const { isShowDetails, pointsOfCurrentTitle, pointsOfNextTitle, 
+                currentTitle, nextTitle } = this.state;
+        const { cPost, cThread, points } = this.props;
 
         return (
             <Card title="当前称号" className="card-small">
                 <div className="title-wrapper">
-                    <h1 className="display-1">开国大佬</h1>
-                    <p className="helper text-muted">距离下一称号还有<strong>1300</strong>积分</p>
-                    <p className="helper text-muted">相当于水贴<strong>365</strong>条</p>
+                    <h1 className="display-1">{currentTitle}</h1>
+                    <p className="helper text-muted">距离下一称号还有<strong>{pointsOfNextTitle - points}</strong>积分</p>
+                    <p className="helper text-muted">相当于水贴<strong>{Math.floor((pointsOfNextTitle-points)/2)}</strong>条</p>
                 </div>
                 {/* <div className="title-bottom-bar clearfix">
                     <Button 
@@ -44,29 +79,29 @@ export class Title extends React.Component {
                         </svg>
                     </Button>
                 </div> */}
-                <div 
+                <div
                     className="title-details"
                     style={{ maxHeight: `${isShowDetails ? '200px' : '0'}` }}
                 >
                     <div>
                         <div className="clearfix">
-                            <span className="pull-left text-muted">长老级</span>
-                            <span className="pull-right text-muted">开国元老</span>
+                            <span className="pull-left text-muted">{currentTitle}</span>
+                            <span className="pull-right text-muted">{nextTitle}</span>
                         </div>
                         <ProgressBar 
-                            now={64} 
-                            label="13784/20000" 
+                            now={((points - pointsOfCurrentTitle)/(pointsOfNextTitle - pointsOfCurrentTitle))*100}
+                            label={`${points}/${pointsOfNextTitle}`} 
                             bsStyle="warning"
                             striped
                         />
                     </div>
                     <div className="clearfix">
                         <div className="statistic-wrapper pull-left">
-                            <p>158</p>
+                            <p>{cThread}</p>
                             <p className="text-muted">发表主题贴</p>
                         </div>
                         <div className="statistic-wrapper pull-left">
-                            <p>1337</p>
+                            <p>{cThread + cPost}</p>
                             <p className="text-muted">总共发帖</p>
                         </div>
                     </div>
@@ -97,5 +132,9 @@ export const Medal = () => {
 };
 
 export const Friends = () => {
-    
-}
+    return (
+        <Card title="我的好友" className="card-small">
+            <Chip avatar={<Avatar id="18480" />} label="testuser" />
+        </Card>
+    )
+};

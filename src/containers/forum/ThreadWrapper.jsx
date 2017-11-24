@@ -61,23 +61,12 @@ class ThreadWrapper extends React.PureComponent {
         this.handleClickReply = this.handleClickReply.bind(this);
         this.handleCancelReply = this.handleCancelReply.bind(this);
         this.handleCommentSuccess = this.handleCommentSuccess.bind(this);
-        this.handlePageScroll = this.handlePageScroll.bind(this);
     }
 
     componentWillMount() {
         const { getThreadPage, match: { params: { tid, page } } } = this.props;
         getThreadPage(+tid, page);
         this.setState({ activePage: +page });
-    }
-
-    componentDidMount () {
-        window.addEventListener('scroll', this._debounce(() => {
-            console.log(document.documentElement.scrollTop);
-        }, 100));
-    }
-
-    componentWillUnmount () {
-        window.removeEventListener('scroll', this.handlePageScroll);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -118,20 +107,6 @@ class ThreadWrapper extends React.PureComponent {
         this.setState({
             replyContent: ''
         });
-    }
-
-    handlePageScroll () {
-        this._debounce(() => {
-            // console.log(document.documentElement.scrollTop);
-        }, 500);
-    }
-
-    _debounce (func, wait) {
-        let timeout;
-        return function () {
-            clearTimeout(timeout);
-            timeout = setTimeout(func, wait);
-        };
     }
 
     render () {
