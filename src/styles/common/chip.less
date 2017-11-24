@@ -1,0 +1,36 @@
+.chip {
+    max-width: 150px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    display: inline-block;
+    color: rgba(0, 0, 0, .87);
+    background-color: #e4e4e4;
+    outline: none;
+    transition: all .3s cubic-bezier(0.4, 0, 0.4, 1) 0ms;
+    border-radius: 16px;
+    cursor: pointer;
+
+    &.active {
+        width: 100%;
+        max-width: 999px;
+    }    
+    
+    .avatar {
+        width: 32px;
+        height: 32px;
+        img {
+            width: 100%;
+        }
+    }
+
+    .label {
+        white-space: nowrap;
+        padding: 0 12px;
+        user-select: none;
+        color: rgba(0, 0, 0, 0.87);
+        font-size: 14px;
+        font-weight: normal;
+        line-height: 32px;
+    }
+}
