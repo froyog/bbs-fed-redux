@@ -43,7 +43,7 @@ class Chip extends React.Component {
                     </span>
                 }
             </div>
-        )
+        );
     }
 }
 

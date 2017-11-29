@@ -29,7 +29,7 @@ export class Title extends React.PureComponent {
         if (typeof nextProps.points !== 'undefined') {
             const { cPost, cThread, points } = nextProps;
             const TITLE_ARRAY = ['新手上路', '一般站友', '中级站友', '高级站友', '老站友', '长老级', '本站元老', '开国大佬'],
-                  POINTS_ARRAY = [0, 100, 500, 1000, 2000, 4000, 8000, 10000];
+                POINTS_ARRAY = [0, 100, 500, 1000, 2000, 4000, 8000, 10000];
             
             let eachTitleIndex = 0, currentTitleIndex, nextTitleIndex;
             for (eachTitleIndex = 0; eachTitleIndex < POINTS_ARRAY.length; eachTitleIndex++) {
@@ -58,7 +58,7 @@ export class Title extends React.PureComponent {
 
     render () {
         const { isShowDetails, pointsOfCurrentTitle, pointsOfNextTitle, 
-                currentTitle, nextTitle } = this.state;
+            currentTitle, nextTitle } = this.state;
         const { cPost, cThread, points } = this.props;
 
         return (
@@ -136,5 +136,5 @@ export const Friends = () => {
         <Card title="我的好友" className="card-small">
             <Chip avatar={<Avatar id="18480" />} label="testuser" />
         </Card>
-    )
+    );
 };
