@@ -19,7 +19,12 @@ export class Title extends React.PureComponent {
     constructor () {
         super();
         this.state = {
-            isShowDetails: true
+            isShowDetails: true,
+            pointsOfCurrentTitle: 0,
+            pointsOfNextTitle: 0,
+            currentTitle: '',
+            nextTitle: '',
+            atMaxLevel: false
         };
 
         this.handleClickShowMore = this.handleClickShowMore.bind(this);
@@ -32,7 +37,7 @@ export class Title extends React.PureComponent {
                 POINTS_ARRAY = [0, 100, 500, 1000, 2000, 4000, 8000, 10000];
             
             let eachTitleIndex = 0, currentTitleIndex, nextTitleIndex;
-            for (eachTitleIndex = 0; eachTitleIndex < POINTS_ARRAY.length; eachTitleIndex++) {
+            for (eachTitleIndex; eachTitleIndex < POINTS_ARRAY.length; eachTitleIndex++) {
                 if (POINTS_ARRAY[eachTitleIndex] < points) {
                     currentTitleIndex = eachTitleIndex;
                 } else {
@@ -43,9 +48,10 @@ export class Title extends React.PureComponent {
     
             this.setState({
                 pointsOfCurrentTitle: POINTS_ARRAY[currentTitleIndex],
-                pointsOfNextTitle: POINTS_ARRAY[nextTitleIndex],
+                pointsOfNextTitle: POINTS_ARRAY[nextTitleIndex] || 10000,
                 currentTitle: TITLE_ARRAY[currentTitleIndex],
-                nextTitleIndex: TITLE_ARRAY[nextTitleIndex]
+                nextTitle: TITLE_ARRAY[nextTitleIndex],
+                atMaxLevel: typeof nextTitleIndex === 'undefined' ? true : false
             });
         }
     }
@@ -58,15 +64,22 @@ export class Title extends React.PureComponent {
 
     render () {
         const { isShowDetails, pointsOfCurrentTitle, pointsOfNextTitle, 
-            currentTitle, nextTitle } = this.state;
+            currentTitle, nextTitle, atMaxLevel } = this.state;
+            console.log(atMaxLevel);
         const { cPost, cThread, points } = this.props;
 
         return (
             <Card title="当前称号" className="card-small">
                 <div className="title-wrapper">
                     <h1 className="display-1">{currentTitle}</h1>
-                    <p className="helper text-muted">距离下一称号还有<strong>{pointsOfNextTitle - points}</strong>积分</p>
-                    <p className="helper text-muted">相当于水贴<strong>{Math.floor((pointsOfNextTitle-points)/2)}</strong>条</p>
+                    {
+                        atMaxLevel
+                            ? <p className="helper text-muted">您已达到最高等级</p>
+                            : <div>
+                                <p className="helper text-muted">距离下一称号还有<strong>{pointsOfNextTitle - points}</strong>积分</p>
+                                <p className="helper text-muted">相当于水贴<strong>{Math.floor((pointsOfNextTitle-points)/2)}</strong>条</p>
+                              </div>
+                    }
                 </div>
                 {/* <div className="title-bottom-bar clearfix">
                     <Button 
@@ -84,12 +97,20 @@ export class Title extends React.PureComponent {
                     style={{ maxHeight: `${isShowDetails ? '200px' : '0'}` }}
                 >
                     <div>
-                        <div className="clearfix">
-                            <span className="pull-left text-muted">{currentTitle}</span>
-                            <span className="pull-right text-muted">{nextTitle}</span>
-                        </div>
+                        {
+                            atMaxLevel
+                                ? null
+                                : <div className="clearfix">
+                                    <span className="pull-left text-muted">{currentTitle}</span>
+                                    <span className="pull-right text-muted">{nextTitle}</span>
+                                  </div>
+                        }
                         <ProgressBar 
-                            now={((points - pointsOfCurrentTitle)/(pointsOfNextTitle - pointsOfCurrentTitle))*100}
+                            now={ 
+                                atMaxLevel
+                                    ? 100
+                                    : ((points - pointsOfCurrentTitle)/(pointsOfNextTitle - pointsOfCurrentTitle))*100
+                            }
                             label={`${points}/${pointsOfNextTitle}`} 
                             bsStyle="warning"
                             striped

@@ -12,6 +12,9 @@ const RecentUpdate = ({ recentThreads }) => {
     return (
         <Card title="最新动态">
             {renderThreads}
+            { !recentThreads.length && 
+                <p>您似乎来到了帖子的荒原=.=</p>
+            }
         </Card>
     );
 };
