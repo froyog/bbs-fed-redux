@@ -65,7 +65,6 @@ export class Title extends React.PureComponent {
     render () {
         const { isShowDetails, pointsOfCurrentTitle, pointsOfNextTitle, 
             currentTitle, nextTitle, atMaxLevel } = this.state;
-            console.log(atMaxLevel);
         const { cPost, cThread, points } = this.props;
 
         return (
@@ -78,7 +77,7 @@ export class Title extends React.PureComponent {
                             : <div>
                                 <p className="helper text-muted">距离下一称号还有<strong>{pointsOfNextTitle - points}</strong>积分</p>
                                 <p className="helper text-muted">相当于水贴<strong>{Math.floor((pointsOfNextTitle-points)/2)}</strong>条</p>
-                              </div>
+                            </div>
                     }
                 </div>
                 <div
@@ -92,7 +91,7 @@ export class Title extends React.PureComponent {
                                 : <div className="clearfix">
                                     <span className="pull-left text-muted">{currentTitle}</span>
                                     <span className="pull-right text-muted">{nextTitle}</span>
-                                  </div>
+                                </div>
                         }
                         <ProgressBar 
                             now={ 
@@ -144,7 +143,7 @@ export const Medal = () => {
 export const Friends = () => {
     return (
         <Card title="我的好友" className="card-small">
-            <Chip avatar={<Avatar id="18480" />} label="testuser" />
+            <Chip avatar={<Avatar id={18480} />} label="testuser" />
         </Card>
     );
 };

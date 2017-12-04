@@ -8,7 +8,7 @@ import RecentUpdate from '../../components/profile/RecentUpdate';
 import { Medal, Title, Friends } from '../../components/profile/Widgets';
 
 
-class UserIndex extends React.Component {
+class UserBase extends React.Component {
     static propTypes = {
         points: PropTypes.number,
         cThread: PropTypes.number,
@@ -30,8 +30,8 @@ class UserIndex extends React.Component {
                             cThread={cThread}
                             cPost={cPost}
                         />
-                        <Friends />
                         <Medal />
+                        {renderFriends}
                     </Col>
                     <Col lg={8}>
                         {renderRecentUpdates}
@@ -43,10 +43,14 @@ class UserIndex extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const uid = ownProps.match.params.uid;
-    const profileState = state.getIn(['profiles', uid]);
+    let uid = ownProps.match.params.uid;
+    if (uid === 'me') {
+        // get self uid from state
+        uid = state.getIn(['user', 'uid']);
+    }
+
+    const profileState = state.getIn(['profiles', +uid]);
     if (!profileState) return {};
-    
 
     return {
         recentUpdates: profileState.getIn(['profile', 'recent']),
@@ -55,6 +59,6 @@ const mapStateToProps = (state, ownProps) => {
         cPost: profileState.getIn(['profile', 'cPost'])
     };
 };
-UserIndex = connect(mapStateToProps)(toJS(UserIndex));
+UserBase = connect(mapStateToProps)(toJS(UserBase));
 
-export default UserIndex;
+export default UserBase;

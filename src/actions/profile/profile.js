@@ -6,24 +6,33 @@ export const GET_PROFILE_SUCCESS = 'GET_PROFILE_SUCCESS';
 export const GET_PROFILE_FAILURE = 'GET_PROFILE_FAILURE';
 
 const fetchProfile = (uid, authentication) => {
-    const callApiArgs = {
-        types: [GET_PROFILE_REQUEST, GET_PROFILE_SUCCESS, GET_PROFILE_FAILURE],
-        apiPath: uid === 'me' ? 'home' : `user/${uid}/home`
-    };
+    let profileAction;
     // add authentication for self profile request
     if (uid === 'me' && authentication) {
-        callApiArgs.request = {
-            method: 'GET',
-            headers: {
-                auth: authentication
-            }
+        const selfUid = authentication.substring(0, authentication.indexOf('|'));
+        profileAction = {
+            [CALL_API]: {
+                types: [GET_PROFILE_REQUEST, GET_PROFILE_SUCCESS, GET_PROFILE_FAILURE],
+                apiPath: 'home',
+                request: {
+                    method: 'GET',
+                    headers: {
+                        auth: authentication
+                    }
+                }
+            },
+            uid: +selfUid,
+        };
+    } else {
+        profileAction = {
+            [CALL_API]: {
+                types: [GET_PROFILE_REQUEST, GET_PROFILE_SUCCESS, GET_PROFILE_FAILURE],
+                apiPath: `user/${uid}/home`
+            },
+            uid: +uid
         };
     }
-
-    return {
-        [CALL_API]: callApiArgs,
-        uid: uid
-    };
+    return profileAction;
 };
 
 export const getProfileIfNeeded = uid => (dispatch, getState) => {

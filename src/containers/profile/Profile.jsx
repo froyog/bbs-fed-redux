@@ -47,14 +47,14 @@ class ProfileWrapper extends React.Component {
     }
 
     render () {
-        const { isFetching, profile, error, uid } = this.props;
+        const { isFetching, profile, error, thisUid } = this.props;
         if (!profile || isFetching) {
             return <FetchingOverlay fullPage />;
         }
 
         return (
             <Profile 
-                uid={uid}
+                uid={thisUid}
                 profile={profile} 
             />
         );
@@ -62,11 +62,17 @@ class ProfileWrapper extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const uid = ownProps.uid;
-    const profileState = state.getIn(['profiles', uid]);
+    let uid = ownProps.uid;
+    if (uid === 'me') {
+        // get self uid from state
+        uid = state.getIn(['user', 'uid']);
+    }
+
+    const profileState = state.getIn(['profiles', +uid]);
     if (!profileState) return {};
     
     return {
+        thisUid: uid,
         isFetching: profileState.get('isFetching'),
         profile: profileState.get('profile'),
         error: profileState.get('error')

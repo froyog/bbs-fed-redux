@@ -68,4 +68,4 @@ export const initFromLocal = userState => dispatch => {
         type: INIT,
         userFromLocal: userState
     });
-}
+};
