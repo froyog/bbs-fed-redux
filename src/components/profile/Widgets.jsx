@@ -74,24 +74,13 @@ export class Title extends React.PureComponent {
                     <h1 className="display-1">{currentTitle}</h1>
                     {
                         atMaxLevel
-                            ? <p className="helper text-muted">您已达到最高等级</p>
+                            ? <p className="helper text-muted">已达到最高等级</p>
                             : <div>
                                 <p className="helper text-muted">距离下一称号还有<strong>{pointsOfNextTitle - points}</strong>积分</p>
                                 <p className="helper text-muted">相当于水贴<strong>{Math.floor((pointsOfNextTitle-points)/2)}</strong>条</p>
                               </div>
                     }
                 </div>
-                {/* <div className="title-bottom-bar clearfix">
-                    <Button 
-                        className="flat pull-right" 
-                        bsStyle="link"
-                        onClick={this.handleClickShowMore}
-                    >
-                        <svg viewbox="0 0 12 12">
-                            <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path>
-                        </svg>
-                    </Button>
-                </div> */}
                 <div
                     className="title-details"
                     style={{ maxHeight: `${isShowDetails ? '200px' : '0'}` }}

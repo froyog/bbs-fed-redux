@@ -15,6 +15,7 @@ import NoMatch from '../components/NoMatch';
 import { connect } from 'react-redux';
 import { isMobile } from '../util.js';
 import { toggleSidebar } from '../actions/frame/sidebar';
+import { initFromLocal } from '../actions/bbsIndex';
 
 import '../styles/app.less';
 import '../styles/global.less';
@@ -27,8 +28,11 @@ class App extends React.Component {
     };
 
     componentWillMount() {
-        const { onToggleSidebar } = this.props;
+        const { onToggleSidebar, initFromLocal } = this.props;
         onToggleSidebar(!isMobile());
+
+        const user = JSON.parse(localStorage.getItem('user'));
+        initFromLocal(user);
     }
 
     render () {
@@ -62,7 +66,8 @@ const mapStateToProps = state => ({
     isOpen: state.get('sidebarIsOpen')
 });
 const mapDispatchToProps = dispatch => ({
-    onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus))
+    onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus)),
+    initFromLocal: userState => dispatch(initFromLocal(userState))
 });
 App = withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
 

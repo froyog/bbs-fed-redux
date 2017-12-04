@@ -41,6 +41,8 @@ const crossSliceReducer = (state, action) => {
     switch (action.type) {
         case 'LOGIN_SUCCESS':
             return state.set('user', fromJS(action.json.data));
+        case 'INIT':
+            return state.set('user', fromJS(action.userFromLocal));
         default:
             return state;
     }

@@ -2,6 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 import rootReducer from '../reducers/rootReducer';
 import thunk from 'redux-thunk';
 import callApi from '../middlewares/callApi';
+import localize from '../middlewares/localize';
 import RavenMiddleware from 'redux-raven-middleware';
 
 
@@ -12,6 +13,7 @@ const configureStore = preloadedState =>
         applyMiddleware(
             thunk,
             callApi,
+            localize,
             RavenMiddleware('https://de6f307b8ac24a1683da00b87ecd4b20@sentry.twtstudio.com/12')
         )
     );
