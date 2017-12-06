@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getMessages } from '../../actions/profile/messages';
+import { getMessages, refreshMessages } from '../../actions/profile/messages';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
+import { FetchingOverlay } from '../../components/common/Loading';
+import MessageBase from './MessageBase';
+
 
 class Messages extends React.Component {
     static propTypes = {
         getMessages: PropTypes.func.isRequired,
+        refreshMessages: PropTypes.func.isRequired,
         isFetching: PropTypes.bool.isRequired,
         error: PropTypes.string.isRequired,
         messages: PropTypes.arrayOf(PropTypes.shape({
@@ -35,9 +39,18 @@ class Messages extends React.Component {
     }
 
     render () {
+        const { isFetching, messages, error } = this.props;
+        const renderMessages = messages.map(message => {
+            return <MessageBase key={message.id} message={message} />;
+        });
+
+        if (!messages.length) return <p>您似乎来到了消息的荒原...</p>;
         return (
-            <p>messages</p>
-        )
+            <div>
+                { isFetching && <FetchingOverlay /> }
+                { renderMessages }
+            </div>
+        );
     }
 }
 
@@ -50,7 +63,8 @@ const mapStateToProps = state => {
     };
 };
 const mapDispatchToProps = dispatch => ({
-    getMessages: page => dispatch(getMessages(page))
+    getMessages: page => dispatch(getMessages(page)),
+    refreshMessages: () => dispatch(refreshMessages())
 });
 Messages = connect(mapStateToProps, mapDispatchToProps)(toJS(Messages));
 

@@ -57,7 +57,7 @@ const latest = (state = fromJS({
                 'error': fromJS(action.error)
             });
         case ActionTypes.INVAILDATE_LATEST:
-            return state.set('didInvaildate', true)
+            return state.set('didInvaildate', true);
         default:
             return state;
     }

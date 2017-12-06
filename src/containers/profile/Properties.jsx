@@ -34,7 +34,7 @@ const Properties = () => {
                 */}
             </Switch>
         </Card> 
-    )
+    );
 };
 
 export default Properties;

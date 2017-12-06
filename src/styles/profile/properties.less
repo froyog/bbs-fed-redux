@@ -7,7 +7,7 @@ ul.profile-nav {
 .nav-link-wrapper {
     list-style-type: none;
     display: inline-block;
-    padding: 0 5px;
+    padding-right: 10px;
     
     a {
         display: inline-block;
@@ -19,5 +19,53 @@ ul.profile-nav {
             color: @material-red;
         }
         transition: all .3s;
+    }
+}
+
+.message-wrapper {
+    position: relative;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+    font-size: 16px;
+
+    .title {
+        color: #8590a6;
+        margin-bottom: 5px;
+        .unread {
+            margin-left: 3px;
+            color: @material-red-light;
+        }
+    }
+    .meta {
+        margin-bottom: 5px;
+    }
+    .message-author-avatar {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 20px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    .message-author {
+        line-height: 30px;
+    }
+    .message-time {
+        line-height: 24px;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    button.flat {
+        padding: 0;
+        margin-right: 10px;
+    }
+
+    .reply-box {
+        padding: 10px;
+        background-color: #f8f8f8;
+        border: 1px solid #dadada;
+        border-radius: 5px;
+        margin-top: 3px;
     }
 }

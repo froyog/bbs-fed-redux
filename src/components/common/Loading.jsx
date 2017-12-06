@@ -18,7 +18,8 @@ export const FetchingOverlay = ({ fullPage }) =>
         className="fetching-overlay"
         style={{
             position: fullPage ? 'fixed' : 'absolute',
-            backgroundColor: `rgba(255, 255, 255, ${fullPage ? 1 : .6})` 
+            backgroundColor: `rgba(255, 255, 255, ${fullPage ? 1 : .6})`,
+            zIndex: fullPage ? 11 : 10
         }}
     >
         <div className="loader-inner">

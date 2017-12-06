@@ -30,10 +30,10 @@ const messages = (state = fromJS({
                 'error': action.error,
             });
         case ActionTypes.INVAILDATE_MESSAGES:
-            return state.set('didInvaildate', true)
+            return state.set('didInvaildate', true);
         default:
             return state;
     }
-}
+};
 
 export default messages;
