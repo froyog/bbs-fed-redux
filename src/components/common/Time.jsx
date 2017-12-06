@@ -20,7 +20,7 @@ const Time = ({ timestamp, absolute, ...restProps }) => {
             : new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
         if ((diff > 0 && date <= base) || (diff < 0 && date >= base)) {
-            // 在同一天
+            // on same day
             if (absDiff > 3600000) {
                 return `${Math.floor(absDiff / 3600000)} 小时${relation}`;
             } else if (absDiff > 1800000) {
@@ -63,7 +63,7 @@ const Time = ({ timestamp, absolute, ...restProps }) => {
     if (absolute || !relative) return <span {...restProps}>{timeString}</span>;
     return (
         <OverlayTrigger placement="bottom" overlay={renderTooltip(timeString)}>
-            <span {...restProps}>{relativeTime(createDate)}</span>
+            <span {...restProps}>{relative}</span>
         </OverlayTrigger>
     );
 
