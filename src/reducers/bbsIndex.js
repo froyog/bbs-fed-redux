@@ -27,17 +27,18 @@ const topTen = (state = topTenDefaultState, action) => {
     }
 };
 
-const latestDefaultState = fromJS({
+
+const latest = (state = fromJS({
     isFetching: false,
     didInvaildate: false,
     items: [],
     error: ''
-});
-
-const latest = (state = latestDefaultState, action) => {
+}), action) => {
     switch (action.type) {
         case ActionTypes.GET_LATEST_REQUEST:
-            return state.set('isFetching', true);
+            return state
+                .set('isFetching', true)
+                .set('error', '');
         case ActionTypes.GET_LATEST_SUCCESS:
             const incomingItems = fromJS(action.json.data);
             const finalItems = action.page === 0
@@ -46,7 +47,8 @@ const latest = (state = latestDefaultState, action) => {
             return Map({
                 'isFetching': false,
                 'didInvalidate': false,
-                'items': finalItems
+                'items': finalItems,
+                'error': ''
             });
         case ActionTypes.GET_LATEST_FAILURE:
             return Map({
@@ -55,7 +57,7 @@ const latest = (state = latestDefaultState, action) => {
                 'error': fromJS(action.error)
             });
         case ActionTypes.INVAILDATE_LATEST:
-            return state.set('didInvaildate', true).set('items', List());
+            return state.set('didInvaildate', true)
         default:
             return state;
     }

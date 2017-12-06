@@ -1,0 +1,23 @@
+@import '../universal.less';
+
+ul.profile-nav {
+    padding: 0;
+}
+
+.nav-link-wrapper {
+    list-style-type: none;
+    display: inline-block;
+    padding: 0 5px;
+    
+    a {
+        display: inline-block;
+        font-size: 18px;
+        color: #333;
+        &:hover, &:focus, &.active {
+            text-decoration: none;
+            font-size: 24px;
+            color: @material-red;
+        }
+        transition: all .3s;
+    }
+}

@@ -51,7 +51,7 @@ export class Title extends React.PureComponent {
                 pointsOfNextTitle: POINTS_ARRAY[nextTitleIndex] || 10000,
                 currentTitle: TITLE_ARRAY[currentTitleIndex],
                 nextTitle: TITLE_ARRAY[nextTitleIndex],
-                atMaxLevel: typeof nextTitleIndex === 'undefined' ? true : false
+                atMaxLevel: points > POINTS_ARRAY[-1] ? true : false
             });
         }
     }

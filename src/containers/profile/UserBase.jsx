@@ -6,6 +6,7 @@ import { Row, Col } from 'react-bootstrap';
 import { toJS } from '../../util';
 import RecentUpdate from '../../components/profile/RecentUpdate';
 import { Medal, Title, Friends } from '../../components/profile/Widgets';
+import Properties from './Properties';
 
 
 class UserBase extends React.Component {
@@ -17,7 +18,6 @@ class UserBase extends React.Component {
 
     render () {
         const { match: { params: { uid } }, recentUpdates, points, cThread, cPost } = this.props;
-        const renderFriends = uid === 'me' ? <Friends /> : null;
         const renderRecentUpdates = recentUpdates && <RecentUpdate recentThreads={recentUpdates} />;
         
         return (
@@ -31,10 +31,17 @@ class UserBase extends React.Component {
                             cPost={cPost}
                         />
                         <Medal />
-                        {renderFriends}
+                        {
+                            uid === 'me' &&
+                            <Friends />
+                        }
                     </Col>
                     <Col lg={8}>
                         {renderRecentUpdates}
+                        {
+                            uid === 'me' &&
+                            <Properties />
+                        }
                     </Col>
                 </Row>
             </div>

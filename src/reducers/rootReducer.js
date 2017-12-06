@@ -14,6 +14,7 @@ import newComment from './forum/newComment';
 import searchUser from './common/searchUser';
 import errorModal from './common/errorModal';
 import profiles from './profile/profile';
+import messages from './profile/messages';
 
 // TODO: need refactoring
 // const rootReducer = combineReducers({
@@ -34,6 +35,7 @@ const combinedReducer = combineReducers({
     searchUser,
     errorModalIsShow: errorModal,
     profiles,
+    messages,
     user: (state=Map()) => state
 });
 
