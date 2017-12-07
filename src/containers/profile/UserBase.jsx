@@ -24,6 +24,13 @@ class UserBase extends React.Component {
             <div>
                 <Profile uid={uid} />
                 <Row>
+                    <Col lg={8}>
+                        {
+                            uid === 'me'
+                                ? <Properties />
+                                : renderRecentUpdates
+                        }
+                    </Col>
                     <Col lg={4}>
                         <Title 
                             points={points}
@@ -34,13 +41,6 @@ class UserBase extends React.Component {
                         {
                             uid === 'me' &&
                             <Friends />
-                        }
-                    </Col>
-                    <Col lg={8}>
-                        {renderRecentUpdates}
-                        {
-                            uid === 'me' &&
-                            <Properties />
                         }
                     </Col>
                 </Row>

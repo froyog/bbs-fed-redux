@@ -11,6 +11,7 @@ ul.profile-nav {
     
     a {
         display: inline-block;
+        line-height: 1.5;
         font-size: 18px;
         color: #333;
         &:hover, &:focus, &.active {
@@ -25,9 +26,12 @@ ul.profile-nav {
 .message-wrapper {
     position: relative;
     border-bottom: 1px solid #eee;
-    padding: 10px 0;
+    padding: 15px 0;
     font-size: 16px;
-
+    
+    p { margin-bottom: 3px; }
+    strong { color: @material-red; }
+    .meta + div:not(.message-reply-post) { margin-top: 5px; }
     .title {
         color: #8590a6;
         margin-bottom: 5px;
@@ -36,20 +40,13 @@ ul.profile-nav {
             color: @material-red-light;
         }
     }
-    .meta {
-        margin-bottom: 5px;
-    }
     .message-author-avatar {
-        width: 30px;
-        height: 30px;
-        line-height: 30px;
         font-size: 20px;
-        border-radius: 50%;
         margin-right: 10px;
+
+        .avatar-size(30px);
     }
-    .message-author {
-        line-height: 30px;
-    }
+    .message-author { line-height: 30px; }
     .message-time {
         line-height: 24px;
         font-size: 14px;
@@ -61,11 +58,44 @@ ul.profile-nav {
         margin-right: 10px;
     }
 
-    .reply-box {
-        padding: 10px;
-        background-color: #f8f8f8;
+    .deleted-overlay {
+        .screen(absolute);
+        background-color: rgba(255, 255, 255, .7);
+        text-align: center;
+        padding-top: 30px;
+    }
+
+    .thread-renderer {
+        padding: 15px;
         border: 1px solid #dadada;
+        background-color: #fafafa;
         border-radius: 5px;
-        margin-top: 3px;
+        margin-bottom: 0;
+
+        & > blockquote:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+}
+
+.message-private {
+    .reply-box {
+        padding: 12px;
+        background-color: #f8f8f8;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-top: 5px;
+    }
+}
+
+.message-delete, .message-reply-post, .message-reply-thread {
+    .reply-content, .replied-content {
+        margin-left: 14px;
+        padding: 0 0 5px 21px;
+
+    }
+    .replied-content {
+        border-left: 3px solid #bbb;
     }
 }

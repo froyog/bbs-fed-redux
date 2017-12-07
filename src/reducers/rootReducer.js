@@ -43,6 +43,12 @@ const crossSliceReducer = (state, action) => {
     switch (action.type) {
         case 'LOGIN_SUCCESS':
             return state.set('user', fromJS(action.json.data));
+        case 'GET_PROFILE_SUCCESS':
+            const selfUid = state.getIn(['user', 'uid']);
+            return state.setIn(
+                ['user', 'username'],
+                state.getIn(['profiles', selfUid, 'profile', 'name'])
+            );
         case 'INIT':
             return state.set('user', fromJS(action.userFromLocal));
         default:
