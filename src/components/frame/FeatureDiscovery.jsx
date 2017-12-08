@@ -54,6 +54,13 @@ class FeatureDiscovery extends React.Component {
                 <div className="content">
                     <h1>What's new ?</h1>
                     <section className="version">
+                        <h3>alpha 0.5.0</h3>
+                        <ul>
+                            <li>个人主页完成（消息，主页，小工具）</li>
+                            <li>重构bypassing reducers</li>
+                        </ul>
+                    </section>
+                    <section className="version">
                         <h3>alpha 0.4.0</h3>
                         <ul>
                             <li>header会动态响应帖子标题</li>

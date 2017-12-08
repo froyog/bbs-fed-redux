@@ -28,3 +28,11 @@ docs and CHANGELOG working in progress
 
 ### 1.0.0+
 1. SSR
+
+## TODO when version changes
+1. git tag
+2. alpha page version
+3. version in package.json
+4. feature discovery
+    * date in Header.jsx
+    * content in FeatureDiscovery.jsx
