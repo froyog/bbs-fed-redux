@@ -23,12 +23,14 @@ ul.profile-nav {
     }
 }
 
+.message-wrapper:last-child {
+    border-bottom: 0;
+}
 .message-wrapper {
     position: relative;
     border-bottom: 1px solid #eee;
     padding: 15px 0;
     font-size: 16px;
-    
     p { margin-bottom: 3px; }
     strong { color: @material-red; }
     .meta + div:not(.message-reply-post) { margin-top: 5px; }

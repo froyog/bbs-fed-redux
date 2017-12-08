@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { toJS } from '../../util';
 import { FetchingOverlay } from '../../components/common/Loading';
 import MessageBase from './MessageBase';
+import { Button } from 'react-bootstrap';
+import { LoadingDots } from '../../components/common/Loading';
 
 
 class Messages extends React.Component {
@@ -34,25 +36,51 @@ class Messages extends React.Component {
         }))
     }
 
+    constructor () {
+        super();
+        this.state = {
+            page: 0
+        };
+
+        this.handleLoadMore = this.handleLoadMore.bind(this);
+    }
+
     componentWillMount () {
-        this.props.getMessages(0);
+        this.props.getMessages(this.state.page);
     }
 
     componentWillUnmount () {
         this.props.clearUnreadTag();
     }
 
+    handleLoadMore () {
+        const { page } = this.state;
+        this.props.getMessages(page + 1);
+        this.setState({
+            page: page + 1
+        });
+    }
+
     render () {
         const { isFetching, messages, error } = this.props;
-        const renderMessages = messages.map(message => {
-            return <MessageBase key={message.id} message={message} />;
-        });
+        console.log(messages);
 
         if (!messages.length) return <p>您似乎来到了消息的荒原...</p>;
         return (
             <div>
                 { isFetching && <FetchingOverlay /> }
-                { renderMessages }
+                { messages.map(message => {
+                    return <MessageBase key={message.id} message={message} />;
+                }) }
+                <Button
+                    className="load-more"
+                    block
+                    bsStyle="link"
+                    onClick={this.handleLoadMore}
+                    disabled={isFetching}
+                >
+                    { isFetching ? <LoadingDots /> : '更多消息' }
+                </Button>
             </div>
         );
     }

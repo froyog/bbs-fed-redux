@@ -17,7 +17,8 @@ const messages = (state = fromJS({
             const incomingMessages = fromJS(action.json.data);
             const finalItems = action.page === 0
                 ? incomingMessages
-                : incomingMessages.concat(state.getIn(['messages', 'messages']));
+                : state.get('messages').concat(incomingMessages);
+            
             return Map({
                 'isFetching': false,
                 'didInvaildate': false,
