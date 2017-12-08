@@ -49,11 +49,9 @@ class Profile extends React.Component {
                                 <span className="nickname">（{nickname}）</span>
                             </Media.Heading>
                             <p className="text-muted">{signature || '这个人很懒什么都没有留下'}</p>
-                            <p>
-                                <Label bsStyle="primary">
-                                    {points} <span className="points-content">积分</span>
-                                </Label>
-                            </p>
+                            <Label bsStyle="primary">
+                                {points} <span className="points-content">积分</span>
+                            </Label>
                         </Media.Body>
                     </Media>
                 </div>
