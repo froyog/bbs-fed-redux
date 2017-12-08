@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 import { Grid } from 'react-bootstrap';
 
 import Header from './frame/Header';
@@ -48,6 +48,7 @@ class App extends React.Component {
                 <div id="main" style={mainStyle}>
                     <Grid>
                         <Switch>
+                            <Redirect exact from='/user' to='/user/me/messages' />
                             <Route exact path='/' component={Home} />
                             <Route exact path='/forum' component={Forum} />
                             <Route path='/forum/board/:bid/page/:page' component={Board} />

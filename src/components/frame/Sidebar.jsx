@@ -25,7 +25,7 @@ const Sidebar = props => {
             <ul>
                 <li><NavLink exact to='/' activeClassName="active">首页</NavLink></li>
                 <li><NavLink to='/forum' activeClassName="active">论坛</NavLink></li>
-                <li><NavLink to='/user/me' activeClassName="active">个人中心</NavLink></li>
+                <li><NavLink to='/user' activeClassName="active">个人中心</NavLink></li>
                 <li><NavLink to='#'>排行榜</NavLink></li>
             </ul>
         </nav>
