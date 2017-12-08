@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Profile from './Profile';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
+import Profile from './Profile';
 import { toJS } from '../../util';
 import RecentUpdate from '../../components/profile/RecentUpdate';
 import { Medal, Title, Friends } from '../../components/profile/Widgets';

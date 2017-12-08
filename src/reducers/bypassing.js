@@ -4,12 +4,7 @@ const bypassing = ({ types, mapActionToKey }) => {
     if (!Array.isArray(types) || types.length !== 3) {
         throw new Error('Expected types to be an array of three elements.');
     }
-    if (!types.every(t => typeof t === 'string')) {
-        throw new Error('Expected types to be strings.');
-    }
-    if (typeof mapActionToKey !== 'function') {
-        throw new Error('Expected mapActionToKey to be a function.');
-    }
+
     const [ requestType, successType, failureType ] = types;
 
     const bypassState = (state = fromJS({
@@ -30,18 +25,21 @@ const bypassing = ({ types, mapActionToKey }) => {
                 return state
                     .set('isFetching', false)
                     .set('error', action.error);
+            default:
+                return state;
         }
     };
 
+    // if no keys specificated, return bypassing state
+    if (!mapActionToKey) return bypassState;
+
+    // get key from action if mapActionToKey provided
     return (state = Map(), action) => {
         switch (action.type) {
             case requestType:
             case successType:
             case failureType:
                 const key = mapActionToKey(action);
-                if (typeof key !== 'string') {
-                    throw new Error('Expected key to be a string');
-                }
                 return state.set(key, bypassState(state.get(key), action));
             default:
                 return state;

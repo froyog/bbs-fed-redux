@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, FormGroup, FormControl, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Button, Form, FormGroup, FormControl, Modal } from 'react-bootstrap';
+import { LoadingDots } from '../common/Loading';
 import ThreadRenderer from '../forum/ThreadRenderer';
 import Avatar from '../common/Avatar';
+import Time from '../common/Time';
 
 
 export class MessagePrivate extends React.Component {
@@ -13,14 +15,35 @@ export class MessagePrivate extends React.Component {
             isShowReplyBox: false,
             replyValue: '',
             isShowDialog: false,
-            page: 0
+            isShowSuccessOverlay: false,
+            dialogPage: 0
         };
 
         this.handleClickReply = this.handleClickReply.bind(this);
-        this.handleClickSend = this.handleClickSend.bind(this);
+        this.handleClickSendMessage = this.handleClickSendMessage.bind(this);
         this.handleReplyChange = this.handleReplyChange.bind(this);
         this.handleShowDialog = this.handleShowDialog.bind(this);
         this.handleHideDialog = this.handleHideDialog.bind(this);
+    }
+
+    componentWillReceiveProps (nextProps) {
+        const { privatePayload } = nextProps;
+        if (privatePayload && !privatePayload.isFetching &&
+            privatePayload !== this.props.privatePayload
+        ) {
+            if (!privatePayload.error) {
+                this.setState({
+                    isShowSuccessOverlay: true
+                });
+                setTimeout(() => {
+                    this.setState({
+                        isShowReplyBox: false,
+                        replyValue: '',
+                        isShowSuccessOverlay: false
+                    });
+                }, 2000);
+            }
+        }
     }
 
     handleClickReply () {
@@ -35,7 +58,7 @@ export class MessagePrivate extends React.Component {
         });
     }
 
-    handleClickSend (e) {
+    handleClickSendMessage (e) {
         e.preventDefault();
         const { onSendPrivateMessage, authorId } = this.props;
         const { replyValue } = this.state;
@@ -44,8 +67,8 @@ export class MessagePrivate extends React.Component {
 
     handleShowDialog () {
         const { authorId, onGetDialog } = this.props;
-        const { page } = this.state;
-        onGetDialog(page, authorId);
+        const { dialogPage } = this.state;
+        onGetDialog(authorId, dialogPage);
         this.setState({
             isShowDialog: true
         });
@@ -58,11 +81,11 @@ export class MessagePrivate extends React.Component {
     }
 
     render () {
-        const { restInfo: { id, content }, authorName } = this.props;
-        const { isShowReplyBox, replyValue, isShowDialog } = this.state;
+        const { restInfo: { id, content }, authorName, privatePayload, dialogState } = this.props;
+        const { isShowReplyBox, replyValue, isShowDialog, isShowSuccessOverlay } = this.state;
 
         return (
-            <div>
+            <div className="message-private">
                 <div>
                     <p>{content}</p>
                     <Button 
@@ -83,6 +106,10 @@ export class MessagePrivate extends React.Component {
                 {
                     isShowReplyBox &&
                     <Form inline className="reply-box">
+                        { 
+                            isShowSuccessOverlay &&
+                            <div className="success-overlay">私信发送成功</div>
+                        }
                         <FormGroup>
                             <FormControl 
                                 type="text" 
@@ -95,10 +122,18 @@ export class MessagePrivate extends React.Component {
                         <Button 
                             bsStyle="default" 
                             type="submit"
-                            onClick={this.handleClickSend}
-                        >
-                            发送
+                            onClick={this.handleClickSendMessage}
+                        >   
+                            发射
                         </Button>
+                        {
+                            privatePayload && privatePayload.error &&
+                            <span>{privatePayload.error}</span>
+                        }
+                        {
+                            privatePayload && privatePayload.isFetching &&
+                            <LoadingDots />
+                        }
                     </Form>
                 }
                 <Modal show={isShowDialog} onHide={this.handleHideDialog}>
@@ -106,7 +141,26 @@ export class MessagePrivate extends React.Component {
                         <Modal.Title>与{authorName}的对话列表</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-
+                        {
+                            dialogState && (dialogState.isFetching
+                                ? <LoadingDots />
+                                : dialogState.items.map(dialogMessage => {
+                                    const { tCreate, authorId, authorName, content } = dialogMessage;
+                                    return (
+                                        <div className="clearfix dialog-wrapper">
+                                            <div className="pull-left clearfix meta">
+                                                <Avatar className="pull-left avatar" id={authorId} name={authorName} imageShape="square" />
+                                                <div className="pull-left">
+                                                    <p>{authorName}</p>
+                                                    <p><Time className="time text-muted" timestamp={tCreate} /></p>
+                                                </div>
+                                            </div>
+                                            <div className="pull-left content">{content}</div>
+                                        </div>
+                                    );
+                                })
+                            )
+                        }
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.handleHideDialog}>关闭</Button>

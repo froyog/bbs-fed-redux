@@ -15,11 +15,23 @@ import searchUser from './common/searchUser';
 import errorModal from './common/errorModal';
 import profiles from './profile/profile';
 import messages from './profile/messages';
+import bypassingFactory from './bypassing';
 
-// TODO: need refactoring
-// const rootReducer = combineReducers({
-// });
-    
+import { SEND_PRIVATE_REQUEST, SEND_PRIVATE_SUCCESS, SEND_PRIVATE_FAILURE,
+    GET_DIALOG_REQUEST, GET_DIALOG_SUCCESS, GET_DIALOG_FAILURE } from '../actions/profile/messages';
+
+
+const bypassing = combineReducers({
+    sendPrivateMessage: bypassingFactory({
+        types: [SEND_PRIVATE_REQUEST, SEND_PRIVATE_SUCCESS, SEND_PRIVATE_FAILURE],
+        mapActionToKey: action => action.targetUid
+    }),
+    dialogWith: bypassingFactory({
+        types: [GET_DIALOG_REQUEST, GET_DIALOG_SUCCESS, GET_DIALOG_FAILURE],
+        mapActionToKey: action => action.withUid
+    })
+});
+
 const combinedReducer = combineReducers({
     sidebarIsOpen: sidebar,
     forumList,
@@ -36,7 +48,8 @@ const combinedReducer = combineReducers({
     errorModalIsShow: errorModal,
     profiles,
     messages,
-    user: (state=Map()) => state
+    bypassing,
+    user: (state = Map()) => state
 });
 
 const crossSliceReducer = (state, action) => {

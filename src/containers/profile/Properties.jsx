@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import { Route, Redirect, Switch, NavLink } from 'react-router-dom';
+import { Route, Switch, NavLink } from 'react-router-dom';
 import { Card } from '../../components/common/Card'; 
 import Messages from './Messages';
 

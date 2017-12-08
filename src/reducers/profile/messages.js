@@ -1,4 +1,4 @@
-import { Map, List, fromJS } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import * as ActionTypes from '../../actions/profile/messages';
 
 

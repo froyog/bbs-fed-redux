@@ -5,8 +5,16 @@ import Avatar from '../../components/common/Avatar';
 import { MessagePrivate, MessageDeleted, MessageReply, MessageMentioned } from '../../components/profile/Messages';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
+import { sendPrivateMessage, getDialog } from '../../actions/profile/messages';
 
 class MessageBase extends React.Component {
+    static propTypes = {
+        selfUid: PropTypes.number,
+        selfName: PropTypes.string,
+        sendPrivateMessage: PropTypes.func.isRequired,
+        getDialog: PropTypes.func.isRequired
+    }
+
     constructor () {
         super();
         
@@ -37,7 +45,7 @@ class MessageBase extends React.Component {
 
     _mapTagToContent (tag) {
         const { message: { authorName, authorId, ...restInfo }, getDialog, 
-            sendPrivateMessage } = this.props;
+            sendPrivateMessage, privateMessageState, dialogState } = this.props;
         switch (tag) {
             case 1:
                 return (
@@ -46,7 +54,9 @@ class MessageBase extends React.Component {
                         authorName={authorName}
                         authorId={authorId}
                         onGetDialog={getDialog}
+                        dialogState={dialogState[authorId]}
                         onSendPrivateMessage={sendPrivateMessage}
+                        privatePayload={privateMessageState[authorId]}
                     />
                 );
             case 2:
@@ -111,15 +121,21 @@ class MessageBase extends React.Component {
 }
 
 const mapStateToProps = state => {
+    const user = state.get('user');
+    const privateMessageState = state.getIn(['bypassing', 'sendPrivateMessage']);
+    const dialogState = state.getIn(['bypassing', 'dialogWith']);
+
     return {
-        selfUid: state.getIn(['user', 'uid']),
-        selfName: state.getIn(['user', 'username'])
+        selfUid: user.get('uid'),
+        selfName: user.get('username'),
+        privateMessageState: privateMessageState,
+        dialogState: dialogState
     };
 };
 const mapDispatchToProps = dispatch => ({
     getDialog: (page, authorId) => dispatch(getDialog(page, authorId)),
-    sendPrivateMessage: (authorId, content) => dispatch(sendPrivateMessage(authorId, content))
+    sendPrivateMessage: (targetUid, content) => dispatch(sendPrivateMessage(targetUid, content))
 });
-MessageBase = connect(mapStateToProps)(toJS(MessageBase));
+MessageBase = connect(mapStateToProps, mapDispatchToProps)(toJS(MessageBase));
 
 export default MessageBase;

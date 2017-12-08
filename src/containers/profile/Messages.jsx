@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getMessages, refreshMessages } from '../../actions/profile/messages';
+import { getMessages, refreshMessages, clearUnreadTag } from '../../actions/profile/messages';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
 import { FetchingOverlay } from '../../components/common/Loading';
@@ -38,6 +38,10 @@ class Messages extends React.Component {
         this.props.getMessages(0);
     }
 
+    componentWillUnmount () {
+        this.props.clearUnreadTag();
+    }
+
     render () {
         const { isFetching, messages, error } = this.props;
         const renderMessages = messages.map(message => {
@@ -64,7 +68,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => ({
     getMessages: page => dispatch(getMessages(page)),
-    refreshMessages: () => dispatch(refreshMessages())
+    refreshMessages: () => dispatch(refreshMessages()),
+    clearUnreadTag: () => dispatch(clearUnreadTag())
 });
 Messages = connect(mapStateToProps, mapDispatchToProps)(toJS(Messages));
 
