@@ -19,7 +19,7 @@ import bypassingFactory from './bypassing';
 
 import { SEND_PRIVATE_REQUEST, SEND_PRIVATE_SUCCESS, SEND_PRIVATE_FAILURE,
     GET_DIALOG_REQUEST, GET_DIALOG_SUCCESS, GET_DIALOG_FAILURE } from '../actions/profile/messages';
-
+import { GET_UNREAD_REQUEST, GET_UNREAD_SUCCESS, GET_UNREAD_FAILURE } from '../actions/frame/sidebar';
 
 const bypassing = combineReducers({
     sendPrivateMessage: bypassingFactory({
@@ -29,7 +29,8 @@ const bypassing = combineReducers({
     dialogWith: bypassingFactory({
         types: [GET_DIALOG_REQUEST, GET_DIALOG_SUCCESS, GET_DIALOG_FAILURE],
         mapActionToKey: action => action.withUid
-    })
+    }),
+    unreadMessage: bypassingFactory({ types: [GET_UNREAD_REQUEST, GET_UNREAD_SUCCESS, GET_UNREAD_FAILURE] })
 });
 
 const combinedReducer = combineReducers({
