@@ -18,15 +18,13 @@ docs and CHANGELOG working in progress
 
 ### alpha-0.6.0
 1. other parts of profile
-
-### alpha-0.7.0
-1. login/register of passport
-2. dock TwT account logging in
+2. widgets on index
 
 ### 1.0.0
-1. migrating to React 16
+1. login/register of passport
 
 ### 1.0.0+
+1. migrating to React 16
 1. SSR
 
 ## TODO when version changes

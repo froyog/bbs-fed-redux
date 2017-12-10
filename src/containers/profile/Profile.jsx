@@ -47,13 +47,14 @@ class ProfileWrapper extends React.Component {
     }
 
     render () {
-        const { isFetching, profile, error, thisUid } = this.props;
+        const { isFetching, profile, error, thisUid, uid } = this.props;
         if (!profile || isFetching) {
             return <FetchingOverlay fullPage />;
         }
 
         return (
             <Profile 
+                isSelf={uid === 'me'}
                 uid={thisUid}
                 profile={profile} 
             />
