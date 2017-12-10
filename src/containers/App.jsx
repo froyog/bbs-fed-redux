@@ -11,10 +11,6 @@ import Board from './forum/BoardWrapper';
 import Thread from './forum/ThreadWrapper';
 import Home from './bbs-index/Home';
 import UserBase from './profile/UserBase';
-<<<<<<< HEAD
-import NoMatch from '../components/NoMatch';
-=======
->>>>>>> tom
 import { connect } from 'react-redux';
 import { isMobile } from '../util.js';
 import { toggleSidebar } from '../actions/frame/sidebar';
