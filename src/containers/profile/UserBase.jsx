@@ -16,6 +16,14 @@ class UserBase extends React.Component {
         cPost: PropTypes.number
     }
 
+    componentWillReceiveProps (nextProps) {
+        const {selfUid, match, history } = nextProps;
+        if (selfUid === match.params.uid) {
+            // it is me
+            history.push('/user/me/messages');
+        }
+    }
+
     render () {
         const { match: { params: { uid } }, recentUpdates, points, cThread, cPost } = this.props;
         const renderRecentUpdates = recentUpdates && <RecentUpdate recentThreads={recentUpdates} />;
@@ -51,15 +59,17 @@ class UserBase extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     let uid = ownProps.match.params.uid;
+    const selfUid = state.getIn(['user', 'uid']);
     if (uid === 'me') {
         // get self uid from state
-        uid = state.getIn(['user', 'uid']);
+        uid = selfUid;
     }
 
     const profileState = state.getIn(['profiles', +uid]);
     if (!profileState) return {};
 
     return {
+        selfUid: selfUid,
         recentUpdates: profileState.getIn(['profile', 'recent']),
         points: profileState.getIn(['profile', 'points']),
         cThread: profileState.getIn(['profile', 'cThread']),

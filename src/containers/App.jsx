@@ -11,7 +11,10 @@ import Board from './forum/BoardWrapper';
 import Thread from './forum/ThreadWrapper';
 import Home from './bbs-index/Home';
 import UserBase from './profile/UserBase';
+<<<<<<< HEAD
 import NoMatch from '../components/NoMatch';
+=======
+>>>>>>> tom
 import { connect } from 'react-redux';
 import { isMobile } from '../util.js';
 import { toggleSidebar } from '../actions/frame/sidebar';
@@ -48,6 +51,7 @@ class App extends React.Component {
                 <div id="main" style={mainStyle}>
                     <Grid>
                         <Switch>
+<<<<<<< HEAD
                             <Redirect exact from='/user' to='/user/me/messages' />
                             <Route exact path='/' component={Home} />
                             <Route exact path='/forum' component={Forum} />
@@ -55,6 +59,15 @@ class App extends React.Component {
                             <Route path='/forum/thread/:tid/page/:page' component={Thread} />
                             <Route path='/user/:uid' component={UserBase} />
                             <Route component={NoMatch} />
+=======
+                            <Redirect exact from="/user" to="/user/me/messages" />
+                            <Route exact path="/" component={Home} />
+                            <Route exact path="/forum" component={Forum} />
+                            <Route path="/forum/board/:bid/page/:page" component={Board} />
+                            <Route path="/forum/thread/:tid/page/:page" component={Thread} />
+                            <Route path="/user/:uid" component={UserBase} />
+                            <Redirect from="*" to="/404" />
+>>>>>>> tom
                         </Switch>
                     </Grid>
                 </div>

@@ -3,9 +3,8 @@ import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import App from './containers/App';
+import NotFound from './components/NotFound';
 import Passport from './containers/passport/Passport';
-import Welcome from './alpha/Welcome';
-import PrivateRoute from './alpha/PrivateRoute';
 
 import './styles/icon-font/iconfont.css';
 
@@ -16,9 +15,9 @@ const Root = () =>
     <Provider store={store}>
         <Router>
             <Switch>
-                <Route path='/welcome' component={Welcome} />
-                <Route path='/passport' component={Passport} />
-                <PrivateRoute path='/' component={App} />
+                <Route path="/passport" component={Passport} />
+                <Route path="/404" component={NotFound} />
+                <Route path="/" component={App} />
             </Switch>
         </Router>
     </Provider>;
