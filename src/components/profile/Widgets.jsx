@@ -27,33 +27,31 @@ export class Title extends React.PureComponent {
             atMaxLevel: false
         };
 
-        this.handleClickShowMore = this.handleClickShowMore.bind(this);
+        this._mapPointsToTitle = this._mapPointsToTitle.bind(this);
     }
 
-    componentWillReceiveProps (nextProps) {
-        if (typeof nextProps.points !== 'undefined') {
-            const { cPost, cThread, points } = nextProps;
-            const TITLE_ARRAY = ['新手上路', '一般站友', '中级站友', '高级站友', '老站友', '长老级', '本站元老', '开国大佬'],
-                POINTS_ARRAY = [0, 100, 500, 1000, 2000, 4000, 8000, 10000];
-            
-            let eachTitleIndex = 0, currentTitleIndex, nextTitleIndex;
-            for (eachTitleIndex; eachTitleIndex < POINTS_ARRAY.length; eachTitleIndex++) {
-                if (POINTS_ARRAY[eachTitleIndex] < points) {
-                    currentTitleIndex = eachTitleIndex;
-                } else {
-                    nextTitleIndex = eachTitleIndex;
-                    break;
-                }
+    _mapPointsToTitle () {
+        const { cPost, cThread, points } = this.props;
+        const TITLE_ARRAY = ['新手上路', '一般站友', '中级站友', '高级站友', '老站友', '长老级', '本站元老', '开国大佬'],
+            POINTS_ARRAY = [0, 100, 500, 1000, 2000, 4000, 8000, 10000];
+        
+        let eachTitleIndex = 0, currentTitleIndex, nextTitleIndex;
+        for (eachTitleIndex; eachTitleIndex < POINTS_ARRAY.length; eachTitleIndex++) {
+            if (POINTS_ARRAY[eachTitleIndex] < points) {
+                currentTitleIndex = eachTitleIndex;
+            } else {
+                nextTitleIndex = eachTitleIndex;
+                break;
             }
-    
-            this.setState({
-                pointsOfCurrentTitle: POINTS_ARRAY[currentTitleIndex],
-                pointsOfNextTitle: POINTS_ARRAY[nextTitleIndex] || 10000,
-                currentTitle: TITLE_ARRAY[currentTitleIndex],
-                nextTitle: TITLE_ARRAY[nextTitleIndex],
-                atMaxLevel: points > POINTS_ARRAY[-1] ? true : false
-            });
         }
+
+        return {
+            pointsOfCurrentTitle: POINTS_ARRAY[currentTitleIndex],
+            pointsOfNextTitle: POINTS_ARRAY[nextTitleIndex] || 10000,
+            currentTitle: TITLE_ARRAY[currentTitleIndex],
+            nextTitle: TITLE_ARRAY[nextTitleIndex],
+            atMaxLevel: points > POINTS_ARRAY[-1] ? true : false
+        };
     }
 
     handleClickShowMore () {
@@ -63,9 +61,9 @@ export class Title extends React.PureComponent {
     }
 
     render () {
-        const { isShowDetails, pointsOfCurrentTitle, pointsOfNextTitle, 
-            currentTitle, nextTitle, atMaxLevel } = this.state;
         const { cPost, cThread, points } = this.props;
+        const { isShowDetails, pointsOfCurrentTitle, pointsOfNextTitle, 
+            currentTitle, nextTitle, atMaxLevel } = this._mapPointsToTitle();
 
         return (
             <Card title="当前称号" className="card-small">
