@@ -13,8 +13,8 @@ export const fetchProfile = (uid, authentication, isMyself) => {
         return {
             [CALL_API]: {
                 types: [GET_MYSELF_PROFILE_REQUEST, 
-                        GET_MYSELF_PROFILE_SUCCESS, 
-                        GET_MYSELF_PROFILE_FAILURE],
+                    GET_MYSELF_PROFILE_SUCCESS, 
+                    GET_MYSELF_PROFILE_FAILURE],
                 apiPath: 'home',
                 request: {
                     method: 'GET',

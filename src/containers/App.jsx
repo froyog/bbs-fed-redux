@@ -14,7 +14,8 @@ import UserBase from './profile/UserBase';
 import { connect } from 'react-redux';
 import { isMobile } from '../util.js';
 import { toggleSidebar } from '../actions/frame/sidebar';
-import { initFromLocal } from '../actions/bbsIndex';
+import { initFromLocal } from '../actions/init';
+import { getProfileIfNeeded } from '../actions/profile/profile';
 
 import '../styles/app.less';
 import '../styles/global.less';
@@ -27,11 +28,14 @@ class App extends React.Component {
     };
 
     componentWillMount() {
-        const { onToggleSidebar, initFromLocal } = this.props;
+        const { onToggleSidebar, initFromLocal, getSelfProfile } = this.props;
+
         onToggleSidebar(!isMobile());
 
         const user = JSON.parse(localStorage.getItem('user'));
         initFromLocal(user);
+
+        getSelfProfile();
     }
 
     render () {
@@ -67,7 +71,8 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
     onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus)),
-    initFromLocal: userState => dispatch(initFromLocal(userState))
+    initFromLocal: userState => dispatch(initFromLocal(userState)),
+    getSelfProfile: () => dispatch(getProfileIfNeeded('me'))
 });
 App = withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
 

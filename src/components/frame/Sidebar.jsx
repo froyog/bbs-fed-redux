@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { Badge } from 'react-bootstrap';
+import { Badge, Button } from 'react-bootstrap';
 import '../../styles/frame/sidebar.less';
 import Avatar from '../common/Avatar';
 import { isMobile } from '../../util';
 
 
-const Sidebar = ({ isOpen, unreadMessageCount, onClickNav }) => {
+const Sidebar = ({ isOpen, unreadMessageCount, onClickNav, 
+    selfName, selfSignature, isLogin}) => {
+
     const sidebarOpenStyle = {
         'transform': `translateX(${isOpen ? '0' : '-100%'})`
     };
@@ -25,11 +27,32 @@ const Sidebar = ({ isOpen, unreadMessageCount, onClickNav }) => {
             role="navigation"
             style={sidebarOpenStyle}
         >
-            <div className="avatar">
-                <Avatar id={18480} />
-                <p className="username">testuser</p>
-                <p>scarlet0345@gmail.com</p>
-            </div>
+            { 
+                isLogin
+                    ? <div className="avatar">
+                        <Avatar id={18480} />
+                        <p className="username">{selfName}</p>
+                        <p>{selfSignature}</p>
+                    </div>
+                    : <div className="avatar">
+                        <Avatar id={null} />
+                        <p className="not-login">您当前未登录</p>
+                        <p>
+                            <Button 
+                                href="/passport/login" 
+                                className="raised login"
+                            >
+                                登录
+                            </Button>
+                            <Button 
+                                href="/passport/register" 
+                                className="raised login"
+                            >
+                                注册
+                            </Button>
+                        </p>
+                    </div>
+            }
             <ul onClick={handleClickNav}>
                 <li><NavLink exact to='/' activeClassName="active">首页</NavLink></li>
                 <li><NavLink to='/forum' activeClassName="active">论坛</NavLink></li>

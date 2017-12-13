@@ -4,6 +4,7 @@ import * as ActionTypes from '../../actions/passport/login';
 
 const defaultState = fromJS({
     'isFetching': false,
+    'success': false,
     'error': ''
 });
 
@@ -14,11 +15,13 @@ const Login = (state = defaultState, action) => {
         case ActionTypes.LOGIN_SUCCESS:
             return Map({
                 'isFetching': false,
+                'success': true,
                 'error': ''
             });
         case ActionTypes.LOGIN_FAILURE:
             return Map({
                 'isFetching': false,
+                'success': false,
                 'error': fromJS(action.error)
             });
         default:

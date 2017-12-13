@@ -4,19 +4,20 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
-const postLoginInfo = loginInfo => ({
-    [CALL_API]: {
-        types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
-        apiPath: `passport/login`,
-        request: {
-            method: 'POST',
-            body: JSON.stringify(loginInfo),
-            headers: {
-                contentType: 'application/json'
+export const login = (username, password) => dispatch =>
+    dispatch({
+        [CALL_API]: {
+            types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
+            apiPath: `passport/login`,
+            request: {
+                method: 'POST',
+                body: JSON.stringify({
+                    username: username,
+                    password:password
+                }),
+                headers: {
+                    contentType: 'application/json'
+                }
             }
         }
-    }
-});
-
-export const login = loginInfo => dispatch =>
-    dispatch(postLoginInfo(loginInfo));
+    })

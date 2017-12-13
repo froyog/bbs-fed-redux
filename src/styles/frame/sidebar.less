@@ -43,19 +43,33 @@
         overflow: hidden;
         img {
             width: 39%;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         p {
             color: white;
             margin-bottom: 0;
-            padding-left: 5px;
             word-break: break-all;
             opacity: .9;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-width: 165px;
         }
         p.username {
             opacity: 1;
             font-weight: bold;
             font-size: 15px;
+        }
+        p.not-login { margin-bottom: 5px; }
+        .login {
+            background-color: transparent;
+            color: #fff;
+            border-color: rgba(255, 255, 255, .5);
+            margin-right: 5px;
+            transition: all .3s;
+            &:hover {
+                background-color: rgba(255, 255, 255, .35);
+            }
         }
     }
 
