@@ -1,8 +1,8 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { Route, Switch, NavLink } from 'react-router-dom';
 import { Card } from '../../components/common/Card'; 
 import Messages from './Messages';
+import Collections from './Collections';
 
 import '../../styles/profile/properties.less';
 
@@ -28,10 +28,8 @@ const Properties = () => {
             </ul>
             <Switch>
                 <Route path='/user/me/messages' component={Messages} />
-                {/* 
-                    <Route path='/user/me/collections' component={} />
-                    <Route path='/user/me/publish' component={} /> 
-                */}
+                <Route path='/user/me/collections' component={Collections} />
+                {/* <Route path='/user/me/publish' component={} />  */}
             </Switch>
         </Card> 
     );
