@@ -40,8 +40,7 @@ export const getProfileIfNeeded = locationUid => (dispatch, getState) => {
         ? getState().getIn(['user', 'uid'])
         : locationUid;
 
-    const profileByUid = getState().getIn(['profile', uid]);
-    console.log(profileByUid);
+    const profileByUid = getState().getIn(['profiles', uid]);
     if (profileByUid) {
         return null;
     }
