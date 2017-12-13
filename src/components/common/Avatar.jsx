@@ -33,6 +33,14 @@ class ImageFeed extends React.Component {
         this.handleError = this.handleError.bind(this);
     }
 
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.id !== this.props.id) {
+            this.setState({
+                src: `https://bbs.tju.edu.cn/api/${nextProps.type}/${nextProps.id}/avatar`
+            });
+        }
+    }
+
     handleError () {
         const { type, name, id, anonymous } = this.props;
         if (type === 'user') {
