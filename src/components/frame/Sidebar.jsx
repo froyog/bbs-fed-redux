@@ -8,7 +8,7 @@ import { isMobile } from '../../util';
 
 
 const Sidebar = ({ isOpen, unreadMessageCount, onClickNav, 
-    selfName, selfSignature, isLogin}) => {
+    selfName, selfSignature, isLogin, onLogout}) => {
 
     const sidebarOpenStyle = {
         'transform': `translateX(${isOpen ? '0' : '-100%'})`
@@ -19,6 +19,9 @@ const Sidebar = ({ isOpen, unreadMessageCount, onClickNav,
     const handleClickNav = () => {
         if (!isMobile()) return;
         onClickNav && onClickNav();
+    }
+    const handleLogout = () => {
+        onLogout && onLogout();
     }
 
     return (
@@ -32,7 +35,13 @@ const Sidebar = ({ isOpen, unreadMessageCount, onClickNav,
                     ? <div className="avatar">
                         <Avatar id={18480} />
                         <p className="username">{selfName}</p>
-                        <p>{selfSignature}</p>
+                        <p className="signature">{selfSignature}</p>
+                        <Button 
+                            className="raised opearate logout"
+                            onClick={handleLogout}
+                        >
+                            登出
+                        </Button>
                     </div>
                     : <div className="avatar">
                         <Avatar id={null} />
@@ -40,13 +49,13 @@ const Sidebar = ({ isOpen, unreadMessageCount, onClickNav,
                         <p>
                             <Button 
                                 href="/passport/login" 
-                                className="raised login"
+                                className="raised opearate"
                             >
                                 登录
                             </Button>
                             <Button 
                                 href="/passport/register" 
-                                className="raised login"
+                                className="raised opearate"
                             >
                                 注册
                             </Button>
@@ -66,7 +75,13 @@ const Sidebar = ({ isOpen, unreadMessageCount, onClickNav,
 };
 
 Sidebar.propTypes = {
-    isOpen: PropTypes.bool.isRequired
+    isOpen: PropTypes.bool.isRequired,
+    onClickNav: PropTypes.func.isRequired,
+    unreadMessageCount: PropTypes.number,
+    onLogout: PropTypes.func.isRequired,
+    selfName: PropTypes.string,
+    selfSignature: PropTypes.string,
+    isLogin: PropTypes.bool,
 };
 
 export default Sidebar;

@@ -1,5 +1,5 @@
 import { fromJS, Map } from 'immutable';
-import * as ActionTypes from '../../actions/passport/login';
+import * as ActionTypes from '../../actions/passport/log-io';
 
 
 const defaultState = fromJS({

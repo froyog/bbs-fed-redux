@@ -21,6 +21,7 @@ import { SEND_PRIVATE_REQUEST, SEND_PRIVATE_SUCCESS, SEND_PRIVATE_FAILURE,
 import { GET_UNREAD_REQUEST, GET_UNREAD_SUCCESS, GET_UNREAD_FAILURE } from '../actions/frame/sidebar';
 import { GET_COLLECTIONS_REQUEST, GET_COLLECTIONS_SUCCESS, GET_COLLECTIONS_FAILURE,
     GET_FOLLOWINGS_REQUEST, GET_FOLLOWINGS_SUCCESS, GET_FOLLOWINGS_FAILURE } from '../actions/profile/collections';
+import { LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE } from '../actions/passport/log-io';
 
 const bypassing = combineReducers({
     sendPrivateMessage: bypassingFactory({
@@ -34,6 +35,7 @@ const bypassing = combineReducers({
     unreadMessage: bypassingFactory({ types: [GET_UNREAD_REQUEST, GET_UNREAD_SUCCESS, GET_UNREAD_FAILURE] }),
     collections: bypassingFactory({ types: [GET_COLLECTIONS_REQUEST, GET_COLLECTIONS_SUCCESS, GET_COLLECTIONS_FAILURE] }),
     followings: bypassingFactory({ types: [GET_FOLLOWINGS_REQUEST, GET_FOLLOWINGS_SUCCESS, GET_FOLLOWINGS_FAILURE] }),
+    logout: bypassingFactory({ types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE] }),
 });
 
 const combinedReducer = combineReducers({
@@ -67,6 +69,8 @@ const crossSliceReducer = (state, action) => {
             );
         case 'INIT':
             return state.set('user', fromJS(action.userFromLocal));
+        case 'LOGOUT_SUCCESS':
+            return state.set('user', fromJS(null));
         default:
             return state;
     }

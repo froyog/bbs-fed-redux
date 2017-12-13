@@ -70,6 +70,7 @@ class Login extends React.Component {
                             : '登录'
                     }
                 </Button>
+                <p>{error}</p>
             </form>
         );
     }

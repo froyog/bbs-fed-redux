@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { toggleSidebar, getUnreadMessage } from '../../actions/frame/sidebar';
+import { logout } from '../../actions/passport/log-io';
 import Sidebar from '../../components/frame/Sidebar';
 import { toJS } from '../../util';
 
@@ -29,6 +30,7 @@ class SidebarWrapper extends React.Component {
         super();
 
         this.handleClickNav = this.handleClickNav.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
     }
 
     componentWillMount () {
@@ -41,13 +43,18 @@ class SidebarWrapper extends React.Component {
         onToggleSidebar && onToggleSidebar(false);
     }
 
+    handleLogout () {
+        const { logout } = this.props;
+        logout && logout();
+    }
+
     render () {
-        const { isOpen, onToggleSidebar, unreadMessageCount, selfProfile, isLogin } = this.props;
+        const { isOpen, onToggleSidebar, unreadMessageCount, selfProfile, isLogin, logoutState } = this.props;
         const overlayStyle = {
             'opacity': isOpen ? '0.5' : '0',
             'visibility': isOpen ? 'visible' : 'hidden'
         };
-
+        console.log(logoutState, isLogin);
         let name, signature;
         if (selfProfile && selfProfile.profile) {
             name = selfProfile.profile.name;
@@ -63,6 +70,7 @@ class SidebarWrapper extends React.Component {
                     selfName={name}
                     selfSignature={signature}
                     isLogin={isLogin}
+                    onLogout={this.handleLogout}
                 />
                 <div
                     className="sidebar-overlay"
@@ -83,12 +91,14 @@ const mapStateToProps = state => {
         isOpen: state.get('sidebarIsOpen'),
         unreadMessageCount: state.getIn(['bypassing', 'unreadMessage', 'items']),
         selfProfile: selfProfile,
-        isLogin: !!(state.getIn(['user', 'token']))
+        isLogin: !!(state.getIn(['user', 'token'])),
+        logoutState: state.getIn(['bypassing', 'logout', 'items'])
     };
 };
 const mapDispatchToProps = dispatch => ({
     onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus)),
-    getUnreadMessage: () => dispatch(getUnreadMessage())
+    getUnreadMessage: () => dispatch(getUnreadMessage()),
+    logout: () => dispatch(logout())
 });
 SidebarWrapper = withRouter(connect(mapStateToProps, mapDispatchToProps)(toJS(SidebarWrapper)));
 

@@ -35,15 +35,28 @@
     }
 
     .avatar {
+        position: relative;
         background: url(../../assests/material2.jpg) no-repeat fixed;
         background-size: 400px;
         width: 200px;
         height: 160px;
         padding: 20px 10px 0 20px;
         overflow: hidden;
+
+        &:hover {
+            & .logout {
+                visibility: visible;
+                opacity: 1;
+            }
+            & p.signature {
+                visibility: hidden;
+                opacity: 0;
+            }
+        }
+
         img {
             width: 39%;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
         }
         p {
             color: white;
@@ -54,6 +67,8 @@
             text-overflow: ellipsis;
             overflow: hidden;
             max-width: 165px;
+            transition: opacity .4s;
+            margin-left: 3px;
         }
         p.username {
             opacity: 1;
@@ -61,7 +76,7 @@
             font-size: 15px;
         }
         p.not-login { margin-bottom: 5px; }
-        .login {
+        .opearate {
             background-color: transparent;
             color: #fff;
             border-color: rgba(255, 255, 255, .5);
@@ -70,6 +85,14 @@
             &:hover {
                 background-color: rgba(255, 255, 255, .35);
             }
+        }
+        .logout {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            top: 115px;
+            left: 20px;
+            transition: opacity .4s;
         }
     }
 

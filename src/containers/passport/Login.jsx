@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
-import { login } from '../../actions/passport/login';
+import { login } from '../../actions/passport/log-io';
 import Login from '../../components/passport/Login';
 
 
