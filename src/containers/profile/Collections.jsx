@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
 import { getFollowingsIfNeeded, getCollectionsIfNeeded,
-    onDeleteCollection, onDeleteFollowing } from '../../actions/profile/collections';
+    deleteCollection, deleteFollowing } from '../../actions/profile/collections';
 import { LoadingDots } from '../../components/common/Loading';
 import { Collections, Followings } from '../../components/profile/Collections';
 
@@ -45,28 +45,10 @@ class CollectionsWrapper extends React.Component {
         })
     }
 
-    constructor () {
-        super();
-
-        this.handleDeleteFollowing = this.handleDeleteFollowing.bind(this);
-        this.handleDeleteCollection = this.handleDeleteCollection.bind(this);
-    }
-
     componentWillMount () {
         const { getFollowings, getCollections } = this.props;
         getFollowings && getFollowings();
         getCollections && getCollections();
-    }
-
-    handleDeleteFollowing (bid) {
-        const { onDeleteFollowing } = this.props;
-        onDeleteFollowing && onDeleteFollowing(bid);
-    }
-
-    handleDeleteCollection (tid) {
-        console.log(tid);
-        const { onDeleteCollection } = this.props;
-        onDeleteCollection && onDeleteCollection(tid);
     }
 
     render () {
@@ -81,7 +63,6 @@ class CollectionsWrapper extends React.Component {
                             <h4>关注的板块</h4>
                             <Followings 
                                 items={followings} 
-                                onDeleteFollowing={this.handleDeleteFollowing}
                             />
                         </div>
                         : <h4>您没有关注任何板块</h4>
@@ -92,7 +73,6 @@ class CollectionsWrapper extends React.Component {
                             <h4>收藏的帖子</h4>
                             <Collections 
                                 items={collections} 
-                                onDeleteCollection={this.handleDeleteCollection}
                             />
                         </div>
                         : <h4>您没有收藏任何帖子</h4>
@@ -105,14 +85,12 @@ class CollectionsWrapper extends React.Component {
 const mapStateToProps = state => {
     return {
         collectionsState: state.getIn(['bypassing', 'collections']),
-        followingsState: state.getIn(['bypassing', 'followings'])
+        followingsState: state.getIn(['bypassing', 'followings']),
     };
 };
 const mapDispatchToProps = dispatch => ({
     getCollections: () => dispatch(getCollectionsIfNeeded()),
     getFollowings: () => dispatch(getFollowingsIfNeeded()),
-    onDeleteCollection: tid => dispatch(deleteCollection(tid)),
-    onDeleteFollowing: bid => dispatch(deleteFollowing(bid))
 });
 CollectionsWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(CollectionsWrapper));
 

@@ -12,19 +12,19 @@ export const Followings = ({ items: followings, onDeleteFollowing }) => {
                 <tr>
                     <th>讨论区</th>
                     <th>板块</th>
+                    <th>简介</th>
                     <th>帖子数</th>
-                    <th>操作</th>
                 </tr>
             </thead>
             <tbody>
                 {followings.map(following => {
-                    const { id, name, forumName, cThread } = following;
+                    const { id, name, forumName, cThread, info } = following;
                     return (
                         <tr key={id}>
                             <td>{forumName}</td>
                             <td><Link to={`/forum/board/${id}/page/1`}>{name}</Link></td>
+                            <td className="thread-title">{info}</td>
                             <td>{cThread}</td>
-                            <td><a onClick={() => onDeleteFollowing(id)}>不再关注</a></td>
                         </tr>
                     );
                 })}
@@ -51,13 +51,13 @@ export const Collections = ({ items: collections, onDeleteCollection }) =>
             <tr>
                 <th>板块</th>
                 <th>帖子标题</th>
+                <th>作者</th>
                 <th>最后回复时间</th>
-                <th>操作</th>
             </tr>
         </thead>
         <tbody>
             {collections.map(collection => {
-                const { id, title, boardId, boardName, tReply } = collection;
+                const { id, title, boardId, boardName, tReply, authorId, authorName } = collection;
                 return (
                     <tr key={id}>
                         <td>
@@ -66,8 +66,10 @@ export const Collections = ({ items: collections, onDeleteCollection }) =>
                         <td className="thread-title">
                             <Link to={`/forum/thread/${id}/page/1`}>{title}</Link>
                         </td>
+                        <td>
+                            <Link to={`/user/${authorId}`}>{authorName}</Link>
+                        </td>
                         <td><Time timestamp={tReply} absolute /></td>
-                        <td><a onClick={() => onDeleteCollection(id)}>取消收藏</a></td>
                     </tr>
                 );
             })}
