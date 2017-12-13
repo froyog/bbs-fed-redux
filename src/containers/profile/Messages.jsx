@@ -50,7 +50,8 @@ class Messages extends React.Component {
     }
 
     componentWillUnmount () {
-        this.props.clearUnreadTag();
+        const { clearUnreadTag } = this.props;
+        clearUnreadTag && clearUnreadTag();
     }
 
     handleLoadMore () {

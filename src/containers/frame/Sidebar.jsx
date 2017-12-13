@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { toggleSidebar, getUnreadMessage } from '../../actions/frame/sidebar';
 import { logout } from '../../actions/passport/log-io';
 import Sidebar from '../../components/frame/Sidebar';
@@ -38,6 +38,14 @@ class SidebarWrapper extends React.Component {
         getUnreadMessage && getUnreadMessage();
     }
 
+    componentWillReceiveProps (nextProps) {
+        const { logoutMessage, logoutIsFetching, history } = nextProps;
+        console.log(logoutIsFetching, this.props.logoutIsFetching);
+        if (logoutMessage === '请求成功' && logoutIsFetching !== this.props.logoutIsFetching) {
+            history.push('/');
+        }
+    }
+
     handleClickNav () {
         const { onToggleSidebar } = this.props;
         onToggleSidebar && onToggleSidebar(false);
@@ -49,12 +57,11 @@ class SidebarWrapper extends React.Component {
     }
 
     render () {
-        const { isOpen, onToggleSidebar, unreadMessageCount, selfProfile, isLogin, logoutState } = this.props;
+        const { isOpen, onToggleSidebar, unreadMessageCount, selfProfile, isLogin } = this.props;
         const overlayStyle = {
             'opacity': isOpen ? '0.5' : '0',
             'visibility': isOpen ? 'visible' : 'hidden'
         };
-        console.log(logoutState, isLogin);
         let name, signature;
         if (selfProfile && selfProfile.profile) {
             name = selfProfile.profile.name;
@@ -86,13 +93,15 @@ class SidebarWrapper extends React.Component {
 const mapStateToProps = state => {
     const selfUid = state.getIn(['user', 'uid']);
     const selfProfile = state.getIn(['profiles', selfUid]);
+    const logoutState = state.getIn(['bypassing', 'logout']);
 
     return {
         isOpen: state.get('sidebarIsOpen'),
         unreadMessageCount: state.getIn(['bypassing', 'unreadMessage', 'items']),
         selfProfile: selfProfile,
         isLogin: !!(state.getIn(['user', 'token'])),
-        logoutState: state.getIn(['bypassing', 'logout', 'items'])
+        logoutMessage: logoutState.get('items'),
+        logoutIsFetching: logoutState.get('isFetcting')
     };
 };
 const mapDispatchToProps = dispatch => ({

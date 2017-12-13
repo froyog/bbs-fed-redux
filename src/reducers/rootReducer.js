@@ -70,7 +70,9 @@ const crossSliceReducer = (state, action) => {
         case 'INIT':
             return state.set('user', fromJS(action.userFromLocal));
         case 'LOGOUT_SUCCESS':
-            return state.set('user', fromJS(null));
+            return state.set('user', null);
+        case 'SEND_READ_SUCCESS':
+            return state.setIn(['bypassing', 'unreadMessage', 'items'], 0);
         default:
             return state;
     }
