@@ -16,8 +16,20 @@ class SidebarWrapper extends React.Component {
         unreadMessageCount: PropTypes.oneOfType([ PropTypes.number, PropTypes.object ])
     }
 
+    constructor () {
+        super();
+
+        this.handleClickNav = this.handleClickNav.bind(this);
+    }
+
     componentWillMount () {
-        this.props.getUnreadMessage();
+        const { getUnreadMessage } = this.props;
+        getUnreadMessage && getUnreadMessage();
+    }
+
+    handleClickNav () {
+        const { onToggleSidebar } = this.props;
+        onToggleSidebar && onToggleSidebar(false);
     }
 
     render () {
@@ -32,6 +44,7 @@ class SidebarWrapper extends React.Component {
                 <Sidebar 
                     isOpen={isOpen} 
                     unreadMessageCount={unreadMessageCount}
+                    onClickNav={this.handleClickNav}
                 />
                 <div
                     className="sidebar-overlay"
@@ -44,10 +57,16 @@ class SidebarWrapper extends React.Component {
     }
 };
 
-const mapStateToProps = state => ({
-    isOpen: state.get('sidebarIsOpen'),
-    unreadMessageCount: state.getIn(['bypassing', 'unreadMessage', 'items'])
-});
+const mapStateToProps = state => {
+    const selfUid = state.getIn(['user', 'uid']);
+    const selfProfile = state.getIn(['profile', selfUid]);
+
+    return {
+        isOpen: state.get('sidebarIsOpen'),
+        unreadMessageCount: state.getIn(['bypassing', 'unreadMessage', 'items']),
+        selfProfile: selfProfile
+    };
+};
 const mapDispatchToProps = dispatch => ({
     onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus)),
     getUnreadMessage: () => dispatch(getUnreadMessage())

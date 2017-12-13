@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Media, Label, Button } from 'react-bootstrap';
 import { Card } from '../../components/common/Card';
 import Avatar from '../common/Avatar';
+import bgMaterial from '../../assests/bg-material.jpg';
+import bgMaterial2 from '../../assests/bg-material2.jpeg';
 
 import '../../styles/profile/profile.less';
 
@@ -26,12 +28,17 @@ class Profile extends React.Component {
     render () {
         const { profile: { name, nickname, signature, 
             points, cPost, cThread, cOnline, tCreate}, uid, isSelf } = this.props;
+        const bgPath = isSelf ? bgMaterial2 : bgMaterial;
+
         return (
             <Card className="card-profile">
                 <div ref={ wrapper => this.wrapper = wrapper }>
                     <div className="profile-cover">
                         <div 
                             className="bg"
+                            style={{
+                                backgroundImage: `url(${bgPath})`
+                            }}
                             ref={ bg => this.bg = bg }
                         ></div>
                     </div>
@@ -54,14 +61,14 @@ class Profile extends React.Component {
                                 isSelf
                                     ? <Button
                                         className="profile-ops"
-                                      >
+                                    >
                                         编辑个人资料
-                                      </Button>
+                                    </Button>
                                     : <Button
                                         className="profile-ops"
-                                      >
+                                    >
                                         发私信
-                                      </Button>
+                                    </Button>
                             }
                         </div>
                     </div>

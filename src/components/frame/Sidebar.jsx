@@ -4,15 +4,21 @@ import { NavLink } from 'react-router-dom';
 import { Badge } from 'react-bootstrap';
 import '../../styles/frame/sidebar.less';
 import Avatar from '../common/Avatar';
+import { isMobile } from '../../util';
 
 
-const Sidebar = ({ isOpen, unreadMessageCount }) => {
+const Sidebar = ({ isOpen, unreadMessageCount, onClickNav }) => {
     const sidebarOpenStyle = {
         'transform': `translateX(${isOpen ? '0' : '-100%'})`
     };
     const renderUnreadMessage = unreadMessageCount 
         ? <Badge className="sidebar-badge">{unreadMessageCount}</Badge>
         : null;
+    const handleClickNav = () => {
+        if (!isMobile()) return;
+        onClickNav && onClickNav();
+    }
+
     return (
         <nav
             id="sidebar"
@@ -24,7 +30,7 @@ const Sidebar = ({ isOpen, unreadMessageCount }) => {
                 <p className="username">testuser</p>
                 <p>scarlet0345@gmail.com</p>
             </div>
-            <ul>
+            <ul onClick={handleClickNav}>
                 <li><NavLink exact to='/' activeClassName="active">首页</NavLink></li>
                 <li><NavLink to='/forum' activeClassName="active">论坛</NavLink></li>
                 <li><NavLink to='/user' activeClassName="active">
