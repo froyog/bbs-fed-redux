@@ -31,7 +31,7 @@ export const LoadingLines = ({ className }) =>
         <div className="shadow-masker word-speartor"></div>
         <div className="shadow-masker line-speartor"></div>
         <div className="shadow-masker word-speartor"></div>
-    </div>
+    </div>;
 
 export const FetchingOverlay = ({ fullPage }) =>
     <div

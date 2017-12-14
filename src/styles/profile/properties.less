@@ -167,6 +167,13 @@ ul.profile-nav {
     margin-bottom: 2px;
     padding: 10px 0;
 
+    &:hover {
+        .delete-button {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
     .thread-renderer {
         font-size: 15px;
         border-radius: 5px;
@@ -203,6 +210,8 @@ ul.profile-nav {
         transition: all .3s;
     }
     .delete-button {
+        opacity: 0;
+        visibility: hidden;
         position: absolute;
         bottom: 10px;
         right: 0;
@@ -213,6 +222,11 @@ ul.profile-nav {
             .icon-delete {
                 color: #333;
             }
+        }
+
+        @media @phones {
+            opacity: 1;
+            visibility: visible;
         }
     }
 }

@@ -23,6 +23,7 @@ import { GET_UNREAD_REQUEST, GET_UNREAD_SUCCESS, GET_UNREAD_FAILURE } from '../a
 import { GET_COLLECTIONS_REQUEST, GET_COLLECTIONS_SUCCESS, GET_COLLECTIONS_FAILURE,
     GET_FOLLOWINGS_REQUEST, GET_FOLLOWINGS_SUCCESS, GET_FOLLOWINGS_FAILURE } from '../actions/profile/collections';
 import { LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE } from '../actions/passport/log-io';
+import { DELETE_THREAD_REQUEST, DELETE_THREAD_SUCCESS, DELETE_THREAD_FAILURE } from '../actions/forum/board';
 
 const bypassing = combineReducers({
     sendPrivateMessage: bypassingFactory({
@@ -37,6 +38,7 @@ const bypassing = combineReducers({
     collections: bypassingFactory({ types: [GET_COLLECTIONS_REQUEST, GET_COLLECTIONS_SUCCESS, GET_COLLECTIONS_FAILURE] }),
     followings: bypassingFactory({ types: [GET_FOLLOWINGS_REQUEST, GET_FOLLOWINGS_SUCCESS, GET_FOLLOWINGS_FAILURE] }),
     logout: bypassingFactory({ types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE] }),
+    deleteThread: bypassingFactory({ types: [DELETE_THREAD_REQUEST, DELETE_THREAD_SUCCESS, DELETE_THREAD_FAILURE] })
 });
 
 const combinedReducer = combineReducers({

@@ -37,7 +37,3 @@ export const getReplyList = createPublishAction({
     types: [GET_REPLY_REQUEST, GET_REPLY_SUCCESS, GET_REPLY_FAILURE],
     apiPath: 'home/publish/post'
 });
-
-export const DELETE_THREAD_REQUEST = 'DELETE_THREAD_REQUEST';
-export const DELETE_THREAD_SUCCESS = 'DELETE_THREAD_SUCCESS';
-export const DELETE_THREAD_FAILURE = 'DELETE_THREAD_FAILURE';

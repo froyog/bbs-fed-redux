@@ -64,7 +64,7 @@ class Messages extends React.Component {
     render () {
         const { isFetching, messages, error } = this.props;
 
-        if (isFetching && !messages.length) return <LoadingLines />
+        if (isFetching && !messages.length) return <LoadingLines />;
         if (!messages.length) return <p>您似乎来到了消息的荒原...</p>;
 
         return (

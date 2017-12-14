@@ -28,7 +28,7 @@ export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 
 export const logout = () => (dispatch, getState) => {
-    const authenication = parseUser(getState())
+    const authenication = parseUser(getState());
     dispatch({
         [CALL_API]: {
             types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE],
@@ -41,4 +41,4 @@ export const logout = () => (dispatch, getState) => {
             }
         }
     });
-}
+};

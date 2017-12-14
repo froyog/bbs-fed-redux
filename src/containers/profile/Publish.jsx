@@ -49,7 +49,7 @@ class Publish extends React.Component {
                     publishState={replyState}
                 />
             </div>
-        )
+        );
     }
 }
 

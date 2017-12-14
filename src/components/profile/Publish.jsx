@@ -63,9 +63,9 @@ const renderReplyList = items => {
                     <i className="iconfont icon-delete"></i>
                 </Button>
             </ListGroupItem>
-        )
-    })
-}
+        );
+    });
+};
 
 export class PublishList extends React.Component {
     static propTypes = {

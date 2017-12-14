@@ -19,10 +19,10 @@ const Sidebar = ({ isOpen, unreadMessageCount, onClickNav,
     const handleClickNav = () => {
         if (!isMobile()) return;
         onClickNav && onClickNav();
-    }
+    };
     const handleLogout = () => {
         onLogout && onLogout();
-    }
+    };
 
     return (
         <nav

@@ -28,7 +28,7 @@ const publishReducerFactory = ({ types }) => (state = fromJS({
         default:
             return state;
     }
-}
+};
 
 const publishPage = (state = Map(), action) => {
     switch (action.type) {
