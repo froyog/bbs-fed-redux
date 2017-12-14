@@ -40,7 +40,6 @@ class SidebarWrapper extends React.Component {
 
     componentWillReceiveProps (nextProps) {
         const { logoutMessage, logoutIsFetching, history } = nextProps;
-        console.log(logoutIsFetching, this.props.logoutIsFetching);
         if (logoutMessage === '请求成功' && logoutIsFetching !== this.props.logoutIsFetching) {
             history.push('/');
         }
@@ -101,7 +100,7 @@ const mapStateToProps = state => {
         selfProfile: selfProfile,
         isLogin: !!(state.getIn(['user', 'token'])),
         logoutMessage: logoutState.get('items'),
-        logoutIsFetching: logoutState.get('isFetcting')
+        logoutIsFetching: logoutState.get('isFetching')
     };
 };
 const mapDispatchToProps = dispatch => ({
