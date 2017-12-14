@@ -168,3 +168,46 @@
 	90% { transform: scale(0.5); }
 	100% { transform: scale(0.5); }
 }
+
+
+// loading lines (medium-like)
+.animated-background {
+	position: relative;
+	height: 95px;
+	background: #f6f7f8;
+	background: linear-gradient(to right, #eee 8%, #ddd 18%, #eee 33%);
+	background-size: 800px 104px;
+	animation: 1s shimmer linear infinite forwards;
+
+	.line-speartor { left: 0; right: 0; height: 7px; }
+	.word-speartor { height: 10px; }
+	.shadow-masker {
+		position: absolute;
+		background-color: #fff;
+
+		&:first-child { top: 0; left: 200px; right: 0; }
+		&:nth-child(2) { top: 10px; }
+		&:nth-child(3) { top: 17px; left: 30px; width: 16px; }
+		&:nth-child(4) { top: 17px; left: 160px; width: 10px; }
+		&:nth-child(5) { top: 17px; left: 360px; right: 0; }
+		&:nth-child(6) { top: 27px; }
+		&:nth-child(7) { top: 34px; left: 260px; right: 0; }
+		&:nth-child(8) { top: 44px; }
+		&:nth-child(10) { top: 51px; left: 190px; right: 0; }
+		&:nth-child(11) { top: 61px; }
+		&:nth-child(12) { top: 68px; left: 20px; width: 10px; }
+		&:nth-child(13) { top: 68px; left: 110px; width: 20px; }
+		&:nth-child(14) { top: 68px; left: 400px; right: 0; }
+		&:nth-child(15) { top: 78px; }
+		&:nth-child(16) { top: 85px; left: 118px; right: 0; }
+	}
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: -468px 0;
+	}
+	100% {
+		background-position: 468px 0;
+	}
+}
