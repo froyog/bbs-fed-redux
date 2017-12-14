@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { getMessages, refreshMessages, clearUnreadTag } from '../../actions/profile/messages';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
-import { FetchingOverlay } from '../../components/common/Loading';
+import { FetchingOverlay, LoadingDots, LoadingLines } from '../../components/common/Loading';
 import MessageBase from './MessageBase';
 import { Button } from 'react-bootstrap';
-import { LoadingDots } from '../../components/common/Loading';
 
 
 class Messages extends React.Component {
@@ -64,11 +63,13 @@ class Messages extends React.Component {
 
     render () {
         const { isFetching, messages, error } = this.props;
+        console.log(this.props);
 
+        if (isFetching && !messages.length) return <LoadingLines />
         if (!messages.length) return <p>您似乎来到了消息的荒原...</p>;
+
         return (
             <div>
-                { isFetching && <FetchingOverlay /> }
                 { messages.map(message => {
                     return <MessageBase key={message.id} message={message} />;
                 }) }
