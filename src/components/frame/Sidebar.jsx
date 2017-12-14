@@ -8,7 +8,7 @@ import { isMobile } from '../../util';
 
 
 const Sidebar = ({ isOpen, unreadMessageCount, onClickNav, 
-    selfName, selfSignature, isLogin, onLogout}) => {
+    selfName, selfSignature, selfUid, isLogin, onLogout}) => {
 
     const sidebarOpenStyle = {
         'transform': `translateX(${isOpen ? '0' : '-100%'})`
@@ -33,9 +33,9 @@ const Sidebar = ({ isOpen, unreadMessageCount, onClickNav,
             { 
                 isLogin
                     ? <div className="avatar">
-                        <Avatar id={18480} />
+                        <Avatar id={selfUid} />
                         <p className="username">{selfName}</p>
-                        <p className="signature">{selfSignature}</p>
+                        <p className="signature">{selfSignature || '这个人很懒什么都没有留下'}</p>
                         <Button 
                             className="raised opearate logout"
                             onClick={handleLogout}
