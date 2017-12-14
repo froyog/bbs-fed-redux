@@ -7,6 +7,28 @@ button.raised, a.raised {
     box-shadow: @shadow-material-raise;
 }
 
+button.float {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 50%;
+    text-decoration: none !important;
+    outline: none !important;
+    transition: all .3s;
+    background-color: #eee;
+    box-shadow: @shadow-material-float;
+
+    i { 
+        width: 100%; 
+        line-height: 100%;
+    }
+
+    &:hover {
+        color: inherit;
+        background-color: #ddd;
+    }
+}
+
 button.flat {
     color: @flat-pink;
     font-weight: 500;
@@ -81,7 +103,6 @@ blockquote {
 
 button.load-more {
     padding: 12px 0 0 0;
-    margin-top: 20px;
     font-size: 16px;
     color: inherit;
     outline: none !important;

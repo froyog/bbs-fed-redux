@@ -23,7 +23,8 @@ class SidebarWrapper extends React.Component {
                 name: PropTypes.string,
                 signature: PropTypes.string
             })
-        })
+        }),
+        selfUid: PropTypes.number
     }
 
     constructor () {
@@ -56,7 +57,8 @@ class SidebarWrapper extends React.Component {
     }
 
     render () {
-        const { isOpen, onToggleSidebar, unreadMessageCount, selfProfile, isLogin } = this.props;
+        const { isOpen, onToggleSidebar, unreadMessageCount, 
+            selfProfile, isLogin, selfUid } = this.props;
         const overlayStyle = {
             'opacity': isOpen ? '0.5' : '0',
             'visibility': isOpen ? 'visible' : 'hidden'
@@ -75,6 +77,7 @@ class SidebarWrapper extends React.Component {
                     onClickNav={this.handleClickNav}
                     selfName={name}
                     selfSignature={signature}
+                    selfUid={selfUid}
                     isLogin={isLogin}
                     onLogout={this.handleLogout}
                 />
@@ -98,6 +101,7 @@ const mapStateToProps = state => {
         isOpen: state.get('sidebarIsOpen'),
         unreadMessageCount: state.getIn(['bypassing', 'unreadMessage', 'items']),
         selfProfile: selfProfile,
+        selfUid: selfUid,
         isLogin: !!(state.getIn(['user', 'token'])),
         logoutMessage: logoutState.get('items'),
         logoutIsFetching: logoutState.get('isFetching')

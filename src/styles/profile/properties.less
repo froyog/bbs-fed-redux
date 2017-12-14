@@ -45,6 +45,7 @@ ul.profile-nav {
     .message-author-avatar {
         font-size: 20px;
         margin-right: 10px;
+        box-shadow: @shadow-material;
 
         .avatar-size(30px);
     }
@@ -80,7 +81,7 @@ ul.profile-nav {
         }
 
         a.img-link {
-            max-width: 100%;
+            max-width: 75%;
         }
     }
 
@@ -158,4 +159,74 @@ ul.profile-nav {
     td a {
         cursor: pointer;
     }
+}
+
+.publish-thread-wrapper {
+    border: 0;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 2px;
+    padding: 10px 0;
+
+    .thread-renderer {
+        font-size: 15px;
+        border-radius: 5px;
+        color: #777;
+    }
+    .thread-title {
+        color: #333;
+        font-size: 18px;
+
+        &:hover { color: #333; }
+    }
+    .anonymous {
+        color: @material-red;
+    }
+    .statistics {
+        i { 
+            font-size: 14px; 
+            color: #999;
+            margin-right: 3px;
+        }
+        span {
+            margin-right: 10px;
+        }
+        .floor {
+            color: #333;
+            font-weight: bold;
+            color: @material-red-light;
+        }
+    }
+    .icon-delete {
+        margin: 0;
+        font-size: 18px;
+        color: #999;
+        transition: all .3s;
+    }
+    .delete-button {
+        position: absolute;
+        bottom: 10px;
+        right: 0;
+        width: 36px;
+        height: 36px;
+
+        &:hover {
+            .icon-delete {
+                color: #333;
+            }
+        }
+    }
+}
+
+.publish-header {
+    h3 {
+        margin: 5px 0;
+    }
+    .expand-button {
+        margin-top: 3px;
+        font-size: 16px;
+    }
+}
+
+.publish-loading-lines {
+    margin-bottom: 10px;
 }

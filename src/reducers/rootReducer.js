@@ -15,6 +15,7 @@ import errorModal from './common/errorModal';
 import profiles from './profile/profile';
 import messages from './profile/messages';
 import bypassingFactory from './bypassing';
+import publish from './profile/publish';
 
 import { SEND_PRIVATE_REQUEST, SEND_PRIVATE_SUCCESS, SEND_PRIVATE_FAILURE,
     GET_DIALOG_REQUEST, GET_DIALOG_SUCCESS, GET_DIALOG_FAILURE } from '../actions/profile/messages';
@@ -54,6 +55,7 @@ const combinedReducer = combineReducers({
     profiles,
     messages,
     bypassing,
+    publish,
     user: (state = Map()) => state
 });
 
