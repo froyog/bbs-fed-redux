@@ -41,8 +41,7 @@ Followings.propTypes = {
         name: PropTypes.string,
         info: PropTypes.string,
         cThread: PropTypes.number
-    })),
-    onDeleteFollowing: PropTypes.func.isRequired
+    }))
 };
 
 export const Collections = ({ items: collections, onDeleteCollection }) => 

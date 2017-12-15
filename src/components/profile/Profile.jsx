@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Media, Label, Button } from 'react-bootstrap';
+import { Label, Button, Modal } from 'react-bootstrap';
 import { Card } from '../../components/common/Card';
 import Avatar from '../common/Avatar';
 import bgMaterial from '../../assests/bg-material.jpg';
@@ -12,7 +12,12 @@ import '../../styles/profile/profile.less';
 class Profile extends React.Component {
     constructor () {
         super();
+        this.state = {
+            privateModalIsOpen: false
+        };
+
         this.handleMouseMove = this.handleMouseMove.bind(this);
+        this.handleTogglePrivateMessage = this.handleTogglePrivateMessage.bind(this);
     }
     
     componentDidMount () {
@@ -25,9 +30,16 @@ class Profile extends React.Component {
         this.bg.style.transform = `translate(${(hratio-0.5)*20}px, ${(wratio-0.5)*20}px)`;
     }
 
+    handleTogglePrivateMessage () {
+        this.setState({
+            privateModalIsOpen: !this.state.privateModalIsOpen
+        });
+    }
+
     render () {
         const { profile: { name, nickname, signature, 
             points, cPost, cThread, cOnline, tCreate}, uid, isSelf } = this.props;
+        const { privateModalIsOpen } = this.state;
         const bgPath = isSelf ? bgMaterial2 : bgMaterial;
 
         return (
@@ -57,8 +69,8 @@ class Profile extends React.Component {
                             <Label bsStyle="primary">
                                 {points} <span className="points-content">积分</span>
                             </Label>
-                            {
-                                isSelf
+                            <div className="profile-ops-wrapper">
+                                { isSelf
                                     ? <Button
                                         className="profile-ops"
                                     >
@@ -66,10 +78,12 @@ class Profile extends React.Component {
                                     </Button>
                                     : <Button
                                         className="profile-ops"
+                                        onClick={this.handleTogglePrivateMessage}
                                     >
                                         发私信
                                     </Button>
-                            }
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>

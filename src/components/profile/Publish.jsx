@@ -11,7 +11,7 @@ const renderPublishList = items => {
     return items.map(thread => {
         const { id, title, tCreate, cPost, content } = thread;
         return (
-            <ListGroupItem className="publish-thread-wrapper">
+            <ListGroupItem key={id} className="publish-thread-wrapper">
                 <Link 
                     className="thread-title" 
                     to={`/forum/thread/${id}/page/1`}
@@ -39,9 +39,9 @@ const renderPublishList = items => {
 
 const renderReplyList = items => {
     return items.map(post => {
-        const { threadId, floor, tCreate, anonymous, threadTitle, content } = post;
+        const { threadId, floor, tCreate, anonymous, threadTitle, content, id } = post;
         return (
-            <ListGroupItem className="publish-thread-wrapper">
+            <ListGroupItem key={id} className="publish-thread-wrapper">
                 <Link
                     className="thread-title"
                     to={`/forum/thread/${threadId}/page/1`}

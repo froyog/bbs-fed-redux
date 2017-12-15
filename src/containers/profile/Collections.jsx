@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { toJS } from '../../util';
 import { getFollowingsIfNeeded, getCollectionsIfNeeded,
     deleteCollection, deleteFollowing } from '../../actions/profile/collections';
-import { LoadingDots } from '../../components/common/Loading';
+import { LoadingDots, LoadingLines } from '../../components/common/Loading';
 import { Collections, Followings } from '../../components/profile/Collections';
 
 
@@ -55,11 +55,12 @@ class CollectionsWrapper extends React.Component {
         const { isFetching: collectionsIsFetching, items: collections } = this.props.collectionsState;
         const { isFetching: followingsIsFetching, items: followings } = this.props.followingsState;
 
+        if (collectionsIsFetching || followingsIsFetching) return <LoadingLines />
         return (
             <div className="profile-collections">
                 {
                     followings && followings.length
-                        ? <div>
+                    ? <div>
                             <h4>关注的板块</h4>
                             <Followings 
                                 items={followings} 

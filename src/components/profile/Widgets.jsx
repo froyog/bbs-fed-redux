@@ -19,7 +19,6 @@ export class Title extends React.PureComponent {
     constructor () {
         super();
         this.state = {
-            isShowDetails: true,
             pointsOfCurrentTitle: 0,
             pointsOfNextTitle: 0,
             currentTitle: '',
@@ -27,7 +26,6 @@ export class Title extends React.PureComponent {
             atMaxLevel: false
         };
 
-        this._mapPointsToTitle = this._mapPointsToTitle.bind(this);
     }
 
     _mapPointsToTitle () {
@@ -54,15 +52,9 @@ export class Title extends React.PureComponent {
         };
     }
 
-    handleClickShowMore () {
-        this.setState({
-            isShowDetails: true
-        });
-    }
-
     render () {
         const { cPost, cThread, points } = this.props;
-        const { isShowDetails, pointsOfCurrentTitle, pointsOfNextTitle, 
+        const { pointsOfCurrentTitle, pointsOfNextTitle, 
             currentTitle, nextTitle, atMaxLevel } = this._mapPointsToTitle();
 
         return (
@@ -73,15 +65,16 @@ export class Title extends React.PureComponent {
                         atMaxLevel
                             ? <p className="helper text-muted">已达到最高等级</p>
                             : <div>
-                                <p className="helper text-muted">距离下一称号还有<strong>{pointsOfNextTitle - points}</strong>积分</p>
-                                <p className="helper text-muted">相当于水贴<strong>{Math.floor((pointsOfNextTitle-points)/2)}</strong>条</p>
+                                <p className="helper text-muted">
+                                    距离下一称号还有<strong>{pointsOfNextTitle - points}</strong>积分
+                                </p>
+                                <p className="helper text-muted">
+                                    相当于水贴<strong>{Math.floor((pointsOfNextTitle-points)/2)}</strong>条
+                                </p>
                             </div>
                     }
                 </div>
-                <div
-                    className="title-details"
-                    style={{ maxHeight: `${isShowDetails ? '200px' : '0'}` }}
-                >
+                <div className="title-details">
                     <div>
                         {
                             atMaxLevel
@@ -91,16 +84,16 @@ export class Title extends React.PureComponent {
                                     <span className="pull-right text-muted">{nextTitle}</span>
                                 </div>
                         }
-                        <ProgressBar 
-                            now={ 
-                                atMaxLevel
-                                    ? 100
-                                    : ((points - pointsOfCurrentTitle)/(pointsOfNextTitle - pointsOfCurrentTitle))*100
-                            }
-                            label={`${points}/${pointsOfNextTitle}`} 
-                            bsStyle="warning"
-                            striped
-                        />
+                    <ProgressBar 
+                        now={ 
+                            atMaxLevel
+                                ? 100
+                                : ((points - pointsOfCurrentTitle)/(pointsOfNextTitle - pointsOfCurrentTitle))*100
+                        }
+                        label={`${points}/${pointsOfNextTitle}`} 
+                        bsStyle="warning"
+                        striped
+                    />
                     </div>
                     <div className="clearfix">
                         <div className="statistic-wrapper pull-left">
