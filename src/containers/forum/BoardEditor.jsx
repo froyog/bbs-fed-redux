@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import { InputField } from '../../components/common/Input';
 import { Editor } from 'react-draft-wysiwyg';
@@ -39,7 +39,8 @@ class BoardEditor extends React.Component {
         super();
         this.state = {
             editorState: EditorState.createEmpty(),
-            bid: 0
+            bid: 0,
+            referToThread: false
         };
 
         this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -52,11 +53,13 @@ class BoardEditor extends React.Component {
 
     componentWillReceiveProps (nextProps) {
         const { tid, error, isFetching, history } = nextProps;
-
+        console.log(nextProps);
         if (tid && !error && !isFetching) {
             // success
             this.handleCloseModal();
-            history.push(`/forum/thread/${tid}/page/1`);
+            this.setState({
+                referToThread: tid
+            });
         }
     }
 
@@ -98,8 +101,11 @@ class BoardEditor extends React.Component {
     }
     
     render () {
-        const { editorState, title } = this.state;
+        const { editorState, title, referToThread } = this.state;
         const { isFetching } = this.props;
+        if (referToThread) {
+            return <Redirect to={`/forum/thread/${referToThread}/page/1`} />
+        }
 
         return (
             <div>
@@ -164,5 +170,5 @@ const mapDispatchToProps = dispatch => ({
     newThread: (bid, title, content) => dispatch(fetchNewThread(bid, title, content))
 });
 
-BoardEditor = withRouter(connect(mapStateToProps, mapDispatchToProps)(toJS(BoardEditor)));
+BoardEditor = connect(mapStateToProps, mapDispatchToProps)(toJS(BoardEditor));
 export default BoardEditor;
