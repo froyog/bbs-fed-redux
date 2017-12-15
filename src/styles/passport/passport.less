@@ -4,6 +4,41 @@
     .screen();
     background: url(../../assests/bg-min.jpg) no-repeat fixed center top;
     background-size: cover;
+    .back-to-home, .switch-link {
+        color: #fff;
+        font-size: 16px;
+        padding: 5px 10px;
+        text-decoration: none !important;
+        transition: font-size .2s;
+        &:hover, &.active {
+            border-bottom: 2px solid #fff;
+            font-size: 18px;
+        }
+    }
+    .back-to-home-wrapper, .switch-link-wrapper {
+        position: absolute;
+        top: 20px;
+        z-index: 1;
+    }
+    .switch-link-wrapper { right: 30px; }
+    .back-to-home-wrapper { left: 30px; }
+
+    .input-realname, .input-stunum {
+        width: 50% !important;
+        float: left;
+    }
+    .input-realname { 
+        padding-right: 5px; 
+        hr { right: 5px; left: 0; }
+    }
+    .input-stunum { padding-left: 5px; }
+
+    @media @phones {
+        .back-to-home, .switch-link { color: #333; }
+        .back-to-home-wrapper { left: 10px; }
+        .switch-link-wrapper { right: 10px; }
+    }
+
 }
 
 .card-passport {
@@ -15,8 +50,37 @@
     max-width: 400px;
     transform: translate(-50%, -50%);
     background-color: rgba(255, 255, 255, .95);
+
     .card-content {
         padding: 32px;
+    }
+
+    button.submit-button {
+        padding: 8px 0;
+        letter-spacing: 5px;
+        font-size: 16px;
+        margin: 25px 0 8px;
+    }
+
+    @media @phones {
+        width: 100%;
+        max-width: none;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transform: none;
+        margin: 0;
+
+        .card-content {
+            padding: 20px;
+        }
+    }
+
+    .error-msg {
+        color: #d32f2f;
+        font-size: 16px;
+        text-align: center;
     }
 }
 
@@ -26,10 +90,28 @@
         font-weight: bold;
         margin: 30px auto 20px;
     }
-    button.raised {
-        padding: 8px 0;
-        letter-spacing: 5px;
-        font-size: 16px;
-        margin-top: 25px;
+    
+    @media @phones {
+        margin-top: 80px;
+    }
+    .additional-link-wrapper {
+        a {
+            color: #00a1e9;
+            text-decoration: none !important;
+            font-size: 16px;
+        }
+        a.appeal-link {
+            color: #333;
+            font-size: 14px;
+        }
+        p { margin-bottom: 0; }
+    }
+}
+
+.register {
+    @media @phones {
+        h3 {
+            margin: 10px 0 5px;
+        }
     }
 }

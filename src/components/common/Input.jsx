@@ -3,18 +3,6 @@ import PropTypes from 'prop-types';
 import { Card } from './Card';
 import '../../styles/common/input.less';
 
-const labelDefaultStyle = {
-    transform: 'scale(1) translate(0, 0)',
-    color: 'rgba(0, 0, 0, .5)'
-};
-const selectLabelDefaultStyle = {
-    transform: 'scale(.75) translate(0, -28px)',
-    color: 'rgba(0, 0, 0, .5)'
-};
-const labelFocusedStyle = {
-    transform: 'scale(.75) translate(0, -28px)',
-    color: '#2565ac'
-};
 
 export class InputField extends React.PureComponent {
     static propTypes = {
@@ -24,7 +12,8 @@ export class InputField extends React.PureComponent {
         placeholder: PropTypes.string,
         type: PropTypes.string,
         fullWidth: PropTypes.bool,
-        color: PropTypes.string
+        color: PropTypes.string,
+        errorMessage: PropTypes.string
     };
 
     static defaultProps = {
@@ -52,9 +41,6 @@ export class InputField extends React.PureComponent {
     }
 
     handleInputBlur () {
-        if (this.state.hasContent) {
-            return;
-        }
         this.setState({
             focused: false
         });
@@ -76,14 +62,32 @@ export class InputField extends React.PureComponent {
     }
 
     render () {
-        const { id, text, type, placeholder, fullWidth } = this.props;
+        const { id, text, type, placeholder, fullWidth, errorMessage, className } = this.props;
         const { focused, hasContent } = this.state;
+        let labelStyle = {
+            transform: 'scale(1) translate(0, 0)',
+            color: 'rgba(0, 0, 0, .5)'
+        };
+        if (focused) {
+            labelStyle.transform = 'scale(.75) translate(0, -28px)';
+            labelStyle.color = '#2565ac';
+        }
+        if (hasContent) {
+            labelStyle.transform = 'scale(.75) translate(0, -28px)';
+        }
+        if (errorMessage) {
+            labelStyle.color = '#d32f2f';
+        }
+
 
         return (
-            <div className="input-wrapper" style={{ width: `${fullWidth ? '100%' : '256px'}` }}>
+            <div 
+                className={`input-wrapper${className ? ' ' + className : ''}`} 
+                style={{ width: `${fullWidth ? '100%' : '256px'}` }}
+            >
                 <label
                     htmlFor={id}
-                    style={focused ? labelFocusedStyle : labelDefaultStyle}
+                    style={labelStyle}
                 >
                     {text}
                 </label>
@@ -109,12 +113,18 @@ export class InputField extends React.PureComponent {
                     <hr aria-hidden="true" className="border-muted" />
                     <hr
                         style={{
-                            transform: `scaleX(${focused ? '1' : '0'})`
+                            transform: `scaleX(${focused ? '1' : '0'})`,
+                            borderBottomColor: `${focused && errorMessage ? '#d32f2f' : '#2565ac' }`
                         }}
                         aria-hidden="true"
                         className="border-colored" 
                     />
                 </div>
+                { errorMessage &&
+                    <div className="input-error">
+                        {errorMessage}
+                    </div>
+                }
             </div>
         );
     }
@@ -193,11 +203,23 @@ export class SelectField extends React.PureComponent {
             );
         }
 
+        let labelStyle = {
+            transform: 'scale(.75) translate(0, -28px)',
+            color: 'rgba(0, 0, 0, .5)'
+        };
+        if (focused) {
+            labelStyle.transform = 'scale(.75) translate(0, -28px)';
+            labelStyle.color = '#2565ac';
+        }
+        if (hasContent) {
+            labelStyle.transform = 'scale(.75) translate(0, -28px)';
+        }
+
         return (
             <div className="input-wrapper select" style={{ width: `${fullWidth ? '100%' : '256px'}` }}>
                 <label
                     htmlFor={id}
-                    style={(focused || hasContent) ? labelFocusedStyle : selectLabelDefaultStyle}
+                    style={labelStyle}
                 >
                     {labelText}
                 </label>
@@ -227,7 +249,7 @@ export class SelectField extends React.PureComponent {
                     <hr aria-hidden="true" className="border-muted" />
                     <hr
                         style={{
-                            transform: `scaleX(${(focused || hasContent) ? '1' : '0'})`
+                            transform: `scaleX(${focused ? '1' : '0'})`
                         }}
                         aria-hidden="true"
                         className="border-colored"

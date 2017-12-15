@@ -10,7 +10,6 @@
     background-color: transparent;
     .transition-material(.2s, height);
     cursor: auto;
-    overflow: hidden;
 
     label {
         position: absolute;
@@ -30,8 +29,17 @@
         font-size: .9em;
         color: rgba(0, 0, 0, .5);
         .transition-material(.45s);
+        line-height: 22px;
+        white-space: nowrap;
     }
 
+    .input-error {
+        position: relative;
+        bottom: 5px;
+        font-size: 12px;
+        line-height: 12px;
+        color: #d32f2f;
+    }
 
     hr {
         position: absolute;

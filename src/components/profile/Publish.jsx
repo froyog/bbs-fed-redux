@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { ListGroup, ListGroupItem, Button, Panel } from 'react-bootstrap';
+import { ListGroup, ListGroupItem, Button } from 'react-bootstrap';
 import ThreadRenderer from '../forum/ThreadRenderer';
 import { LoadingLines, FetchingOverlay } from '../common/Loading';
 import Time from '../common/Time';

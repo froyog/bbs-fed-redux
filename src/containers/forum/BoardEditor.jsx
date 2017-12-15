@@ -104,7 +104,7 @@ class BoardEditor extends React.Component {
         const { editorState, title, referToThread } = this.state;
         const { isFetching } = this.props;
         if (referToThread) {
-            return <Redirect to={`/forum/thread/${referToThread}/page/1`} />
+            return <Redirect to={`/forum/thread/${referToThread}/page/1`} />;
         }
 
         return (

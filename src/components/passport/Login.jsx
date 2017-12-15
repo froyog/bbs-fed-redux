@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { InputField } from '../../components/common/Input';
 import { Button } from 'react-bootstrap';
 import { LoadingDots } from '../common/Loading';
@@ -57,7 +58,7 @@ class Login extends React.Component {
                     fullWidth
                     value={password} />
                 <Button
-                    className="raised"
+                    className="raised submit-button"
                     block
                     type="submit"
                     bsStyle="primary"
@@ -70,7 +71,16 @@ class Login extends React.Component {
                             : '登录'
                     }
                 </Button>
-                <p>{error}</p>
+                <p className="error-msg">{error}</p>
+                <div className="additional-link-wrapper">
+                    <p>
+                        <Link to='/passport/forget'>忘记用户名/密码</Link>
+                        <Link className="pull-right" to='/passport/old'>老用户认证</Link>
+                    </p>
+                    <p>
+                        <Link className="appeal-link" to='/passport/appeal'>人工申诉</Link>
+                    </p>
+                </div>
             </form>
         );
     }
