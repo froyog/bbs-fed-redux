@@ -6,12 +6,13 @@ import { toJS } from '../../util';
 import { sendAppeal } from '../../actions/passport/appeal';
 
 
-let AppealWrapper = ({ isFetching, error, onSubmitAppeal }) => {
+let AppealWrapper = ({ isFetching, error, item, onSubmitAppeal }) => {
     const handleSubmitAppeal = appealInfo => {
         onSubmitAppeal && onSubmitAppeal(appealInfo);
     };
     return (
         <Appeal 
+            success={item}
             isFetching={isFetching}
             error={error}
             onSubmitAppeal={handleSubmitAppeal}        
@@ -30,6 +31,7 @@ const mapStateToProps = state => {
 
     return {
         isFetching: appealState.get('isFetching'),
+        item: appealState.get('items'),
         error: appealState.get('error')
     };
 };

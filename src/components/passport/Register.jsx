@@ -29,6 +29,19 @@ class Register extends React.Component {
         this.handleClickRegister = this.handleClickRegister.bind(this);
     }
 
+    componentWillUnmount () {
+        clearTimeout(this.timeout);
+    }
+
+    componentWillReceiveProps (nextProps) {
+        const { success, history } = nextProps;
+        if (success === '请求成功' && success !== this.props.success) {
+            this.timeout = setTimeout(() => {
+                history.push('/passport/login');
+            }, 2000);
+        }
+    }
+
     handleInputChange (e) {
         const { target: { id, value } } = e;
         this._checkVaildation(id, value);
@@ -61,7 +74,7 @@ class Register extends React.Component {
 
     render () {
         const { realname, stunum, cid, username, password, passwordDuplicate, errorMessage } = this.state;
-        const { error: serverErrorMessage, isFetching } = this.props;
+        const { error: serverErrorMessage, isFetching, success } = this.props;
 
         return (
             <form className="register">
@@ -100,7 +113,7 @@ class Register extends React.Component {
                     placeholder="仅限字母数字且不能为纯数字"
                 />
                 <InputField 
-                    text="密码"
+                    text="设置密码"
                     type="password"
                     id="password"
                     onChange={this.handleInputChange}
@@ -109,7 +122,7 @@ class Register extends React.Component {
                     placeholder="8位以上字符"
                 />
                 <InputField 
-                    text="重复密码"
+                    text="确认密码"
                     type="password"
                     id="passwordDuplicate"
                     onChange={this.handleInputChange}
@@ -136,6 +149,13 @@ class Register extends React.Component {
                     }
                 </Button>
                 <p className="error-msg">{serverErrorMessage}</p>
+                {
+                    success === '请求成功' &&
+                    <div className="success-wrapper">
+                        <p className="success-msg">注册成功</p>
+                        <p>正在跳转至登录页</p>
+                    </div>
+                }
             </form>
         );
     }

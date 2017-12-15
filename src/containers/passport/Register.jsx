@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { toJS } from '../../util';
 
 
-let RegisterWrapper = ({ isFetching, error, onNewRegister }) => {
+let RegisterWrapper = ({ isFetching, error, item, onNewRegister }) => {
     const handleRegister = (registerInfo) => {
         onNewRegister && onNewRegister(registerInfo);
     };
@@ -15,6 +15,7 @@ let RegisterWrapper = ({ isFetching, error, onNewRegister }) => {
         <Register 
             isFetching={isFetching}
             error={error}
+            success={item}
             onSubmitRegister={handleRegister}
         />
     );
@@ -32,7 +33,8 @@ const mapStateToProps = state => {
 
     return {
         isFetching: newRegisterState.get('isFetching'),
-        error: newRegisterState.get('error')
+        error: newRegisterState.get('error'),
+        item: newRegisterState.get('items')
     };
 };
 const mapDispatchToProps = dispatch => ({

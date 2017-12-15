@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { InputField } from '../common/Input';
 import { Button } from 'react-bootstrap';
 import { LoadingDots } from '../common/Loading';
+import { Link } from 'react-router-dom';
 
 
 class Appeal extends React.Component {
@@ -40,7 +41,7 @@ class Appeal extends React.Component {
 
     render () {
         const { realname, cid, stunum, username, email, message } = this.state;
-        const { isFetching, error } = this.props;
+        const { isFetching, error, success } = this.props;
 
         return (
             <form>
@@ -107,6 +108,13 @@ class Appeal extends React.Component {
                             : '提交'
                     }
                 </Button>
+                {
+                    success === '请求成功' &&
+                    <div className="success-wrapper">
+                        <p className="success-msg">您的申诉已提交，请等待审核</p>
+                        <p><Link to='/'>返回首页</Link></p>
+                    </div>
+                }
             </form>
         );
     }
