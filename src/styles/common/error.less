@@ -33,3 +33,36 @@
     0% { transform: scale(0, 0); }
     100% { transform: scale(1, 1); }
 }
+
+.error-overlay {
+    .error-msg {
+        .face-msg {
+            margin: 0;
+            margin-right: 30px;
+            font-size: 180px;
+        }
+        .text-msg {
+            position: relative;
+            top: 90px;
+        }
+        p {
+            font-size: 48px;
+            margin: 0;
+        }
+        .text-muted {
+            font-size: 36px;
+            opacity: 0.5;
+            color: #333;
+        }
+    }
+    .action {
+        position: relative;
+        margin-top: 50px;
+        p {
+            margin-bottom: 5px;
+        }
+        .reason {
+            color: @red-danger;
+        }
+    }
+}

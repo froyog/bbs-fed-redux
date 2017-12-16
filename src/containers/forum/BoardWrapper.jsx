@@ -11,6 +11,7 @@ import { toJS, isEqual } from '../../util.js';
 import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
 // import BoardEditor from './BoardEditor';
 import RefreshButton from '../../components/common/RefreshButton';
+import { ErrorOverlay } from '../../components/common/ErrorModal';
 
 import '../../styles/forum/board.less';
 
@@ -112,8 +113,9 @@ class BoardWrapper extends React.Component {
     // }
 
     render () {
-        const { isFetching, boardInfo, threadList, type, order } = this.props;
+        const { isFetching, boardInfo, threadList, type, order, error } = this.props;
         const { activePage } = this.state;
+        if (error) return <ErrorOverlay reason={error} needRefresh />
         if (isFetching || !boardInfo || !threadList) {
             return <FetchingOverlay fullPage />;
         }
@@ -234,6 +236,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         isFetching: board.get('isFetching'),
         boardInfo: board.get('boardInfo'),
+        error: board.get('error'),
         threadList: board.get('threadList'),
         type: board.get('type'),
         order: board.get('order')
