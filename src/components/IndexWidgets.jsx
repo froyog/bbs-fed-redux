@@ -41,11 +41,11 @@ export const CarouselAd = ({ adList }) => {
                             />
                         </a>
                     </Carousel.Item>
-                )
+                );
             }) }
         </Carousel>
-    )
-}
+    );
+};
 
 CarouselAd.propTypes = {
     adList: PropTypes.arrayOf(PropTypes.shape({
@@ -53,7 +53,7 @@ CarouselAd.propTypes = {
         img: PropTypes.number,
         src: PropTypes.string
     }))
-}
+};
 
 export const IndexRank = ({ rankData }) => {
     const [ startTime, rankList ] = rankData;
@@ -76,7 +76,7 @@ export const IndexRank = ({ rankData }) => {
                                 <p>周获积分：{pointInc}</p>
                             </Media.Body>
                         </Media>
-                    )
+                    );
                 })}
             </ul>
             <div className="action-wrapper">
@@ -86,7 +86,7 @@ export const IndexRank = ({ rankData }) => {
             </div>
         </div>
     );
-}
+};
 
 IndexRank.propTypes = {
     rankData: PropTypes.arrayOf(PropTypes.oneOfType([
@@ -97,4 +97,4 @@ IndexRank.propTypes = {
             pointInc: PropTypes.number
         })
     ]))
-}
+};

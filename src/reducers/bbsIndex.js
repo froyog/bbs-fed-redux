@@ -107,7 +107,7 @@ const adsCarousel = (state = fromJS({
         default:
             return state;
     }
-}
+};
 
 const indexRank = (state = fromJS({
     isFetching: false,
@@ -130,7 +130,7 @@ const indexRank = (state = fromJS({
         default:
             return state;
     }
-}
+};
 
 const bbsIndex = (state = Map(), action) => {
     switch (action.type) {

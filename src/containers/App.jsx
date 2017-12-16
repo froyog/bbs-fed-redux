@@ -11,6 +11,7 @@ import Board from './forum/BoardWrapper';
 import Thread from './forum/ThreadWrapper';
 import Home from './bbs-index/Home';
 import UserBase from './profile/UserBase';
+import Rank from './rank/Rank';
 import { connect } from 'react-redux';
 import { isMobile } from '../util.js';
 import { toggleSidebar } from '../actions/frame/sidebar';
@@ -57,6 +58,7 @@ class App extends React.Component {
                             <Route path="/forum/board/:bid/page/:page" component={Board} />
                             <Route path="/forum/thread/:tid/page/:page" component={Thread} />
                             <Route path="/user/:uid" component={UserBase} />
+                            <Route path="/rank" component={Rank} />
                             <Redirect from="*" to="/404" />
                         </Switch>
                     </Grid>

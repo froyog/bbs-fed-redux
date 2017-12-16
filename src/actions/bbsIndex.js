@@ -93,7 +93,7 @@ export const getAdsIfNeeded = () => (dispatch, getState) => {
             apiPath: 'index/ads'
         }
     });
-}
+};
 
 export const GET_INDEX_RANK_REQUEST = 'GET_INDEX_RANK_REQUEST';
 export const GET_INDEX_RANK_SUCCESS = 'GET_INDEX_RANK_SUCCESS';
@@ -111,4 +111,4 @@ export const getIndexRankIfNeeded = () => (dispatch, getState) => {
             apiPath: 'index/rank'
         }
     });
-}
+};

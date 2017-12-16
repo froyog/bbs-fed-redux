@@ -132,7 +132,7 @@ class Register extends React.Component {
                 />
                 <p className="text-muted">
                     点击注册表示您已阅读并同意
-                    <a href="https://bbs.tju.edu.cn/forum/thread/155551/page/1" target="_blank">《求实BBS注册条款》</a>
+                    <a href="https://bbs.tju.edu.cn/forum/thread/171565/page/1" target="_blank">《求实BBS注册条款》</a>
                 </p>
                 <Button
                     className="raised submit-button"

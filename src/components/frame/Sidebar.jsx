@@ -68,7 +68,7 @@ const Sidebar = ({ isOpen, unreadMessageCount, onClickNav,
                 <li><NavLink to='/user' activeClassName="active">
                     个人中心{renderUnreadMessage}
                 </NavLink></li>
-                <li><NavLink to='#'>排行榜</NavLink></li>
+                <li><NavLink to='/rank'>排行榜</NavLink></li>
             </ul>
         </nav>
     );

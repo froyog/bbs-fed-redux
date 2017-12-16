@@ -16,6 +16,7 @@ import profiles from './profile/profile';
 import messages from './profile/messages';
 import bypassingFactory from './bypassing';
 import publish from './profile/publish';
+import rank from './rank/rank';
 
 import { SEND_PRIVATE_REQUEST, SEND_PRIVATE_SUCCESS, SEND_PRIVATE_FAILURE,
     GET_DIALOG_REQUEST, GET_DIALOG_SUCCESS, GET_DIALOG_FAILURE } from '../actions/profile/messages';
@@ -63,6 +64,7 @@ const combinedReducer = combineReducers({
     messages,
     bypassing,
     publish,
+    rank,
     user: (state = Map()) => state
 });
 

@@ -107,7 +107,7 @@ class CarouselAdWrapper extends React.Component {
             <CarouselAd 
                 adList={adList}
             />
-        )
+        );
     }
 }
 
@@ -189,4 +189,4 @@ IndexRankWrapper = connect(
 )(toJS(IndexRankWrapper));
 
 export { AnnounceWrapper, AppQRCode, WeiboFollowing, 
-        CarouselAdWrapper, IndexRankWrapper };
+    CarouselAdWrapper, IndexRankWrapper };
