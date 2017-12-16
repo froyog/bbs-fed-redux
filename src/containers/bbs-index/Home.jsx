@@ -2,6 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import TopTen from './TopTen';
 import Latest from './Latest';
+import { AnnounceWrapper, AppQRCode, WeiboFollowing, CarouselAdWrapper, IndexRankWrapper } from './IndexWidgets';
 import { Card } from '../../components/common/Card';
 import { Row, Col } from 'react-bootstrap';
 
@@ -12,9 +13,11 @@ const HomeWrapper = () =>
             <Latest />
         </Col>
         <Col md={3} smHidden xsHidden>
-            <Card style={{ minHeight: '1000px' }}>
-                我是右边栏站位符 :)
-            </Card>
+            <AnnounceWrapper />
+            <IndexRankWrapper />
+            <WeiboFollowing />
+            <AppQRCode />
+            <CarouselAdWrapper />
         </Col>
     </Row>;
 

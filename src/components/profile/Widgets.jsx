@@ -84,16 +84,16 @@ export class Title extends React.PureComponent {
                                     <span className="pull-right text-muted">{nextTitle}</span>
                                 </div>
                         }
-                    <ProgressBar 
-                        now={ 
-                            atMaxLevel
-                                ? 100
-                                : ((points - pointsOfCurrentTitle)/(pointsOfNextTitle - pointsOfCurrentTitle))*100
-                        }
-                        label={`${points}/${pointsOfNextTitle}`} 
-                        bsStyle="warning"
-                        striped
-                    />
+                        <ProgressBar 
+                            now={ 
+                                atMaxLevel
+                                    ? 100
+                                    : ((points - pointsOfCurrentTitle)/(pointsOfNextTitle - pointsOfCurrentTitle))*100
+                            }
+                            label={`${points}/${pointsOfNextTitle}`} 
+                            bsStyle="warning"
+                            striped
+                        />
                     </div>
                     <div className="clearfix">
                         <div className="statistic-wrapper pull-left">
