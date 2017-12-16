@@ -10,18 +10,18 @@ import '../../styles/profile/properties.less';
 const Properties = () => {
     return (
         <Card>
-            <ul className="profile-nav">
-                <li className="nav-link-wrapper">
+            <ul className="tabs">
+                <li className="tab">
                     <NavLink to="/user/me/messages" activeClassName="active">
                         消息
                     </NavLink>
                 </li>
-                <li className="nav-link-wrapper">
+                <li className="tab">
                     <NavLink to="/user/me/collections" activeClassName="active">
                         关注收藏
                     </NavLink>
                 </li>
-                <li className="nav-link-wrapper">
+                <li className="tab">
                     <NavLink to="/user/me/publish" activeClassName="active">
                         我的发布
                     </NavLink>
