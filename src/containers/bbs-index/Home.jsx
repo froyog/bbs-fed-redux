@@ -15,9 +15,9 @@ const HomeWrapper = () =>
         <Col md={3} smHidden xsHidden>
             <AnnounceWrapper />
             <IndexRankWrapper />
+            <CarouselAdWrapper />
             <WeiboFollowing />
             <AppQRCode />
-            <CarouselAdWrapper />
         </Col>
     </Row>;
 
