@@ -4,6 +4,7 @@ import { SelectField } from '../../components/common/Input';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
 import { getForumList, getBoardList } from '../../actions/forumList';
+import { withRouter } from 'react-router-dom';
 
 
 class BIDSelector extends React.Component {
@@ -26,7 +27,12 @@ class BIDSelector extends React.Component {
     }
 
     componentDidMount () {
-        this.props.getForumList();
+        const { getForumList, getBoardList, currentBoardInfo, onBIDSelect } = this.props;
+        getForumList && getForumList();
+        if (currentBoardInfo) {
+            const { forumId, id } = currentBoardInfo;
+            onBIDSelect && onBIDSelect(id);
+        }
     }
 
     handleSelectForum (selectedForumId) {
@@ -41,19 +47,24 @@ class BIDSelector extends React.Component {
     }
 
     render () {
-        const { forumList, boardList } = this.props;
+        const { forumList, boardList, currentBoardInfo } = this.props;
         const { selectedForumId } = this.state;
-        let forumOptions;
+        let forumOptions, initialForumName, initialBoardName;
         forumOptions = forumList && forumList.map(forum => ({
             name: forum.name,
             id: forum.id
         }));
         let boardOptions;
+        
         if (boardList[selectedForumId] && boardList[selectedForumId].items.boards) {
             boardOptions = boardList[selectedForumId].items.boards.map(board => ({
                 name: board.name,
                 id: board.id
             }));
+        }
+        if (currentBoardInfo) {
+            initialForumName = currentBoardInfo.forumName;
+            initialBoardName = currentBoardInfo.name;
         }
 
         return (
@@ -62,11 +73,13 @@ class BIDSelector extends React.Component {
                     labelText="选择分区"
                     options={forumOptions}
                     onSelect={this.handleSelectForum}
+                    initialValue={initialForumName}
                 />
                 <SelectField
                     labelText="选择板块"
                     options={boardOptions}
                     onSelect={this.handleSelectBoard}
+                    initialValue={initialBoardName}
                 />
             </div>
         );
@@ -74,11 +87,18 @@ class BIDSelector extends React.Component {
 }
 
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
+    let currentBoardInfo, result;
+    if (result = /^\/forum\/board\/(\d{3})\/page/.exec(ownProps.location.pathname)) {
+        let bid = result[1];
+        currentBoardInfo = state.getIn(['board', bid, 'boardInfo']);
+    }
+
     return {
         forumIsFetching: state.getIn(['forumList', 'isFetching']),
         forumList: state.getIn(['forumList', 'items']),
-        boardList: state.getIn(['boardList'])
+        boardList: state.get('boardList'),
+        currentBoardInfo: currentBoardInfo
     };
 };
 const mapDispatchToProps = dispatch => ({
@@ -86,5 +106,6 @@ const mapDispatchToProps = dispatch => ({
     getBoardList: fid => dispatch(getBoardList(fid))
 });
 BIDSelector = connect(mapStateToProps, mapDispatchToProps)(toJS(BIDSelector));
+BIDSelector = withRouter(BIDSelector);
 
 export default BIDSelector;

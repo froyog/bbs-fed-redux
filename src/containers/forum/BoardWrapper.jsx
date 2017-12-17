@@ -115,7 +115,7 @@ class BoardWrapper extends React.Component {
     render () {
         const { isFetching, boardInfo, threadList, type, order, error } = this.props;
         const { activePage } = this.state;
-        if (error) return <ErrorOverlay reason={error} needRefresh />
+        if (error) return <ErrorOverlay reason={error} needRefresh />;
         if (isFetching || !boardInfo || !threadList) {
             return <FetchingOverlay fullPage />;
         }
