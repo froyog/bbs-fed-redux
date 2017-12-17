@@ -1,10 +1,11 @@
 export const SHOW_TOAST = 'SHOW_TOAST';
 export const HIDE_TOAST = 'HIDE_TOAST';
 
-export const showToast = () => (dispatch, getState) => {
+export const showToast = message => (dispatch, getState) => {
     if (!getState().getIn(['toast', 'isShow'])) {
         return dispatch({
-            type: SHOW_TOAST
+            type: SHOW_TOAST,
+            message: message
         });
     }
 };

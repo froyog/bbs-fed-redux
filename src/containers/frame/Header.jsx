@@ -34,26 +34,24 @@ class HeaderWrapper extends React.PureComponent {
                 tapIsShow: true
             });
         }
-        setTimeout(() => {
-            this.props.showToast()
-
-        }, 1000);
     }
 
     componentWillReceiveProps (nextProps) {
-        const { path, threadTitle } = nextProps;
-        let headerContent;
-        if (path.indexOf('/forum/thread') !== -1) {
-            headerContent = threadTitle;
-        } else {
-            headerContent = '';
+        const { path, threadTitle, isLogin } = nextProps;
+        if (threadTitle) {
+            let headerContent;
+            if (path.indexOf('/forum/thread') !== -1) {
+                headerContent = threadTitle;
+            } else {
+                headerContent = '';
+            }
+            clearTimeout(this.timer);
+            this.timer = setTimeout(() => {
+                this.setState({
+                    headerContent: headerContent
+                });
+            }, 500);
         }
-        clearTimeout(this.timer);
-        this.timer = setTimeout(() => {
-            this.setState({
-                headerContent: headerContent
-            });
-        }, 500);
     }
 
     componentWillUnmount () {
@@ -61,6 +59,11 @@ class HeaderWrapper extends React.PureComponent {
     }
 
     handleOpenModal () {
+        const { isLogin, showToast } = this.props;
+        if (!isLogin) {
+            showToast('您未登录');
+            return;
+        }
         this.setState({ postingModalOpen: true });
     }
 
@@ -122,12 +125,13 @@ const mapStateToProps = state => {
     }
 
     return {
+        isLogin: !!(state.getIn(['user', 'uid'])),
         isOpen: state.get('sidebarIsOpen'),
         threadTitle: threadTitle
     };
 };
 const mapDispatchToProps = dispatch => ({
-    showToast: () => dispatch(showToast()),
+    showToast: message => dispatch(showToast(message)),
     onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus))
 });
 HeaderWrapper = withRouter(connect(mapStateToProps, mapDispatchToProps)(toJS(HeaderWrapper)));

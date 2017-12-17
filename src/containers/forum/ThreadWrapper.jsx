@@ -172,7 +172,8 @@ class ThreadWrapper extends React.PureComponent {
                     replyContent={replyContent}
                     onCancelReply={this.handleCancelReply}
                     tid={tid} 
-                    onCommentSuccess={this.handleCommentSuccess} />
+                    onCommentSuccess={this.handleCommentSuccess} 
+                />
             </div>
         );
     }

@@ -43,7 +43,7 @@ const latest = (state = fromJS({
             const incomingItems = fromJS(action.json.data);
             const finalItems = action.page === 0
                 ? incomingItems
-                : incomingItems.concat(state.get('items'));
+                : state.get('items').concat(incomingItems);
             return Map({
                 'isFetching': false,
                 'didInvalidate': false,

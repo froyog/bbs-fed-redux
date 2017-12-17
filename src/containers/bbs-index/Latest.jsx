@@ -53,6 +53,9 @@ class Latest extends React.Component {
         const { refresh, getLatest } = this.props;
         refresh();
         getLatest(0);
+        this.setState({
+            page: 0
+        });
     }
 
     handleLoadMore () {
