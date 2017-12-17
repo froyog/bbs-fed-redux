@@ -4,6 +4,7 @@ import { Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toggleSidebar } from '../../actions/frame/sidebar';
+import { showToast } from '../../actions/common/toast';
 import BoardEditor from '../forum/BoardEditor';
 import Header from '../../components/frame/Header';
 import { toJS } from '../../util';
@@ -33,6 +34,10 @@ class HeaderWrapper extends React.PureComponent {
                 tapIsShow: true
             });
         }
+        setTimeout(() => {
+            this.props.showToast()
+
+        }, 1000);
     }
 
     componentWillReceiveProps (nextProps) {
@@ -121,11 +126,10 @@ const mapStateToProps = state => {
         threadTitle: threadTitle
     };
 };
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus))
-    };
-};
+const mapDispatchToProps = dispatch => ({
+    showToast: () => dispatch(showToast()),
+    onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus))
+});
 HeaderWrapper = withRouter(connect(mapStateToProps, mapDispatchToProps)(toJS(HeaderWrapper)));
 
 export default HeaderWrapper;

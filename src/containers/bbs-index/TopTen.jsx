@@ -6,7 +6,6 @@ import { toJS } from '../../util.js';
 import { Card } from '../../components/common/Card';
 import { FetchingOverlay } from '../../components/common/Loading';
 import ThreadItem from '../../components/common/ThreadItem';
-import { showErrorModal } from '../../actions/common/error-portal';
 
 import '../../styles/home.less';
 
@@ -34,9 +33,9 @@ class TopTenWrapper extends React.Component {
     }
 
     componentWillReceiveProps (nextProps) {
-        const { error, fireErrorModal } = nextProps;
+        const { error } = nextProps;
         if (error) {
-            fireErrorModal();
+            // fire error modal
         }
     }
 
@@ -75,8 +74,7 @@ const mapStateToProps = state => {
     };
 };
 const mapDispatchToProps = {
-    getTopTen,
-    fireErrorModal: showErrorModal
+    getTopTen
 };
 TopTenWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(TopTenWrapper));
 

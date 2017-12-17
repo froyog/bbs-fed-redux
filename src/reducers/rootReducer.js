@@ -11,7 +11,7 @@ import newThread from './forum/newThread';
 import attach from './forum/attach';
 import newComment from './forum/newComment';
 import searchUser from './common/searchUser';
-import errorModal from './common/errorModal';
+import toast from './common/toast';
 import profiles from './profile/profile';
 import messages from './profile/messages';
 import bypassingFactory from './bypassing';
@@ -59,7 +59,7 @@ const combinedReducer = combineReducers({
     newComment,
     attach,
     searchUser,
-    errorModalIsShow: errorModal,
+    toast,
     profiles,
     messages,
     bypassing,

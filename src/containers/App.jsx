@@ -5,7 +5,7 @@ import { Grid } from 'react-bootstrap';
 
 import Header from './frame/Header';
 import Sidebar from './frame/Sidebar';
-import ErrorModal from './common/ErrorModal';
+import Toast from './common/Toast';
 import Forum from './forum/ForumList';
 import Board from './forum/BoardWrapper';
 import Thread from './forum/ThreadWrapper';
@@ -48,7 +48,7 @@ class App extends React.Component {
             <div id="frame" onScroll={this.handlePageScroll}>
                 <Header path={location.pathname}/>
                 <Sidebar />
-                <ErrorModal />
+                <Toast />
                 <div id="main" style={mainStyle}>
                     <Grid>
                         <Switch>
