@@ -70,6 +70,7 @@ const mapStateToProps = (state, ownProps) => {
     const selfUid = state.getIn(['user', 'uid']);
     if (uid === 'me') {
         // get self uid from state
+        
         if (!selfUid) return { isLogin: false };
         uid = selfUid;
     }
@@ -78,6 +79,7 @@ const mapStateToProps = (state, ownProps) => {
     if (!profileState) return {};
 
     return {
+        isLogin: true,
         selfUid: selfUid,
         recentUpdates: profileState.getIn(['profile', 'recent']),
         points: profileState.getIn(['profile', 'points']),

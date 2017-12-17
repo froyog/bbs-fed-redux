@@ -135,11 +135,11 @@ class IndexRankWrapper extends React.Component {
         isFetching: PropTypes.bool,
         rankData: PropTypes.arrayOf(PropTypes.oneOfType([
             PropTypes.number,
-            PropTypes.shape({
+            PropTypes.arrayOf(PropTypes.shape({
                 id: PropTypes.number,
                 name: PropTypes.string,
-                pointsInc: PropTypes.number
-            })
+                pointInc: PropTypes.number
+            }))
         ])),
         error: PropTypes.string,
         getIndexRank: PropTypes.func.isRequired

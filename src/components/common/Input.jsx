@@ -143,11 +143,12 @@ export class SelectField extends React.PureComponent {
         color: '#2565ac'
     };
 
-    constructor () {
-        super();
+    constructor (props) {
+        super(props);
         this.state = {
             focused: false,
-            hasContent: false
+            hasContent: false,
+            selectedValue: props.initialValue || ''
         };
 
         this.handleInputFocused = this.handleInputFocused.bind(this);
@@ -190,8 +191,8 @@ export class SelectField extends React.PureComponent {
     render () {
         const { id, labelText, fullWidth, options } = this.props;
         const { focused, selectedValue, hasContent } = this.state;
-        let optionItem;
-        if (options) {
+        let optionItem, inputDisabled = false;
+        if (options && options.length) {
             optionItem = options.map(option => 
                 <li 
                     onMouseDown={this.handleSelect}
@@ -201,6 +202,8 @@ export class SelectField extends React.PureComponent {
                     {option.name}
                 </li>
             );
+        } else {
+            inputDisabled = true;
         }
 
         let labelStyle = {
@@ -240,6 +243,7 @@ export class SelectField extends React.PureComponent {
                         className="select-button"
                         onFocus={this.handleInputFocused}
                         onBlur={this.handleInputBlur}
+                        disabled={inputDisabled}
                     />
                     <svg className="select-icon" focusable="false" viewBox="0 0 24 24">
                         <path d="M7 10l5 5 5-5z"></path>

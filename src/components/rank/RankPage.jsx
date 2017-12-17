@@ -41,11 +41,11 @@ const RankPage = ({ data, type }) => {
                             </Media.Body>
                         </Media>
                     </li>
-                )
+                );
             }) }
             <p>从 <Time timestamp={after} absolute /> 开始计算分数</p>
         </ul>
-    )
+    );
 };
 
 RankPage.propTypes = {

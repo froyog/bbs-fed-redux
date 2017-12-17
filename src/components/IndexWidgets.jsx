@@ -91,10 +91,10 @@ export const IndexRank = ({ rankData }) => {
 IndexRank.propTypes = {
     rankData: PropTypes.arrayOf(PropTypes.oneOfType([
         PropTypes.number,
-        PropTypes.shape({
+        PropTypes.arrayOf(PropTypes.shape({
             id: PropTypes.number,
             name: PropTypes.string,
             pointInc: PropTypes.number
-        })
+        }))
     ]))
 };

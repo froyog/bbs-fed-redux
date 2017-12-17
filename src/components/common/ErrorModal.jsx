@@ -39,7 +39,7 @@ export default ErrorModal;
 
 const refreshPage = () => {
     location.reload();
-}
+};
 export const ErrorOverlay = ({ reason, action, needRefresh }) => {
     return (
         <div className="error-overlay clearfix">
@@ -70,11 +70,11 @@ export const ErrorOverlay = ({ reason, action, needRefresh }) => {
                 }
             </div>
         </div>
-    )
-}
+    );
+};
 
 ErrorOverlay.propTypes = {
     reason: PropTypes.string,
     action: PropTypes.element,
     needRefresh: PropTypes.bool
-}
+};

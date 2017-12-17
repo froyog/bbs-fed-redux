@@ -21,17 +21,7 @@ class Messages extends React.Component {
             id: PropTypes.number,
             read: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
             tCreate: PropTypes.number,
-            tag: PropTypes.number,
-            content: PropTypes.shape({
-                content: PropTypes.string,
-                floor: PropTypes.number,
-                status: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-                threadId: PropTypes.number,
-                threadTitle: PropTypes.string,
-                tCreate: PropTypes.number,
-                tModify: PropTypes.number,
-                id: PropTypes.number
-            })
+            tag: PropTypes.number
         }))
     }
 
