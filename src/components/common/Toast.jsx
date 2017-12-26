@@ -13,7 +13,7 @@ class Toast extends React.Component {
     componentDidMount () {
         this.timer = setTimeout(() => {
             this.props.onDismiss();
-        }, 3000);
+        }, 2000);
     }
 
     componentWillUnmount () {
@@ -32,10 +32,10 @@ class Toast extends React.Component {
                     className="flat pull-right"
                     onClick={onDismiss}
                 >
-                    Dismiss
+                    好的
                 </Button>
             </div>
-        )
+        );
     }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from '../common/Card';
-import { Button, ProgressBar } from 'react-bootstrap';
+import { ProgressBar } from 'react-bootstrap';
 import medalVector from '../../assests/medal.jpg';
 import Chip from '../common/Chip';
 import Avatar from '../common/Avatar';
@@ -29,7 +29,7 @@ export class Title extends React.PureComponent {
     }
 
     _mapPointsToTitle () {
-        const { cPost, cThread, points } = this.props;
+        const { points } = this.props;
         const TITLE_ARRAY = ['新手上路', '一般站友', '中级站友', '高级站友', '老站友', '长老级', '本站元老', '开国大佬'],
             POINTS_ARRAY = [0, 100, 500, 1000, 2000, 4000, 8000, 10000];
         

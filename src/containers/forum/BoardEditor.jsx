@@ -52,7 +52,7 @@ class BoardEditor extends React.Component {
     }
 
     componentWillReceiveProps (nextProps) {
-        const { tid, error, isFetching, history } = nextProps;
+        const { tid, error, isFetching } = nextProps;
         if (tid && !error && !isFetching) {
             // success
             this.handleCloseModal();

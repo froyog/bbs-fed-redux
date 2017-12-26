@@ -50,7 +50,7 @@ export const DELETE_THREAD_REQUEST = 'DELETE_THREAD_REQUEST';
 export const DELETE_THREAD_SUCCESS = 'DELETE_THREAD_SUCCESS';
 export const DELETE_THREAD_FAILURE = 'DELETE_THREAD_FAILURE';
 
-export const deleteThread = () => (dispatch, getState) => {
+export const deleteThread = tid => (dispatch, getState) => {
     const authentication = parseUser(getState());
     dispatch({
         [CALL_API]: {

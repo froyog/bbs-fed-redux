@@ -27,7 +27,7 @@ class BIDSelector extends React.Component {
     }
 
     componentDidMount () {
-        const { getForumList, getBoardList, currentBoardInfo, onBIDSelect } = this.props;
+        const { getForumList, currentBoardInfo, onBIDSelect } = this.props;
         getForumList && getForumList();
         if (currentBoardInfo) {
             const { forumId, id } = currentBoardInfo;

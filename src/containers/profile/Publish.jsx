@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PublishList, ReplyList } from '../../components/profile/Publish';
+import { PublishList } from '../../components/profile/Publish';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
 import { getPublishList, getReplyList } from '../../actions/profile/publish';

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getProfileIfNeeded } from '../../actions/profile/profile';
+import { sendPrivateMessage } from '../../actions/profile/messages';
+import { showToast } from '../../actions/common/toast';
 import { FetchingOverlay } from '../../components/common/Loading';
 import Profile from '../../components/profile/Profile';
 import { connect } from 'react-redux';
@@ -31,7 +33,15 @@ class ProfileWrapper extends React.Component {
                 tReply: PropTypes.number
             }))
         }),
-        error: PropTypes.string
+        error: PropTypes.string,
+        privatePayload: PropTypes.shape({
+            isFetching: PropTypes.bool,
+            items: PropTypes.object,
+            error: PropTypes.string
+        }),
+        getProfile: PropTypes.func.isRequired,
+        sendPrivateMessage: PropTypes.func.isRequired,
+        showToast: PropTypes.func.isRequired
     }
 
     componentWillMount () {
@@ -47,7 +57,8 @@ class ProfileWrapper extends React.Component {
     }
 
     render () {
-        const { isFetching, profile, error, thisUid, uid } = this.props;
+        const { isFetching, profile, thisUid, uid, 
+            sendPrivateMessage, privateState, showToast } = this.props;
         if (!profile || isFetching) {
             return <FetchingOverlay fullPage />;
         }
@@ -57,6 +68,9 @@ class ProfileWrapper extends React.Component {
                 isSelf={uid === 'me'}
                 uid={thisUid}
                 profile={profile} 
+                onSendPrivateMessage={sendPrivateMessage}
+                privatePayload={privateState}
+                showToast={showToast}
             />
         );
     }
@@ -76,11 +90,14 @@ const mapStateToProps = (state, ownProps) => {
         thisUid: uid,
         isFetching: profileState.get('isFetching'),
         profile: profileState.get('profile'),
-        error: profileState.get('error')
+        error: profileState.get('error'),
+        privateState: state.getIn(['bypassing', 'sendPrivateMessage', +uid])
     };
 };
 const mapDispatchToProps = dispatch => ({
-    getProfile: uid => dispatch(getProfileIfNeeded(uid))
+    getProfile: uid => dispatch(getProfileIfNeeded(uid)),
+    sendPrivateMessage: (uid, content) => dispatch(sendPrivateMessage(uid, content)),
+    showToast: message => dispatch(showToast(message))
 });
 ProfileWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(ProfileWrapper));
 

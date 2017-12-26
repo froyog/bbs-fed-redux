@@ -10,7 +10,7 @@ const toast = (state = fromJS({
             return Map({
                 isShow: true,
                 message: action.message
-            })
+            });
         case ActionTypes.HIDE_TOAST:
             return state.set('isShow', false);
         default:

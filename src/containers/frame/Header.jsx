@@ -37,7 +37,7 @@ class HeaderWrapper extends React.PureComponent {
     }
 
     componentWillReceiveProps (nextProps) {
-        const { path, threadTitle, isLogin } = nextProps;
+        const { path, threadTitle } = nextProps;
         if (threadTitle) {
             let headerContent;
             if (path.indexOf('/forum/thread') !== -1) {

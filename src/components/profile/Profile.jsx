@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Label, Button, Modal } from 'react-bootstrap';
+import { InputField } from '../../components/common/Input';
 import { Card } from '../../components/common/Card';
 import Avatar from '../common/Avatar';
 import bgMaterial from '../../assests/bg-material.jpg';
@@ -10,18 +11,61 @@ import '../../styles/profile/profile.less';
 
 
 class Profile extends React.Component {
+    static propTypes = {
+        profile: PropTypes.shape({
+            name: PropTypes.string,
+            nickname: PropTypes.string,
+            signature: PropTypes.string,
+            points: PropTypes.number,
+            cPost: PropTypes.number,
+            cThread: PropTypes.number,
+            cOnline: PropTypes.number,
+            tCreate: PropTypes.number,
+            group: PropTypes.number,
+            recent: PropTypes.arrayOf(PropTypes.shape({
+                id: PropTypes.number,
+                title: PropTypes.string,
+                bElite: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+                visibility: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+                tCreate: PropTypes.number,
+                tReply: PropTypes.number
+            }))
+        }),
+        uid: PropTypes.string,
+        isSelf: PropTypes.bool,
+        onSendPrivateMessage: PropTypes.func.isRequired,
+        showToast: PropTypes.func.isRequired
+    }
+
     constructor () {
         super();
         this.state = {
-            privateModalIsOpen: false
+            privateModalIsOpen: false,
+            privateMessage: ''
         };
 
         this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleTogglePrivateMessage = this.handleTogglePrivateMessage.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSendPrivateMessage = this.handleSendPrivateMessage.bind(this);
     }
     
     componentDidMount () {
         this.wrapper.addEventListener('mousemove', this.handleMouseMove);
+    }
+
+    componentWillReceiveProps (nextProps) {
+        const { privatePayload, showToast } = nextProps;
+        if (privatePayload && !privatePayload.isFetching &&
+            privatePayload !== this.props.privatePayload
+        ) {
+            if (!privatePayload.error) {
+                this.setState({
+                    privateModalIsOpen: false
+                });
+                showToast('私信发送成功');
+            }
+        }
     }
 
     handleMouseMove (e) {
@@ -36,12 +80,65 @@ class Profile extends React.Component {
         });
     }
 
+    handleInputChange (e) {
+        const { target: { id, value } } = e;
+        this.setState({
+            [id]: value
+        });
+    }
+
+    handleSendPrivateMessage (e) {
+        e.preventDefault();
+        const { onSendPrivateMessage, uid } = this.props;
+        const { privateMessage: content } = this.state;
+        onSendPrivateMessage && onSendPrivateMessage(+uid, content);
+    }
+
     render () {
         const { profile: { name, nickname, signature, 
             points, cPost, cThread, cOnline, tCreate}, uid, isSelf } = this.props;
         const { privateModalIsOpen } = this.state;
-        const bgPath = isSelf ? bgMaterial2 : bgMaterial;
-
+        const renderOperators = isSelf
+            ? <div className="profile-ops-wrapper">
+                <Button
+                    className="profile-ops"
+                >
+                    编辑个人资料
+                </Button>
+            </div>
+            : <div className="profile-ops-wrapper private-message">
+                <Button
+                    className="profile-ops"
+                    onClick={this.handleTogglePrivateMessage}
+                >
+                    发私信
+                </Button>
+                {
+                    privateModalIsOpen &&
+                    <form className="private-message-wrapper">
+                        <InputField
+                            text="私信内容"
+                            id="privateMessage"
+                            onChange={this.handleInputChange}
+                        />
+                        <Button
+                            type="submit"
+                            bsStyle="primary"
+                            className="raised pull-right"
+                            onClick={this.handleSendPrivateMessage}
+                        >
+                            发送
+                        </Button>
+                        <Button
+                            className="raised pull-right"
+                            onClick={this.handleTogglePrivateMessage}
+                        >
+                            关闭
+                        </Button>
+                    </form>
+                }
+            </div>
+        
         return (
             <Card className="card-profile">
                 <div ref={ wrapper => this.wrapper = wrapper }>
@@ -49,7 +146,7 @@ class Profile extends React.Component {
                         <div 
                             className="bg"
                             style={{
-                                backgroundImage: `url(${bgPath})`
+                                backgroundImage: `url(${isSelf ? bgMaterial2 : bgMaterial})`
                             }}
                             ref={ bg => this.bg = bg }
                         ></div>
@@ -70,19 +167,7 @@ class Profile extends React.Component {
                                 {points} <span className="points-content">积分</span>
                             </Label>
                             <div className="profile-ops-wrapper">
-                                { isSelf
-                                    ? <Button
-                                        className="profile-ops"
-                                    >
-                                        编辑个人资料
-                                    </Button>
-                                    : <Button
-                                        className="profile-ops"
-                                        onClick={this.handleTogglePrivateMessage}
-                                    >
-                                        发私信
-                                    </Button>
-                                }
+                                {renderOperators}
                             </div>
                         </div>
                     </div>

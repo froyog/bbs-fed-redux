@@ -27,15 +27,22 @@ class UserBase extends React.Component {
     }
 
     render () {
-        const { isLogin, match: { params: { uid } }, recentUpdates, points, cThread, cPost } = this.props;
+        const { isLogin, match: { params: { uid } }, recentUpdates, 
+            points, cThread, cPost, error } = this.props;
         const renderRecentUpdates = recentUpdates && <RecentUpdate recentThreads={recentUpdates} />;
-        
-        if (!isLogin) return (
-            <ErrorOverlay 
+        if (uid === 'me' && !isLogin) {
+            return <ErrorOverlay 
                 reason="您未登录或登录信息已过期"
                 action={<p>您可以尝试<Link to='/passport/login'>登录</Link></p>}
-            />
-        );
+            />;
+        }
+        if (error) {
+            return <ErrorOverlay 
+                reason={error}
+                needRefresh
+            />;
+        }
+
         return (
             <div>
                 <Profile uid={uid} />
@@ -84,7 +91,8 @@ const mapStateToProps = (state, ownProps) => {
         recentUpdates: profileState.getIn(['profile', 'recent']),
         points: profileState.getIn(['profile', 'points']),
         cThread: profileState.getIn(['profile', 'cThread']),
-        cPost: profileState.getIn(['profile', 'cPost'])
+        cPost: profileState.getIn(['profile', 'cPost']),
+        error: profileState.get('error')
     };
 };
 UserBase = connect(mapStateToProps)(toJS(UserBase));

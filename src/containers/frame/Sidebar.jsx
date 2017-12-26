@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { toggleSidebar, getUnreadMessage } from '../../actions/frame/sidebar';
 import { logout } from '../../actions/passport/log-io';
 import Sidebar from '../../components/frame/Sidebar';

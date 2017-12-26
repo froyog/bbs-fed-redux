@@ -19,8 +19,7 @@ const RankPage = ({ data, type }) => {
     return (
         <ul className="rank-wrapper">
             { rank.map((user, index) => {
-                const { points, name, nickname, tCreate, 
-                    signature, id, pointsInc } = user;
+                const { points, name, nickname, signature, id, pointsInc } = user;
                 return (
                     <li>
                         <h1 className="rank-index">{index+1}</h1>

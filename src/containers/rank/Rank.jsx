@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Switch, Route, Redirect, NavLink } from 'react-router-dom';
 import RankPage from './RankPage';
 
