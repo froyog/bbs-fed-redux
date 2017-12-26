@@ -61,7 +61,7 @@ export const IndexRank = ({ rankData }) => {
         <div>
             <ul className="rank-list">
                 {rankList.map(user => {
-                    const { id, name, pointInc } = user;
+                    const { id, name, pointsInc } = user;
                     return (
                         <Media key={id}>
                             <Media.Left align="middle">
@@ -73,7 +73,7 @@ export const IndexRank = ({ rankData }) => {
                             </Media.Left>
                             <Media.Body>
                                 <Media.Heading>{name}</Media.Heading>
-                                <p>周获积分：{pointInc}</p>
+                                <p>周获积分：{pointsInc}</p>
                             </Media.Body>
                         </Media>
                     );
