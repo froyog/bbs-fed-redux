@@ -13,7 +13,8 @@ export class InputField extends React.PureComponent {
         type: PropTypes.string,
         fullWidth: PropTypes.bool,
         color: PropTypes.string,
-        errorMessage: PropTypes.string
+        errorMessage: PropTypes.string,
+        initialValue: PropTypes.string
     };
 
     static defaultProps = {
@@ -22,11 +23,11 @@ export class InputField extends React.PureComponent {
         color: '#2565ac'
     };
 
-    constructor () {
-        super();
+    constructor (props) {
+        super(props);
         this.state = {
             focused: false,
-            hasContent: false
+            hasContent: !!props.initialValue
         };
 
         this.handleInputFocused = this.handleInputFocused.bind(this);
@@ -62,7 +63,8 @@ export class InputField extends React.PureComponent {
     }
 
     render () {
-        const { id, text, type, placeholder, fullWidth, errorMessage, className } = this.props;
+        const { id, text, type, placeholder, fullWidth, 
+            errorMessage, className, initialValue, disabled } = this.props;
         const { focused, hasContent } = this.state;
         let labelStyle = {
             transform: 'scale(1) translate(0, 0)',
@@ -103,11 +105,13 @@ export class InputField extends React.PureComponent {
                     </div>
                 }
                 <input
+                    defaultValue={initialValue}
                     type={type}
                     id={id}
                     onFocus={this.handleInputFocused}
                     onBlur={this.handleInputBlur}
                     onChange={this.handleInputChange}
+                    disabled={disabled}
                 />
                 <div>
                     <hr aria-hidden="true" className="border-muted" />

@@ -73,6 +73,11 @@
         cursor: inherit;
         opacity: 1;
         overflow: hidden;
+
+        &:disabled {
+            cursor: not-allowed;
+            color: rgba(0, 0, 0, .57);
+        }
     }
 
     &.select {

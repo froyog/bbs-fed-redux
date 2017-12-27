@@ -4,6 +4,7 @@ import { Label, Button, Modal } from 'react-bootstrap';
 import { InputField } from '../../components/common/Input';
 import { Card } from '../../components/common/Card';
 import Avatar from '../common/Avatar';
+import EditingProfile from './EditingProfile';
 import bgMaterial from '../../assests/bg-material.jpg';
 import bgMaterial2 from '../../assests/bg-material2.jpeg';
 
@@ -31,7 +32,7 @@ class Profile extends React.Component {
                 tReply: PropTypes.number
             }))
         }),
-        uid: PropTypes.string,
+        uid: PropTypes.number,
         isSelf: PropTypes.bool,
         onSendPrivateMessage: PropTypes.func.isRequired,
         showToast: PropTypes.func.isRequired
@@ -41,13 +42,16 @@ class Profile extends React.Component {
         super();
         this.state = {
             privateModalIsOpen: false,
-            privateMessage: ''
+            privateMessage: '',
+            isEditingProfile: true
         };
 
         this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleTogglePrivateMessage = this.handleTogglePrivateMessage.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSendPrivateMessage = this.handleSendPrivateMessage.bind(this);
+        this.handleEditProfile = this.handleEditProfile.bind(this);
+        this.handleCloseEditProfile = this.handleCloseEditProfile.bind(this);
     }
     
     componentDidMount () {
@@ -63,7 +67,7 @@ class Profile extends React.Component {
                 this.setState({
                     privateModalIsOpen: false
                 });
-                showToast('私信发送成功');
+                showToast('私信已发送');
             }
         }
     }
@@ -94,14 +98,27 @@ class Profile extends React.Component {
         onSendPrivateMessage && onSendPrivateMessage(+uid, content);
     }
 
+    handleEditProfile () {
+        this.setState({
+            isEditingProfile: true
+        });
+    }
+
+    handleCloseEditProfile () {
+        this.setState({
+            isEditingProfile: false
+        });
+    }
+
     render () {
-        const { profile: { name, nickname, signature, 
-            points, cPost, cThread, cOnline, tCreate}, uid, isSelf } = this.props;
-        const { privateModalIsOpen } = this.state;
+        const { profile, profile: { name, nickname, signature, 
+            points, cPost, cThread, cOnline, tCreate }, uid, isSelf } = this.props;
+        const { privateModalIsOpen, isEditingProfile } = this.state;
         const renderOperators = isSelf
             ? <div className="profile-ops-wrapper">
                 <Button
                     className="profile-ops"
+                    onClick={this.handleEditProfile}
                 >
                     编辑个人资料
                 </Button>
@@ -137,7 +154,7 @@ class Profile extends React.Component {
                         </Button>
                     </form>
                 }
-            </div>
+            </div>;
         
         return (
             <Card className="card-profile">
@@ -151,26 +168,32 @@ class Profile extends React.Component {
                             ref={ bg => this.bg = bg }
                         ></div>
                     </div>
-                    <div className="profile-wrapper">
-                        <Avatar 
-                            className="profile-avatar"
-                            id={+uid} 
-                            imageShape="rounded"
+                    {(isSelf && isEditingProfile)
+                        ? <EditingProfile
+                            profile={profile}
+                            onCancel={this.handleCloseEditProfile}
                         />
-                        <div className="intro">
-                            <div className="username">
-                                {name}
-                                <span className="nickname">（{nickname}）</span>
-                            </div>
-                            <p className="text-muted">{signature || '这个人很懒什么都没有留下'}</p>
-                            <Label bsStyle="primary">
-                                {points} <span className="points-content">积分</span>
-                            </Label>
-                            <div className="profile-ops-wrapper">
-                                {renderOperators}
+                        : <div className="profile-wrapper">
+                            <Avatar 
+                                className="profile-avatar"
+                                id={+uid} 
+                                imageShape="rounded"
+                            />
+                            <div className="intro">
+                                <div className="username">
+                                    {name}
+                                    <span className="nickname">（{nickname}）</span>
+                                </div>
+                                <p className="text-muted">{signature || '这个人很懒什么都没有留下'}</p>
+                                <Label bsStyle="primary">
+                                    {points} <span className="points-content">积分</span>
+                                </Label>
+                                <div className="profile-ops-wrapper">
+                                    {renderOperators}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </Card>
         );
