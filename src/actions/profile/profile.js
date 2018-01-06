@@ -4,17 +4,17 @@ import { parseUser } from '../../util';
 export const GET_PROFILE_REQUEST = 'GET_PROFILE_REQUEST';
 export const GET_PROFILE_SUCCESS = 'GET_PROFILE_SUCCESS';
 export const GET_PROFILE_FAILURE = 'GET_PROFILE_FAILURE';
-export const GET_MYSELF_PROFILE_REQUEST = 'GET_MYSELF_PROFILE_REQUEST';
-export const GET_MYSELF_PROFILE_SUCCESS = 'GET_MYSELF_PROFILE_SUCCESS';
-export const GET_MYSELF_PROFILE_FAILURE = 'GET_MYSELF_PROFILE_FAILURE';
+export const GET_SELF_PROFILE_REQUEST = 'GET_SELF_PROFILE_REQUEST';
+export const GET_SELF_PROFILE_SUCCESS = 'GET_SELF_PROFILE_SUCCESS';
+export const GET_SELF_PROFILE_FAILURE = 'GET_SELF_PROFILE_FAILURE';
 
 export const fetchProfile = (uid, authentication, isMyself) => {
     if (isMyself) {
         return {
             [CALL_API]: {
-                types: [GET_MYSELF_PROFILE_REQUEST, 
-                    GET_MYSELF_PROFILE_SUCCESS, 
-                    GET_MYSELF_PROFILE_FAILURE],
+                types: [GET_SELF_PROFILE_REQUEST, 
+                    GET_SELF_PROFILE_SUCCESS, 
+                    GET_SELF_PROFILE_FAILURE],
                 apiPath: 'home',
                 request: {
                     method: 'GET',

@@ -49,14 +49,14 @@ class Login extends React.Component {
                     id="username"
                     onChange={this.handleInputChange}
                     fullWidth
-                    value={username} />
+                />
                 <InputField
                     text="密码"
                     id="password"
                     type="password"
                     onChange={this.handleInputChange}
                     fullWidth
-                    value={password} />
+                />
                 <Button
                     className="raised submit-button"
                     block

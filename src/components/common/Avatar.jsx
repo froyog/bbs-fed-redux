@@ -56,7 +56,7 @@ class ImageFeed extends React.Component {
 
     render () {
         const { src, generateAvatar } = this.state;
-        const { name, id, imageShape, ...restProps } = this.props;
+        const { name, id, imageShape, anonymous, ...restProps } = this.props;
 
         if (generateAvatar) {
             const randomColor = COLOR_ARRAY[Math.floor(name.charCodeAt(0) % COLOR_ARRAY.length)];

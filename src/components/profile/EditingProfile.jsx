@@ -18,6 +18,7 @@ class EditingProfile extends React.Component {
             tCreate: PropTypes.number.isRequired,
             group: PropTypes.number.isRequired,
         }).isRequired,
+        saveProfile: PropTypes.func.isRequired
     }
 
     constructor (props) {
@@ -25,6 +26,10 @@ class EditingProfile extends React.Component {
         this.state = {
             nickname: props.profile.nickname,
             signature: props.profile.signature,
+            oldPassword: '',
+            password: '',
+            passwordDuplicate: '',
+            notMatchErrorMessage: '',
             isShowPasswordSet: false
         };
 
@@ -32,6 +37,23 @@ class EditingProfile extends React.Component {
         this.handleClickSetPassword = this.handleClickSetPassword.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         this.handleSubmitProfile = this.handleSubmitProfile.bind(this);
+    }
+
+    _checkVaildation (token, value) {
+        console.log(token);
+        
+        if (token === 'passwordRepeat') {
+            const { password } = this.state;
+            if (password !== value) {
+                this.setState({
+                    notMatchErrorMessage: '两个密码不匹配，请检查您的输入'
+                });
+                return;
+            }
+        }
+        this.setState({
+            notMatchErrorMessage: ''
+        });
     }
 
     handleClickSetPassword () {
@@ -42,6 +64,7 @@ class EditingProfile extends React.Component {
 
     handleInputChange (e) {
         const { target: { id, value } } = e;
+        this._checkVaildation(id, value);
         this.setState({
             [id]: value
         });
@@ -54,12 +77,20 @@ class EditingProfile extends React.Component {
 
     handleSubmitProfile (e) {
         e.preventDefault();
+        const { nickname, signature, password, oldPassword } = this.state;
+        const { saveProfile } = this.props;
+        saveProfile && saveProfile({
+            nickname: nickname,
+            signature: signature,
+            old_password: oldPassword,
+            password: password
+        });
     }
 
     render () {
         const { profile: { name, nickname, signature, 
             points, cPost, cThread, cOnline, tCreate } } = this.props;
-        const { isShowPasswordSet } = this.state;
+        const { isShowPasswordSet, notMatchErrorMessage } = this.state;
         return (
             <div className="profile-editing-wrapper">
                 <div className="profile-wrapper">
@@ -100,27 +131,34 @@ class EditingProfile extends React.Component {
                     <div 
                         className="password-set-wrapper"
                         style={{ 
-                            maxHeight: isShowPasswordSet ? '150px' : '0',
+                            maxHeight: isShowPasswordSet ? '180px' : '0',
                             marginTop: isShowPasswordSet ? '10px' : '0' 
                         }}
                     >
-                        <p><InputField 
+                        <div><InputField 
                             text="原密码"
-                            id="passwordOriginal"
+                            id="oldPassword"
+                            type="password"
                             onChange={this.handleInputChange}
-                        /></p>
-                        <InputField 
-                            text="设置新密码"
-                            placeholder="8位以上字符"
-                            id="passwordNew"
-                            className="input-gap"
-                            onChange={this.handleInputChange}
-                        />
-                        <InputField 
-                            text="重复密码"
-                            id="passwordNewRepeat"
-                            onChange={this.handleInputChange}
-                        />
+                            /></div>
+                        <div className="edit-password-line clearfix">
+                            <InputField 
+                                text="设置新密码"
+                                type="password"
+                                placeholder="8位以上字符"
+                                id="password"
+                                className="input-gap pull-left"
+                                onChange={this.handleInputChange}
+                                />
+                            <InputField 
+                                text="确认密码"
+                                type="password"
+                                id="passwordRepeat"
+                                className="pull-left"
+                                onChange={this.handleInputChange}
+                                errorMessage={notMatchErrorMessage}
+                            />
+                        </div>
                     </div>
                     <h4>统计信息</h4>
                     <p>账号创建日期：<Time timestamp={tCreate} absolute /></p>

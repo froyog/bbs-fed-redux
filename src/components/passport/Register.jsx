@@ -20,7 +20,7 @@ class Register extends React.Component {
             cid: '',
             username: '',
             password: '',
-            passwordDuplicate: '',
+            passwordRepeat: '',
             errorMessage: ''
         };
 
@@ -58,7 +58,7 @@ class Register extends React.Component {
     }
 
     _checkVaildation (token, value) {
-        if (token === 'passwordDuplicate') {
+        if (token === 'passwordRepeat') {
             const { password } = this.state;
             if (password !== value) {
                 this.setState({
@@ -73,7 +73,7 @@ class Register extends React.Component {
     }
 
     render () {
-        const { realname, stunum, cid, username, password, passwordDuplicate, errorMessage } = this.state;
+        const { realname, stunum, cid, username, password, passwordRepeat, errorMessage } = this.state;
         const { error: serverErrorMessage, isFetching, success } = this.props;
 
         return (
@@ -85,7 +85,6 @@ class Register extends React.Component {
                     className="input-realname"
                     onChange={this.handleInputChange}
                     fullWidth
-                    value={realname}
                     placeholder="您的真实姓名"
                 />
                 <InputField 
@@ -94,7 +93,6 @@ class Register extends React.Component {
                     className="input-stunum"
                     onChange={this.handleInputChange}
                     fullWidth
-                    value={stunum}
                     placeholder="新生可用录取通知书号注册"
                 />
                 <InputField 
@@ -102,14 +100,12 @@ class Register extends React.Component {
                     id="cid"
                     onChange={this.handleInputChange}
                     fullWidth
-                    value={cid}
                 />
                 <InputField 
                     text="用户名"
                     id="username"
                     onChange={this.handleInputChange}
                     fullWidth
-                    value={username}
                     placeholder="仅限字母数字且不能为纯数字"
                 />
                 <InputField 
@@ -118,16 +114,14 @@ class Register extends React.Component {
                     id="password"
                     onChange={this.handleInputChange}
                     fullWidth
-                    value={password}
                     placeholder="8位以上字符"
                 />
                 <InputField 
                     text="确认密码"
                     type="password"
-                    id="passwordDuplicate"
+                    id="passwordRepeat"
                     onChange={this.handleInputChange}
                     fullWidth
-                    value={passwordDuplicate}
                     errorMessage={errorMessage}
                 />
                 <p className="text-muted">

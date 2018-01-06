@@ -35,7 +35,8 @@ class Profile extends React.Component {
         uid: PropTypes.number,
         isSelf: PropTypes.bool,
         onSendPrivateMessage: PropTypes.func.isRequired,
-        showToast: PropTypes.func.isRequired
+        showToast: PropTypes.func.isRequired,
+        saveProfile: PropTypes.func.isRequired
     }
 
     constructor () {
@@ -112,7 +113,7 @@ class Profile extends React.Component {
 
     render () {
         const { profile, profile: { name, nickname, signature, 
-            points, cPost, cThread, cOnline, tCreate }, uid, isSelf } = this.props;
+            points, cPost, cThread, cOnline, tCreate }, uid, isSelf, saveProfile } = this.props;
         const { privateModalIsOpen, isEditingProfile } = this.state;
         const renderOperators = isSelf
             ? <div className="profile-ops-wrapper">
@@ -172,6 +173,7 @@ class Profile extends React.Component {
                         ? <EditingProfile
                             profile={profile}
                             onCancel={this.handleCloseEditProfile}
+                            saveProfile={saveProfile}
                         />
                         : <div className="profile-wrapper">
                             <Avatar 

@@ -27,7 +27,7 @@ import { LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE } from '../actions/passp
 import { DELETE_THREAD_REQUEST, DELETE_THREAD_SUCCESS, DELETE_THREAD_FAILURE } from '../actions/forum/board';
 import { NEW_REGISTER_REQUEST, NEW_REGISTER_SUCCESS, NEW_REGISTER_FAILURE } from '../actions/passport/register';
 import { SEND_APPEAL_REQUEST, SEND_APPEAL_SUCCESS, SEND_APPEAL_FAILURE } from '../actions/passport/appeal';
-
+import { EDIT_PROFILE_REQUEST, EDIT_PROFILE_SUCCESS, EDIT_PROFILE_FAILURE } from '../actions/profile/edit';
 
 const bypassing = combineReducers({
     sendPrivateMessage: bypassingFactory({
@@ -45,6 +45,7 @@ const bypassing = combineReducers({
     deleteThread: bypassingFactory({ types: [DELETE_THREAD_REQUEST, DELETE_THREAD_SUCCESS, DELETE_THREAD_FAILURE] }),
     newRegister: bypassingFactory({ types: [NEW_REGISTER_REQUEST, NEW_REGISTER_SUCCESS, NEW_REGISTER_FAILURE] }),
     appeal: bypassingFactory({ types: [SEND_APPEAL_REQUEST, SEND_APPEAL_SUCCESS, SEND_APPEAL_FAILURE] }),
+    editProfile: bypassingFactory({ types: [EDIT_PROFILE_REQUEST, EDIT_PROFILE_SUCCESS, EDIT_PROFILE_FAILURE] }),
 });
 
 const combinedReducer = combineReducers({
@@ -81,6 +82,7 @@ const crossSliceReducer = (state, action) => {
         case 'INIT':
             return state.set('user', fromJS(action.userFromLocal));
         case 'LOGOUT_SUCCESS':
+        case 'GET_SELF_PROFILE_FAILURE':
             return state.set('user', null);
         case 'SEND_READ_SUCCESS':
             return state.setIn(['bypassing', 'unreadMessage', 'items'], 0);

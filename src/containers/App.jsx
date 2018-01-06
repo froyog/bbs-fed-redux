@@ -25,7 +25,9 @@ import '../styles/global.less';
 class App extends React.Component {
     static propTypes = {
         isOpen: PropTypes.bool.isRequired,
-        onToggleSidebar: PropTypes.func.isRequired
+        onToggleSidebar: PropTypes.func.isRequired,
+        initFromLocal: PropTypes.func.isRequired,
+        getSelfProfile: PropTypes.func.isRequired
     };
 
     componentWillMount() {
@@ -37,6 +39,27 @@ class App extends React.Component {
         initFromLocal(user);
 
         getSelfProfile();
+        console.info(
+            '_________  ___       __   _________  ________  _________  ___  ___  ________  ___  ________     \n' +
+            ' |\\___   ___\\\\  \\     |\\  \\|\\___   ___\\\\   ____\\|\\___   ___\\\\  \\|\\  \\|\\   ___ \\|\\  \\|\\   __  \\    \n' +
+            ' \\|___ \\  \\_\\ \\  \\    \\ \\  \\|___ \\  \\_\\ \\  \\___|\\|___ \\  \\_\\ \\  \\\\\\  \\ \\  \\_|\\ \\ \\  \\ \\  \\|\\  \\   \n' +
+            '      \\ \\  \\ \\ \\  \\  __\\ \\  \\   \\ \\  \\ \\ \\_____  \\   \\ \\  \\ \\ \\  \\\\\\  \\ \\  \\ \\\\ \\ \\  \\ \\  \\\\\\  \\  \n' +
+            '      \\ \\  \\ \\ \\  \\  __\\ \\  \\   \\ \\  \\ \\ \\_____  \\   \\ \\  \\ \\ \\  \\\\\\  \\ \\  \\ \\\\ \\ \\  \\ \\  \\\\\\  \\  \n' +
+            '       \\ \\  \\ \\ \\  \\|\\__\\_\\  \\   \\ \\  \\ \\|____|\\  \\   \\ \\  \\ \\ \\  \\\\\\  \\ \\  \\_\\\\ \\ \\  \\ \\  \\\\\\  \\ \n' +
+            '        \\ \\__\\ \\ \\____________\\   \\ \\__\\  ____\\_\\  \\   \\ \\__\\ \\ \\_______\\ \\_______\\ \\__\\ \\_______\\\n' +
+            '         \\|__|  \\|____________|    \\|__| |\\_________\\   \\|__|  \\|_______|\\|_______|\\|__|\\|_______|\n' +
+            '                                         \\|_________|                                             \n\n'
+        );
+        console.info('加入我们，欢迎访问 https://coder.twtstudio.com');
+        
+ 
+
+
+
+
+                                                                                                  
+                                                                                                  
+ 
     }
 
     render () {

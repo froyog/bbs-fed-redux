@@ -27,7 +27,7 @@ class LoginWrapper extends React.Component {
     componentWillReceiveProps (nextProps) {
         const { isFetching, success, history } = nextProps;
         if (success && isFetching !== this.props.isFetching) {
-            history.push('/');
+            history.push('/', { from: 'login' });
         }
     }
 

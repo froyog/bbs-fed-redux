@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getProfileIfNeeded } from '../../actions/profile/profile';
+import { saveProfile } from '../../actions/profile/edit';
 import { sendPrivateMessage } from '../../actions/profile/messages';
 import { showToast } from '../../actions/common/toast';
 import { FetchingOverlay } from '../../components/common/Loading';
@@ -41,7 +42,8 @@ class ProfileWrapper extends React.Component {
         }),
         getProfile: PropTypes.func.isRequired,
         sendPrivateMessage: PropTypes.func.isRequired,
-        showToast: PropTypes.func.isRequired
+        showToast: PropTypes.func.isRequired,
+        saveProfile: PropTypes.func.isRequired
     }
 
     componentWillMount () {
@@ -58,7 +60,7 @@ class ProfileWrapper extends React.Component {
 
     render () {
         const { isFetching, profile, thisUid, uid, 
-            sendPrivateMessage, privateState, showToast } = this.props;
+            sendPrivateMessage, privateState, showToast, saveProfile } = this.props;
         if (!profile || isFetching) {
             return <FetchingOverlay fullPage />;
         }
@@ -71,6 +73,7 @@ class ProfileWrapper extends React.Component {
                 onSendPrivateMessage={sendPrivateMessage}
                 privatePayload={privateState}
                 showToast={showToast}
+                saveProfile={saveProfile}
             />
         );
     }
@@ -97,7 +100,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => ({
     getProfile: uid => dispatch(getProfileIfNeeded(uid)),
     sendPrivateMessage: (uid, content) => dispatch(sendPrivateMessage(uid, content)),
-    showToast: message => dispatch(showToast(message))
+    showToast: message => dispatch(showToast(message)),
+    saveProfile: editedProfile => dispatch(saveProfile(editedProfile))
 });
 ProfileWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(ProfileWrapper));
 
