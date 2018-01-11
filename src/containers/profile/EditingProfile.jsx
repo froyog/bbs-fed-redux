@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InputField } from '../common/Input';
 import { Button } from 'react-bootstrap';
-import Time from '../common/Time';
+import { withRouter } from 'react-router';
+import Time from '../../components/common/Time';
+import { InputField } from '../../components/common/Input';
+import { showToast } from '../../actions/common/toast';
+import { connect } from 'react-redux';
+import { toJS } from '../../util';
+import { saveProfile } from '../../actions/profile/edit';
 
 
 class EditingProfile extends React.Component {
@@ -30,7 +35,8 @@ class EditingProfile extends React.Component {
             password: '',
             passwordDuplicate: '',
             notMatchErrorMessage: '',
-            isShowPasswordSet: false
+            isShowPasswordSet: false,
+            isPasswordChanged: false
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -39,9 +45,21 @@ class EditingProfile extends React.Component {
         this.handleSubmitProfile = this.handleSubmitProfile.bind(this);
     }
 
+    componentWillReceiveProps (nextProps) {
+        const { isFetching: nextIsFetching, error, showToast } = nextProps;
+        if (!error && !nextIsFetching && nextIsFetching !== this.props.isFetching) {
+            if (this.state.isPasswordChanged) {
+                showToast('已更新，请重新登录');
+                setTimeout(() => {
+                    this.props.history.push('/passport/login');
+                    return;
+                }, 1000);
+            }
+            showToast('个人资料已更新');
+        }
+    }
+
     _checkVaildation (token, value) {
-        console.log(token);
-        
         if (token === 'passwordRepeat') {
             const { password } = this.state;
             if (password !== value) {
@@ -79,17 +97,23 @@ class EditingProfile extends React.Component {
         e.preventDefault();
         const { nickname, signature, password, oldPassword } = this.state;
         const { saveProfile } = this.props;
-        saveProfile && saveProfile({
+        const editedProfile = {
             nickname: nickname,
             signature: signature,
-            old_password: oldPassword,
-            password: password
-        });
+        };
+        if (oldPassword) {
+            editedProfile.old_password = oldPassword;
+            editedProfile.password = password;
+            this.setState({
+                isPasswordChanged: true
+            });
+        }
+        saveProfile && saveProfile(editedProfile);
     }
 
     render () {
-        const { profile: { name, nickname, signature, 
-            points, cPost, cThread, cOnline, tCreate } } = this.props;
+        const { profile: { name, nickname, signature, points, cPost, cThread, 
+            cOnline, tCreate }, isFetching, error } = this.props;
         const { isShowPasswordSet, notMatchErrorMessage } = this.state;
         return (
             <div className="profile-editing-wrapper">
@@ -100,6 +124,11 @@ class EditingProfile extends React.Component {
                             src={`https://bbs.tju.edu.cn/api/user/18480/avatar`} 
                             alt="user-avatar" 
                         />
+                        <Button
+                            className="edit-avatar-button"
+                        >
+                            更新头像
+                        </Button>
                     </div>
                     <div className="intro editing">
                         <div className="username">{name}</div>
@@ -170,6 +199,7 @@ class EditingProfile extends React.Component {
                         type="submit"
                         className="profile-ops"
                         onClick={this.handleSubmitProfile}
+                        disabled={isFetching}
                     >
                         提交更改
                     </Button>
@@ -180,9 +210,29 @@ class EditingProfile extends React.Component {
                         取消
                     </Button>
                 </div>
+                <p className="error-message text-right">{error}</p>
             </div>
         );
     }
 }
+
+const mapStateToProps = state => {
+    const editProfileState = state.getIn(['bypassing', 'editProfile']);
+    if (!editProfileState) {
+        return {};
+    }
+
+    return {
+        isFetching: editProfileState.get('isFetching'),
+        success: editProfileState.get('items'),
+        error: editProfileState.get('error')
+    };
+}
+const mapDispatchToProps = dispatch => ({
+    saveProfile: editedProfile => dispatch(saveProfile(editedProfile)),
+    showToast: message => dispatch(showToast(message))
+});
+EditingProfile = withRouter(EditingProfile);
+EditingProfile = connect(mapStateToProps, mapDispatchToProps)(toJS(EditingProfile));
 
 export default EditingProfile;

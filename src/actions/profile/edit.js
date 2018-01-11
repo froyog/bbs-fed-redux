@@ -13,12 +13,7 @@ export const saveProfile = editedProfile => (dispatch, getState) => {
             apiPath: 'home',
             request: {
                 method: 'PUT',
-                body: JSON.stringify({
-                    nickname: editedProfile.nickname || '',
-                    signature: editedProfile.signature || '',
-                    old_password: editedProfile.old_password || '',
-                    password: editedProfile.password || ''
-                }),
+                body: JSON.stringify(editedProfile),
                 headers: {
                     auth: authenication,
                     contentType: 'application/json'
