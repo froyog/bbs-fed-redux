@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import asyncComponent from '../../asyncComponent';
+
 import { Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toggleSidebar } from '../../actions/frame/sidebar';
 import { showToast } from '../../actions/common/toast';
-import BoardEditor from '../forum/BoardEditor';
 import Header from '../../components/frame/Header';
 import { toJS } from '../../util';
 import FeatureDiscovery from '../../components/frame/FeatureDiscovery';
+const AsyncBoardEditor = asyncComponent(() => import('../forum/BoardEditor'));
 
 
 class HeaderWrapper extends React.PureComponent {
@@ -104,7 +106,7 @@ class HeaderWrapper extends React.PureComponent {
                     backdrop="static"
                     className="posting-modal"
                 >
-                    <BoardEditor onCloseModal={this.handleCloseModal} />
+                    <AsyncBoardEditor onCloseModal={this.handleCloseModal} />
                 </Modal>
             </header>
         );
