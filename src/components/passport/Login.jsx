@@ -39,7 +39,6 @@ class Login extends React.Component {
     }
 
     render () {
-        const { username, password } = this.state;
         const { isFetching, error } = this.props;
         return (
             <form className="login">

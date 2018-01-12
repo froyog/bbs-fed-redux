@@ -35,13 +35,13 @@ export const fetchProfile = (uid, authentication, isMyself) => {
     };
 };
 
-export const getProfileIfNeeded = locationUid => (dispatch, getState) => {
+export const getProfileIfNeeded = (locationUid, forceUpdate) => (dispatch, getState) => {
     const uid = locationUid === 'me'
         ? getState().getIn(['user', 'uid'])
         : locationUid;
 
     const profileByUid = getState().getIn(['profiles', uid]);
-    if (profileByUid) {
+    if (profileByUid && !forceUpdate) {
         return null;
     }
 

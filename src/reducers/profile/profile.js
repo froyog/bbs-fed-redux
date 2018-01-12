@@ -39,6 +39,7 @@ const profilesByUid = (state = Map(), action) => {
                     action.uid, profiles(state.get(action.uid), action)
                 );
             }
+            return state;
         default:
             return state;
     }

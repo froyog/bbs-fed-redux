@@ -8,6 +8,7 @@ import { showToast } from '../../actions/common/toast';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
 import { saveProfile } from '../../actions/profile/edit';
+import { getProfileIfNeeded } from '../../actions/profile/profile';
 
 
 class EditingProfile extends React.Component {
@@ -23,7 +24,9 @@ class EditingProfile extends React.Component {
             tCreate: PropTypes.number.isRequired,
             group: PropTypes.number.isRequired,
         }).isRequired,
-        saveProfile: PropTypes.func.isRequired
+        saveProfile: PropTypes.func.isRequired,
+        showToast: PropTypes.func.isRequired,
+        refreshSelfProfile: PropTypes.func.isRequired,
     }
 
     constructor (props) {
@@ -46,12 +49,15 @@ class EditingProfile extends React.Component {
     }
 
     componentWillReceiveProps (nextProps) {
-        const { isFetching: nextIsFetching, error, showToast } = nextProps;
+        const { isFetching: nextIsFetching, error, showToast, 
+            history, refreshSelfProfile } = nextProps;
         if (!error && !nextIsFetching && nextIsFetching !== this.props.isFetching) {
+            // success
+            refreshSelfProfile();
             if (this.state.isPasswordChanged) {
                 showToast('已更新，请重新登录');
                 setTimeout(() => {
-                    this.props.history.push('/passport/login');
+                    history.push('/passport/login');
                     return;
                 }, 1000);
             }
@@ -169,7 +175,7 @@ class EditingProfile extends React.Component {
                             id="oldPassword"
                             type="password"
                             onChange={this.handleInputChange}
-                            /></div>
+                        /></div>
                         <div className="edit-password-line clearfix">
                             <InputField 
                                 text="设置新密码"
@@ -178,7 +184,7 @@ class EditingProfile extends React.Component {
                                 id="password"
                                 className="input-gap pull-left"
                                 onChange={this.handleInputChange}
-                                />
+                            />
                             <InputField 
                                 text="确认密码"
                                 type="password"
@@ -227,10 +233,11 @@ const mapStateToProps = state => {
         success: editProfileState.get('items'),
         error: editProfileState.get('error')
     };
-}
+};
 const mapDispatchToProps = dispatch => ({
     saveProfile: editedProfile => dispatch(saveProfile(editedProfile)),
-    showToast: message => dispatch(showToast(message))
+    showToast: message => dispatch(showToast(message)),
+    refreshSelfProfile: () => dispatch(getProfileIfNeeded('me', true))
 });
 EditingProfile = withRouter(EditingProfile);
 EditingProfile = connect(mapStateToProps, mapDispatchToProps)(toJS(EditingProfile));

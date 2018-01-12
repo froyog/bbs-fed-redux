@@ -117,7 +117,7 @@ function getSuggestionComponent () {
             return (
                 <span
                     className="rdw-suggestion-wrapper"
-                    ref={suggestion => this.suggestion = suggestion}
+                    ref={ suggestion => this.suggestion = suggestion }
                     onClick={this.handleCloseDropdown}
                     aria-haspopup="true"
                     aria-label="rdw-suggestion-popup"
@@ -129,7 +129,7 @@ function getSuggestionComponent () {
                             className="rdw-suggestion-dropdown"
                             contentEditable="false"
                             style={style}
-                            ref={dropdown => this.dropdown = dropdown}
+                            ref={ dropdown => this.dropdown = dropdown }
                         >
                             {suggestions.map((suggestion, index) =>
                                 (<span

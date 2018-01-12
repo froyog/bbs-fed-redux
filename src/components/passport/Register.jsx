@@ -73,7 +73,6 @@ class Register extends React.Component {
     }
 
     render () {
-        const { realname, stunum, cid, username, password, passwordRepeat, errorMessage } = this.state;
         const { error: serverErrorMessage, isFetching, success } = this.props;
 
         return (

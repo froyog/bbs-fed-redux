@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getMessages, refreshMessages, clearUnreadTag } from '../../actions/profile/messages';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
-import { FetchingOverlay, LoadingDots, LoadingLines } from '../../components/common/Loading';
+import { LoadingDots, LoadingLines } from '../../components/common/Loading';
 import MessageBase from './MessageBase';
 import { Button } from 'react-bootstrap';
 

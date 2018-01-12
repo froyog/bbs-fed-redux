@@ -20,7 +20,6 @@ import '../../styles/profile/profile.less';
 class Profile extends React.Component {
     static propTypes = {
         uid: PropTypes.string.isRequired,
-        getProfile: PropTypes.func,
         isFetching: PropTypes.bool,
         profile: PropTypes.shape({
             name: PropTypes.string,
@@ -145,8 +144,7 @@ class Profile extends React.Component {
     }
 
     render () {
-        const { isFetching, profile, uidInNumber, uid, 
-            sendPrivateMessage, privateState } = this.props;
+        const { isFetching, profile, uidInNumber, uid } = this.props;
         if (!profile || isFetching) {
             return <FetchingOverlay fullPage />;
         }
