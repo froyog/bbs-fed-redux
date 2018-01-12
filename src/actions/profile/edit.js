@@ -22,3 +22,24 @@ export const saveProfile = editedProfile => (dispatch, getState) => {
         }
     });
 };
+
+export const AVATAR_UPLOAD_REQUEST = 'AVATAR_UPLOAD_REQUEST';
+export const AVATAR_UPLOAD_SUCCESS = 'AVATAR_UPLOAD_SUCCESS';
+export const AVATAR_UPLOAD_FAILURE = 'AVATAR_UPLOAD_FAILURE';
+
+export const uploadAvatar = fileData => (dispatch, getState) => {
+    const authentication = parseUser(getState());
+    dispatch({
+        [CALL_API]: {
+            types: [AVATAR_UPLOAD_REQUEST, AVATAR_UPLOAD_SUCCESS, AVATAR_UPLOAD_FAILURE],
+            apiPath: 'home/avatar',
+            request: {
+                method: 'PUT',
+                body: fileData,
+                headers: {
+                    auth: authentication
+                }
+            }
+        }
+    });
+};

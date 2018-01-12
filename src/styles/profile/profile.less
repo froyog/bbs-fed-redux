@@ -19,6 +19,14 @@
         font-size: 16px;
         padding-right: 36px;
     }
+    .ReactCrop {
+        position: absolute;
+        bottom: 0;
+        width: 180px;
+        height: 180px;
+        touch-action: none;
+        border: 5px solid #fff;
+    }
 }
 
 .card-profile {
@@ -142,7 +150,7 @@
             height: 100px;
             top: 0;
         }
-        .profile-avatar.editing {
+        .profile-avatar.editing, .ReactCrop {
             position: static;
             width: 150px;
             height: 150px;
@@ -177,9 +185,9 @@
     bottom: -40px;
     width: 180px;
     @media @phones {
-        position: relative;
-        top: 54px;
-        bottom: 0;
+        position: absolute;
+        top: 113px;
+        bottom: unset;
         width: 110px;
     }
 }

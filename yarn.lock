@@ -5316,6 +5316,10 @@ react-error-overlay@^3.0.0:
   version "3.0.0"
   resolved "http://registry.npm.taobao.org/react-error-overlay/download/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
 
+react-image-crop@^3.0.9:
+  version "3.0.9"
+  resolved "http://registry.npm.taobao.org/react-image-crop/download/react-image-crop-3.0.9.tgz#5f1601a50c6fda31b3ad927a56380c81bfa466db"
+
 react-overlays@^0.7.4:
   version "0.7.4"
   resolved "http://registry.npm.taobao.org/react-overlays/download/react-overlays-0.7.4.tgz#ef2ec652c3444ab8aa014262b18f662068e56d5c"

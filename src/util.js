@@ -49,7 +49,7 @@ export const toJS = WrappedComponent => wrappedComponentProps => {
 
 // compress image to minimize the size
 // by zhuyupe
-const dataURItoBlob = dataURI => {
+export const dataURItoBlob = dataURI => {
     const byteString = atob(dataURI.split(',')[1]);
 
     const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
