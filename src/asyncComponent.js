@@ -24,7 +24,7 @@ const asyncComponent = (importComponent) => {
                 : null;
         }
     }
-    return AsyncComponent
-}
+    return AsyncComponent;
+};
 
 export default asyncComponent;

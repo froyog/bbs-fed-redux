@@ -149,16 +149,16 @@ class EditingProfile extends React.Component {
             canvas.width = SIZE;
             canvas.height = SIZE;
 
-            let ctx = canvas.getContext('2d')
-            ctx.clearRect(0, 0, SIZE, SIZE)
+            let ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, SIZE, SIZE);
 
-            let cropData = pixelCrop
+            let cropData = pixelCrop;
             if (cropData.width) {
-                ctx.drawImage(img, cropData.x, cropData.y, cropData.width, cropData.height, 0, 0, SIZE, SIZE)
+                ctx.drawImage(img, cropData.x, cropData.y, cropData.width, cropData.height, 0, 0, SIZE, SIZE);
             } else if (img.width > img.height) {
-                ctx.drawImage(img, (img.width - img.height) / 2, 0, img.height, img.height, 0, 0, SIZE, SIZE)
+                ctx.drawImage(img, (img.width - img.height) / 2, 0, img.height, img.height, 0, 0, SIZE, SIZE);
             } else {
-                ctx.drawImage(img, 0, (img.height - img.width) / 2, img.width, img.width, 0, 0, SIZE, SIZE)
+                ctx.drawImage(img, 0, (img.height - img.width) / 2, img.width, img.width, 0, 0, SIZE, SIZE);
             }
 
             let form = new FormData();
@@ -167,7 +167,7 @@ class EditingProfile extends React.Component {
                 console.log(pair[0]+ ', ' + pair[1]); 
             }
             uploadAvatar && uploadAvatar(form);
-        }
+        };
         img.src = uploadedImageUrl;
     }
 

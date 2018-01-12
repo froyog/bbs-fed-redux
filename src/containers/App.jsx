@@ -9,10 +9,10 @@ import Sidebar from './frame/Sidebar';
 import Toast from './common/Toast';
 import Home from './bbs-index/Home';
 import Forum from './forum/ForumList';
-const AsyncBoard = asyncComponent(() => import('./forum/BoardWrapper'));
-const AsyncThread = asyncComponent(() => import('./forum/ThreadWrapper'));
+import Board from './forum/BoardWrapper';
+const AsyncThread = asyncComponent(() => import('./forum/ThreadWrapper.jsx'));
 const AsyncUserBase = asyncComponent(() => import('./profile/UserBase'));
-const AsyncRank = asyncComponent(() => import('./rank/Rank'));
+import Rank from './rank/Rank';
 import { connect } from 'react-redux';
 import { isMobile } from '../util.js';
 import { toggleSidebar } from '../actions/frame/sidebar';
@@ -58,10 +58,10 @@ class App extends React.Component {
                             <Redirect exact from="/user" to="/user/me/messages" />
                             <Route exact path="/" component={Home} />
                             <Route exact path="/forum" component={Forum} />
-                            <Route path="/forum/board/:bid/page/:page" component={AsyncBoard} />
+                            <Route path="/forum/board/:bid/page/:page" component={Board} />
                             <Route path="/forum/thread/:tid/page/:page" component={AsyncThread} />
                             <Route path="/user/:uid" component={AsyncUserBase} />
-                            <Route path="/rank" component={AsyncRank} />
+                            <Route path="/rank" component={Rank} />
                             <Redirect from="*" to="/404" />
                         </Switch>
                     </Grid>
