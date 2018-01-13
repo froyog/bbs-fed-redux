@@ -10,7 +10,8 @@ import Toast from './common/Toast';
 import Home from './bbs-index/Home';
 import Forum from './forum/ForumList';
 import Board from './forum/BoardWrapper';
-const AsyncThread = asyncComponent(() => import('./forum/ThreadWrapper.jsx'));
+import Thread from './forum/ThreadWrapper';
+// import UserBase from './profile/UserBase';
 const AsyncUserBase = asyncComponent(() => import('./profile/UserBase'));
 import Rank from './rank/Rank';
 import { connect } from 'react-redux';
@@ -59,7 +60,7 @@ class App extends React.Component {
                             <Route exact path="/" component={Home} />
                             <Route exact path="/forum" component={Forum} />
                             <Route path="/forum/board/:bid/page/:page" component={Board} />
-                            <Route path="/forum/thread/:tid/page/:page" component={AsyncThread} />
+                            <Route path="/forum/thread/:tid/page/:page" component={Thread} />
                             <Route path="/user/:uid" component={AsyncUserBase} />
                             <Route path="/rank" component={Rank} />
                             <Redirect from="*" to="/404" />

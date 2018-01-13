@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import asyncComponent from '../../asyncComponent';
 import { connect} from 'react-redux';
 import { Pagination } from 'react-bootstrap';
 import { Card } from '../../components/common/Card';
@@ -9,7 +10,9 @@ import { toJS, isEqual } from '../../util';
 import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
 import ThreadHeader from './ThreadHeader';
 import ThreadPost from './ThreadPost';
-import ThreadEditor from './ThreadEditor';
+// import ThreadEditor from './ThreadEditor';
+const AsyncThreadEditor = asyncComponent(() => import('./ThreadEditor'));
+
 
 class ThreadWrapper extends React.PureComponent {
     static propTypes = {
@@ -168,7 +171,7 @@ class ThreadWrapper extends React.PureComponent {
                         activePage={this.state.activePage}
                         onSelect={this.handleSelect} />
                 </Card>
-                <ThreadEditor
+                <AsyncThreadEditor
                     replyContent={replyContent}
                     onCancelReply={this.handleCancelReply}
                     tid={tid} 

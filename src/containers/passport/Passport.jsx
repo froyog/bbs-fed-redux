@@ -1,11 +1,13 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { Switch, Route, Redirect, NavLink, Link } from 'react-router-dom';
+import { Card } from '../../components/common/Card';
 import Login from './Login';
 import Register from './Register';
 import Appeal from './Appeal';
-import { Card } from '../../components/common/Card';
-
+import { ForgetAuthWrapper as ForgetAuth,
+    ForgetResetWrapper as ForgetReset } from './Forget';
+    
 import '../../styles/passport/passport.less';
 
 
@@ -26,7 +28,10 @@ const Passport = () => {
                     <Route path="/passport/login" component={Login} />
                     <Route path="/passport/register" component={Register} />
                     <Route path="/passport/appeal" component={Appeal} />
-                    <Redirect from="/passport" to="/passport/login" />
+                    <Route path="/passport/forget/auth" component={ForgetAuth} />
+                    <Route path="/passport/forget/reset" component={ForgetReset} />
+                    <Redirect exact from="/passport" to="/passport/login" />
+                    <Redirect exact from="/passport/forget" to="/passport/forget/auth" />
                 </Switch>
             </Card>
         </div>

@@ -188,5 +188,4 @@ IndexRankWrapper = connect(
     mapRankDispatchToProps
 )(toJS(IndexRankWrapper));
 
-export { AnnounceWrapper, AppQRCode, WeiboFollowing, 
-    CarouselAdWrapper, IndexRankWrapper };
+export { AnnounceWrapper, AppQRCode, WeiboFollowing, CarouselAdWrapper, IndexRankWrapper };

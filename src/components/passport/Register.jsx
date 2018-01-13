@@ -43,7 +43,7 @@ class Register extends React.Component {
     }
 
     handleInputChange (e) {
-        const { target: { id, value } } = e;
+        const { id, value } = e.target;
         this._checkVaildation(id, value);
         this.setState({
             [e.target.id]: e.target.value

@@ -14,7 +14,8 @@ export class InputField extends React.PureComponent {
         fullWidth: PropTypes.bool,
         color: PropTypes.string,
         errorMessage: PropTypes.string,
-        initialValue: PropTypes.string
+        initialValue: PropTypes.string,
+        disabled: PropTypes.bool
     };
 
     static defaultProps = {

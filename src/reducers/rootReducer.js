@@ -29,6 +29,8 @@ import { NEW_REGISTER_REQUEST, NEW_REGISTER_SUCCESS, NEW_REGISTER_FAILURE } from
 import { SEND_APPEAL_REQUEST, SEND_APPEAL_SUCCESS, SEND_APPEAL_FAILURE } from '../actions/passport/appeal';
 import { EDIT_PROFILE_REQUEST, EDIT_PROFILE_SUCCESS, EDIT_PROFILE_FAILURE } from '../actions/profile/edit';
 import { AVATAR_UPLOAD_REQUEST, AVATAR_UPLOAD_SUCCESS, AVATAR_UPLOAD_FAILURE } from '../actions/profile/edit';
+import { FORGET_AUTH_REQUEST, FORGET_AUTH_SUCCESS, FORGET_AUTH_FAILURE,
+    FORGET_RESET_REQUEST, FORGET_RESET_SUCCESS, FORGET_RESET_FAILURE } from '../actions/passport/forget';
 
 
 const bypassing = combineReducers({
@@ -49,6 +51,9 @@ const bypassing = combineReducers({
     appeal: bypassingFactory({ types: [SEND_APPEAL_REQUEST, SEND_APPEAL_SUCCESS, SEND_APPEAL_FAILURE] }),
     editProfile: bypassingFactory({ types: [EDIT_PROFILE_REQUEST, EDIT_PROFILE_SUCCESS, EDIT_PROFILE_FAILURE] }),
     uploadAvatar: bypassingFactory({ types: [AVATAR_UPLOAD_REQUEST, AVATAR_UPLOAD_SUCCESS, AVATAR_UPLOAD_FAILURE] }),
+    forgetAuth: bypassingFactory({ types: [FORGET_AUTH_REQUEST, FORGET_AUTH_SUCCESS, FORGET_AUTH_FAILURE] }),
+    forgetReset: bypassingFactory({ types: [FORGET_RESET_REQUEST, FORGET_RESET_SUCCESS, FORGET_RESET_FAILURE] }),
+    
 });
 
 const combinedReducer = combineReducers({

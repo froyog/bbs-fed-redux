@@ -42,7 +42,7 @@ const Header = ({ isOpen, onToggleSidebar, onOpenModal, headerContent }) => {
                         bsStyle="primary"
                         onClick={handleOpenModal}
                     >
-                        快速发帖
+                        发帖
                     </Button>
                 </section>
                 <section>

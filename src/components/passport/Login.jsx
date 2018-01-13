@@ -73,7 +73,7 @@ class Login extends React.Component {
                 <p className="error-msg">{error}</p>
                 <div className="additional-link-wrapper">
                     <p>
-                        <Link to='/passport/forget'>忘记用户名/密码</Link>
+                        <Link to='/passport/forget/auth'>忘记用户名/密码</Link>
                         <Link className="pull-right" to='/passport/old'>老用户认证</Link>
                     </p>
                     <p>
