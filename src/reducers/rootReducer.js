@@ -31,7 +31,8 @@ import { EDIT_PROFILE_REQUEST, EDIT_PROFILE_SUCCESS, EDIT_PROFILE_FAILURE } from
 import { AVATAR_UPLOAD_REQUEST, AVATAR_UPLOAD_SUCCESS, AVATAR_UPLOAD_FAILURE } from '../actions/profile/edit';
 import { FORGET_AUTH_REQUEST, FORGET_AUTH_SUCCESS, FORGET_AUTH_FAILURE,
     FORGET_RESET_REQUEST, FORGET_RESET_SUCCESS, FORGET_RESET_FAILURE } from '../actions/passport/forget';
-
+import { OLD_LOGIN_REQUEST, OLD_LOGIN_SUCCESS, OLD_LOGIN_FAILURE,
+    OLD_REGISTER_REQUEST, OLD_REGISTER_SUCCESS, OLD_REGISTER_FAILURE } from '../actions/passport/old';
 
 const bypassing = combineReducers({
     sendPrivateMessage: bypassingFactory({
@@ -53,7 +54,9 @@ const bypassing = combineReducers({
     uploadAvatar: bypassingFactory({ types: [AVATAR_UPLOAD_REQUEST, AVATAR_UPLOAD_SUCCESS, AVATAR_UPLOAD_FAILURE] }),
     forgetAuth: bypassingFactory({ types: [FORGET_AUTH_REQUEST, FORGET_AUTH_SUCCESS, FORGET_AUTH_FAILURE] }),
     forgetReset: bypassingFactory({ types: [FORGET_RESET_REQUEST, FORGET_RESET_SUCCESS, FORGET_RESET_FAILURE] }),
-    
+    oldLogin: bypassingFactory({ types: [OLD_LOGIN_REQUEST, OLD_LOGIN_SUCCESS, OLD_LOGIN_FAILURE] }),
+    oldRegister: bypassingFactory({ types: [OLD_REGISTER_REQUEST, OLD_REGISTER_SUCCESS, OLD_REGISTER_FAILURE] }),
+
 });
 
 const combinedReducer = combineReducers({

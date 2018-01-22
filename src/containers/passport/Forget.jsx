@@ -32,7 +32,7 @@ class ForgetAuthWrapper extends React.Component {
 
     componentWillReceiveProps (nextProps) {
         const { history, isFetching, error, forgetInfo } = nextProps;
-        if (!error && !isFetching && isFetching !== this.props.isFEtching) {
+        if (!error && !isFetching && isFetching !== this.props.isFetching) {
             history.push('/passport/forget/reset', { forgetInfo: forgetInfo });
         }
     }
@@ -101,8 +101,6 @@ class ForgetResetWrapper extends React.Component {
 
     render () {
         const { isFetching, error, success, location: { state: locationState } } = this.props;
-        console.log(locationState);
-        
         if (!locationState || !locationState.forgetInfo || 
             !locationState.forgetInfo.token
         ) {

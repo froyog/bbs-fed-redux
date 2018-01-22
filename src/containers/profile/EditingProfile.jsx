@@ -306,7 +306,7 @@ class EditingProfile extends React.Component {
                         </div>
                     </div>
                     <h4>统计信息</h4>
-                    <p>账号创建日期：<Time timestamp={tCreate} absolute /></p>
+                    <p>帐号创建日期：<Time timestamp={tCreate} absolute /></p>
                     <p>上站次数：{cOnline}</p>
                     <p>总共发帖：{cPost}</p>
                 </div>

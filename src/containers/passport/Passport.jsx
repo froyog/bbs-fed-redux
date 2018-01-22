@@ -7,6 +7,8 @@ import Register from './Register';
 import Appeal from './Appeal';
 import { ForgetAuthWrapper as ForgetAuth,
     ForgetResetWrapper as ForgetReset } from './Forget';
+import { OldLoginWrapper as OldLogin,
+    OldRegisterWrapper as OldRegister } from './Old';
     
 import '../../styles/passport/passport.less';
 
@@ -30,8 +32,12 @@ const Passport = () => {
                     <Route path="/passport/appeal" component={Appeal} />
                     <Route path="/passport/forget/auth" component={ForgetAuth} />
                     <Route path="/passport/forget/reset" component={ForgetReset} />
+                    <Route path="/passport/old/login" component={OldLogin} />
+                    <Route path="/passport/old/register" component={OldRegister} />
                     <Redirect exact from="/passport" to="/passport/login" />
                     <Redirect exact from="/passport/forget" to="/passport/forget/auth" />
+                    <Redirect exact from="/passport/old" to="/passport/old/login" />
+
                 </Switch>
             </Card>
         </div>
