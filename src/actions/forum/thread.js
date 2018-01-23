@@ -8,14 +8,6 @@ export const GET_THREAD_SUCCESS = 'GET_THREAD_SUCCESS';
 export const GET_THREAD_FAILURE = 'GET_THREAD_FAILURE';
 export const INVAILDATE_THREAD_PAGE = 'INVAILDATE_THREAD_PAGE';
 
-const fetchThreadPage = (tid, page) => ({
-    [CALL_API]: {
-        types: [GET_THREAD_REQUEST, GET_THREAD_SUCCESS, GET_THREAD_FAILURE],
-        apiPath: `thread/${tid}/page/${page - 1}`
-    },
-    tid: tid,
-    page: page
-});
 
 const shouldFetchThreadPage = (threadNode, tid, page) => {
     if (!threadNode) {
@@ -37,7 +29,20 @@ const shouldFetchThreadPage = (threadNode, tid, page) => {
 export const getThreadPage = (tid, page) => (dispatch, getState) => {
     const threadNode = getState().getIn(['thread', page]);
     if (shouldFetchThreadPage(threadNode, tid, page)) {
-        dispatch(fetchThreadPage(tid, page));
+        const authentication = parseUser(getState());
+        dispatch({
+            [CALL_API]: {
+                types: [GET_THREAD_REQUEST, GET_THREAD_SUCCESS, GET_THREAD_FAILURE],
+                apiPath: `thread/${tid}/page/${page - 1}`,
+                request: {
+                    headers: {
+                        auth: authentication
+                    }
+                }
+            },
+            tid: tid,
+            page: page
+        });
     }
 };
 

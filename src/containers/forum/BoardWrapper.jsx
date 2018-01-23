@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Pagination, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getBoard } from '../../actions/forum/board';
+import SwitchButton from './SwitchButton';
 import ThreadItem from '../../components/common/ThreadItem';
 import { Card } from '../../components/common/Card';
 import { FetchingOverlay } from '../../components/common/Loading';
@@ -120,7 +121,9 @@ class BoardWrapper extends React.Component {
             return <FetchingOverlay fullPage />;
         }
 
-        const { name, cThread, cElite, info, moderator, id } = boardInfo;
+        const { name, cThread, cElite, info, moderator, id, follow } = boardInfo;
+        console.log(boardInfo);
+        
         const paginationItems = type === 'elite' ? cElite : cThread;
         const renderModerator = moderator.map(admin => {
             const { uid, name } = admin;
@@ -128,7 +131,7 @@ class BoardWrapper extends React.Component {
         });
         let renderThreads;
         if (paginationItems <= 0) {
-            renderThreads = <p className="no-data">暂无数据，快来抢沙发啊（哦精华贴你似乎抢不了）</p>;
+            renderThreads = <p className="no-data">暂无帖子</p>;
         } else {
             renderThreads = threadList.map(thread =>
                 <ThreadItem key={thread.id} thread={thread} />
@@ -171,14 +174,22 @@ class BoardWrapper extends React.Component {
                     }
                 >
                     <div className="board-buttons">
-                        <Button className="flat" bsStyle="link">关注</Button>
-                        {/* <Button
-                            className="flat"
-                            bsStyle="link"
-                            onClick={this.handleOpenModal}
+                        <SwitchButton
+                            switchType="follow"
+                            id={id}
+                            initialState={follow}
                         >
-                            发帖
-                        </Button> */}
+                            {(active, onClickButton) => {
+                                return <Button 
+                                    className="flat" 
+                                    bsStyle="link"
+                                    onClick={onClickButton}
+                                >
+                                    {active ? '已关注' :　'关注'}
+                                </Button>
+                            }}
+
+                        </SwitchButton>
                     </div>
                     <p>版主：{renderModerator.length ? renderModerator : '暂无' }</p>
                     <p>帖数：{cThread}</p>

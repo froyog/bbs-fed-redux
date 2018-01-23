@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Media } from 'react-bootstrap';
+import { Media, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Time from '../../components/common/Time';
 import Avatar from '../../components/common/Avatar';
 import ThreadRenderer from '../../components/forum/ThreadRenderer';
 import Sharing from '../../components/common/Sharing';
+import SwitchButton from './SwitchButton';
 
 import '../../styles/forum/thread.less';
 
 
 let ThreadHeader = ({ thread, board }) => {
-    const { authorId, authorName, title, anonymous,
-        authorNickname, tCreate, content } = thread;
+    const { id: tid, authorId, authorName, title, anonymous,
+        authorNickname, tCreate, content, inCollection } = thread;
     const { id, name } = board;
 
     return (
@@ -45,10 +46,27 @@ let ThreadHeader = ({ thread, board }) => {
                 </Media.Body>
             </Media>
             <ThreadRenderer content={content} />
-            <Sharing
-                title={title}
-                url={window.location.href}
-                sites={['wechat', 'qq', 'douban', 'weibo']} />
+            <div className="clearfix">
+                <Sharing
+                    className="pull-left"
+                    title={title}
+                    url={window.location.href}
+                    sites={['wechat', 'qq', 'douban', 'weibo']}
+                />
+                <div className="thread-buttons pull-right">
+                    <SwitchButton
+                        switchType="collect"
+                        id={tid}
+                        initialState={inCollection}
+                    >
+                        {(active, onClickButton) => {
+                            return <Button bsStyle="link" className="flat" onClick={onClickButton}>
+                                {active ? '已收藏' : '收藏'}
+                            </Button>
+                        }}
+                    </SwitchButton>
+                </div>
+            </div>
         </div>
     );
 };

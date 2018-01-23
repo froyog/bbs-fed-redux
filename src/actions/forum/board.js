@@ -6,22 +6,26 @@ export const GET_BOARD_REQUEST = 'GET_BOARD_REQUEST';
 export const GET_BOARD_SUCCESS = 'GET_BOARD_SUCCESS';
 export const GET_BOARD_FAILURE = 'GET_BOARD_FAILURE';
 
-const fetchBoard = (bid, page, type, order) => {
-    return ({
+
+export const getBoard = (bid, page, type, order) => (dispatch, getState) => {
+    const authentication = parseUser(getState());
+    return dispatch({
         // page minus 1 since server-side paging starts from 0
         [CALL_API]: {
             types: [GET_BOARD_REQUEST, GET_BOARD_SUCCESS, GET_BOARD_FAILURE],
-            apiPath: `board/${bid}/page/${page - 1}?type=${type}&order=${order}`
+            apiPath: `board/${bid}/page/${page - 1}?type=${type}&order=${order}`,
+            request: {
+                headers: {
+                    auth: authentication
+                }
+            }
         },
         bid: bid,
         page: page,
         threadType: type,
         order: order
     });
-};
-
-export const getBoard = (bid, page, type, order) => dispatch =>
-    dispatch(fetchBoard(bid, page, type, order));
+}
 
 
 export const NEW_THREAD_REQUEST = 'NEW_THREAD_REQUEST';

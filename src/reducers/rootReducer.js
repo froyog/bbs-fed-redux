@@ -17,6 +17,7 @@ import messages from './profile/messages';
 import bypassingFactory from './bypassing';
 import publish from './profile/publish';
 import rank from './rank/rank';
+import switchButton from './forum/switchButton';
 
 import { SEND_PRIVATE_REQUEST, SEND_PRIVATE_SUCCESS, SEND_PRIVATE_FAILURE,
     GET_DIALOG_REQUEST, GET_DIALOG_SUCCESS, GET_DIALOG_FAILURE } from '../actions/profile/messages';
@@ -77,6 +78,7 @@ const combinedReducer = combineReducers({
     bypassing,
     publish,
     rank,
+    switchButton,
     user: (state = Map()) => state
 });
 
@@ -84,7 +86,7 @@ const crossSliceReducer = (state, action) => {
     switch (action.type) {
         case 'LOGIN_SUCCESS':
             return state.set('user', fromJS(action.json.data));
-        case 'GET_PROFILE_SUCCESS':
+        case 'GET_SELF_PROFILE_SUCCESS':
             const selfUid = state.getIn(['user', 'uid']);
             return state.setIn(
                 ['user', 'username'],

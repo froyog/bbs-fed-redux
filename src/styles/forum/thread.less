@@ -51,15 +51,16 @@
     a.img-link {
         max-width: 42%;
         display: block;
+
+        @media @phones {
+            max-width: 100%;
+        }
     }
     img {
         max-width: 100%;
         margin: 20px 0;
         display: block;
         box-shadow: @shadow-normal;
-        @media @phones {
-            max-width: 100%;
-        }
     }
 }
 
@@ -78,5 +79,11 @@
             right: 8px;
             top: 5px;
         }
+    }
+}
+
+.thread-buttons {
+    button {
+        font-size: 16px;
     }
 }
