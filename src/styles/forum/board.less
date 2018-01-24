@@ -29,30 +29,28 @@ ul.thread-list-withborder {
 
 }
 
-ul.board-operation {
-    margin: 10px 0;
-    padding-left: 0;
+.baord-header-wrapper {
+    margin-top: 30px;
     position: relative;
-    & > span {
-        padding-left: 24px;
-        font-weight: bold;
+}
+
+div.board-operation {
+    margin-top: 12px;
+    font-size: 15px;
+    cursor: pointer;
+    color: rgba(0, 0, 0, .5);
+    position: relative;
+    right: 54px;
+    &:hover {
+        color: @material-red;
     }
-    & > li {
-        display: inline;
-        padding-left: 24px;
-        cursor: pointer;
-        transition: color .3s ease;
-        &:hover, &.active {
-            color: #e77574;
-        }
-    }
-    button.refresh {
-        position: absolute;
-        right: 0;
-        bottom: -5px;
-        .icon-refresh {
-            font-size: 14px;
-        }
+}
+.board-refresh-button {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    .icon-refresh {
+        font-size: 14px;
     }
 }
 
@@ -63,11 +61,8 @@ ul.board-operation {
 
     button {
         font-size: 18px;
+        padding-right: 0;
     }
-}
-
-.board.tabs {
-    margin-top: 30px;
 }
 
 .posting-modal {

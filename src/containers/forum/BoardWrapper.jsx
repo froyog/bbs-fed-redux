@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Pagination, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { getBoard } from '../../actions/forum/board';
+import { getBoard, refreshBoard } from '../../actions/forum/board';
 import SwitchButton from './SwitchButton';
 import ThreadItem from '../../components/common/ThreadItem';
 import { Card } from '../../components/common/Card';
 import { FetchingOverlay } from '../../components/common/Loading';
 import { toJS, isEqual } from '../../util.js';
 import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
-// import BoardEditor from './BoardEditor';
 import RefreshButton from '../../components/common/RefreshButton';
 import { ErrorOverlay } from '../../components/common/ErrorModal';
 
@@ -20,6 +19,7 @@ import '../../styles/forum/board.less';
 class BoardWrapper extends React.Component {
     static propTypes = {
         getBoard: PropTypes.func.isRequired,
+        refreshBoard: PropTypes.func.isRequired,
         isFetching: PropTypes.bool,
         boardInfo: PropTypes.shape({
             name: PropTypes.string,
@@ -60,8 +60,7 @@ class BoardWrapper extends React.Component {
         this.handleSelect = this.handleSelect.bind(this);
         this.handleTypeChange = this.handleTypeChange.bind(this);
         this.handleOrderChange = this.handleOrderChange.bind(this);
-        // this.handleCloseModal = this.handleCloseModal.bind(this);
-        // this.handleOpenModal = this.handleOpenModal.bind(this);
+        this.handleRefresh = this.handleRefresh.bind(this);
     }
 
     componentWillMount() {
@@ -98,20 +97,20 @@ class BoardWrapper extends React.Component {
     handleOrderChange ({ target }) {
         const { getBoard, match: { params: { bid } }, type } = this.props;
         let order = target.id || '';
-        getBoard(bid, 1, type, order);
+        let changedOrder;
+        if (order === '') {
+            changedOrder = 'create';
+        } else if (order === 'create') {
+            changedOrder = '';
+        }
+        getBoard(bid, 1, type, changedOrder);
     }
 
-    // handleOpenModal () {
-    //     this.setState({
-    //         postingModalOpen: true
-    //     });
-    // }
-
-    // handleCloseModal () {
-    //     this.setState({
-    //         postingModalOpen: false
-    //     });
-    // }
+    handleRefresh () {
+        const { getBoard, refreshBoard, match: { params: { bid } }, type, order } = this.props;
+        refreshBoard(bid);
+        getBoard(bid, 1, type, order);
+    }
 
     render () {
         const { isFetching, boardInfo, threadList, type, order, error } = this.props;
@@ -122,8 +121,6 @@ class BoardWrapper extends React.Component {
         }
 
         const { name, cThread, cElite, info, moderator, id, follow } = boardInfo;
-        console.log(boardInfo);
-        
         const paginationItems = type === 'elite' ? cElite : cThread;
         const renderModerator = moderator.map(admin => {
             const { uid, name } = admin;
@@ -194,33 +191,39 @@ class BoardWrapper extends React.Component {
                     <p>版主：{renderModerator.length ? renderModerator : '暂无' }</p>
                     <p>帖数：{cThread}</p>
                     <p>简介：{info}</p>
-                    <ul className="tabs board">
-                        <li className={`tab ${type === '' ? 'active' : ''}`}>
-                            <a id="" onClick={this.handleTypeChange}>全部</a>
-                        </li>
-                        <li className={`tab ${type === 'elite' ? 'active' : ''}`}>
-                            <a id="elite" onClick={this.handleTypeChange}>精华</a>
-                        </li>
-                    </ul>
-                    <ul className="board-operation">
-                        <span>排序</span>
-                        <li
-                            className={`${order === '' ? 'active' : ''}`}
-                            id=""
+                    <div className="clearfix baord-header-wrapper">
+                        <ul className="tabs board pull-left">
+                            <li className="tab">
+                                <a 
+                                    id="" 
+                                    className={`${type === '' ? 'active' : ''}`} 
+                                    onClick={this.handleTypeChange}
+                                >
+                                    全部
+                                </a>
+                            </li>
+                            <li className="tab">
+                                <a 
+                                    id="elite" 
+                                    className={`${type === 'elite' ? 'active' : ''}`} 
+                                    onClick={this.handleTypeChange}
+                                >
+                                    精华
+                                </a>
+                            </li>
+                        </ul>
+                        <div 
+                            className="board-operation pull-right"
+                            id={order}
                             onClick={this.handleOrderChange}
                         >
-                            按最新回复
-                        </li>
-                        <li
-                            className={`${order === 'create' ? 'active': ''}`}
-                            id="create"
-                            onClick={this.handleOrderChange}
-                        >
-                            按最新发布
-                        </li>
-                        <RefreshButton />
-                        {/* <Button className="raised refresh" bsStyle="success">刷新</Button> */}
-                    </ul>
+                            {order === 'create' ? '按最新发布' : '按最新回复'}
+                        </div>
+                        <RefreshButton 
+                            className="board-refresh-button" 
+                            onClick={this.handleRefresh}
+                        />
+                    </div>
                 </Card>
                 {/* <Modal
                     bsSize="large"
@@ -254,7 +257,8 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 const mapDispatchToProps = dispatch => ({
-    getBoard: (bid, page, type, order) => dispatch(getBoard(bid, page, type, order))
+    getBoard: (bid, page, type, order) => dispatch(getBoard(bid, page, type, order)),
+    refreshBoard: bid => dispatch(refreshBoard(bid))
 });
 
 BoardWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(BoardWrapper));
