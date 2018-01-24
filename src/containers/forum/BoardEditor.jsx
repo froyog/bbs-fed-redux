@@ -7,6 +7,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import draftToMarkdown from 'draftjs-to-markdown';
 import { fetchNewThread } from '../../actions/forum/board';
+import AnonymousSwitch from '../../components/forum/AnonymousSwitch';
 import { connect } from 'react-redux';
 import { getDecorator } from './editor/mention.js';
 import Attach from './editor/Attach';
@@ -41,6 +42,7 @@ class BoardEditor extends React.Component {
             editorState: EditorState.createEmpty(),
             bid: 0,
             referToThread: false,
+            anonymousState: false
         };
 
         this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -49,6 +51,7 @@ class BoardEditor extends React.Component {
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleSelectBID = this.handleSelectBID.bind(this);
         this.getEditorState = this.getEditorState.bind(this);
+        this.handleToggleAnonymous = this.handleToggleAnonymous.bind(this);
     }
 
     componentWillReceiveProps (nextProps) {
@@ -85,15 +88,21 @@ class BoardEditor extends React.Component {
         });
     }
 
+    handleToggleAnonymous (anonymousState) {
+        this.setState({
+            annoymous: anonymousState
+        });
+    }
+
     handleSubmit (e) {
         e.preventDefault();
         const { newThread } = this.props;
-        const { editorState, title } = this.state;
+        const { editorState, title, anonymous } = this.state;
         const mdContent = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
 
         const { bid } = this.state;
         if (!bid) return;
-        newThread(bid, title, mdContent);
+        newThread(bid, title, mdContent, anonymous);
     }
 
     getEditorState () {
@@ -101,7 +110,7 @@ class BoardEditor extends React.Component {
     }
     
     render () {
-        const { editorState, title, referToThread } = this.state;
+        const { editorState, title, referToThread, bid } = this.state;
         const { isFetching, error } = this.props;
         if (referToThread) {
             return <Redirect to={`/forum/thread/${referToThread}/page/1`} />;
@@ -137,6 +146,13 @@ class BoardEditor extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                     <p className="error-message-in-editor">{error}</p>
+                    {
+                        +bid === 193 &&
+                        <AnonymousSwitch 
+                            className="pull-left"
+                            onToggle={this.handleToggleAnonymous}
+                        />
+                    }
                     <Button
                         bsStyle="link"
                         onClick={this.handleSubmit}
@@ -170,7 +186,7 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 const mapDispatchToProps = dispatch => ({
-    newThread: (bid, title, content) => dispatch(fetchNewThread(bid, title, content)),
+    newThread: (bid, title, content, anonymous) => dispatch(fetchNewThread(bid, title, content, anonymous)),
 });
 BoardEditor = connect(mapStateToProps, mapDispatchToProps)(toJS(BoardEditor));
 

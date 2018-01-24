@@ -118,7 +118,7 @@ class ThreadWrapper extends React.PureComponent {
         if (!postList || isFetching) return <FetchingOverlay fullPage />;
 
         const { cPost, title } = threadInfo;
-        const { id: boardId, name } = boardInfo;
+        const { id: boardId, name, anonymous: allowAnonymous } = boardInfo;
         const renderPostList = postList.map(post =>
             <ThreadPost
                 key={post.id}
@@ -176,6 +176,7 @@ class ThreadWrapper extends React.PureComponent {
                     onCancelReply={this.handleCancelReply}
                     tid={tid} 
                     onCommentSuccess={this.handleCommentSuccess} 
+                    allowAnonymous={allowAnonymous}
                 />
             </div>
         );
