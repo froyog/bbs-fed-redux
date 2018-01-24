@@ -57,7 +57,7 @@ export const NEW_COMMENT_REQUEST = 'NEW_COMMENT_REQUEST';
 export const NEW_COMMENT_SUCCESS = 'NEW_COMMENT_SUCCESS';
 export const NEW_COMMENT_FAILURE = 'NEW_COMMENT_FAILURE';
 
-export const fetchNewComment = (tid, content) => (dispatch, getState) => {
+export const fetchNewComment = (tid, content, anonymous) => (dispatch, getState) => {
     const authentication = parseUser(getState());
     dispatch({
         [CALL_API]: {
@@ -65,9 +65,32 @@ export const fetchNewComment = (tid, content) => (dispatch, getState) => {
             apiPath: `thread/${tid}`,
             request: {
                 method: 'POST',
-                body: JSON.stringify({content}),
+                body: JSON.stringify({
+                    content,
+                    anonymous: Number(anonymous)
+                }),
                 headers: {
                     contentType: 'application/json',
+                    auth: authentication
+                }
+            }
+        }
+    });
+};
+
+export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
+
+export const deletePost = pid => (dispatch, getState) => {
+    const authentication = parseUser(getState());
+    dispatch({
+        [CALL_API]: {
+            types: [DELETE_POST_REQUEST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE],
+            apiPath: `post/${pid}`,
+            request: {
+                method: 'DELETE',
+                headers: {
                     auth: authentication
                 }
             }

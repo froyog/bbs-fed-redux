@@ -58,7 +58,7 @@ export const NEW_THREAD_REQUEST = 'NEW_THREAD_REQUEST';
 export const NEW_THREAD_SUCCESS = 'NEW_THREAD_SUCCESS';
 export const NEW_THREAD_FAILURE = 'NEW_THREAD_FAILURE';
 
-export const fetchNewThread = (bid, title, content) => (dispatch, getState) => {
+export const fetchNewThread = (bid, title, content, anonymous) => (dispatch, getState) => {
     const authentication = parseUser(getState());
     dispatch({
         [CALL_API]: {
@@ -66,7 +66,7 @@ export const fetchNewThread = (bid, title, content) => (dispatch, getState) => {
             apiPath: `board/${bid}`,
             request: {
                 method: 'POST',
-                body: JSON.stringify({title, content}),
+                body: JSON.stringify({title, content, anonymous: Number(anonymous)}),
                 headers: {
                     contentType: 'application/json',
                     auth: authentication

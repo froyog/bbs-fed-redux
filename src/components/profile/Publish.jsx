@@ -7,9 +7,13 @@ import { LoadingLines, FetchingOverlay } from '../common/Loading';
 import Time from '../common/Time';
 
 
-const renderPublishList = items => {
+const renderPublishList = (items, onDelete) => {
     return items.map(thread => {
         const { id, title, tCreate, cPost, content } = thread;
+        const handleDeleteThread = () => {
+            onDelete && onDelete('thread', id);
+        };
+
         return (
             <ListGroupItem key={id} className="publish-thread-wrapper">
                 <Link 
@@ -29,7 +33,11 @@ const renderPublishList = items => {
                         <Time timestamp={tCreate} />
                     </span>
                 </div>
-                <Button bsStyle="link" className="float delete-button">
+                <Button 
+                    bsStyle="link" 
+                    className="float delete-button"
+                    onClick={handleDeleteThread}
+                >
                     <i className="iconfont icon-delete"></i>
                 </Button>
             </ListGroupItem>
@@ -37,9 +45,13 @@ const renderPublishList = items => {
     });
 };
 
-const renderReplyList = items => {
+const renderReplyList = (items, onDelete) => {
     return items.map(post => {
         const { threadId, floor, tCreate, anonymous, threadTitle, content, id } = post;
+        const handleDeletePost = () => {
+            onDelete && onDelete('post', id);
+        };
+
         return (
             <ListGroupItem key={id} className="publish-thread-wrapper">
                 <Link
@@ -59,7 +71,11 @@ const renderReplyList = items => {
                         <Time timestamp={tCreate} />
                     </span>
                 </div>
-                <Button bsStyle="link" className="float delete-button">
+                <Button 
+                    bsStyle="link" 
+                    className="float delete-button"
+                    onClick={handleDeletePost}
+                >
                     <i className="iconfont icon-delete"></i>
                 </Button>
             </ListGroupItem>
@@ -81,7 +97,8 @@ export class PublishList extends React.Component {
             })),
             error: PropTypes.string
         }),
-        onLoadMorePage: PropTypes.func.isRequired
+        onLoadMorePage: PropTypes.func.isRequired,
+        onDelete: PropTypes.func.isRequired
     }
 
     constructor () {
@@ -113,7 +130,7 @@ export class PublishList extends React.Component {
     }
 
     render () {
-        const { publishState, type } = this.props;
+        const { publishState, type, onDelete } = this.props;
         if (!publishState || (publishState.isFetching && !publishState.items.length)) {
             return <LoadingLines className="publish-loading-lines"/>;
         }
@@ -140,8 +157,8 @@ export class PublishList extends React.Component {
                 {
                     isExpand &&
                     <ListGroup>
-                        { type === 'thread' && renderPublishList(items) }
-                        { type === 'post' && renderReplyList(items) }
+                        { type === 'thread' && renderPublishList(items, onDelete) }
+                        { type === 'post' && renderReplyList(items, onDelete) }
                         <Button
                             bsStyle="link" 
                             className="load-more"
