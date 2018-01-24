@@ -26,6 +26,24 @@ const ThreadPost = ({ post, onClickReply }) => {
         window.scrollTo(0, document.body.scrollHeight);
     };
 
+    const renderUserName = () => {
+        if (anonymous) {
+            if (!authorId) {
+                // others, render anonymous user name
+                return <span>匿名用户</span>;
+            }
+            // anonymous but authorId exists, me
+            return <span>匿名用户（您）</span>
+        } 
+        return (
+            <span className="text-muted">
+                <Link to={`/user/${authorId}`}>{authorName}</Link>
+                （{authorNickname}）
+            </span>
+        );
+    }
+
+
     return (
         <div className="thread-head">
             <Media className="thread-meta">
@@ -34,18 +52,12 @@ const ThreadPost = ({ post, onClickReply }) => {
                         className="author-avatar post"
                         id={authorId}
                         name={authorName}
-                        anonymous={anonymous} />
+                        anonymous={anonymous} 
+                    />
                 </Media.Left>
                 <Media.Body>
                     <p className="post-meta">
-                        {
-                            anonymous
-                                ? <span>匿名用户</span>
-                                : <span className="text-muted">
-                                    <Link to={`/user/${authorId}`}>{authorName}</Link>
-                                    （{authorNickname}）
-                                </span>
-                        }
+                        {renderUserName()}
                         <span className="floor text-muted pull-right">#{floor}</span>
                         <Time className="text-muted pull-right" timestamp={tCreate} />
                     </p>

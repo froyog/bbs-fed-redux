@@ -25,8 +25,14 @@ class ImageFeed extends React.Component {
     constructor (props) {
         super(props);
         const { type, id } = props;
+        let src;
+        if (props.anonymous) {
+            src = anonymousAvatar;
+        } else {
+            src = `https://bbs.tju.edu.cn/api/${type}/${id}/avatar`; 
+        }
         this.state = {
-            src: `https://bbs.tju.edu.cn/api/${type}/${id}/avatar`,
+            src: src,
             generateAvatar: false
         };
 
@@ -46,8 +52,6 @@ class ImageFeed extends React.Component {
         if (type === 'user') {
             if (!name) {
                 this.setState({ src: defaultAvatar });
-            } else if (anonymous) {
-                this.setState({ src: anonymousAvatar });
             } else {
                 this.setState({ generateAvatar: true });
             }
