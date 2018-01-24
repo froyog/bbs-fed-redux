@@ -132,11 +132,12 @@ class ThreadEditor extends React.Component {
                     发表回复
                 </Button>
                 {
-                    allowAnonymous &&
-                    <AnonymousSwitch
+                    allowAnonymous
+                    ? <AnonymousSwitch
                         className="pull-right"
                         onToggle={this.handleToggleAnonymous} 
-                    />
+                    /> 
+                    : null
                 }
                 <span className="error-message">{error}</span>
             </Card>

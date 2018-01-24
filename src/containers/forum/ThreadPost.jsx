@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom';
 import Avatar from '../../components/common/Avatar';
 import Time from '../../components/common/Time';
 import ThreadRenderer from '../../components/forum/ThreadRenderer';
+import SwitchButton from './SwitchButton';
 
 
 const ThreadPost = ({ post, onClickReply }) => {
-    const { authorId, authorName, authorNickname, floor, anonymous, tCreate, content } = post;
+    const { id: pid, authorId, authorName, authorNickname, floor, anonymous, 
+        tCreate, content, liked, like } = post;
 
     const processContent = (content) => {
         let processedContent = content.replace(/^(?:>[ ]*){2}.*/gm, '');
@@ -71,7 +73,18 @@ const ThreadPost = ({ post, onClickReply }) => {
                     >
                         回复
                     </Button>
-                    <Button bsStyle="link" className="flat">编辑</Button>
+                    <SwitchButton
+                        switchType="likePost"
+                        id={pid}
+                        initialState={liked}
+                    >
+                        {(active, onClickButton) => {
+                            return <Button bsStyle="link" className="flat" onClick={onClickButton}>
+                                {active ? '已赞' : '点赞'}
+                                {like ? `（${like}）` : null}
+                            </Button>
+                        }}
+                    </SwitchButton>
                     <Button bsStyle="link" className="flat">删除</Button>
                 </footer>
             </Media>

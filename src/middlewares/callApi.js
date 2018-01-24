@@ -80,7 +80,7 @@ export default store => next => action => {
             type: successType
         })),
         error => next(actionWith({
-            error: error.data || 'Something bad happens',
+            error: error.data || '网络连接错误',
             type: failureType
         }))
     );

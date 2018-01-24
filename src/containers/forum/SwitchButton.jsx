@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
-import { followBoard, collectThread } from '../../actions/forum/switchButton';
+import { followBoard, collectThread, likeThread, likePost } from '../../actions/forum/switchButton';
 import { showToast } from '../../actions/common/toast';
 
 class SwitchButton extends React.Component {
@@ -13,7 +13,7 @@ class SwitchButton extends React.Component {
         isFetching: PropTypes.bool,
         success: PropTypes.string,
         error: PropTypes.string,
-        initialState: PropTypes.bool
+        initialState: PropTypes.oneOfType([PropTypes.number, PropTypes.bool])
     }
 
     constructor (props) {
@@ -53,6 +53,12 @@ class SwitchButton extends React.Component {
             case 'collect':
                 this.props.onChangeCollectState(id, nextState);
                 break;
+            case 'likeThread':
+                this.props.onChangeLikeThreadState(id, nextState);
+                break;
+            case 'likePost':
+                this.props.onChangeLikePostState(id, nextState);
+                break;
             default:
                 break;
         }
@@ -85,8 +91,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     onChangeFollowState: (bid, nextFollowState) => dispatch(followBoard(bid, nextFollowState)),
     onChangeCollectState: (tid, nextColloectState) => dispatch(collectThread(tid, nextColloectState)),
-    // onChangeLikeThreadState: (tid, nextLikeState) => dispatch(likeThread(tid, nextLikeState)),
-    // onChangeLikePostState: (pid, nextLikeState) => dispatch(likePost(pid, nextLikeState)),
+    onChangeLikeThreadState: (tid, nextLikeState) => dispatch(likeThread(tid, nextLikeState)),
+    onChangeLikePostState: (pid, nextLikeState) => dispatch(likePost(pid, nextLikeState)),
     showToast: message => dispatch(showToast(message))
 })
 SwitchButton = connect(mapStateToProps, mapDispatchToProps)(SwitchButton);

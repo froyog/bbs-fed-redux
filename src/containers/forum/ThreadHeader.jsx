@@ -13,7 +13,7 @@ import '../../styles/forum/thread.less';
 
 let ThreadHeader = ({ thread, board }) => {
     const { id: tid, authorId, authorName, title, anonymous,
-        authorNickname, tCreate, content, inCollection } = thread;
+        authorNickname, tCreate, content, inCollection, like, liked } = thread;
     const { id, name } = board;
 
     return (
@@ -62,6 +62,18 @@ let ThreadHeader = ({ thread, board }) => {
                         {(active, onClickButton) => {
                             return <Button bsStyle="link" className="flat" onClick={onClickButton}>
                                 {active ? '已收藏' : '收藏'}
+                            </Button>
+                        }}
+                    </SwitchButton>
+                    <SwitchButton
+                        switchType="likeThread"
+                        id={tid}
+                        initialState={liked}
+                    >
+                        {(active, onClickButton) => {
+                            return <Button bsStyle="link" className="flat" onClick={onClickButton}>
+                                {active ? '已赞' : '点赞'}
+                                {like ? `（${like}）` : null}
                             </Button>
                         }}
                     </SwitchButton>

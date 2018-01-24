@@ -66,3 +66,61 @@ export const collectThread = followAndCollectAction({
     apiPath: 'home/collection',
     idType: 'tid'
 });
+
+
+export const LIKE_THREAD_REQUEST = 'LIKE_THREAD_REQUEST';
+export const LIKE_THREAD_SUCCESS = 'LIKE_THREAD_SUCCESS';
+export const LIKE_THREAD_FAILURE = 'LIKE_THREAD_FAILURE';
+
+export const UNLIKE_THREAD_REQUEST = 'UNLIKE_THREAD_REQUEST';
+export const UNLIKE_THREAD_SUCCESS = 'UNLIKE_THREAD_SUCCESS';
+export const UNLIKE_THREAD_FAILURE = 'UNLIKE_THREAD_FAILURE';
+
+export const LIKE_POST_REQUEST = 'LIKE_POST_REQUEST';
+export const LIKE_POST_SUCCESS = 'LIKE_POST_SUCCESS';
+export const LIKE_POST_FAILURE = 'LIKE_POST_FAILURE';
+
+export const UNLIKE_POST_REQUEST = 'UNLIKE_POST_REQUEST';
+export const UNLIKE_POST_SUCCESS = 'UNLIKE_POST_SUCCESS';
+export const UNLIKE_POST_FAILURE = 'UNLIKE_POST_FAILURE';
+
+
+export const likeThread = (tid, nextState) => (dispatch, getState) => {
+    const authentication = parseUser(getState());
+    return dispatch({
+        [CALL_API]: {
+            types: (
+                nextState 
+                ? [LIKE_THREAD_REQUEST, LIKE_THREAD_SUCCESS, LIKE_THREAD_FAILURE]
+                : [UNLIKE_THREAD_REQUEST, UNLIKE_THREAD_SUCCESS, UNLIKE_THREAD_FAILURE]
+            ),
+            apiPath: `thread/${tid}/like`,
+            request: {
+                method: nextState ? 'PUT' : 'DELETE',
+                headers: {
+                    auth: authentication
+                }
+            }
+        }
+    });
+}
+
+export const likePost = (pid, nextState) => (dispatch, getState) => {
+    const authentication = parseUser(getState());
+    return dispatch({
+        [CALL_API]: {
+            types: (
+                nextState 
+                ? [LIKE_POST_REQUEST, LIKE_POST_SUCCESS, LIKE_POST_FAILURE]
+                : [UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS, UNLIKE_POST_FAILURE]
+            ),
+            apiPath: `post/${pid}/like`,
+            request: {
+                method: nextState ? 'PUT' : 'DELETE',
+                headers: {
+                    auth: authentication
+                }
+            }
+        }
+    });
+}

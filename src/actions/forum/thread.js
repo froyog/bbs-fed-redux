@@ -25,7 +25,7 @@ const shouldFetchThreadPage = (threadNode, tid, page) => {
 
 // Fetch thread page if needed, check page and thread id respectively to
 // decide whether the request page is already cached.
-// Keep it in your mind that we only cache pages, not threads.
+// cache pages only, not threads.
 export const getThreadPage = (tid, page) => (dispatch, getState) => {
     const threadNode = getState().getIn(['thread', page]);
     if (shouldFetchThreadPage(threadNode, tid, page)) {
