@@ -9,7 +9,8 @@ const board = (state = fromJS({
     page: 0,
     order: '',
     type: '',
-    error: ''
+    error: '',
+    didInvalidate: false
 }), action) => {
     switch (action.type) {
         case ActionTypes.GET_BOARD_REQUEST:
@@ -28,6 +29,8 @@ const board = (state = fromJS({
                 'isFetching': false,
                 'error': fromJS(action.error)
             });
+        case ActionTypes.INVAILDATE_BOARD:
+            return state.set('didInvalidate', true);
         default:
             return state;
     }
@@ -38,6 +41,7 @@ const boardByBid = (state = Map(), action) => {
         case ActionTypes.GET_BOARD_REQUEST:
         case ActionTypes.GET_BOARD_SUCCESS:
         case ActionTypes.GET_BOARD_FAILURE:
+        case ActionTypes.INVAILDATE_BOARD:
             return state.set(
                 action.bid, board(state.get(action.bid), action)
             );

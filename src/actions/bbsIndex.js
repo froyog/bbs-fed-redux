@@ -61,11 +61,54 @@ export const refreshLatest = () => dispatch => {
 };
 
 
-// inital state from local storage
-export const INIT = 'INIT';
-export const initFromLocal = userState => dispatch => {
-    return dispatch({ 
-        type: INIT,
-        userFromLocal: userState
+export const GET_ANNOUNCE_REQUEST = 'GET_ANNOUNCE_REQUEST';
+export const GET_ANNOUNCE_SUCCESS = 'GET_ANNOUNCE_SUCCESS';
+export const GET_ANNOUNCE_FAILURE = 'GET_ANNOUNCE_FAILURE';
+
+export const getAnnouncements = () => (dispatch, getState) => {
+    const announcementsState = getState().getIn(['bbsIndex', 'announce']);
+    if (announcementsState && announcementsState.get('announcements').size) {
+        return null;
+    }
+    return dispatch({
+        [CALL_API]: {
+            types: [GET_ANNOUNCE_REQUEST, GET_ANNOUNCE_SUCCESS, GET_ANNOUNCE_FAILURE],
+            apiPath: 'index/announce'
+        }
+    });
+};
+
+export const GET_ADS_REQUEST = 'GET_ADS_REQUEST';
+export const GET_ADS_SUCCESS = 'GET_ADS_SUCCESS';
+export const GET_ADS_FAILURE = 'GET_ADS_FAILURE';
+
+export const getAdsIfNeeded = () => (dispatch, getState) => {
+    const adsState = getState().getIn(['bbsIndex', 'ads']);
+    if (adsState && adsState.get('adList').size) {
+        return;
+    }
+    return dispatch({
+        [CALL_API]: {
+            types: [GET_ADS_REQUEST, GET_ADS_SUCCESS, GET_ADS_FAILURE],
+            apiPath: 'index/ads'
+        }
+    });
+};
+
+export const GET_INDEX_RANK_REQUEST = 'GET_INDEX_RANK_REQUEST';
+export const GET_INDEX_RANK_SUCCESS = 'GET_INDEX_RANK_SUCCESS';
+export const GET_INDEX_RANK_FAILURE = 'GET_INDEX_RANK_FAILURE';
+
+export const getIndexRankIfNeeded = () => (dispatch, getState) => {
+    const indexRankState = getState().getIn(['bbsIndex', 'rank']);
+    if (indexRankState && indexRankState.get('rankData').size) {
+        return;
+    }
+
+    return dispatch({
+        [CALL_API]: {
+            types: [GET_INDEX_RANK_REQUEST, GET_INDEX_RANK_SUCCESS, GET_INDEX_RANK_FAILURE],
+            apiPath: 'index/rank'
+        }
     });
 };

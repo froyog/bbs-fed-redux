@@ -1,20 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import asyncComponent from '../asyncComponent';
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 import { Grid } from 'react-bootstrap';
 
 import Header from './frame/Header';
 import Sidebar from './frame/Sidebar';
-import ErrorModal from './common/ErrorModal';
+import Toast from './common/Toast';
+import Home from './bbs-index/Home';
 import Forum from './forum/ForumList';
 import Board from './forum/BoardWrapper';
 import Thread from './forum/ThreadWrapper';
-import Home from './bbs-index/Home';
-import UserBase from './profile/UserBase';
+// import UserBase from './profile/UserBase';
+const AsyncUserBase = asyncComponent(() => import('./profile/UserBase'));
+import Rank from './rank/Rank';
 import { connect } from 'react-redux';
 import { isMobile } from '../util.js';
 import { toggleSidebar } from '../actions/frame/sidebar';
-import { initFromLocal } from '../actions/bbsIndex';
+import { initFromLocal } from '../actions/init';
+import { getProfileIfNeeded } from '../actions/profile/profile';
 
 import '../styles/app.less';
 import '../styles/global.less';
@@ -23,15 +27,20 @@ import '../styles/global.less';
 class App extends React.Component {
     static propTypes = {
         isOpen: PropTypes.bool.isRequired,
-        onToggleSidebar: PropTypes.func.isRequired
+        onToggleSidebar: PropTypes.func.isRequired,
+        initFromLocal: PropTypes.func.isRequired,
+        getSelfProfile: PropTypes.func.isRequired
     };
 
     componentWillMount() {
-        const { onToggleSidebar, initFromLocal } = this.props;
+        const { onToggleSidebar, initFromLocal, getSelfProfile } = this.props;
+
         onToggleSidebar(!isMobile());
 
         const user = JSON.parse(localStorage.getItem('user'));
         initFromLocal(user);
+
+        getSelfProfile();
     }
 
     render () {
@@ -43,7 +52,7 @@ class App extends React.Component {
             <div id="frame" onScroll={this.handlePageScroll}>
                 <Header path={location.pathname}/>
                 <Sidebar />
-                <ErrorModal />
+                <Toast />
                 <div id="main" style={mainStyle}>
                     <Grid>
                         <Switch>
@@ -61,7 +70,8 @@ class App extends React.Component {
                             <Route exact path="/forum" component={Forum} />
                             <Route path="/forum/board/:bid/page/:page" component={Board} />
                             <Route path="/forum/thread/:tid/page/:page" component={Thread} />
-                            <Route path="/user/:uid" component={UserBase} />
+                            <Route path="/user/:uid" component={AsyncUserBase} />
+                            <Route path="/rank" component={Rank} />
                             <Redirect from="*" to="/404" />
 >>>>>>> tom
                         </Switch>
@@ -77,7 +87,8 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
     onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus)),
-    initFromLocal: userState => dispatch(initFromLocal(userState))
+    initFromLocal: userState => dispatch(initFromLocal(userState)),
+    getSelfProfile: () => dispatch(getProfileIfNeeded('me'))
 });
 App = withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
 

@@ -13,6 +13,26 @@ export const LoadingDots = () =>
 export const LoadingSpinner = () =>
     <div className="cp-spinner cp-hue"></div>;
 
+export const LoadingLines = ({ className }) =>
+    <div className={`animated-background${className ? ' ' + className : ''}`}>
+        <div className="shadow-masker word-speartor"></div>
+        <div className="shadow-masker line-speartor"></div>
+        <div className="shadow-masker word-speartor"></div>
+        <div className="shadow-masker word-speartor"></div>
+        <div className="shadow-masker word-speartor"></div>
+        <div className="shadow-masker line-speartor"></div>
+        <div className="shadow-masker word-speartor"></div>
+        <div className="shadow-masker line-speartor"></div>
+        <div className="shadow-masker"></div>
+        <div className="shadow-masker word-speartor"></div>
+        <div className="shadow-masker line-speartor"></div>
+        <div className="shadow-masker word-speartor"></div>
+        <div className="shadow-masker word-speartor"></div>
+        <div className="shadow-masker word-speartor"></div>
+        <div className="shadow-masker line-speartor"></div>
+        <div className="shadow-masker word-speartor"></div>
+    </div>;
+
 export const FetchingOverlay = ({ fullPage }) =>
     <div
         className="fetching-overlay"

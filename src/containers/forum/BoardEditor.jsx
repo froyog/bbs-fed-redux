@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import { InputField } from '../../components/common/Input';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import draftToMarkdown from 'draftjs-to-markdown';
 import { fetchNewThread } from '../../actions/forum/board';
+import AnonymousSwitch from '../../components/forum/AnonymousSwitch';
 import { connect } from 'react-redux';
 import { getDecorator } from './editor/mention.js';
 import Attach from './editor/Attach';
@@ -39,7 +40,9 @@ class BoardEditor extends React.Component {
         super();
         this.state = {
             editorState: EditorState.createEmpty(),
-            bid: 0
+            bid: 0,
+            referToThread: false,
+            anonymous: false
         };
 
         this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -48,15 +51,17 @@ class BoardEditor extends React.Component {
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleSelectBID = this.handleSelectBID.bind(this);
         this.getEditorState = this.getEditorState.bind(this);
+        this.handleToggleAnonymous = this.handleToggleAnonymous.bind(this);
     }
 
     componentWillReceiveProps (nextProps) {
-        const { tid, error, isFetching, history } = nextProps;
-
+        const { tid, error, isFetching } = nextProps;
         if (tid && !error && !isFetching) {
             // success
             this.handleCloseModal();
-            history.push(`/forum/thread/${tid}/page/1`);
+            this.setState({
+                referToThread: tid
+            });
         }
     }
 
@@ -83,14 +88,22 @@ class BoardEditor extends React.Component {
         });
     }
 
+    handleToggleAnonymous (anonymousState) {
+        this.setState({
+            anonymous: anonymousState
+        });
+    }
+
     handleSubmit (e) {
         e.preventDefault();
         const { newThread } = this.props;
-        const { editorState, title } = this.state;
+        const { editorState, title, anonymous } = this.state;
         const mdContent = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
 
         const { bid } = this.state;
-        newThread(bid, title, mdContent);
+        if (!bid) return;
+        
+        newThread(bid, title, mdContent, anonymous);
     }
 
     getEditorState () {
@@ -98,8 +111,11 @@ class BoardEditor extends React.Component {
     }
     
     render () {
-        const { editorState, title } = this.state;
-        const { isFetching } = this.props;
+        const { editorState, title, referToThread, bid } = this.state;
+        const { isFetching, error } = this.props;
+        if (referToThread) {
+            return <Redirect to={`/forum/thread/${referToThread}/page/1`} />;
+        }
 
         return (
             <div>
@@ -112,7 +128,9 @@ class BoardEditor extends React.Component {
                         fullWidth
                         onChange={this.handleTitleChange}
                     />
-                    <BIDSelector onBIDSelect={this.handleSelectBID}/>
+                    <BIDSelector 
+                        onBIDSelect={this.handleSelectBID}
+                    />
                     <Editor
                         toolbar={customToolbar}
                         toolbarCustomButtons={[<Attach />]}
@@ -128,19 +146,27 @@ class BoardEditor extends React.Component {
                     />
                 </Modal.Body>
                 <Modal.Footer>
+                    <p className="error-message-in-editor">{error}</p>
+                    {
+                        +bid === 193 &&
+                        <AnonymousSwitch 
+                            className="pull-left"
+                            onToggle={this.handleToggleAnonymous}
+                        />
+                    }
                     <Button
-                        bsStyle="primary"
+                        bsStyle="link"
                         onClick={this.handleSubmit}
-                        className="raised pull-left"
+                        className="flat"
                         type="submit"
                         disabled={isFetching}
                     >
                         发表
                     </Button>
                     <Button
-                        bsStyle="danger"
+                        bsStyle="link"
                         onClick={this.handleCloseModal}
-                        className="raised"
+                        className="flat"
                     >
                         关闭
                     </Button>
@@ -150,19 +176,19 @@ class BoardEditor extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
     const newThread = state.get('newThread');
     if (!newThread) return {};
 
     return {
         isFetching: newThread.get('isFetching'),
         tid: newThread.get('tid'),
-        error: newThread.get('error')
+        error: newThread.get('error'),
     };
 };
 const mapDispatchToProps = dispatch => ({
-    newThread: (bid, title, content) => dispatch(fetchNewThread(bid, title, content))
+    newThread: (bid, title, content, anonymous) => dispatch(fetchNewThread(bid, title, content, anonymous)),
 });
+BoardEditor = connect(mapStateToProps, mapDispatchToProps)(toJS(BoardEditor));
 
-BoardEditor = withRouter(connect(mapStateToProps, mapDispatchToProps)(toJS(BoardEditor)));
 export default BoardEditor;

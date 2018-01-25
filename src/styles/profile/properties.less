@@ -1,28 +1,5 @@
 @import '../universal.less';
 
-ul.profile-nav {
-    padding: 0;
-}
-
-.nav-link-wrapper {
-    list-style-type: none;
-    display: inline-block;
-    padding-right: 10px;
-    
-    a {
-        display: inline-block;
-        line-height: 1.5;
-        font-size: 18px;
-        color: #333;
-        &:hover, &:focus, &.active {
-            text-decoration: none;
-            font-size: 24px;
-            color: @material-red;
-        }
-        transition: all .3s;
-    }
-}
-
 .message-wrapper:last-child {
     border-bottom: 0;
 }
@@ -45,6 +22,7 @@ ul.profile-nav {
     .message-author-avatar {
         font-size: 20px;
         margin-right: 10px;
+        box-shadow: @shadow-material;
 
         .avatar-size(30px);
     }
@@ -77,6 +55,10 @@ ul.profile-nav {
 
         & > blockquote:last-child {
             margin-bottom: 0;
+        }
+
+        a.img-link {
+            max-width: 75%;
         }
     }
 
@@ -142,4 +124,100 @@ ul.profile-nav {
     .replied-content {
         border-left: 3px solid #bbb;
     }
+}
+
+.profile-collections {
+    td.thread-title {
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    td a {
+        cursor: pointer;
+    }
+}
+
+.publish-thread-wrapper {
+    border: 0;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 2px;
+    padding: 10px 0;
+
+    &:hover {
+        .delete-button {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+    .thread-renderer {
+        font-size: 15px;
+        border-radius: 5px;
+        color: #777;
+    }
+    .thread-title {
+        color: #333;
+        font-size: 18px;
+
+        &:hover { color: #333; }
+    }
+    .anonymous {
+        color: @material-red;
+    }
+    .statistics {
+        i { 
+            font-size: 14px; 
+            color: #999;
+            margin-right: 3px;
+        }
+        span {
+            margin-right: 10px;
+        }
+        .floor {
+            color: #333;
+            font-weight: bold;
+            color: @material-red-light;
+        }
+    }
+    .icon-delete {
+        margin: 0;
+        font-size: 18px;
+        color: #999;
+        transition: all .3s;
+    }
+    .delete-button {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        bottom: 10px;
+        right: 0;
+        width: 36px;
+        height: 36px;
+
+        &:hover {
+            .icon-delete {
+                color: #333;
+            }
+        }
+
+        @media @phones {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+.publish-header {
+    h3 {
+        margin: 5px 0;
+    }
+    .expand-button {
+        margin-top: 3px;
+        font-size: 16px;
+    }
+}
+
+.publish-loading-lines {
+    margin-bottom: 10px;
 }

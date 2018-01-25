@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button, Form, FormGroup, FormControl, Modal } from 'react-bootstrap';
 import { LoadingDots } from '../common/Loading';
@@ -81,7 +81,7 @@ export class MessagePrivate extends React.Component {
     }
 
     render () {
-        const { restInfo: { id, content }, authorName, privatePayload, dialogState } = this.props;
+        const { restInfo: { content }, authorName, privatePayload, dialogState } = this.props;
         const { isShowReplyBox, replyValue, isShowDialog, isShowSuccessOverlay } = this.state;
 
         return (
@@ -124,7 +124,7 @@ export class MessagePrivate extends React.Component {
                             type="submit"
                             onClick={this.handleClickSendMessage}
                         >   
-                            发射
+                            发送
                         </Button>
                         {
                             privatePayload && privatePayload.error &&
@@ -189,7 +189,7 @@ export const MessageDeleted = ({ content, isThread }) => {
 };
 
 export const MessageReply = ({ content, isThread, selfUid, selfName }) => {
-    const { floor, threadTitle, threadId, 
+    const { threadTitle, threadId, 
         content: threadContent, replyContent, status } = content;
 
     const renderDeletedOverlay = !status && 

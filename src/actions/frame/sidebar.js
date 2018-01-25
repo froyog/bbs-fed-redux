@@ -26,4 +26,4 @@ export const getUnreadMessage = () => (dispatch, getState) => {
             }
         }
     });
-}
+};

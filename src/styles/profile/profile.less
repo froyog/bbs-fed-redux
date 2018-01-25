@@ -7,6 +7,26 @@
     width: 150px;
     height: 150px;
     border: 5px solid #fff;
+
+    &.editing {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+.profile-editing-wrapper {
+    .error-message {
+        font-size: 16px;
+        padding-right: 36px;
+    }
+    .ReactCrop {
+        position: absolute;
+        bottom: 0;
+        width: 180px;
+        height: 180px;
+        touch-action: none;
+        border: 5px solid #fff;
+    }
 }
 
 .card-profile {
@@ -14,10 +34,31 @@
         padding: 0 0 24px;
     }
 
+    .private-message-wrapper {
+        position: absolute;
+        right: 0;
+        top: 40px;
+        padding: 10px 20px 15px;
+        background-color: rgba(255, 255, 255, .95);
+        box-shadow: @shadow-material-deep;
+        border-radius: 3px;
+
+        button.raised {
+            margin-left: 5px;
+        }
+    }
+
+    .profile-ops-wrapper {
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        z-index: 1;
+
+        @media @phones {
+            position: static;
+        }
+    }
     button.profile-ops {
-        position: relative;
-        top: -2px;
-        margin-right: 10px;
         padding: 3px 20px;
         font-size: 16px;
         outline: 0 !important;
@@ -26,10 +67,16 @@
         transition: all .3s;
         float: right;
 
-        &:hover {
+        &:hover, &:active, &:focus {
             color: #fff;
             background-color: #007bff;
         }
+    }
+    button.profile-ops-secondary {
+        padding: 3px 20px;
+        font-size: 16px;
+        margin-right: 5px;
+        float: right;
     }
 
     .profile-cover {
@@ -45,7 +92,6 @@
             bottom: -20px;
             left: -40px;
             right: -40px;
-            background-image: url('../../assests/bg-material.jpg');
             background-position: 50% 60%;
             background-size: cover;
         }
@@ -55,7 +101,12 @@
         position: relative;
         margin: 0 36px;
     }
-    .intro { margin-left: 165px; }
+    .intro { 
+        margin-left: 165px; 
+        &.editing {
+            margin-left: 205px;
+        }
+    }
     .username {
         margin-bottom: 0;
         font-size: 30px;
@@ -77,19 +128,69 @@
         }
     }
 
+    .input-gap { margin-right: 20px; }
+    
+    .password-set-wrapper {
+        margin-top: 10px;
+        overflow: hidden;
+        .transition-material(.5s, max-height);
+
+        p { margin: 0; }
+    }
+    .editing-rest {
+        padding: 0 36px;
+        margin-left: 205px;
+    }
+
+    .editing-buttons-wrapper {
+        text-align: right;
+        padding: 0 36px;
+    }
+
     @media @phones {
-        .profile-avatar {
+        .profile-avatar:not(.editing) {
             width: 100px;
             height: 100px;
             top: 0;
         }
+        .profile-avatar.editing, .ReactCrop {
+            position: static;
+            width: 150px;
+            height: 150px;
+            margin-right: 5px;
+        }
         .profile-wrapper { margin: 0 20px; }
         .intro { margin-left: 110px; }
-        .profile-cover { height: 135px; }
+        .intro.editing { margin-left: 0; }
+        .editing-rest { margin-left: 0; padding: 0 20px; }
+        .profile-cover { height: 140px; }
+        .profile-editing-wrapper {
+            position: relative;
+            top: -40px;
+        }
         button.profile-ops { 
             float: none; 
             margin-top: 10px;
         }
         .nickname { display: none; }
+    }
+}
+
+.edit-password-line {
+    min-height: 70px;
+    @media @phones {
+        min-height: 120px;
+    }
+}
+
+.edit-avatar-button {
+    position: absolute;
+    bottom: -40px;
+    width: 180px;
+    @media @phones {
+        position: absolute;
+        top: 113px;
+        bottom: unset;
+        width: 110px;
     }
 }

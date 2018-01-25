@@ -8,8 +8,6 @@ import { LoadingDots, FetchingOverlay} from '../../components/common/Loading';
 import { Card } from '../../components/common/Card';
 import ThreadItem from '../../components/common/ThreadItem';
 import RefreshButton from '../../components/common/RefreshButton';
-import { showErrorModal } from '../../actions/common/error-portal';
-
 
 class Latest extends React.Component {
     static propTypes = {
@@ -45,9 +43,9 @@ class Latest extends React.Component {
     }
 
     componentWillReceiveProps (nextProps) {
-        const { error, fireErrorModal } = nextProps;
+        const { error } = nextProps;
         if (error) {
-            fireErrorModal();
+            // fire error modal
         }
     }
 
@@ -55,6 +53,9 @@ class Latest extends React.Component {
         const { refresh, getLatest } = this.props;
         refresh();
         getLatest(0);
+        this.setState({
+            page: 0
+        });
     }
 
     handleLoadMore () {
@@ -118,8 +119,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => ({
     getLatest: page => dispatch(getLatest(page)),
-    refresh: () => dispatch(refreshLatest()),
-    fireErrorModal: () => dispatch(showErrorModal())
+    refresh: () => dispatch(refreshLatest())
 });
 Latest = connect(mapStateToProps, mapDispatchToProps)(toJS(Latest));
 
