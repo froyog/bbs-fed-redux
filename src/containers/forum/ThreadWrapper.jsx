@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import asyncComponent from '../../asyncComponent';
 import { connect} from 'react-redux';
 import { Pagination } from 'react-bootstrap';
 import { Card } from '../../components/common/Card';
@@ -9,12 +10,16 @@ import { toJS, isEqual } from '../../util';
 import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
 import ThreadHeader from './ThreadHeader';
 import ThreadPost from './ThreadPost';
-import ThreadEditor from './ThreadEditor';
+import { ErrorOverlay } from '../../components/common/ErrorModal';
+// import ThreadEditor from './ThreadEditor';
+const AsyncThreadEditor = asyncComponent(() => import('./ThreadEditor'));
+
 
 class ThreadWrapper extends React.PureComponent {
     static propTypes = {
         getThreadPage: PropTypes.func.isRequired,
         isFetching: PropTypes.bool,
+        error: PropTypes.string,
         tid: PropTypes.number,
         threadInfo: PropTypes.shape({
             cPost: PropTypes.number,
@@ -60,7 +65,7 @@ class ThreadWrapper extends React.PureComponent {
         this.handleSelect = this.handleSelect.bind(this);
         this.handleClickReply = this.handleClickReply.bind(this);
         this.handleCancelReply = this.handleCancelReply.bind(this);
-        this.handleCommentSuccess = this.handleCommentSuccess.bind(this);
+        this.handleRefreshLastPage = this.handleRefreshLastPage.bind(this);
     }
 
     componentWillMount() {
@@ -95,13 +100,14 @@ class ThreadWrapper extends React.PureComponent {
         this.setState({ replyContent: '' });
     }
 
-    handleCommentSuccess () {
+    handleRefreshLastPage () {
         const { threadInfo: { cPost }, 
             getThreadPage,
             refreshThread, 
             match: { params: { tid } } } = this.props;
-        const lastPage = Math.ceil(cPost / 50);
-
+        
+        const lastPage = Math.ceil((cPost + 1) / 50);
+        
         refreshThread(lastPage + '');
         getThreadPage(+tid, lastPage + '');
         this.setState({
@@ -110,17 +116,21 @@ class ThreadWrapper extends React.PureComponent {
     }
 
     render () {
-        const { threadInfo, postList, boardInfo, isFetching, match: { params: { tid } } } = this.props;
+        const { threadInfo, postList, boardInfo, isFetching, error,
+            match: { params: { tid } } } = this.props;
         const { replyContent } = this.state;
+        if (error) return <ErrorOverlay reason={error} needRefresh />;
         if (!postList || isFetching) return <FetchingOverlay fullPage />;
 
         const { cPost, title } = threadInfo;
-        const { id: boardId, name } = boardInfo;
+        const { id: boardId, name, anonymous: allowAnonymous } = boardInfo;
         const renderPostList = postList.map(post =>
             <ThreadPost
                 key={post.id}
                 post={post}
-                onClickReply={this.handleClickReply} />
+                onClickReply={this.handleClickReply} 
+                onDeleteSuccess={this.handleRefreshLastPage}
+            />
         );
 
         return (
@@ -141,7 +151,9 @@ class ThreadWrapper extends React.PureComponent {
                         <ThreadHeader
                             thread={threadInfo}
                             board={boardInfo}
-                            onClickReply={this.handleClickReply} /> }
+                            onClickReply={this.handleClickReply} 
+                        /> 
+                    }
                     {/*<Pagination
                         prev
                         next
@@ -168,11 +180,13 @@ class ThreadWrapper extends React.PureComponent {
                         activePage={this.state.activePage}
                         onSelect={this.handleSelect} />
                 </Card>
-                <ThreadEditor
+                <AsyncThreadEditor
                     replyContent={replyContent}
                     onCancelReply={this.handleCancelReply}
                     tid={tid} 
-                    onCommentSuccess={this.handleCommentSuccess} />
+                    onCommentSuccess={this.handleRefreshLastPage} 
+                    allowAnonymous={allowAnonymous}
+                />
             </div>
         );
     }
@@ -187,6 +201,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         isFetching: thread.get('isFetching'),
         tid: thread.get('tid'),
+        error: thread.get('error'),
         threadInfo: thread.get('threadInfo'),
         postList: thread.get('postList'),
         boardInfo: thread.get('boardInfo')

@@ -97,7 +97,7 @@
         "no-redeclare": 1,
         "no-regex-spaces": 1,
         "no-restricted-syntax": [1, "LabeledStatement", "WithStatement"],
-        "no-return-assign": 1,
+        "no-return-assign": 0,
         "no-script-url": 1,
         "no-self-assign": 1,
         "no-self-compare": 1,

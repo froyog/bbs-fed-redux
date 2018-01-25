@@ -37,18 +37,19 @@ const Header = ({ isOpen, onToggleSidebar, onOpenModal, headerContent }) => {
             >
                 <section>
                     <img className="slogan" src={slogan} alt="slogan" />
-                    <Button
-                        className="raised quick-thread" 
-                        bsStyle="primary"
-                        onClick={handleOpenModal}
-                    >
-                        快速发帖
-                    </Button>
+                    
                 </section>
                 <section>
                     {headerContent}
                 </section>
             </div>
+            <Button
+                className="raised quick-thread" 
+                bsStyle="primary"
+                onClick={handleOpenModal}
+            >
+                发帖
+            </Button>
         </div>
     );
 };

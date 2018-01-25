@@ -5,81 +5,177 @@ import { Link } from 'react-router-dom';
 import Avatar from '../../components/common/Avatar';
 import Time from '../../components/common/Time';
 import ThreadRenderer from '../../components/forum/ThreadRenderer';
+import SwitchButton from './SwitchButton';
+import { showToast } from '../../actions/common/toast';
+import { deletePost } from '../../actions/forum/thread';
+import { connect } from 'react-redux';
+import { toJS } from '../../util';
 
 
-const ThreadPost = ({ post, onClickReply }) => {
-    const { authorId, authorName, authorNickname, floor, anonymous, tCreate, content } = post;
+class ThreadPost extends React.Component {
+    static propTypes = {
+        post: PropTypes.shape({
+            authorId: PropTypes.number.isRequired,
+            authorNickname: PropTypes.string.isRequired,
+            floor: PropTypes.number.isRequired,
+            anonymous: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired,
+            tCreate: PropTypes.number.isRequired,
+            tModify: PropTypes.number.isRequired,
+            authorName: PropTypes.string.isRequired,
+            like: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired,
+            content: PropTypes.string.isRequired,
+            id: PropTypes.number.isRequired
+        }).isRequired,
+        onClickReply: PropTypes.func.isRequired,
+        deletePost: PropTypes.func.isRequired,
+        isFetching: PropTypes.bool,
+        success: PropTypes.string,
+        error: PropTypes.string,
+        selfUid: PropTypes.number,
+        showToast: PropTypes.func.isRequired
+    }
 
-    const processContent = (content) => {
+    constructor () {
+        super();
+
+        this.handleClickReply = this.handleClickReply.bind(this);
+        this._renderUserName = this._renderUserName.bind(this);
+        this.handleDeletePost = this.handleDeletePost.bind(this);
+    }
+
+    componentWillReceiveProps (nextProps) {
+        const { isFetching, error, showToast, onDeleteSuccess } = nextProps;
+        if (!isFetching && isFetching !== this.props.isFetching) {
+            if (error) {
+                showToast(error);
+            } else {
+                // success
+                onDeleteSuccess();
+            }
+        }
+    }
+
+    _processContent (content) {
         let processedContent = content.replace(/^(?:>[ ]*){2}.*/gm, '');
         processedContent = processedContent.replace(/^(?:>[ ]*)+[ ]*(\n|$)/gm, '');
         processedContent = processedContent.substr(0, 180).trim();
         return processedContent;
     };
 
-    const handleClickReply = () => {
+    _renderUserName () {
+        const { post: { anonymous, authorId, authorName, authorNickname } } = this.props;
+        if (anonymous) {
+            if (!authorId) {
+                // others, render anonymous user name
+                return <span>匿名用户</span>;
+            }
+            // anonymous but authorId exists, me
+            return <span>匿名用户（您）</span>;
+        } 
+        return (
+            <span className="text-muted">
+                <Link to={`/user/${authorId}`}>{authorName}</Link>
+                <span className="author-nickname">（{authorNickname}）</span>
+            </span>
+        );
+    }
+
+    handleClickReply () {
         // process content fit length and add blockquote
-        const processedContent = processContent(content);
+        const { post: { content, floor, authorName } } = this.props;
+        const processedContent = this._processContent(content);
         const replyContent = `回复 #${floor} ${authorName}：\n\n${processedContent}`.replace(/^/gm, '> ').trim();
-        onClickReply(replyContent);
+        this.onClickReply(replyContent);
         // scroll to the bottom of the page
         window.scrollTo(0, document.body.scrollHeight);
-    };
+    }
 
-    return (
-        <div className="thread-head">
-            <Media className="thread-meta">
-                <Media.Left>
-                    <Avatar
-                        className="author-avatar post"
-                        id={authorId}
-                        name={authorName}
-                        anonymous={anonymous} />
-                </Media.Left>
-                <Media.Body>
-                    <p className="post-meta">
-                        {
-                            anonymous
-                                ? <span>匿名用户</span>
-                                : <span className="text-muted">
-                                    <Link to={`/user/${authorId}`}>{authorName}</Link>
-                                    （{authorNickname}）
-                                </span>
-                        }
-                        <span className="floor text-muted pull-right">#{floor}</span>
-                        <Time className="text-muted pull-right" timestamp={tCreate} />
-                    </p>
-                    <ThreadRenderer content={content} />
-                </Media.Body>
-                <footer>
-                    <Button
-                        bsStyle="link"
-                        className="flat"
-                        onClick={handleClickReply}
-                    >
+    handleDeletePost () {
+        const { post: { id: pid }, deletePost } = this.props;
+        deletePost && deletePost(pid);
+    }
+    
+    render () {
+        const { post: { id: pid, authorId, authorName, 
+            floor, anonymous, tCreate, content, liked, like 
+        },
+        selfUid
+        } = this.props;
+    
+        return (
+            <div className="thread-head">
+                <Media className="thread-meta">
+                    <Media.Left>
+                        <Avatar
+                            className="author-avatar post"
+                            id={authorId}
+                            name={authorName}
+                            anonymous={anonymous} 
+                        />
+                    </Media.Left>
+                    <Media.Body>
+                        <p className="post-meta">
+                            {this._renderUserName()}
+                            <span className="floor text-muted pull-right">#{floor}</span>
+                            <Time className="text-muted pull-right" timestamp={tCreate} />
+                        </p>
+                        <ThreadRenderer content={content} />
+                    </Media.Body>
+                    <footer>
+                        <Button
+                            bsStyle="link"
+                            className="flat"
+                            onClick={this.handleClickReply}
+                        >
                         回复
-                    </Button>
-                    <Button bsStyle="link" className="flat">编辑</Button>
-                    <Button bsStyle="link" className="flat">删除</Button>
-                </footer>
-            </Media>
-        </div>
-    );
-};
+                        </Button>
+                        <SwitchButton
+                            switchType="likePost"
+                            id={pid}
+                            initialState={liked}
+                        >
+                            {(active, onClickButton) => {
+                                return <Button bsStyle="link" className="flat" onClick={onClickButton}>
+                                    {active ? '已赞' : '点赞'}
+                                    {like ? `（${like}）` : null}
+                                </Button>;
+                            }}
+                        </SwitchButton>
+                        {authorId === selfUid
+                            ? (
+                                <Button 
+                                    bsStyle="link" 
+                                    className="flat" 
+                                    onClick={this.handleDeletePost}
+                                >
+                                删除
+                                </Button>
+                            )
+                            : null
+                        }
+                    </footer>
+                </Media>
+            </div>
+        );
+    }
+}
 
-ThreadPost.propTypes = {
-    post: PropTypes.shape({
-        authorId: PropTypes.number.isRequired,
-        authorNickname: PropTypes.string.isRequired,
-        floor: PropTypes.number.isRequired,
-        anonymous: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired,
-        tCreate: PropTypes.number.isRequired,
-        tModify: PropTypes.number.isRequired,
-        authorName: PropTypes.string.isRequired,
-        like: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired,
-        content: PropTypes.string.isRequired,
-        id: PropTypes.number.isRequired
-    }).isRequired,
-    onClickReply: PropTypes.func.isRequired
+const mapStateToProps = state => {
+    const deletePostState = state.getIn(['bypassing', 'deletePost']);
+    const selfUid = state.getIn(['user', 'uid']);
+    if (!deletePostState) return {};
+
+    return {
+        selfUid: selfUid,
+        isFetching: deletePostState.get('isFetching'),
+        success: deletePostState.get('items'),
+        error: deletePostState.get('error')
+    };
 };
+const mapDispatchToProps = dispatch => ({
+    deletePost: pid => dispatch(deletePost(pid)),
+    showToast: message => dispatch(showToast(message))
+});
+ThreadPost = connect(mapStateToProps, mapDispatchToProps)(toJS(ThreadPost));
+
 export default ThreadPost;

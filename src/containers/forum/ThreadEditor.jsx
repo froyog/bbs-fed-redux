@@ -6,6 +6,7 @@ import { Card } from '../../components/common/Card';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import ThreadRenderer from '../../components/forum/ThreadRenderer';
+import AnonymousSwitch from '../../components/forum/AnonymousSwitch';
 import draftToMarkdown from 'draftjs-to-markdown';
 import Attach from './editor/Attach';
 import { getDecorator } from './editor/mention.js';
@@ -32,19 +33,25 @@ const customToolbar = {
 class ThreadEditor extends React.Component {
     static propTypes = {
         replyContent: PropTypes.string.isRequired,
-        onCancelReply: PropTypes.func.isRequired
+        onCancelReply: PropTypes.func.isRequired,
+        isFetching: PropTypes.bool,
+        error: PropTypes.string,
+        pid: PropTypes.number,
+        allowAnonymous: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired
     };
 
     constructor () {
         super();
         this.state = {
             editorState: EditorState.createEmpty(),
+            anonymous: false
         };
 
         this.handleEditorStateChange = this.handleEditorStateChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCancelReply = this.handleCancelReply.bind(this);
         this.getEditorState = this.getEditorState.bind(this);
+        this.handleToggleAnonymous = this.handleToggleAnonymous.bind(this);
     }
 
     componentWillReceiveProps (nextProps) {
@@ -63,18 +70,24 @@ class ThreadEditor extends React.Component {
 
     handleSubmit (e) {
         e.preventDefault();
-        const { editorState } = this.state;
+        const { editorState, anonymous } = this.state;
         const { tid, fetchNewComment, replyContent } = this.props;
         let content = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
         if (replyContent.trim()) {
             content = `${content}\n\n${replyContent}`;
         }
-        fetchNewComment(tid, content);
+        fetchNewComment(tid, content, anonymous);
     }
 
     handleCancelReply () {
         const { onCancelReply } = this.props;
         if (onCancelReply) onCancelReply();
+    }
+
+    handleToggleAnonymous (anonymousState) {
+        this.setState({
+            anonymous: anonymousState
+        });
     }
 
     getEditorState () {
@@ -83,7 +96,7 @@ class ThreadEditor extends React.Component {
 
     render () {
         const { editorState } = this.state;
-        const { replyContent, error, isFetching } = this.props;
+        const { replyContent, error, isFetching, allowAnonymous } = this.props;
 
         return (
             <Card className="card-thread-editor">
@@ -118,6 +131,14 @@ class ThreadEditor extends React.Component {
                 >
                     发表回复
                 </Button>
+                {
+                    allowAnonymous
+                        ? <AnonymousSwitch
+                            className="pull-right"
+                            onToggle={this.handleToggleAnonymous} 
+                        /> 
+                        : null
+                }
                 <span className="error-message">{error}</span>
             </Card>
         );
@@ -135,7 +156,7 @@ const mapStateToProps = state => {
     };
 };
 const mapDispatchToProps = dispatch => ({
-    fetchNewComment: (tid, content) => dispatch(fetchNewComment(tid, content))
+    fetchNewComment: (tid, content, anonymous) => dispatch(fetchNewComment(tid, content, anonymous))
 });
 ThreadEditor = connect(mapStateToProps, mapDispatchToProps)(toJS(ThreadEditor));
 export default ThreadEditor;

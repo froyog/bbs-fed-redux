@@ -1,4 +1,4 @@
-// callApi middleware. Dont't expect you to understand this
+// callApi middleware.
 // refer to https://github.com/reactjs/redux/tree/master/examples/real-world for more comments
 
 import { camelizeKeys } from 'humps';
@@ -80,7 +80,7 @@ export default store => next => action => {
             type: successType
         })),
         error => next(actionWith({
-            error: error.data || 'Something bad happens',
+            error: error.data || '网络连接错误',
             type: failureType
         }))
     );

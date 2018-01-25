@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from '../common/Card';
-import { Button, ProgressBar } from 'react-bootstrap';
+import { ProgressBar } from 'react-bootstrap';
 import medalVector from '../../assests/medal.jpg';
 import Chip from '../common/Chip';
 import Avatar from '../common/Avatar';
@@ -19,7 +19,6 @@ export class Title extends React.PureComponent {
     constructor () {
         super();
         this.state = {
-            isShowDetails: true,
             pointsOfCurrentTitle: 0,
             pointsOfNextTitle: 0,
             currentTitle: '',
@@ -27,45 +26,36 @@ export class Title extends React.PureComponent {
             atMaxLevel: false
         };
 
-        this.handleClickShowMore = this.handleClickShowMore.bind(this);
     }
 
-    componentWillReceiveProps (nextProps) {
-        if (typeof nextProps.points !== 'undefined') {
-            const { cPost, cThread, points } = nextProps;
-            const TITLE_ARRAY = ['新手上路', '一般站友', '中级站友', '高级站友', '老站友', '长老级', '本站元老', '开国大佬'],
-                POINTS_ARRAY = [0, 100, 500, 1000, 2000, 4000, 8000, 10000];
-            
-            let eachTitleIndex = 0, currentTitleIndex, nextTitleIndex;
-            for (eachTitleIndex; eachTitleIndex < POINTS_ARRAY.length; eachTitleIndex++) {
-                if (POINTS_ARRAY[eachTitleIndex] < points) {
-                    currentTitleIndex = eachTitleIndex;
-                } else {
-                    nextTitleIndex = eachTitleIndex;
-                    break;
-                }
+    _mapPointsToTitle () {
+        const { points } = this.props;
+        const TITLE_ARRAY = ['新手上路', '一般站友', '中级站友', '高级站友', '老站友', '长老级', '本站元老', '开国大佬'],
+            POINTS_ARRAY = [0, 100, 500, 1000, 2000, 4000, 8000, 10000];
+        
+        let eachTitleIndex = 0, currentTitleIndex, nextTitleIndex;
+        for (eachTitleIndex; eachTitleIndex < POINTS_ARRAY.length; eachTitleIndex++) {
+            if (POINTS_ARRAY[eachTitleIndex] < points) {
+                currentTitleIndex = eachTitleIndex;
+            } else {
+                nextTitleIndex = eachTitleIndex;
+                break;
             }
-    
-            this.setState({
-                pointsOfCurrentTitle: POINTS_ARRAY[currentTitleIndex],
-                pointsOfNextTitle: POINTS_ARRAY[nextTitleIndex] || 10000,
-                currentTitle: TITLE_ARRAY[currentTitleIndex],
-                nextTitle: TITLE_ARRAY[nextTitleIndex],
-                atMaxLevel: points > POINTS_ARRAY[-1] ? true : false
-            });
         }
-    }
 
-    handleClickShowMore () {
-        this.setState({
-            isShowDetails: true
-        });
+        return {
+            pointsOfCurrentTitle: POINTS_ARRAY[currentTitleIndex],
+            pointsOfNextTitle: POINTS_ARRAY[nextTitleIndex] || 10000,
+            currentTitle: TITLE_ARRAY[currentTitleIndex],
+            nextTitle: TITLE_ARRAY[nextTitleIndex],
+            atMaxLevel: !!(points > POINTS_ARRAY[POINTS_ARRAY.length - 1])
+        };
     }
 
     render () {
-        const { isShowDetails, pointsOfCurrentTitle, pointsOfNextTitle, 
-            currentTitle, nextTitle, atMaxLevel } = this.state;
         const { cPost, cThread, points } = this.props;
+        const { pointsOfCurrentTitle, pointsOfNextTitle, 
+            currentTitle, nextTitle, atMaxLevel } = this._mapPointsToTitle();
 
         return (
             <Card title="当前称号" className="card-small">
@@ -75,15 +65,16 @@ export class Title extends React.PureComponent {
                         atMaxLevel
                             ? <p className="helper text-muted">已达到最高等级</p>
                             : <div>
-                                <p className="helper text-muted">距离下一称号还有<strong>{pointsOfNextTitle - points}</strong>积分</p>
-                                <p className="helper text-muted">相当于水贴<strong>{Math.floor((pointsOfNextTitle-points)/2)}</strong>条</p>
+                                <p className="helper text-muted">
+                                    距离下一称号还有<strong>{pointsOfNextTitle - points}</strong>积分
+                                </p>
+                                <p className="helper text-muted">
+                                    相当于水贴<strong>{Math.floor((pointsOfNextTitle-points)/2)}</strong>条
+                                </p>
                             </div>
                     }
                 </div>
-                <div
-                    className="title-details"
-                    style={{ maxHeight: `${isShowDetails ? '200px' : '0'}` }}
-                >
+                <div className="title-details">
                     <div>
                         {
                             atMaxLevel

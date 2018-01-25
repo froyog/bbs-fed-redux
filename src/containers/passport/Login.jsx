@@ -1,59 +1,59 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import { InputField } from '../../components/common/Input';
-import { Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { toJS } from '../../util';
+import { login } from '../../actions/passport/log-io';
+import Login from '../../components/passport/Login';
 
 
-class Login extends React.Component {
-    constructor () {
-        super();
-        this.state = {
-            username: '',
-            password: ''
-        };
-
-        this.handleInputChange = this.handleInputChange.bind(this);
+class LoginWrapper extends React.Component {
+    static propTypes = {
+        login: PropTypes.func.isRequired,
+        isFetching: PropTypes.bool.isRequired,
+        error: PropTypes.string.isRequired
     }
 
-    handleInputChange ({ target }) {
-        this.setState({
-            [target.id]: target.value
-        });
+    constructor () {
+        super();
+
+        this.handleLogin = this.handleLogin.bind(this);
+    }
+
+    handleLogin (username, password) {
+        const { login } = this.props;
+        login && login(username, password);
+    }
+
+    componentWillReceiveProps (nextProps) {
+        const { isFetching, success, history } = nextProps;
+        if (success && isFetching !== this.props.isFetching) {
+            history.push('/', { from: 'login' });
+        }
     }
 
     render () {
-        console.log('relogin');
-        const { username, password } = this.state;
+        const { isFetching, error } = this.props;
         return (
-            <div className="login">
-                <h2>Welcome to TJUBBS!</h2>
-                <InputField
-                    text="用户名"
-                    id="username"
-                    onChange={this.handleInputChange}
-                    fullWidth
-                    value={username} />
-                <InputField
-                    text="密码"
-                    id="password"
-                    type="password"
-                    onChange={this.handleInputChange}
-                    fullWidth
-                    value={password} />
-                <Button
-                    className="raised"
-                    block
-                    type="submit"
-                    bsStyle="primary"
-                >
-                    登录
-                </Button>
-            </div>
+            <Login 
+                onLogin={this.handleLogin}
+                isFetching={isFetching}
+                error={error}
+            />
         );
     }
 }
 
-Login.propTypes = {
-
+const mapStateToProps = state => {
+    const loginState = state.get('login');
+    return {
+        isFetching: loginState.get('isFetching'),
+        success: loginState.get('success'),
+        error: loginState.get('error')
+    };
 };
-export default Login;
+const mapDispatchToProps = dispatch => ({
+    login: (username, password) => dispatch(login(username, password))
+});
+LoginWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(LoginWrapper));
+
+export default LoginWrapper;

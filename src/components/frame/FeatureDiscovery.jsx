@@ -52,7 +52,18 @@ class FeatureDiscovery extends React.Component {
                     <i className="iconfont icon-close"></i>
                 </button>
                 <div className="content">
-                    <h1>What's new ?</h1>
+                    <h1>更新说明</h1>
+                    <section className="version">
+                        <h3>2.0.0</h3>
+                        <ul>
+                            <li>大量UI重新设计</li>
+                            <li>编辑器现已支持 @ 功能</li>
+                            <li>对一些资源进行缓存，更省流量</li>
+                            <li>支持离线浏览</li>
+                            <li>添加其他若干功能</li>
+                        </ul>
+                    </section>
+                    {/* <h1>What's new ?</h1>
                     <section className="version">
                         <h3>alpha 0.5.0</h3>
                         <ul>
@@ -89,7 +100,8 @@ class FeatureDiscovery extends React.Component {
                         >
                             the repo page
                         </a> 
-                        &nbsp;for details</footer>
+                        &nbsp;for details
+                    </footer> */}
                 </div>
             </div>
         );

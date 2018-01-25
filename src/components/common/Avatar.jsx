@@ -25,12 +25,26 @@ class ImageFeed extends React.Component {
     constructor (props) {
         super(props);
         const { type, id } = props;
+        let src;
+        if (props.anonymous) {
+            src = anonymousAvatar;
+        } else {
+            src = `https://bbs.tju.edu.cn/api/${type}/${id}/avatar`; 
+        }
         this.state = {
-            src: `https://bbs.tju.edu.cn/api/${type}/${id}/avatar`,
+            src: src,
             generateAvatar: false
         };
 
         this.handleError = this.handleError.bind(this);
+    }
+
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.id !== this.props.id) {
+            this.setState({
+                src: `https://bbs.tju.edu.cn/api/${nextProps.type}/${nextProps.id}/avatar`
+            });
+        }
     }
 
     handleError () {
@@ -38,8 +52,6 @@ class ImageFeed extends React.Component {
         if (type === 'user') {
             if (!name) {
                 this.setState({ src: defaultAvatar });
-            } else if (anonymous) {
-                this.setState({ src: anonymousAvatar });
             } else {
                 this.setState({ generateAvatar: true });
             }
@@ -48,7 +60,7 @@ class ImageFeed extends React.Component {
 
     render () {
         const { src, generateAvatar } = this.state;
-        const { name, id, anonymous, type, imageShape, ...restProps } = this.props;
+        const { name, id, imageShape, anonymous, ...restProps } = this.props;
 
         if (generateAvatar) {
             const randomColor = COLOR_ARRAY[Math.floor(name.charCodeAt(0) % COLOR_ARRAY.length)];

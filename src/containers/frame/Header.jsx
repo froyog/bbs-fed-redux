@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import asyncComponent from '../../asyncComponent';
 import { Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toggleSidebar } from '../../actions/frame/sidebar';
-import BoardEditor from '../forum/BoardEditor';
+import { showToast } from '../../actions/common/toast';
 import Header from '../../components/frame/Header';
 import { toJS } from '../../util';
 import FeatureDiscovery from '../../components/frame/FeatureDiscovery';
+// import BoardEditor from '../forum/BoardEditor';
+const AsyncBoardEditor = asyncComponent(() => import('../forum/BoardEditor'));
 
 
 class HeaderWrapper extends React.PureComponent {
@@ -17,7 +20,7 @@ class HeaderWrapper extends React.PureComponent {
             postingModalOpen: false,
             headerContent: '',
             tapIsShow: false,
-            updateDate: Date.parse('2017-12-8')
+            updateDate: Date.parse('2018-1-24')
         };
 
         this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -37,18 +40,20 @@ class HeaderWrapper extends React.PureComponent {
 
     componentWillReceiveProps (nextProps) {
         const { path, threadTitle } = nextProps;
-        let headerContent;
-        if (path.indexOf('/forum/thread') !== -1) {
-            headerContent = threadTitle;
-        } else {
-            headerContent = '';
+        if (threadTitle) {
+            let headerContent;
+            if (path.indexOf('/forum/thread') !== -1) {
+                headerContent = threadTitle;
+            } else {
+                headerContent = '';
+            }
+            clearTimeout(this.timer);
+            this.timer = setTimeout(() => {
+                this.setState({
+                    headerContent: headerContent
+                });
+            }, 500);
         }
-        clearTimeout(this.timer);
-        this.timer = setTimeout(() => {
-            this.setState({
-                headerContent: headerContent
-            });
-        }, 500);
     }
 
     componentWillUnmount () {
@@ -56,6 +61,11 @@ class HeaderWrapper extends React.PureComponent {
     }
 
     handleOpenModal () {
+        const { isLogin, showToast } = this.props;
+        if (!isLogin) {
+            showToast('您未登录');
+            return;
+        }
         this.setState({ postingModalOpen: true });
     }
 
@@ -96,7 +106,7 @@ class HeaderWrapper extends React.PureComponent {
                     backdrop="static"
                     className="posting-modal"
                 >
-                    <BoardEditor onCloseModal={this.handleCloseModal} />
+                    <AsyncBoardEditor onCloseModal={this.handleCloseModal} />
                 </Modal>
             </header>
         );
@@ -117,15 +127,15 @@ const mapStateToProps = state => {
     }
 
     return {
+        isLogin: !!(state.getIn(['user', 'uid'])),
         isOpen: state.get('sidebarIsOpen'),
         threadTitle: threadTitle
     };
 };
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus))
-    };
-};
+const mapDispatchToProps = dispatch => ({
+    showToast: message => dispatch(showToast(message)),
+    onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus))
+});
 HeaderWrapper = withRouter(connect(mapStateToProps, mapDispatchToProps)(toJS(HeaderWrapper)));
 
 export default HeaderWrapper;

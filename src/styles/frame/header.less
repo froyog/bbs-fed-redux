@@ -20,6 +20,10 @@
             padding-top: 12px;
             font-size: 22px;
         }
+
+        @media @phones {
+            display: none;
+        }
     }
     
     .logo {
@@ -37,8 +41,13 @@
     }
 
     .quick-thread {
-        float: right;
-        margin-right: 40px;
+        position: absolute;
+        top: 13px;
+        right: 40px;
+
+        @media @phones {
+            right: 15px;
+        }
     }
     
     .menu-button-wrapper {

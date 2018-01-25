@@ -2,9 +2,31 @@
 
 body { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Pingfang-SC,"Microsoft Yahei",SimHei,Arial,sans-serif !important; }
 input[type="file"] { display: none; }
-button.raised {
+button.raised, a.raised {
     padding: 3px 20px;
     box-shadow: @shadow-material-raise;
+}
+
+button.float {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 50%;
+    text-decoration: none !important;
+    outline: none !important;
+    transition: all .3s;
+    background-color: #eee;
+    box-shadow: @shadow-material-float;
+
+    i { 
+        width: 100%; 
+        line-height: 100%;
+    }
+
+    &:hover {
+        color: inherit;
+        background-color: #ddd;
+    }
 }
 
 button.flat {
@@ -24,64 +46,16 @@ button.flat {
     }
 }
 
-.tabs {
-    width: 100%;
-    height: 42px;
-    padding-left: 0;
-    padding-bottom: 1px;
-    margin: 0 auto;
-    list-style-type: none;
-    background-color: #fff;
-    white-space: nowrap;
-    border-bottom: 1px solid #ddd;
-    box-sizing: content-box;
-    text-align: center;
-
-    .tab {
-        display: inline-block;
-        text-align: center;
-        line-height: 42px;
-        height: 42px;
-        padding: 0;
-        margin: 0;
-        box-sizing: content-box;
-        transition: border .2s ease;
-        &:hover, &.active {
-            border-bottom: 2px solid #e77574;
-            a { color: #e77574 }
-        }
-
-        a {
-            // color: rgba(231, 117, 116, 0.6);
-            color: #333;
-            display: block;
-            width: 100%;
-            height: 100%;
-            padding: 0 48px;
-            font-size: 14px;
-            overflow: hidden;
-            text-decoration: none;
-            transition: color .28s ease;
-            cursor: pointer;
-            &:hover {
-                color: #e77574;
-            }
-        }
-    }
-}
-
 blockquote {
     font-size: 14px;
 }
 
 .error-message {
     color: @red-danger;
-    margin-left: 8px;
 }
 
 button.load-more {
     padding: 12px 0 0 0;
-    margin-top: 20px;
     font-size: 16px;
     color: inherit;
     outline: none !important;
@@ -89,5 +63,40 @@ button.load-more {
     &:hover, &:focus {
         color: #2565ac;
         text-decoration: none;
+    }
+}
+
+@media @phones {
+    .modal-dialog {
+        margin: 0;
+        .modal-content {
+            border: 0;
+            box-shadow: none;
+            border-radius: 0;
+        }
+    }
+}
+
+ul.tabs {
+    padding: 0;
+}
+
+li.tab {
+    list-style-type: none;
+    display: inline-block;
+    padding-right: 10px;
+    cursor: pointer;
+    
+    a {
+        display: inline-block;
+        line-height: 1.5;
+        font-size: 18px;
+        color: #333;
+        &:hover, &:focus, &.active {
+            text-decoration: none;
+            font-size: 24px;
+            color: @material-red;
+        }
+        transition: all .3s;
     }
 }

@@ -1,4 +1,4 @@
-import { Map, fromJS } from 'immutable';
+import { Map, List, fromJS } from 'immutable';
 import * as ActionTypes from '../../actions/profile/messages';
 
 
@@ -31,7 +31,9 @@ const messages = (state = fromJS({
                 'error': action.error,
             });
         case ActionTypes.INVAILDATE_MESSAGES:
-            return state.set('didInvaildate', true);
+            return state
+                .set('didInvaildate', true)
+                .set('messages', List());
         default:
             return state;
     }

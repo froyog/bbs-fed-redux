@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { getMessages, refreshMessages, clearUnreadTag } from '../../actions/profile/messages';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
-import { FetchingOverlay } from '../../components/common/Loading';
+import { LoadingDots, LoadingLines } from '../../components/common/Loading';
 import MessageBase from './MessageBase';
 import { Button } from 'react-bootstrap';
-import { LoadingDots } from '../../components/common/Loading';
 
 
 class Messages extends React.Component {
@@ -22,17 +21,7 @@ class Messages extends React.Component {
             id: PropTypes.number,
             read: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
             tCreate: PropTypes.number,
-            tag: PropTypes.number,
-            content: PropTypes.shape({
-                content: PropTypes.string,
-                floor: PropTypes.number,
-                status: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-                threadId: PropTypes.number,
-                threadTitle: PropTypes.string,
-                tCreate: PropTypes.number,
-                tModify: PropTypes.number,
-                id: PropTypes.number
-            })
+            tag: PropTypes.number
         }))
     }
 
@@ -50,7 +39,8 @@ class Messages extends React.Component {
     }
 
     componentWillUnmount () {
-        this.props.clearUnreadTag();
+        const { clearUnreadTag } = this.props;
+        clearUnreadTag && clearUnreadTag();
     }
 
     handleLoadMore () {
@@ -64,10 +54,11 @@ class Messages extends React.Component {
     render () {
         const { isFetching, messages, error } = this.props;
 
+        if (isFetching && !messages.length) return <LoadingLines />;
         if (!messages.length) return <p>您似乎来到了消息的荒原...</p>;
+
         return (
             <div>
-                { isFetching && <FetchingOverlay /> }
                 { messages.map(message => {
                     return <MessageBase key={message.id} message={message} />;
                 }) }

@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 import Profile from './Profile';
 import { toJS } from '../../util';
 import RecentUpdate from '../../components/profile/RecentUpdate';
 import { Medal, Title, Friends } from '../../components/profile/Widgets';
 import Properties from './Properties';
+import { ErrorOverlay } from '../../components/common/ErrorModal';
 
 
 class UserBase extends React.Component {
@@ -25,9 +27,22 @@ class UserBase extends React.Component {
     }
 
     render () {
-        const { match: { params: { uid } }, recentUpdates, points, cThread, cPost } = this.props;
+        const { isLogin, match: { params: { uid } }, recentUpdates, 
+            points, cThread, cPost, error } = this.props;
         const renderRecentUpdates = recentUpdates && <RecentUpdate recentThreads={recentUpdates} />;
-        
+        if (uid === 'me' && !isLogin) {
+            return <ErrorOverlay 
+                reason="您未登录或登录信息已过期"
+                action={<p>您可以尝试<Link to='/passport/login'>登录</Link></p>}
+            />;
+        }
+        if (error) {
+            return <ErrorOverlay 
+                reason={error}
+                needRefresh
+            />;
+        }
+
         return (
             <div>
                 <Profile uid={uid} />
@@ -62,6 +77,8 @@ const mapStateToProps = (state, ownProps) => {
     const selfUid = state.getIn(['user', 'uid']);
     if (uid === 'me') {
         // get self uid from state
+        
+        if (!selfUid) return { isLogin: false };
         uid = selfUid;
     }
 
@@ -69,11 +86,13 @@ const mapStateToProps = (state, ownProps) => {
     if (!profileState) return {};
 
     return {
+        isLogin: true,
         selfUid: selfUid,
         recentUpdates: profileState.getIn(['profile', 'recent']),
         points: profileState.getIn(['profile', 'points']),
         cThread: profileState.getIn(['profile', 'cThread']),
-        cPost: profileState.getIn(['profile', 'cPost'])
+        cPost: profileState.getIn(['profile', 'cPost']),
+        error: profileState.get('error')
     };
 };
 UserBase = connect(mapStateToProps)(toJS(UserBase));

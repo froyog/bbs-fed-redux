@@ -39,7 +39,7 @@ const Sharing = ({ sites, url, title, source, description, className }) => {
     });
 
     return (
-        <div className={`share-button ${className}`}>
+        <div className={`share-button${className ? ` ${className}` : ''}`}>
             {sharingButtons}
         </div>
     );
