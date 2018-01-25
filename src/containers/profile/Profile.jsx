@@ -225,9 +225,7 @@ class Profile extends React.Component {
                                 <Label bsStyle="primary">
                                     {points} <span className="points-content">积分</span>
                                 </Label>
-                                <div className="profile-ops-wrapper">
-                                    {renderOperators}
-                                </div>
+                                {renderOperators}
                             </div>
                         </div>
                     }

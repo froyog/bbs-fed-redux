@@ -46,6 +46,25 @@
             padding-right: 0;
         }
     }
+
+    @media @phones {
+        .media-left {
+            padding-right: 10px;
+        }
+        .thread-title {
+            padding-top: 0;
+        }
+        .author-nickname { display: none; }
+        .author-avatar.post {
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            font-size: 14px;
+        }
+        .floor {
+            margin-left: 8px;
+        }
+    }
 }
 
 .thread-renderer {

@@ -75,7 +75,7 @@ class ThreadPost extends React.Component {
         return (
             <span className="text-muted">
                 <Link to={`/user/${authorId}`}>{authorName}</Link>
-                （{authorNickname}）
+                <span className="author-nickname">（{authorNickname}）</span>
             </span>
         );
     }
