@@ -24,6 +24,7 @@
     "draft-js": "^0.10.3",
     "draftjs-to-markdown": "^0.4.5",
     "draftjs-utils": "^0.8.8",
+    "es6-shim": "^0.35.3",
     "humps": "^2.0.1",
     "immutable": "^3.8.2",
     "less": "^3.0.0-alpha.3",
