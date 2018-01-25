@@ -117,9 +117,9 @@ class ThreadWrapper extends React.PureComponent {
 
     render () {
         const { threadInfo, postList, boardInfo, isFetching, error,
-                match: { params: { tid } } } = this.props;
+            match: { params: { tid } } } = this.props;
         const { replyContent } = this.state;
-        if (error) return <ErrorOverlay reason={error} needRefresh />
+        if (error) return <ErrorOverlay reason={error} needRefresh />;
         if (!postList || isFetching) return <FetchingOverlay fullPage />;
 
         const { cPost, title } = threadInfo;

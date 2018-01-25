@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
-import { getFollowingsIfNeeded, getCollectionsIfNeeded,
-    deleteCollection, deleteFollowing } from '../../actions/profile/collections';
-import { LoadingDots, LoadingLines } from '../../components/common/Loading';
+import { getFollowingsIfNeeded, getCollectionsIfNeeded } from '../../actions/profile/collections';
+import { LoadingLines } from '../../components/common/Loading';
 import { Collections, Followings } from '../../components/profile/Collections';
 
 

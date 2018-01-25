@@ -6,7 +6,7 @@ import Time from './common/Time';
 import Avatar from './common/Avatar';
 
 
-export const Announce = ({ items, error }) => {
+export const Announce = ({ items }) => {
     return (
         <ul className="announcement-list">
             {items.map(announcement => {
@@ -19,6 +19,12 @@ export const Announce = ({ items, error }) => {
             })}
         </ul>
     );
+};
+Announce.propTpyes = {
+    items: PropTypes.arrayOf(PropTypes.shape({
+        title: PropTypes.string,
+        id: PropTypes.number
+    }))
 };
 
 export const CarouselAd = ({ adList }) => {

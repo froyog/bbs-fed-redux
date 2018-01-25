@@ -21,7 +21,7 @@ const shouldFetchBoard = (boardState, page, type, order) => {
     } else {
         return boardState.get('didInvalidate');
     }
-}
+};
 
 export const getBoard = (bid, page, type, order) => (dispatch, getState) => {
     const boardState = getState().getIn(['board', bid]);
@@ -44,7 +44,7 @@ export const getBoard = (bid, page, type, order) => (dispatch, getState) => {
             order: order
         });
     }
-}
+};
 
 export const refreshBoard = bid => dispatch => {
     return dispatch({ 

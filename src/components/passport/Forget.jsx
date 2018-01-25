@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import { InputField } from '../common/Input';
-import { LoadingDots } from '../../components/common/Loading';
+// import { LoadingDots } from '../../components/common/Loading';
 
 
 class ForgetAuth extends React.Component {

@@ -183,7 +183,7 @@ class BoardWrapper extends React.Component {
                                     onClick={onClickButton}
                                 >
                                     {active ? '已关注' :　'关注'}
-                                </Button>
+                                </Button>;
                             }}
 
                         </SwitchButton>

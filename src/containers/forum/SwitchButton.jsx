@@ -20,7 +20,7 @@ class SwitchButton extends React.Component {
         super(props);
         this.state = {
             active: props.initialState
-        }
+        };
 
         this.handleClickButton = this.handleClickButton.bind(this);
         this.callRelatedAction = this.callRelatedAction.bind(this);
@@ -44,7 +44,7 @@ class SwitchButton extends React.Component {
 
     callRelatedAction () {
         const nextState = !this.state.active,
-              id = this.props.id;
+            id = this.props.id;
 
         switch (this.props.switchType) {
             case 'follow':
@@ -94,6 +94,6 @@ const mapDispatchToProps = dispatch => ({
     onChangeLikeThreadState: (tid, nextLikeState) => dispatch(likeThread(tid, nextLikeState)),
     onChangeLikePostState: (pid, nextLikeState) => dispatch(likePost(pid, nextLikeState)),
     showToast: message => dispatch(showToast(message))
-})
-SwitchButton = connect(mapStateToProps, mapDispatchToProps)(SwitchButton);
+});
+SwitchButton = connect(mapStateToProps, mapDispatchToProps)(toJS(SwitchButton));
 export default SwitchButton;

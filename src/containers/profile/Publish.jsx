@@ -65,7 +65,7 @@ class Publish extends React.Component {
             deleteThread && deleteThread(id);
         } else if (type === 'post') {
             // pid
-            deletePost && deletePost(id)
+            deletePost && deletePost(id);
         }
     }
 

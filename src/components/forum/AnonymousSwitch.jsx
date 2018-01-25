@@ -15,7 +15,7 @@ class AnonymousSwitch extends React.Component {
         super(props);
         this.state = {
             active: props.initialState
-        }
+        };
 
         this.handleClickSwitch = this.handleClickSwitch.bind(this);
     }
@@ -43,7 +43,7 @@ class AnonymousSwitch extends React.Component {
                     {active ? '匿名发帖已打开' : '匿名发帖已关闭'}
                 </span>
             </div>
-        )
+        );
     }
 }
 

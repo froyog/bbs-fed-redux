@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Label, Button, Modal } from 'react-bootstrap';
+import { Label, Button } from 'react-bootstrap';
 import { getProfileIfNeeded } from '../../actions/profile/profile';
 import { sendPrivateMessage } from '../../actions/profile/messages';
 import { showToast } from '../../actions/common/toast';

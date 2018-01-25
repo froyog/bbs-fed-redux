@@ -115,6 +115,10 @@ class Appeal extends React.Component {
                         <p><Link to='/'>返回首页</Link></p>
                     </div>
                 }
+                {
+                    error &&
+                    <p className="text-center error-message">{error}</p>
+                }
             </form>
         );
     }

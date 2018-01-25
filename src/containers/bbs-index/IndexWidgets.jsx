@@ -29,6 +29,7 @@ class AnnounceWrapper extends React.Component {
 
     render () {
         const { isFetching, announcements, error } = this.props;
+        if (error) return null;
 
         return (
             <Card className="card-small card-home-widget" title="公告">
@@ -36,7 +37,6 @@ class AnnounceWrapper extends React.Component {
                     ? <LoadingDots />
                     : <Announce 
                         items={announcements}
-                        error={error}
                     />
                 }
             </Card>
@@ -152,7 +152,7 @@ class IndexRankWrapper extends React.Component {
 
     render () {
         const { isFetching, rankData, error } = this.props;
-        if (!rankData) return null;
+        if (!rankData || error) return null;
 
         return (
             <Card 

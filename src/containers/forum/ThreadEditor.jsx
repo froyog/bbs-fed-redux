@@ -95,7 +95,7 @@ class ThreadEditor extends React.Component {
     }
 
     render () {
-        const { editorState, anonymous } = this.state;
+        const { editorState } = this.state;
         const { replyContent, error, isFetching, allowAnonymous } = this.props;
 
         return (
@@ -133,11 +133,11 @@ class ThreadEditor extends React.Component {
                 </Button>
                 {
                     allowAnonymous
-                    ? <AnonymousSwitch
-                        className="pull-right"
-                        onToggle={this.handleToggleAnonymous} 
-                    /> 
-                    : null
+                        ? <AnonymousSwitch
+                            className="pull-right"
+                            onToggle={this.handleToggleAnonymous} 
+                        /> 
+                        : null
                 }
                 <span className="error-message">{error}</span>
             </Card>

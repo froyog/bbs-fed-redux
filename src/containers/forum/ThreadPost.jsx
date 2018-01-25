@@ -70,7 +70,7 @@ class ThreadPost extends React.Component {
                 return <span>匿名用户</span>;
             }
             // anonymous but authorId exists, me
-            return <span>匿名用户（您）</span>
+            return <span>匿名用户（您）</span>;
         } 
         return (
             <span className="text-muted">
@@ -82,6 +82,7 @@ class ThreadPost extends React.Component {
 
     handleClickReply () {
         // process content fit length and add blockquote
+        const { post: { content, floor, authorName } } = this.props;
         const processedContent = this._processContent(content);
         const replyContent = `回复 #${floor} ${authorName}：\n\n${processedContent}`.replace(/^/gm, '> ').trim();
         this.onClickReply(replyContent);
@@ -95,67 +96,67 @@ class ThreadPost extends React.Component {
     }
     
     render () {
-        const { post: { id: pid, authorId, authorName, authorNickname, 
-                floor, anonymous, tCreate, content, liked, like 
-                },
-                selfUid
+        const { post: { id: pid, authorId, authorName, 
+            floor, anonymous, tCreate, content, liked, like 
+        },
+        selfUid
         } = this.props;
     
         return (
             <div className="thread-head">
-            <Media className="thread-meta">
-                <Media.Left>
-                    <Avatar
-                        className="author-avatar post"
-                        id={authorId}
-                        name={authorName}
-                        anonymous={anonymous} 
-                    />
-                </Media.Left>
-                <Media.Body>
-                    <p className="post-meta">
-                        {this._renderUserName()}
-                        <span className="floor text-muted pull-right">#{floor}</span>
-                        <Time className="text-muted pull-right" timestamp={tCreate} />
-                    </p>
-                    <ThreadRenderer content={content} />
-                </Media.Body>
-                <footer>
-                    <Button
-                        bsStyle="link"
-                        className="flat"
-                        onClick={this.handleClickReply}
-                    >
+                <Media className="thread-meta">
+                    <Media.Left>
+                        <Avatar
+                            className="author-avatar post"
+                            id={authorId}
+                            name={authorName}
+                            anonymous={anonymous} 
+                        />
+                    </Media.Left>
+                    <Media.Body>
+                        <p className="post-meta">
+                            {this._renderUserName()}
+                            <span className="floor text-muted pull-right">#{floor}</span>
+                            <Time className="text-muted pull-right" timestamp={tCreate} />
+                        </p>
+                        <ThreadRenderer content={content} />
+                    </Media.Body>
+                    <footer>
+                        <Button
+                            bsStyle="link"
+                            className="flat"
+                            onClick={this.handleClickReply}
+                        >
                         回复
-                    </Button>
-                    <SwitchButton
-                        switchType="likePost"
-                        id={pid}
-                        initialState={liked}
-                    >
-                        {(active, onClickButton) => {
-                            return <Button bsStyle="link" className="flat" onClick={onClickButton}>
-                                {active ? '已赞' : '点赞'}
-                                {like ? `（${like}）` : null}
-                            </Button>
-                        }}
-                    </SwitchButton>
-                    {authorId === selfUid
-                        ? (
-                            <Button 
-                                bsStyle="link" 
-                                className="flat" 
-                                onClick={this.handleDeletePost}
-                            >
+                        </Button>
+                        <SwitchButton
+                            switchType="likePost"
+                            id={pid}
+                            initialState={liked}
+                        >
+                            {(active, onClickButton) => {
+                                return <Button bsStyle="link" className="flat" onClick={onClickButton}>
+                                    {active ? '已赞' : '点赞'}
+                                    {like ? `（${like}）` : null}
+                                </Button>;
+                            }}
+                        </SwitchButton>
+                        {authorId === selfUid
+                            ? (
+                                <Button 
+                                    bsStyle="link" 
+                                    className="flat" 
+                                    onClick={this.handleDeletePost}
+                                >
                                 删除
-                            </Button>
-                        )
-                        : null
-                    }
-                </footer>
-            </Media>
-        </div>
-        )
+                                </Button>
+                            )
+                            : null
+                        }
+                    </footer>
+                </Media>
+            </div>
+        );
     }
 }
 

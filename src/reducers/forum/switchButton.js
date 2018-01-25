@@ -1,5 +1,4 @@
 import { fromJS, Map } from 'immutable';
-import bypassingFactory from '../bypassing';
 import * as ActionTypes from '../../actions/forum/switchButton';
 
 // all state in one reducer
@@ -45,6 +44,6 @@ const switchButton = (state = fromJS({
         default:
             return state;
     }
-}
+};
 
 export default switchButton;

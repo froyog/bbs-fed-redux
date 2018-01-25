@@ -74,7 +74,8 @@ class Register extends React.Component {
 
     render () {
         const { error: serverErrorMessage, isFetching, success } = this.props;
-
+        const { errorMessage } = this.state;
+        
         return (
             <form className="register">
                 <h3>欢迎新用户</h3>

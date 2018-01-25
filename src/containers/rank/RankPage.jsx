@@ -5,6 +5,7 @@ import { toJS } from '../../util';
 import { getCompleteRank } from '../../actions/rank/rank';
 import { LoadingLines } from '../../components/common/Loading';
 import RankPage from '../../components/rank/RankPage';
+import { ErrorOverlay } from '../../components/common/ErrorModal';
 
 class RankPageWrapper extends React.Component {
     static propTypes = {
@@ -40,6 +41,7 @@ class RankPageWrapper extends React.Component {
 
     render () {
         const { isFetching, rankList, error } = this.props;
+        if (error) return <ErrorOverlay reason={error} needRefresh />;
         if (isFetching || !rankList) return <LoadingLines />; 
 
         return (

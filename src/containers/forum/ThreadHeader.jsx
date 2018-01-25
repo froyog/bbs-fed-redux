@@ -80,7 +80,7 @@ class ThreadHeader extends React.Component {
                 return <span>匿名用户</span>;
             }
             // anonymous but authorId exists, me
-            return <span>匿名用户（您）</span>
+            return <span>匿名用户（您）</span>;
         } 
         return (
             <span className="text-muted">
@@ -92,10 +92,9 @@ class ThreadHeader extends React.Component {
 
     render () {
         const { thread: { id: tid, authorId, authorName, title, anonymous,
-                    authorNickname, tCreate, content, inCollection, like, liked 
-                }, 
-                board: { id, name },
-                isFetching, success, error, selfUid
+            tCreate, content, inCollection, like, liked 
+        }, 
+        board: { id, name }, selfUid
         } = this.props;
 
         return (
@@ -138,7 +137,7 @@ class ThreadHeader extends React.Component {
                             {(active, onClickButton) => {
                                 return <Button bsStyle="link" className="flat" onClick={onClickButton}>
                                     {active ? '已收藏' : '收藏'}
-                                </Button>
+                                </Button>;
                             }}
                         </SwitchButton>
                         <SwitchButton
@@ -150,7 +149,7 @@ class ThreadHeader extends React.Component {
                                 return <Button bsStyle="link" className="flat" onClick={onClickButton}>
                                     {active ? '已赞' : '点赞'}
                                     {like ? `（${like}）` : null}
-                                </Button>
+                                </Button>;
                             }}
                         </SwitchButton>
                         {authorId === selfUid
