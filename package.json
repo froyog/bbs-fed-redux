@@ -1,6 +1,6 @@
 {
   "name": "bbs-fed-remaster",
-  "version": "0.5.0",
+  "version": "2.0.0",
   "description": "The remaster version of twt BBS with Redux and SSR",
   "author": "weixinming",
   "private": true,
