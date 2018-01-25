@@ -42,7 +42,7 @@ class BoardEditor extends React.Component {
             editorState: EditorState.createEmpty(),
             bid: 0,
             referToThread: false,
-            anonymousState: false
+            anonymous: false
         };
 
         this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -90,7 +90,7 @@ class BoardEditor extends React.Component {
 
     handleToggleAnonymous (anonymousState) {
         this.setState({
-            annoymous: anonymousState
+            anonymous: anonymousState
         });
     }
 
@@ -102,6 +102,7 @@ class BoardEditor extends React.Component {
 
         const { bid } = this.state;
         if (!bid) return;
+        
         newThread(bid, title, mdContent, anonymous);
     }
 

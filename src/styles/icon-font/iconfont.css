@@ -14,7 +14,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-QQ:before { content: "\e607"; }
+.icon-qq:before { content: "\e607"; }
 
 .icon-close:before { content: "\e61f"; }
 
