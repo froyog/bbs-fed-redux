@@ -6,6 +6,7 @@ import { toJS } from '../../util.js';
 import { Card } from '../../components/common/Card';
 import { FetchingOverlay } from '../../components/common/Loading';
 import ThreadItem from '../../components/common/ThreadItem';
+import { ErrorOverlay } from '../../components/common/ErrorModal';
 
 import '../../styles/home.less';
 
@@ -40,9 +41,9 @@ class TopTenWrapper extends React.Component {
     }
 
     render () {
-        const { topTenThreads, isFetching } = this.props;
+        const { topTenThreads, isFetching, error } = this.props;
         let renderThreads;
-
+        if (error) return <ErrorOverlay reason={error} needRefresh />
         if (!topTenThreads || isFetching) {
             return <FetchingOverlay fullPage />;
         }

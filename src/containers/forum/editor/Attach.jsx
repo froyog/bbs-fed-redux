@@ -81,7 +81,7 @@ class Attach extends React.Component {
     }
 
     _insertImage (imgId) {
-        const src = `https://bbs.tju.edu.cn/api/img/${imgId}`;
+        const src = `/api/img/${imgId}`;
         const { editorState, onChange } = this.props;
         const entityData = { src };
         const entityKey = editorState

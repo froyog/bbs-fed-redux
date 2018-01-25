@@ -6,7 +6,7 @@ import { camelizeKeys } from 'humps';
 
 export const CALL_API = 'Call API';
 
-const API_ROOT = 'http://bbs.tju.edu.cn:8080/api';
+const API_ROOT = 'https://bbs.tju.edu.cn/api';
 
 const fetchApi = (apiPath, request = {}, state = {}) => {
     const fullUrl = `${API_ROOT}/${apiPath}`;
