@@ -43,7 +43,7 @@ class TopTenWrapper extends React.Component {
     render () {
         const { topTenThreads, isFetching, error } = this.props;
         let renderThreads;
-        if (error) return <ErrorOverlay reason={error} needRefresh />
+        if (error) return <ErrorOverlay reason={error} needRefresh />;
         if (!topTenThreads || isFetching) {
             return <FetchingOverlay fullPage />;
         }

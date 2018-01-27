@@ -33,15 +33,6 @@ class Register extends React.Component {
         clearTimeout(this.timeout);
     }
 
-    componentWillReceiveProps (nextProps) {
-        const { success, history } = nextProps;
-        if (success === '请求成功' && success !== this.props.success) {
-            this.timeout = setTimeout(() => {
-                history.push('/passport/login');
-            }, 2000);
-        }
-    }
-
     handleInputChange (e) {
         const { id, value } = e.target;
         this._checkVaildation(id, value);
