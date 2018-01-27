@@ -6,26 +6,46 @@ import { connect } from 'react-redux';
 import { toJS } from '../../util';
 
 
-let RegisterWrapper = ({ isFetching, error, item, onNewRegister }) => {
-    const handleRegister = (registerInfo) => {
+class RegisterWrapper extends React.Component {
+    static propTypes = {
+        onNewRegister: PropTypes.func.isRequired,
+        isFetching: PropTypes.bool,
+        error: PropTypes.string
+    }
+
+    constructor () {
+        super();
+
+        this.handleRegister = this.handleRegister.bind(this);
+    }
+
+    componentWillReceiveProps (nextProps) {
+        const { isFetching, success, history } = nextProps;
+        if (success === '请求成功' && !isFetching && isFetching !== this.props.isFetching) {
+            this.timeout = setTimeout(() => {
+                history.push('/passport/login');
+            }, 2000);
+        }
+    }
+
+    handleRegister (registerInfo) {
+        const { onNewRegister } = this.props;
         onNewRegister && onNewRegister(registerInfo);
-    };
+    }
 
-    return (
-        <Register 
-            isFetching={isFetching}
-            error={error}
-            success={item}
-            onSubmitRegister={handleRegister}
-        />
-    );
-};
+    render () {
+        const { isFetching, error, item } = this.props;
 
-RegisterWrapper.propTypes = {
-    onNewRegister: PropTypes.func.isRequired,
-    isFetching: PropTypes.bool,
-    error: PropTypes.string
-};
+        return (
+            <Register 
+                isFetching={isFetching}
+                error={error}
+                success={item}
+                onSubmitRegister={this.handleRegister}
+            />
+        )
+    }
+}
 
 const mapStateToProps = state => {
     const newRegisterState = state.getIn(['bypassing', 'newRegister']);

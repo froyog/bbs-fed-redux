@@ -85,7 +85,7 @@ class ThreadPost extends React.Component {
         const { post: { content, floor, authorName } } = this.props;
         const processedContent = this._processContent(content);
         const replyContent = `回复 #${floor} ${authorName}：\n\n${processedContent}`.replace(/^/gm, '> ').trim();
-        this.onClickReply(replyContent);
+        this.props.onClickReply(replyContent);
         // scroll to the bottom of the page
         window.scrollTo(0, document.body.scrollHeight);
     }

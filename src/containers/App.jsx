@@ -56,15 +56,6 @@ class App extends React.Component {
                 <div id="main" style={mainStyle}>
                     <Grid>
                         <Switch>
-<<<<<<< HEAD
-                            <Redirect exact from='/user' to='/user/me/messages' />
-                            <Route exact path='/' component={Home} />
-                            <Route exact path='/forum' component={Forum} />
-                            <Route path='/forum/board/:bid/page/:page' component={Board} />
-                            <Route path='/forum/thread/:tid/page/:page' component={Thread} />
-                            <Route path='/user/:uid' component={UserBase} />
-                            <Route component={NoMatch} />
-=======
                             <Redirect exact from="/user" to="/user/me/messages" />
                             <Route exact path="/" component={Home} />
                             <Route exact path="/forum" component={Forum} />
@@ -73,7 +64,6 @@ class App extends React.Component {
                             <Route path="/user/:uid" component={AsyncUserBase} />
                             <Route path="/rank" component={Rank} />
                             <Redirect from="*" to="/404" />
->>>>>>> tom
                         </Switch>
                     </Grid>
                 </div>

@@ -6,7 +6,14 @@ import { camelizeKeys } from 'humps';
 
 export const CALL_API = 'Call API';
 
-const API_ROOT = 'http://bbs.tju.edu.cn:8080/api';
+let API_ROOT;
+
+if (process.env.NODE_ENV === 'production') {
+    API_ROOT = 'https://bbs.tju.edu.cn/api';
+} else if (process.env.NODE_ENV === 'development') {
+    API_ROOT = 'http://bbs.tju.edu.cn:8080/api';
+}
+
 
 const fetchApi = (apiPath, request = {}, state = {}) => {
     const fullUrl = `${API_ROOT}/${apiPath}`;

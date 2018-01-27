@@ -80,7 +80,7 @@ class Forum extends React.Component {
                 <div>
                     <Media className="forum-detail">
                         <Media.Left>
-                            <img width={200} height={200} src={`http://bbs.tju.edu.cn:8080/api/forum/${id}/cover`} alt="Forum Cover" />
+                            <img width={200} height={200} src={`https://bbs.tju.edu.cn/api/forum/${id}/cover`} alt="Forum Cover" />
                         </Media.Left>
                         <Media.Body>
                             <Media.Heading>{name}</Media.Heading>
@@ -122,7 +122,7 @@ class Forum extends React.Component {
             >
                 {isFetching ? <FetchingOverlay /> : null}
                 <CardImage
-                    image={`http://bbs.tju.edu.cn:8080/api/forum/${id}/cover`}
+                    image={`https://bbs.tju.edu.cn/api/forum/${id}/cover`}
                     alt="Forum Cover"
                     title={name}
                 >

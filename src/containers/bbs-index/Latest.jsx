@@ -67,9 +67,10 @@ class Latest extends React.Component {
     }
 
     render () {
-        const { latestThreads, isFetching } = this.props;
+        const { latestThreads, isFetching, error } = this.props;
         let renderThreads, renderLoadButton;
 
+        if (error) return null;
         if (!latestThreads || !latestThreads.length) {
             renderThreads = <p className="text-center">您似乎来到了没有帖子的荒原 =.=</p>;
         } else {
