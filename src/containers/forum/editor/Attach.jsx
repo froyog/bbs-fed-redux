@@ -108,7 +108,7 @@ class Attach extends React.Component {
         );
 
         return (
-            <div className="rdw-attach pull-right">
+            <div className="rdw-attach">
                 <Button
                     bsStyle="link"
                     className="flat"
