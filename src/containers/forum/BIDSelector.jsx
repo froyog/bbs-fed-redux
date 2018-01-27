@@ -89,6 +89,7 @@ class BIDSelector extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     let currentBoardInfo, result;
+    // eslint-disable-next-line
     if (result = /^\/forum\/board\/(\d{3})\/page/.exec(ownProps.location.pathname)) {
         let bid = result[1];
         currentBoardInfo = state.getIn(['board', bid, 'boardInfo']);

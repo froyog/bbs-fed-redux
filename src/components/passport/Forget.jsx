@@ -99,7 +99,7 @@ class ForgetReset extends React.Component {
     static propTypes = {
         isFetching: PropTypes.bool,
         error: PropTypes.string,
-        username: PropTypes.string.isRequired,
+        username: PropTypes.string,
         success: PropTypes.string,
         onSubmitNewPassword: PropTypes.func.isRequired
     }
