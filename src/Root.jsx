@@ -1,7 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory';
+import PiwikReactRouter from 'piwik-react-router';
 import App from './containers/App';
 import NotFound from './components/NotFound';
 import Passport from './containers/passport/Passport';
@@ -11,10 +13,14 @@ import './styles/icon-font/iconfont.css';
 
 
 const store = configureStore();
+const piwik = PiwikReactRouter({
+    url: 'https://elf.twtstudio.com',
+    siteId: 13
+});
 
 const Root = () =>
     <Provider store={store}>
-        <Router>
+        <Router history={piwik.connectToHistory(createBrowserHistory())}>
             <Switch>
                 <Route path="/passport" component={Passport} />
                 <Route path="/404" component={NotFound} />

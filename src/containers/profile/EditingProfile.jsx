@@ -71,7 +71,6 @@ class EditingProfile extends React.Component {
         this.handleFileUpload = this.handleFileUpload.bind(this);
         this.handleCompleteCrop = this.handleCompleteCrop.bind(this);
         this.handleSubmitAvatar = this.handleSubmitAvatar.bind(this);
-        this._processCropData = this._processCropData.bind(this);
     }
 
     componentWillReceiveProps (nextProps) {
@@ -113,11 +112,6 @@ class EditingProfile extends React.Component {
         this.setState({
             notMatchErrorMessage: ''
         });
-    }
-
-    _processCropData () {
-        const { uploadedImageUrl, pixelCrop } = this.state;
-        
     }
 
     handleChooseImage () {
@@ -209,7 +203,7 @@ class EditingProfile extends React.Component {
     }
 
     render () {
-        const { profile: { name, nickname, signature, points, cPost, cThread, 
+        const { profile: { name, nickname, signature, cPost, 
             cOnline, tCreate }, isFetching, error } = this.props;
         const { isShowPasswordSet, notMatchErrorMessage, uploadedImageUrl, crop } = this.state;
         return (

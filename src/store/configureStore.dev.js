@@ -3,6 +3,7 @@ import rootReducer from '../reducers/rootReducer';
 import thunk from 'redux-thunk';
 import callApi from '../middlewares/callApi';
 import localize from '../middlewares/localize';
+import piwikTracker from '../middlewares/piwikTracker';
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -12,7 +13,7 @@ const configureStore = preloadedState => {
         rootReducer,
         preloadedState,
         composeEnhancers(
-            applyMiddleware(thunk, callApi, localize)
+            applyMiddleware(thunk, callApi, piwikTracker, localize)
         )
     );
 

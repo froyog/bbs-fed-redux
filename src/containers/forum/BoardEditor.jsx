@@ -5,7 +5,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { InputField } from '../../components/common/Input';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
-import draftToMarkdown from 'draftjs-to-markdown';
+import { draftToMarkdown } from 'markdown-draft-js';
 import { fetchNewThread } from '../../actions/forum/board';
 import AnonymousSwitch from '../../components/forum/AnonymousSwitch';
 import { connect } from 'react-redux';

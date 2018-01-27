@@ -43,7 +43,7 @@ class RegisterWrapper extends React.Component {
                 success={item}
                 onSubmitRegister={this.handleRegister}
             />
-        )
+        );
     }
 }
 
