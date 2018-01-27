@@ -7,7 +7,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import ThreadRenderer from '../../components/forum/ThreadRenderer';
 import AnonymousSwitch from '../../components/forum/AnonymousSwitch';
-import draftToMarkdown from 'draftjs-to-markdown';
+import { draftToMarkdown } from 'markdown-draft-js';
 import Attach from './editor/Attach';
 import { getDecorator } from './editor/mention.js';
 import { toJS } from '../../util';

@@ -35,5 +35,6 @@ export const resetPasswordWith = resetInfo => dispatch =>
                     contentType: 'application/json'
                 }
             }
-        }
+        },
+        uid: resetInfo.uid
     });
