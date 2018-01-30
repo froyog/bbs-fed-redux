@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import '../../styles/frame/tap.less';
 
 
@@ -53,6 +54,16 @@ class FeatureDiscovery extends React.Component {
                 </button>
                 <div className="content">
                     <h1>更新说明</h1>
+                    <section className="version">
+                        <h3>2.0.1</h3>
+                        <ul>
+                            <li>修复老用户认证bug</li>
+                            <li>修复了编辑器文本粘帖时bug</li>
+                            <li>修复了回复按钮失效等bug</li>
+                            <li>修复了一些无效链接</li>
+                            <li>添加了404页面，<Link to="/404">去看看</Link></li>
+                        </ul>
+                    </section>
                     <section className="version">
                         <h3>2.0.0</h3>
                         <ul>
