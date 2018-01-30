@@ -24,7 +24,6 @@ export default (dispatch, getState) => next => action => {
                 break;
         }
         if (tracker.length) {
-            console.log(tracker);
             window._paq.push(tracker);
         }
     }

@@ -74,7 +74,7 @@ class OldLogin extends React.Component {
                     提交
                 </Button>
                 <p className="text-center error-message">{error}</p>
-                <p>早已忘记帐号或密码？ 进入<Link to="/appeal">人工申诉</Link>页面取回帐号</p>
+                <p>早已忘记帐号密码？认证遇到问题？进入<Link to="/passport/appeal">人工申诉</Link>页面取回帐号</p>
             </div>
         );
     }

@@ -31,7 +31,7 @@ class OldLoginWrapper extends React.Component {
     componentWillReceiveProps (nextProps) {
         const { history, isFetching, error, oldLoginResult } = nextProps;
         if (!error && !isFetching && isFetching !== this.props.isFetching) {
-            history.push('/passport/old/register', { token: oldLoginResult });
+            history.push('/passport/old/register', { token: oldLoginResult.token });
         }
     }
 

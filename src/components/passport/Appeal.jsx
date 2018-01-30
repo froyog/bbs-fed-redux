@@ -85,7 +85,7 @@ class Appeal extends React.Component {
                     onChange={this.handleInputChange}
                     fullWidth
                     value={email}
-                    placeholder="我们将使用此邮箱与您联系"
+                    placeholder="（必填）我们将使用此邮箱与您联系"
                 />
                 <InputField 
                     text="补充信息"
