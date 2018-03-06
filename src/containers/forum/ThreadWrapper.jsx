@@ -77,8 +77,6 @@ class ThreadWrapper extends React.PureComponent {
     componentWillReceiveProps(nextProps) {
         const { match: { params, params: { tid, page } } } = nextProps;
         const { getThreadPage, match: { params: oldParams } } = this.props;
-        console.log(isEqual(params, oldParams));
-        
         if (!isEqual(params, oldParams)) {
             this.setState({ activePage: +page });
             getThreadPage(+tid, page);

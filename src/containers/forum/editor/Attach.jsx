@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { AtomicBlockUtils } from 'draft-js';
-import { Button } from 'react-bootstrap';
+import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { toJS, compressImage } from '../../../util';
 import { uploadAttach } from '../../../actions/forum/attach';
 import { LoadingSpinner } from '../../../components/common/Loading';
+import { InputField } from '../../../components/common/Input';
 
 const MAX_ACCEPT_SIZE = 2097152; // 2 MiB
 
@@ -21,23 +22,38 @@ class Attach extends React.Component {
     constructor () {
         super();
         this.state = {
-            localError: ''
+            localError: '',
+            imgUrl: ''
         };
         this.handleClickUpload = this.handleClickUpload.bind(this);
         this.handleUploadFile = this.handleUploadFile.bind(this);
         this._insertImage = this._insertImage.bind(this);
+        this.handleUrlChange = this.handleUrlChange.bind(this);
+        this.handleClickFromUrl = this.handleClickFromUrl.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
         const { imgId } = nextProps;
         const { imgId: oldImgId } = this.props;
         if (oldImgId !== imgId && imgId !== 0) {
-            this._insertImage(imgId);
+            const src = `/api/img/${imgId}`;
+            this._insertImage(src);
         }
+    }
+
+    handleUrlChange (e) {
+        const { id, value } = e.target;
+        this.setState({
+            [id]: value
+        });
     }
 
     handleClickUpload () {
         this.file.click();
+    }
+
+    handleClickFromUrl () {
+        this._insertImage(this.state.imgUrl);
     }
 
     handleUploadFile (e) {
@@ -80,8 +96,7 @@ class Attach extends React.Component {
         this.props.uploadAttach(data);
     }
 
-    _insertImage (imgId) {
-        const src = `/api/img/${imgId}`;
+    _insertImage (src) {
         const { editorState, onChange } = this.props;
         const entityData = { src };
         const entityKey = editorState
@@ -98,7 +113,7 @@ class Attach extends React.Component {
 
     render () {
         const { isFetching, error } = this.props;
-        const { localError } = this.state;
+        const { localError, imgUrl } = this.state;
         let displayError = localError ? localError : error;
 
         if (isFetching) return (
@@ -109,14 +124,53 @@ class Attach extends React.Component {
 
         return (
             <div className="rdw-attach">
-                <Button
-                    bsStyle="link"
-                    className="flat"
-                    disabled={isFetching}
-                    onClick={this.handleClickUpload}
+                <OverlayTrigger
+                    trigger="click"
+                    placement="left"
+                    overlay={
+                        <Popover
+                            title="插入图片"
+                            className="attach-popover"
+                            id="attach-popover"
+                        >
+                            <Button
+                                bsStyle="link"
+                                className="flat attach-insert"
+                                disabled={isFetching}
+                                onClick={this.handleClickUpload}
+                            >
+                                从本地上传
+                            </Button>
+                            或
+                            <InputField 
+                                placeholder="http://img.io/a.png"
+                                text="输入图片URL"
+                                style={imgUrl ? { width: '175px' } : null}
+                                id="imgUrl"
+                                onChange={this.handleUrlChange}
+                            />
+                            {
+                                this.state.imgUrl
+                                    ? (
+                                        <Button 
+                                            className="raised attach-insert-button" 
+                                            bsStyle="primary"
+                                            onClick={this.handleClickFromUrl}
+                                        >
+                                            确定
+                                        </Button>)
+                                    : null
+                            }
+                        </Popover>
+                    }
                 >
-                    插入图片
-                </Button>
+                    <Button
+                        bsStyle="link"
+                        className="flat"
+                    >
+                        插入图片
+                    </Button>
+                </OverlayTrigger>
                 <input
                     accept=".png,.jpg,.jpeg,.gif,.bmp"
                     type="file"

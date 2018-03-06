@@ -15,7 +15,8 @@ export class InputField extends React.PureComponent {
         color: PropTypes.string,
         errorMessage: PropTypes.string,
         initialValue: PropTypes.string,
-        disabled: PropTypes.bool
+        disabled: PropTypes.bool,
+        style: PropTypes.object,
     };
 
     static defaultProps = {
@@ -65,7 +66,7 @@ export class InputField extends React.PureComponent {
 
     render () {
         const { id, text, type, placeholder, fullWidth, 
-            errorMessage, className, initialValue, disabled } = this.props;
+            errorMessage, className, initialValue, disabled, style } = this.props;
         const { focused, hasContent } = this.state;
         let labelStyle = {
             transform: 'scale(1) translate(0, 0)',
@@ -86,7 +87,7 @@ export class InputField extends React.PureComponent {
         return (
             <div 
                 className={`input-wrapper${className ? ' ' + className : ''}`} 
-                style={{ width: `${fullWidth ? '100%' : '256px'}` }}
+                style={{ width: `${fullWidth ? '100%' : '256px'}`, ...style }}
             >
                 <label
                     htmlFor={id}
