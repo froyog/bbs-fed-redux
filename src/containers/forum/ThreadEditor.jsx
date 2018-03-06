@@ -7,6 +7,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import ThreadRenderer from '../../components/forum/ThreadRenderer';
 import AnonymousSwitch from '../../components/forum/AnonymousSwitch';
+import AdvancedSwitch from '../../components/forum/AdvancedSwitch';
 import { draftToMarkdown } from 'markdown-draft-js';
 import Attach from './editor/Attach';
 import { getDecorator } from './editor/mention.js';
@@ -44,13 +45,15 @@ class ThreadEditor extends React.Component {
         super();
         this.state = {
             editorState: EditorState.createEmpty(),
-            anonymous: false
+            anonymous: false,
+            advancedMode: false,
         };
 
         this.handleEditorStateChange = this.handleEditorStateChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCancelReply = this.handleCancelReply.bind(this);
         this.getEditorState = this.getEditorState.bind(this);
+        this.handleToggleAdvanced = this.handleToggleAdvanced.bind(this)
         this.handleToggleAnonymous = this.handleToggleAnonymous.bind(this);
     }
 
@@ -70,9 +73,14 @@ class ThreadEditor extends React.Component {
 
     handleSubmit (e) {
         e.preventDefault();
-        const { editorState, anonymous } = this.state;
+        const { editorState, anonymous, advancedMode } = this.state;
         const { tid, fetchNewComment, replyContent } = this.props;
-        let content = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
+        let content;
+        if (advancedMode) {
+            content = editorState.getCurrentContent().getPlainText();
+        } else {
+            content = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
+        }
         if (replyContent.trim()) {
             content = `${content}\n\n${replyContent}`;
         }
@@ -90,17 +98,25 @@ class ThreadEditor extends React.Component {
         });
     }
 
+    handleToggleAdvanced (advancedState) {
+        this.setState({
+            advancedMode: advancedState
+        });
+    }
+
     getEditorState () {
         return this.state.editorState;
     }
 
     render () {
-        const { editorState } = this.state;
+        const { editorState, advancedMode } = this.state;
         const { replyContent, error, isFetching, allowAnonymous } = this.props;
 
+        console.log(advancedMode)
         return (
             <Card className="card-thread-editor">
                 <Editor
+                    toolbarStyle={ advancedMode ? { display: 'none' } : {}}
                     toolbar={customToolbar}
                     toolbarCustomButtons={[<Attach />]}
                     editorState={editorState}
@@ -139,6 +155,10 @@ class ThreadEditor extends React.Component {
                         /> 
                         : null
                 }
+                <AdvancedSwitch 
+                    className="pull-right advanced-switch"
+                    onToggle={this.handleToggleAdvanced}
+                />
                 <span className="error-message">{error}</span>
             </Card>
         );
