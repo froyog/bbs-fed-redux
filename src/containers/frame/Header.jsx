@@ -20,7 +20,7 @@ class HeaderWrapper extends React.PureComponent {
             postingModalOpen: false,
             headerContent: '',
             tapIsShow: false,
-            updateDate: Date.parse('2018-2-23')
+            updateDate: Date.parse('2018-3-6')
         };
 
         this.handleOpenModal = this.handleOpenModal.bind(this);

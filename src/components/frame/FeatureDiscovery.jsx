@@ -55,6 +55,14 @@ class FeatureDiscovery extends React.Component {
                 <div className="content">
                     <h1>更新说明</h1>
                     <section className="version">
+                        <h3>2.1.0</h3>
+                        <ul>
+                            <li>修复了翻页无限加载的bug</li>
+                            <li>添加了编辑器<strong>高级模式</strong></li>
+                            <li>添加了从 URL 添加图片</li>
+                        </ul>
+                    </section>
+                    <section className="version">
                         <h3>2.0.2</h3>
                         <ul>
                             <li>添加了直接访问api的功能</li>
