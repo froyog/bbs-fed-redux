@@ -11,7 +11,7 @@ let API_ROOT;
 if (process.env.NODE_ENV === 'production') {
     API_ROOT = 'https://bbs.tju.edu.cn/api';
 } else if (process.env.NODE_ENV === 'development') {
-    API_ROOT = 'http://bbs.tju.edu.cn:8080/api';
+    API_ROOT = 'https://bbs.tju.edu.cn/testapi';
 }
 
 

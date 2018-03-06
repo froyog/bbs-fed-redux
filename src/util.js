@@ -6,7 +6,7 @@ export const isEqual = (a, b) => {
         return false;
     }
     for (let i = 0; i < aProps.length; i++) {
-        if (a[i] !== b[i]) {
+        if (a[aProps[i]] !== b[bProps[i]]) {
             return false;
         }
     }

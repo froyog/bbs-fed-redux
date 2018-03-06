@@ -48,6 +48,12 @@ class App extends React.Component {
         const mainStyle = {
             [isMobile() ? 'left' : 'marginLeft']: `${isOpen ? '200px' : '0'}`
         };
+        let paths = /\/forum\/thread\/(\d+)\/?$/.exec(window.location.pathname);
+        if (paths) {
+            const tid = paths[1];
+            return <Redirect to={`/forum/thread/${tid}/page/1`} />;
+        }
+
         return (
             <div id="frame" onScroll={this.handlePageScroll}>
                 <Header path={location.pathname}/>
