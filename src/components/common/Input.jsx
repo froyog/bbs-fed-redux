@@ -68,6 +68,8 @@ export class InputField extends React.PureComponent {
         const { id, text, type, placeholder, fullWidth, 
             errorMessage, className, initialValue, disabled, style } = this.props;
         const { focused, hasContent } = this.state;
+        console.log(focused);
+        
         let labelStyle = {
             transform: 'scale(1) translate(0, 0)',
             color: 'rgba(0, 0, 0, .5)'

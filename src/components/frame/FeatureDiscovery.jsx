@@ -55,28 +55,11 @@ class FeatureDiscovery extends React.Component {
                 <div className="content">
                     <h1>更新说明</h1>
                     <section className="version">
-                        <h3>2.1.0</h3>
+                        <h3>2.1.1</h3>
                         <ul>
-                            <li>修复了翻页无限加载的bug</li>
-                            <li>添加了编辑器<strong>高级模式</strong></li>
-                            <li>添加了从 URL 添加图片</li>
-                        </ul>
-                    </section>
-                    <section className="version">
-                        <h3>2.0.2</h3>
-                        <ul>
-                            <li>添加了直接访问api的功能</li>
-                            <li>修复了回帖无法收到消息的bug</li>
-                        </ul>
-                    </section>
-                    <section className="version">
-                        <h3>2.0.1</h3>
-                        <ul>
-                            <li>修复老用户认证bug</li>
-                            <li>修复了编辑器文本粘帖时bug</li>
-                            <li>修复了回复按钮失效等bug</li>
-                            <li>修复了一些无效链接</li>
-                            <li>添加了404页面，<Link to="/404">去看看</Link></li>
+                            <li>修复了无法发送图片的bug</li>
+                            <li>修复了编辑器内某些样式错误</li>
+                            <li>修复了此更新说明的显示问题</li>
                         </ul>
                     </section>
                     <section className="version">
@@ -89,6 +72,10 @@ class FeatureDiscovery extends React.Component {
                             <li>添加其他若干功能</li>
                         </ul>
                     </section>
+                    <footer>
+                        从2.1.1版本开始，更新说明只保留最新更新和历次重要更新内容，如果您想了解历史更新记录，
+                        请前往<Link to="/forum/thread/172517/page/1">Web端历史更新记录及bug反馈</Link>
+                    </footer>
                     {/* <h1>What's new ?</h1>
                     <section className="version">
                         <h3>alpha 0.5.0</h3>

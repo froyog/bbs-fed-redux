@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { AtomicBlockUtils } from 'draft-js';
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { toJS, compressImage } from '../../../util';
+import { toJS, compressImage, isMobile } from '../../../util';
 import { uploadAttach } from '../../../actions/forum/attach';
 import { LoadingSpinner } from '../../../components/common/Loading';
 import { InputField } from '../../../components/common/Input';
@@ -36,7 +36,12 @@ class Attach extends React.Component {
         const { imgId } = nextProps;
         const { imgId: oldImgId } = this.props;
         if (oldImgId !== imgId && imgId !== 0) {
-            const src = `/api/img/${imgId}`;
+            let src;
+            if (process.env.NODE_ENV === 'production') {
+                src = `https://bbs.tju.edu.cn/api/img/${imgId}`;
+            } else if (process.env.NODE_ENV === 'development') {
+                src = `https://bbs.tju.edu.cn/testapi/img/${imgId}`;
+            }
             this._insertImage(src);
         }
     }
@@ -126,7 +131,7 @@ class Attach extends React.Component {
             <div className="rdw-attach">
                 <OverlayTrigger
                     trigger="click"
-                    placement="left"
+                    placement={isMobile() ? 'right' : 'left'}
                     overlay={
                         <Popover
                             title="插入图片"

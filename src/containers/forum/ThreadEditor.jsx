@@ -8,10 +8,9 @@ import { convertToRaw, EditorState } from 'draft-js';
 import ThreadRenderer from '../../components/forum/ThreadRenderer';
 import AnonymousSwitch from '../../components/forum/AnonymousSwitch';
 import AdvancedSwitch from '../../components/forum/AdvancedSwitch';
-import { draftToMarkdown } from 'markdown-draft-js';
 import Attach from './editor/Attach';
 import { getDecorator } from './editor/mention.js';
-import { toJS } from '../../util';
+import { toJS, draftToMarkdown } from '../../util';
 import { fetchNewComment } from '../../actions/forum/thread';
 
 import '../../styles/forum/editor.less';
@@ -53,7 +52,7 @@ class ThreadEditor extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCancelReply = this.handleCancelReply.bind(this);
         this.getEditorState = this.getEditorState.bind(this);
-        this.handleToggleAdvanced = this.handleToggleAdvanced.bind(this)
+        this.handleToggleAdvanced = this.handleToggleAdvanced.bind(this);
         this.handleToggleAnonymous = this.handleToggleAnonymous.bind(this);
     }
 
@@ -79,11 +78,19 @@ class ThreadEditor extends React.Component {
         if (advancedMode) {
             content = editorState.getCurrentContent().getPlainText();
         } else {
-            content = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
+            content = draftToMarkdown(convertToRaw(editorState.getCurrentContent()), {
+                entityItems: {
+                    'IMAGE': {
+                        open: () => {},
+                        close: entity => `![](${entity.data.src})`
+                    }
+                }
+            });
         }
         if (replyContent.trim()) {
             content = `${content}\n\n${replyContent}`;
         }
+
         fetchNewComment(tid, content, anonymous);
     }
 
@@ -112,7 +119,6 @@ class ThreadEditor extends React.Component {
         const { editorState, advancedMode } = this.state;
         const { replyContent, error, isFetching, allowAnonymous } = this.props;
 
-        console.log(advancedMode)
         return (
             <Card className="card-thread-editor">
                 <Editor
@@ -138,27 +144,28 @@ class ThreadEditor extends React.Component {
                         <ThreadRenderer content={replyContent} />
                     </div>
                 }
-                <Button
-                    type="submit"
-                    className="raised"
-                    bsStyle="primary"
-                    onClick={this.handleSubmit}
-                    disabled={isFetching}
-                >
-                    发表回复
-                </Button>
-                {
-                    allowAnonymous
-                        ? <AnonymousSwitch
-                            className="pull-right"
-                            onToggle={this.handleToggleAnonymous} 
-                        /> 
-                        : null
-                }
-                <AdvancedSwitch 
-                    className="pull-right advanced-switch"
-                    onToggle={this.handleToggleAdvanced}
-                />
+                <div className="clearfix">
+                    <Button
+                        type="submit"
+                        className="raised"
+                        bsStyle="primary"
+                        onClick={this.handleSubmit}
+                        disabled={isFetching}
+                    >
+                        发表回复
+                    </Button>
+                    <div className="clearfix pull-right">
+                        {
+                            allowAnonymous
+                                ? <AnonymousSwitch onToggle={this.handleToggleAnonymous} /> 
+                                : null
+                        }
+                        <AdvancedSwitch 
+                            className="advanced-switch"
+                            onToggle={this.handleToggleAdvanced}
+                        />
+                    </div>
+                </div>
                 <span className="error-message">{error}</span>
             </Card>
         );

@@ -5,14 +5,13 @@ import { Modal, Button } from 'react-bootstrap';
 import { InputField } from '../../components/common/Input';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
-import { draftToMarkdown } from 'markdown-draft-js';
 import { fetchNewThread } from '../../actions/forum/board';
 import AnonymousSwitch from '../../components/forum/AnonymousSwitch';
 import { connect } from 'react-redux';
 import { getDecorator } from './editor/mention.js';
 import Attach from './editor/Attach';
 import BIDSelector from './BIDSelector';
-import { toJS } from '../../util';
+import { toJS, draftToMarkdown } from '../../util';
 
 import '../../styles/forum/editor.less';
 

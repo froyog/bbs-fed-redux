@@ -225,17 +225,6 @@ class BoardWrapper extends React.Component {
                         />
                     </div>
                 </Card>
-                {/* <Modal
-                    bsSize="large"
-                    show={this.state.postingModalOpen}
-                    onHide={this.handleCloseModal}
-                    backdrop="static"
-                    className="posting-modal"
-                >
-                    <BoardEditor
-                        bid={id}
-                        onCloseModal={this.handleCloseModal} />
-                </Modal> */}
             </div>
         );
     }

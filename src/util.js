@@ -1,3 +1,5 @@
+import { draftToMarkdown as originalDraftToMarkdown } from 'markdown-draft-js';
+
 export const isEqual = (a, b) => {
     const aProps = Object.getOwnPropertyNames(a);
     const bProps = Object.getOwnPropertyNames(b);
@@ -103,3 +105,12 @@ export const parseUser = (state) => {
     const token = user.get('token');
     return `${uid}|${token}`;
 };
+
+export const draftToMarkdown = rawObject => originalDraftToMarkdown(rawObject, {
+    entityItems: {
+        'IMAGE': {
+            open: () => {},
+            close: entity => `![](${entity.data.src})`
+        }
+    }
+});
