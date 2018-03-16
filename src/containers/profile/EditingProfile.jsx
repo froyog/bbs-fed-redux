@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { toJS, dataURItoBlob } from '../../util';
 import { saveProfile, uploadAvatar } from '../../actions/profile/edit';
 import { getProfileIfNeeded } from '../../actions/profile/profile';
+import defaultAvatar from '../../assests/avatar-default.png';
 
 import 'react-image-crop/dist/ReactCrop.css';
 
@@ -60,7 +61,8 @@ class EditingProfile extends React.Component {
                 width: 50,
                 aspect: 1 / 1
             },
-            pixelCrop: {}
+            pixelCrop: {},
+            avatarSrc: `https://bbs.tju.edu.cn/api/user/${props.uid}/avatar`
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -71,6 +73,7 @@ class EditingProfile extends React.Component {
         this.handleFileUpload = this.handleFileUpload.bind(this);
         this.handleCompleteCrop = this.handleCompleteCrop.bind(this);
         this.handleSubmitAvatar = this.handleSubmitAvatar.bind(this);
+        this.handleFallBackAvatar = this.handleFallBackAvatar.bind(this);
     }
 
     componentWillReceiveProps (nextProps) {
@@ -202,10 +205,18 @@ class EditingProfile extends React.Component {
         saveProfile && saveProfile(editedProfile);
     }
 
+    handleFallBackAvatar () {
+        this.setState({
+            avatarSrc: defaultAvatar
+        });
+    }
+
     render () {
         const { profile: { name, nickname, signature, cPost, 
             cOnline, tCreate }, isFetching, error } = this.props;
-        const { isShowPasswordSet, notMatchErrorMessage, uploadedImageUrl, crop } = this.state;
+        const { isShowPasswordSet, notMatchErrorMessage, 
+            uploadedImageUrl, crop, avatarSrc } = this.state;
+
         return (
             <div className="profile-editing-wrapper">
                 <div className="profile-wrapper">
@@ -219,8 +230,9 @@ class EditingProfile extends React.Component {
                                 />
                                 : <img 
                                     className="profile-avatar editing"
-                                    src={`https://bbs.tju.edu.cn/api/user/18480/avatar`} 
+                                    src={avatarSrc} 
                                     alt="user-avatar" 
+                                    onError={this.handleFallBackAvatar}
                                 />
                         }
                         <Button

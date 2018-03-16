@@ -209,6 +209,7 @@ class Profile extends React.Component {
                         ? <EditingProfile 
                             onCancel={this.handleCloseEditProfile} 
                             profile={profile}
+                            uid={uidInNumber}
                         />
                         : <div className="profile-wrapper">
                             <Avatar 
