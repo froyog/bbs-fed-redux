@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { InputField } from '../../components/common/Input';
-import { Button } from 'react-bootstrap';
+import { Button, Form, FormControl, FormGroup } from 'react-bootstrap';
 import { LoadingDots } from '../common/Loading';
+import truth from '../../assests/banner.jpg';
 
 
 class Login extends React.Component {
@@ -40,47 +41,49 @@ class Login extends React.Component {
 
     render () {
         const { isFetching, error } = this.props;
+        const { username, password } = this.state;
         return (
-            <form className="login">
-                <h2>Welcome to TJUBBS!</h2>
-                <InputField
-                    text="用户名"
-                    id="username"
-                    onChange={this.handleInputChange}
-                    fullWidth
-                />
-                <InputField
-                    text="密码"
-                    id="password"
-                    type="password"
-                    onChange={this.handleInputChange}
-                    fullWidth
-                />
-                <Button
-                    className="raised submit-button"
-                    block
-                    type="submit"
-                    bsStyle="primary"
-                    onClick={this.handleLogin}
-                    disabled={isFetching}
-                >
-                    {
-                        isFetching 
-                            ? <LoadingDots />
-                            : '登录'
-                    }
-                </Button>
-                <p className="error-msg">{error}</p>
+            <div className="login">
+                <img className="banner" src={truth} alt="banner" />
+                <Form className="login-form">
+                    <FormGroup controlId="username">
+                        <FormControl
+                            className="login-input"
+                            type="text"
+                            value={username}
+                            placeholder="请输入用户名"
+                            onChange={this.handleInputChange}
+                        />
+                    </FormGroup>
+                    <FormGroup controlId="password">
+                        <FormControl
+                            className="login-input"
+                            type="password"
+                            value={password}
+                            placeholder="请输入密码"
+                            onChange={this.handleInputChange}
+                        />
+                    </FormGroup>
+                    <Button
+                        className="login-button"
+                        type="submit"
+                        block
+                        bsStyle="primary"
+                        onClick={this.handleLogin}
+                        disabled={isFetching}
+                    >
+                        登 录
+                    </Button>
+                    <p className="error-msg">{error}</p>
+                </Form>
                 <div className="additional-link-wrapper">
-                    <p>
-                        <Link to='/passport/forget/auth'>忘记用户名/密码</Link>
-                        <Link className="pull-right" to='/passport/old'>老用户认证</Link>
-                    </p>
-                    <p>
-                        <Link className="appeal-link" to='/passport/appeal'>人工申诉</Link>
-                    </p>
+                    <Link to='/passport/forget/auth'>忘记用户名/密码</Link>
+                    |
+                    <Link to='/passport/old'>老用户认证</Link>
+                    |
+                    <Link to='/passport/appeal'>人工申诉</Link>
                 </div>
-            </form>
+            </div>
         );
     }
 }

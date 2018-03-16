@@ -2,27 +2,9 @@
 
 #passport {
     .screen();
-    background: url(../../assests/bg-min.jpg) no-repeat fixed center top;
-    background-size: cover;
-    .back-to-home, .switch-link {
-        color: #fff;
-        font-size: 16px;
-        padding: 5px 10px;
-        text-decoration: none !important;
-        transition: font-size .2s;
-        &:hover, &.active {
-            border-bottom: 2px solid #fff;
-            font-size: 18px;
-        }
-    }
-    .back-to-home-wrapper, .switch-link-wrapper {
-        position: absolute;
-        top: 20px;
-        z-index: 1;
-    }
-    .switch-link-wrapper { right: 30px; }
-    .back-to-home-wrapper { left: 30px; }
-
+    background: url(../../assests/bg-min.png) #fff no-repeat fixed 0 0;
+    background-size: contain;
+    
     .input-realname, .input-stunum {
         width: 50% !important;
         float: left;
@@ -41,32 +23,68 @@
         }
     }
 
+    .wrapper {
+        margin-top: 30px;
+    }
+
     @media @phones {
-        .back-to-home, .switch-link { color: #333; }
-        .back-to-home-wrapper { left: 10px; }
-        .switch-link-wrapper { right: 10px; }
+        background-size: cover;
+        background-position: center top;    
+    }
+}
+
+.switch-links {
+    position: absolute;
+    right: 32px;
+    a {
+        padding-right: 10px;
+        display: block;
+        font-size: 16px;
+        color: #999;
+        transition: all .3s;
+
+        &:hover, &.active {
+            text-decoration: none;
+            color: #333;
+            transform: scale(1.1);
+            transform-origin: bottom;
+        }
+    }
+
+    @media @phones {
+        right: 10px;
+    }
+}
+
+.back-to-home-wrapper {
+    position: absolute;
+    a {
+        color: #333;
+        font-size: 16px;
+
+        &:hover {
+            text-decoration: none;
+        }
     }
 }
 
 .card-passport {
     position: absolute;
-    background-position: center top;
-    background-size: cover;
-    top: 50%;
-    left: 50%;
-    max-width: 400px;
-    transform: translate(-50%, -50%);
-    background-color: rgba(255, 255, 255, .95);
+    top: 0;
+    bottom: 0;
+    padding: 32px;
+    right: 0;
+    max-width: 600px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, .85);
 
-    .card-content {
-        padding: 32px;
-    }
 
     button.submit-button {
+        width: 200px;
         padding: 8px 0;
         letter-spacing: 5px;
         font-size: 16px;
-        margin: 25px 0 8px;
+        margin: 25px auto 8px;
     }
 
     @media @phones {
@@ -78,10 +96,7 @@
         bottom: 0;
         transform: none;
         margin: 0;
-
-        .card-content {
-            padding: 20px;
-        }
+        padding: 20px 10px;
     }
 
     .error-msg {
@@ -92,34 +107,57 @@
 }
 
 .login {
-    h2 {
-        text-align: center;
-        font-weight: bold;
-        margin: 30px auto 20px;
+    .banner {
+        display: block;
+        margin: 60px auto;
     }
-    
+
+    .login-button {
+        background: linear-gradient(90deg,#05d5ee,#0081e5);
+        border: 0 !important;
+        outline: 0 !important;
+        width: 100%;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        margin: 25px auto 5px;
+        border-radius: 20px;
+        font-size: 16px;
+    }
+
+    .login-input {
+        height: auto;
+        font-size: 16px;
+        padding: 8px 12px;
+        border-radius: 20px;
+        background-color: #f5f5f5;
+    }
+
+    .login-form {
+        width: 300px;
+        margin: 0 auto;
+
+        & .form-group {
+            margin-bottom: 25px;
+        }
+    }
+
+    .additional-link-wrapper {
+        position: absolute;
+        bottom: 50px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #333;
+        font-size: 16px;
+        a {
+            color: inherit;
+            padding: 0 8px;
+            text-decoration: none !important;
+        }
+    }
+
     @media @phones {
         margin-top: 80px;
-    }
-    .additional-link-wrapper {
-        a {
-            color: #00a1e9;
-            text-decoration: none !important;
-            font-size: 16px;
-        }
-        a.appeal-link {
-            color: #333;
-            font-size: 14px;
-        }
-        p { margin-bottom: 0; }
-    }
-}
-
-.register {
-    @media @phones {
-        h3 {
-            margin: 10px 0 5px;
-        }
     }
 }
 
