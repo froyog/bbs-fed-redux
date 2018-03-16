@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { InputField } from '../../components/common/Input';
 import { Button, Form, FormControl, FormGroup } from 'react-bootstrap';
-import { LoadingDots } from '../common/Loading';
 import truth from '../../assests/banner.jpg';
 
 

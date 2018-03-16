@@ -28,6 +28,7 @@ class NoMatch extends React.Component {
         };
         
         const createParticles = count => {
+            // eslint-disable-next-line
             if (count != particles.length) {
                 particles = [];
                 for (var i = 0; i < count; i++) {

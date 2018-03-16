@@ -9,7 +9,7 @@ const COLOR_ARRAY = ['#2196f3', '#3f51b5', '#9c27b0', '#ff5722', '#f44336', '#00
 
 class ImageFeed extends React.Component {
     static propTypes = {
-        id: PropTypes.number.isRequired,
+        id: PropTypes.number,
         name: PropTypes.string,
         type: PropTypes.string,
         anonymous: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
@@ -60,7 +60,8 @@ class ImageFeed extends React.Component {
 
     render () {
         const { src, generateAvatar } = this.state;
-        const { name, id, imageShape, ...restProps } = this.props;
+        // eslint-disable-next-line
+        const { name, id, imageShape, anonymous, ...restProps } = this.props;
 
         if (generateAvatar) {
             const randomColor = COLOR_ARRAY[Math.floor(name.charCodeAt(0) % COLOR_ARRAY.length)];
