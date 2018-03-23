@@ -17,15 +17,13 @@ class HeaderWrapper extends React.PureComponent {
     constructor () {
         super();
         this.state = {
-            postingModalOpen: false,
             headerContent: '',
             tapIsShow: false,
             updateDate: Date.parse('2018-3-6')
         };
 
-        this.handleOpenModal = this.handleOpenModal.bind(this);
-        this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleUnmountTap = this.handleUnmountTap.bind(this);
+        this.handleClickNewPost = this.handleClickNewPost.bind(this);
     }
 
     componentDidMount () {
@@ -60,17 +58,13 @@ class HeaderWrapper extends React.PureComponent {
         clearTimeout(this.timer);
     }
 
-    handleOpenModal () {
-        const { isLogin, showToast } = this.props;
+    handleClickNewPost () {
+        const { isLogin, showToast, history } = this.props;
         if (!isLogin) {
             showToast('您未登录');
             return;
         }
-        this.setState({ postingModalOpen: true });
-    }
-
-    handleCloseModal () {
-        this.setState({ postingModalOpen: false });
+        history.push('/forum/thread/new');
     }
 
     handleUnmountTap () {
@@ -83,7 +77,7 @@ class HeaderWrapper extends React.PureComponent {
 
     render () {
         const { isOpen, onToggleSidebar } = this.props;
-        const { headerContent, postingModalOpen, tapIsShow } = this.state;
+        const { headerContent, tapIsShow } = this.state;
 
         return (
             <header id="header" role="banner">
@@ -91,7 +85,7 @@ class HeaderWrapper extends React.PureComponent {
                     isOpen={isOpen}
                     onToggleSidebar={onToggleSidebar}
                     headerContent={headerContent}
-                    onOpenModal={this.handleOpenModal}
+                    onClickNewPost={this.handleClickNewPost}
                 />
                 {
                     tapIsShow &&
@@ -99,15 +93,6 @@ class HeaderWrapper extends React.PureComponent {
                         onUnmountTap={this.handleUnmountTap}
                     />
                 }
-                <Modal
-                    bsSize="large"
-                    show={postingModalOpen}
-                    onHide={this.handleCloseModal}
-                    backdrop="static"
-                    className="posting-modal"
-                >
-                    <AsyncBoardEditor onCloseModal={this.handleCloseModal} />
-                </Modal>
             </header>
         );
     }

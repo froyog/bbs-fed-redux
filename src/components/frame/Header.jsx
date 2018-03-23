@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
 
 import '../../styles/frame/header.less';
@@ -7,13 +8,13 @@ import logo from '../../assests/logo.png';
 import slogan from '../../assests/slogan.jpg';
 
 
-const Header = ({ isOpen, onToggleSidebar, onOpenModal, headerContent }) => {
+const Header = ({ isOpen, onToggleSidebar, onClickNewPost, headerContent }) => {
     const handleToggleSidebar = () => {
         onToggleSidebar(!isOpen);
     };
-    const handleOpenModal = () => {
-        onOpenModal();
-    };
+    const handleClickNewPost = () => {
+        onClickNewPost();
+    }
     const headerContentStyle = {
         transform: headerContent ? 'translateY(-100%)' : 'none'
     };
@@ -46,7 +47,7 @@ const Header = ({ isOpen, onToggleSidebar, onOpenModal, headerContent }) => {
             <Button
                 className="raised quick-thread" 
                 bsStyle="primary"
-                onClick={handleOpenModal}
+                onClick={handleClickNewPost}
             >
                 发帖
             </Button>
@@ -57,7 +58,7 @@ const Header = ({ isOpen, onToggleSidebar, onOpenModal, headerContent }) => {
 Header.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onToggleSidebar: PropTypes.func.isRequired,
-    onOpenModal: PropTypes.func.isRequired
+    onClickNewPost: PropTypes.func.isRequired,
 };
 
 export default Header;

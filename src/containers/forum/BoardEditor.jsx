@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Prompt } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Modal, Button } from 'react-bootstrap';
+import { Card } from '../../components/common/Card';
 import { InputField } from '../../components/common/Input';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
@@ -30,7 +32,6 @@ const customToolbar = {
 
 class BoardEditor extends React.Component {
     static propTypes = {
-        onCloseModal: PropTypes.func.isRequired,
         newThread: PropTypes.func.isRequired,
         bid: PropTypes.number
     };
@@ -41,10 +42,10 @@ class BoardEditor extends React.Component {
             editorState: EditorState.createEmpty(),
             bid: 0,
             referToThread: false,
-            anonymous: false
+            anonymous: false,
+            hasContent: false,
         };
 
-        this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleEditorStateChange = this.handleEditorStateChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
@@ -57,27 +58,23 @@ class BoardEditor extends React.Component {
         const { tid, error, isFetching } = nextProps;
         if (tid && !error && !isFetching) {
             // success
-            this.handleCloseModal();
             this.setState({
                 referToThread: tid
             });
         }
     }
 
-    handleCloseModal () {
-        const { onCloseModal } = this.props;
-        if (onCloseModal) onCloseModal();
-    }
-
     handleEditorStateChange (editorState) {
         this.setState({
-            editorState
+            editorState,
+            hasContent: editorState.getCurrentContent().hasText()
         });
     }
 
     handleTitleChange ({ target }) {
         this.setState({
-            title: target.value
+            title: target.value,
+            hasContent: target.value.length
         });
     }
 
@@ -101,6 +98,10 @@ class BoardEditor extends React.Component {
 
         const { bid } = this.state;
         if (!bid) return;
+
+        this.setState({
+            hasContent: false
+        });
         
         newThread(bid, title, mdContent, anonymous);
     }
@@ -110,42 +111,45 @@ class BoardEditor extends React.Component {
     }
     
     render () {
-        const { editorState, title, referToThread, bid } = this.state;
+        const { editorState, title, referToThread, bid, hasContent } = this.state;
         const { isFetching, error } = this.props;
         if (referToThread) {
             return <Redirect to={`/forum/thread/${referToThread}/page/1`} />;
         }
 
         return (
-            <div>
-                <Modal.Body>
-                    <InputField
-                        id="title"
-                        text="标题"
-                        placeholder="标题必须超过三个字"
-                        value={title}
-                        fullWidth
-                        onChange={this.handleTitleChange}
-                    />
-                    <BIDSelector 
-                        onBIDSelect={this.handleSelectBID}
-                    />
-                    <Editor
-                        toolbar={customToolbar}
-                        toolbarCustomButtons={[<Attach />]}
-                        editorState={editorState}
-                        onEditorStateChange={this.handleEditorStateChange}
-                        localization={{
-                            locale: 'zh'
-                        }}
-                        placeholder="与天大分享你刚编的故事"
-                        customDecorators={getDecorator(
-                            this.getEditorState, 
-                            this.handleEditorStateChange)}
-                    />
-                </Modal.Body>
-                <Modal.Footer>
+            <Card className="editor-main">
+                <Prompt 
+                    when={hasContent}
+                    message="确定要离开吗？编辑器的内容不会被保存"
+                />
+                <InputField
+                    id="title"
+                    text="标题"
+                    placeholder="标题必须超过三个字"
+                    value={title}
+                    fullWidth
+                    onChange={this.handleTitleChange}
+                />
+                <BIDSelector 
+                    onBIDSelect={this.handleSelectBID}
+                />
+                <Editor
+                    toolbar={customToolbar}
+                    toolbarCustomButtons={[<Attach />]}
+                    editorState={editorState}
+                    onEditorStateChange={this.handleEditorStateChange}
+                    localization={{
+                        locale: 'zh'
+                    }}
+                    placeholder="与天大分享你刚编的故事"
+                    customDecorators={getDecorator(
+                        this.getEditorState, 
+                        this.handleEditorStateChange)}
+                />
+                <footer>
                     <p className="error-message-in-editor">{error}</p>
+
                     {
                         +bid === 193 &&
                         <AnonymousSwitch 
@@ -162,15 +166,16 @@ class BoardEditor extends React.Component {
                     >
                         发表
                     </Button>
-                    <Button
-                        bsStyle="link"
-                        onClick={this.handleCloseModal}
-                        className="flat"
-                    >
-                        关闭
-                    </Button>
-                </Modal.Footer>
-            </div>
+                    <LinkContainer to="/">
+                        <Button
+                            bsStyle="link"
+                            className="flat"
+                        >
+                            返回主页
+                        </Button>
+                    </LinkContainer>
+                </footer>
+            </Card>
         );
     }
 }

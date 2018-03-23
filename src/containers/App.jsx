@@ -10,6 +10,7 @@ import Toast from './common/Toast';
 import Home from './bbs-index/Home';
 import Forum from './forum/ForumList';
 import Board from './forum/BoardWrapper';
+const AsyncBoardEditor = asyncComponent(() => import('./forum/BoardEditor'));
 import Thread from './forum/ThreadWrapper';
 // import UserBase from './profile/UserBase';
 const AsyncUserBase = asyncComponent(() => import('./profile/UserBase'));
@@ -65,6 +66,7 @@ class App extends React.Component {
                             <Redirect exact from="/user" to="/user/me/messages" />
                             <Route exact path="/" component={Home} />
                             <Route exact path="/forum" component={Forum} />
+                            <Route exact path="/forum/thread/new" component={AsyncBoardEditor} />                
                             <Route path="/forum/board/:bid/page/:page" component={Board} />
                             <Route path="/forum/thread/:tid/page/:page" component={Thread} />
                             <Route path="/user/:uid" component={AsyncUserBase} />
