@@ -1,5 +1,3 @@
-import { draftToMarkdown as originalDraftToMarkdown } from 'markdown-draft-js';
-
 export const isEqual = (a, b) => {
     const aProps = Object.getOwnPropertyNames(a);
     const bProps = Object.getOwnPropertyNames(b);
@@ -106,6 +104,8 @@ export const parseUser = (state) => {
     return `${uid}|${token}`;
 };
 
+import { draftToMarkdown as originalDraftToMarkdown } from 'markdown-draft-js';
+
 export const draftToMarkdown = rawObject => originalDraftToMarkdown(rawObject, {
     entityItems: {
         'IMAGE': {
@@ -114,3 +114,16 @@ export const draftToMarkdown = rawObject => originalDraftToMarkdown(rawObject, {
         }
     }
 });
+// re-export for convenient usage
+export { markdownToDraft } from 'markdown-draft-js';
+
+export const customToolbar = {
+    options: ['inline', 'blockType', 'list', 'emoji', 'history'],
+    inline: {
+        options: ['bold', 'italic', 'underline', 'strikethrough', 'monospace']
+    },
+    list: {
+        options: ['unordered', 'ordered']
+    },
+    image: { alignmentEnabled: false }
+};

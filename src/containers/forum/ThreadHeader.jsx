@@ -1,16 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Media, Button } from 'react-bootstrap';
+import { Media, Button, DropdownButton, MenuItem } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
+import { InputField } from '../../components/common/Input';
 import Time from '../../components/common/Time';
 import Avatar from '../../components/common/Avatar';
 import ThreadRenderer from '../../components/forum/ThreadRenderer';
 import Sharing from '../../components/common/Sharing';
 import SwitchButton from './SwitchButton';
 import { showToast } from '../../actions/common/toast';
-import { deleteThread } from '../../actions/forum/board';
+import { deleteThread, editThread } from '../../actions/forum/board';
 import { connect } from 'react-redux';
-import { toJS } from '../../util';
+import { toJS, customToolbar, markdownToDraft, draftToMarkdown } from '../../util';
+
+// editor
+import { getDecorator } from './editor/mention.js';
+import Attach from './editor/Attach';
+import { Editor } from 'react-draft-wysiwyg';
+import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
+
 
 import '../../styles/forum/thread.less';
 
@@ -47,16 +55,67 @@ class ThreadHeader extends React.Component {
         showToast: PropTypes.func.isRequired
     }
 
-    constructor () {
-        super();
+    constructor (props) {
+        super(props);
+        this.state = {
+            isEditing: false,
+            title: props.thread.title,
+            editorState: EditorState.createWithContent(
+                convertFromRaw(markdownToDraft(props.thread.content))
+            )
+        };
 
-        this.handleDeleteThread = this.handleDeleteThread.bind(this);
         this._renderUserName = this._renderUserName.bind(this);
+        this.handleClickOperator = this.handleClickOperator.bind(this);
+        this.handleChangeTitle = this.handleChangeTitle.bind(this);
+        this.handleEditorStateChange = this.handleEditorStateChange.bind(this);
+        this.getEditorState = this.getEditorState.bind(this);
+        this.handleCancelEdit = this.handleCancelEdit.bind(this);
+        this.handleConfirmEdit = this.handleConfirmEdit.bind(this);
     }
 
-    handleDeleteThread () {
+    handleClickOperator (eventKey) {
         const { deleteThread, thread: { id: tid } } = this.props;
-        deleteThread && deleteThread(tid);
+        switch (eventKey) {
+            case 'delete':
+                deleteThread && deleteThread(tid);
+                break;
+            case 'edit':
+                this.setState({
+                    isEditing: true
+                });
+                break;
+            default:
+                break;
+        }
+    }
+
+    handleCancelEdit () {
+        this.setState({
+            isEditing: false
+        });
+    }
+
+    handleConfirmEdit (e) {
+        e.preventDefault();
+        const { editThread, thread: { id: tid } } = this.props;
+        const { title, editorState } = this.state;
+        const mdContent = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
+
+        editThread(tid, title, mdContent);
+    }
+
+    handleChangeTitle ({ target }) {
+        const { id, value } = target;
+        this.setState({
+            [id]: value
+        });
+    }
+
+    handleEditorStateChange (editorState) {
+        this.setState({
+            editorState
+        });
     }
 
     componentWillReceiveProps (nextProps) {
@@ -90,12 +149,96 @@ class ThreadHeader extends React.Component {
         );
     }
 
+    getEditorState () {
+        return this.state.editorState;        
+    }
+
     render () {
         const { thread: { id: tid, authorId, authorName, title, anonymous,
             tCreate, content, inCollection, like, liked 
         }, 
         board: { id, name }, selfUid
         } = this.props;
+
+        const { isEditing, editorState } = this.state;
+
+        const renderOperatorDropDown = authorId === selfUid
+            ? (
+                <DropdownButton
+                    className="operator-dropdown flat"
+                    bsStyle="link"
+                    title="权限"
+                    id="operator-dropdown"
+                    pullRight
+                >   
+                    <MenuItem header>作者</MenuItem>
+                    <MenuItem eventKey="edit" onSelect={this.handleClickOperator}>编辑</MenuItem>
+                    <MenuItem eventKey="delete" onSelect={this.handleClickOperator}>删除</MenuItem>
+                    <MenuItem divider />
+                    <MenuItem header>管理员</MenuItem>
+                    <MenuItem eventKey="0" disabled>设为精华</MenuItem>
+                    <MenuItem eventKey="edit" disabled onSelect={this.handleClickOperator}>编辑</MenuItem>
+                    <MenuItem eventKey="delete" disabled onSelect={this.handleClickOperator}>删除</MenuItem>
+                    <MenuItem eventKey="0" disabled>禁言此作者</MenuItem>
+                    <MenuItem eventKey="0" disabled>锁定</MenuItem>
+                    <MenuItem eventKey="0" disabled>移动至...</MenuItem>
+                </DropdownButton>
+            )
+            : null;
+
+        const renderTitle = isEditing
+            ? (
+                <InputField 
+                    text="标题"
+                    id="edit-title"
+                    onChange={this.handleChangeTitle}
+                    placeholder="标题必须超过三个字"
+                    initialValue={title}
+                    fullWidth                    
+                />
+            )
+            : (
+                <Media.Heading className="thread-title">
+                    <Link to={`/forum/board/${id}/page/1`}>[{name}]</Link>
+                    {title}
+                </Media.Heading>
+            );
+
+        const renderContent = isEditing
+            ? (
+                <div>
+                    <Editor 
+                        toolbar={customToolbar}
+                        toolbarCustomButtons={[<Attach />]}
+                        editorState={editorState}
+                        onEditorStateChange={this.handleEditorStateChange}
+                        localization={{
+                            locale: 'zh'
+                        }}
+                        placeholder="与天大分享你刚编的故事"
+                        customDecorators={getDecorator(
+                            this.getEditorState, 
+                            this.handleEditorStateChange)
+                        }
+                    />
+                    <Button 
+                        bsStyle="primary"
+                        className="raised edit-confirm-button"
+                        onClick={this.handleConfirmEdit}
+                        type="submit"
+                    >
+                        确定
+                    </Button>
+                    <Button 
+                        bsStyle="default"
+                        className="raised"
+                        onClick={this.handleCancelEdit}
+                    >
+                        取消
+                    </Button>
+                </div>
+            )
+            : <ThreadRenderer content={content} />;
 
         return (
             <div className="thread-head">
@@ -109,10 +252,7 @@ class ThreadHeader extends React.Component {
                         />
                     </Media.Left>
                     <Media.Body>
-                        <Media.Heading className="thread-title">
-                            <Link to={`/forum/board/${id}/page/1`}>[{name}]</Link>
-                            {title}
-                        </Media.Heading>
+                        {renderTitle}
                         <p>
                             {this._renderUserName()}
                             <span className="floor text-muted pull-right">#1</span>
@@ -120,8 +260,8 @@ class ThreadHeader extends React.Component {
                         </p>
                     </Media.Body>
                 </Media>
-                <ThreadRenderer content={content} />
-                <div className="clearfix">
+                {renderContent}
+                <div className="clearfix thread-footer">
                     <Sharing
                         className="pull-left"
                         title={title}
@@ -152,18 +292,7 @@ class ThreadHeader extends React.Component {
                                 </Button>;
                             }}
                         </SwitchButton>
-                        {authorId === selfUid
-                            ? (
-                                <Button 
-                                    bsStyle="link" 
-                                    className="flat" 
-                                    onClick={this.handleDeleteThread}
-                                >
-                                    删除
-                                </Button>
-                            )
-                            : null
-                        }
+                        {renderOperatorDropDown}
                     </div>
                 </div>
             </div>
@@ -186,7 +315,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => ({
     deleteThread: tid => dispatch(deleteThread(tid)),
-    showToast: message => dispatch(showToast(message))
+    showToast: message => dispatch(showToast(message)),
+    editThread: (tid, title, content) => dispatch(editThread(tid, title, content))
 });
 ThreadHeader = connect(mapStateToProps, mapDispatchToProps)(toJS(ThreadHeader));
 ThreadHeader = withRouter(ThreadHeader);

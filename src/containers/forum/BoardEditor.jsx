@@ -13,21 +13,9 @@ import { connect } from 'react-redux';
 import { getDecorator } from './editor/mention.js';
 import Attach from './editor/Attach';
 import BIDSelector from './BIDSelector';
-import { toJS, draftToMarkdown } from '../../util';
+import { toJS, draftToMarkdown, customToolbar } from '../../util';
 
 import '../../styles/forum/editor.less';
-
-
-const customToolbar = {
-    options: ['inline', 'blockType', 'list', 'emoji', 'history'],
-    inline: {
-        options: ['bold', 'italic', 'underline', 'strikethrough', 'monospace']
-    },
-    list: {
-        options: ['unordered', 'ordered']
-    },
-    image: { alignmentEnabled: false }
-};
 
 
 class BoardEditor extends React.Component {
@@ -145,7 +133,8 @@ class BoardEditor extends React.Component {
                     placeholder="与天大分享你刚编的故事"
                     customDecorators={getDecorator(
                         this.getEditorState, 
-                        this.handleEditorStateChange)}
+                        this.handleEditorStateChange)
+                    }
                 />
                 <footer>
                     <p className="error-message-in-editor">{error}</p>

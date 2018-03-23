@@ -10,24 +10,10 @@ import AnonymousSwitch from '../../components/forum/AnonymousSwitch';
 import AdvancedSwitch from '../../components/forum/AdvancedSwitch';
 import Attach from './editor/Attach';
 import { getDecorator } from './editor/mention.js';
-import { toJS, draftToMarkdown } from '../../util';
+import { toJS, draftToMarkdown, customToolbar } from '../../util';
 import { fetchNewComment } from '../../actions/forum/thread';
 
 import '../../styles/forum/editor.less';
-
-
-const customToolbar = {
-    options: ['inline', 'blockType', 'list', 'link', 'emoji', 'history'],
-    inline: {
-        options: ['bold', 'italic', 'underline', 'strikethrough', 'monospace']
-    },
-    list: {
-        options: ['unordered', 'ordered']
-    },
-    image: {
-        alignmentEnabled: false
-    }
-};
 
 
 class ThreadEditor extends React.Component {

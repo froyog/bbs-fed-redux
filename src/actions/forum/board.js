@@ -95,3 +95,25 @@ export const deleteThread = tid => (dispatch, getState) => {
         }
     });
 };
+
+// edit
+export const EDIT_THREAD_REQUEST = 'EDIT_THREAD_REQUEST';
+export const EDIT_THREAD_SUCCESS = 'EDIT_THREAD_SUCCESS';
+export const EDIT_THREAD_FAILURE = 'EDIT_THREAD_FAILURE';
+
+export const editThread = (tid, title, content) => (dispatch, getState) => {
+    const authentication = parseUser(getState());
+    dispatch({
+        [CALL_API]: {
+            types: [EDIT_THREAD_REQUEST, EDIT_THREAD_SUCCESS, EDIT_THREAD_FAILURE],
+            apiPath: `thread/${tid}`,
+            body: JSON.stringify({ title, content }),
+            request: {
+                method: 'PUT',
+                headers: {
+                    auth: authentication
+                }
+            }
+        }
+    });
+};
