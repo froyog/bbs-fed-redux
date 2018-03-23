@@ -120,7 +120,7 @@ class BoardEditor extends React.Component {
         return (
             <Card className="editor-main">
                 <Prompt 
-                    when={hasContent}
+                    when={!!hasContent}
                     message="确定要离开吗？编辑器的内容不会被保存"
                 />
                 <InputField
