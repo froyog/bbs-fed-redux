@@ -82,10 +82,10 @@ class ThreadPost extends React.Component {
 
     handleClickReply () {
         // process content fit length and add blockquote
-        const { post: { content, floor, authorName } } = this.props;
+        const { post: { id: replyId, content, floor, authorName } } = this.props;
         const processedContent = this._processContent(content);
         const replyContent = `回复 #${floor} ${authorName}：\n\n${processedContent}`.replace(/^/gm, '> ').trim();
-        this.props.onClickReply(replyContent);
+        this.props.onClickReply(replyId, replyContent);
         // scroll to the bottom of the page
         window.scrollTo(0, document.body.scrollHeight);
     }

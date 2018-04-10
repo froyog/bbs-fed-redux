@@ -59,7 +59,7 @@ class ThreadEditor extends React.Component {
     handleSubmit (e) {
         e.preventDefault();
         const { editorState, anonymous, advancedMode } = this.state;
-        const { tid, fetchNewComment, replyContent } = this.props;
+        const { tid, fetchNewComment, replyContent, replyId } = this.props;
         let content;
         if (advancedMode) {
             content = editorState.getCurrentContent().getPlainText();
@@ -77,7 +77,7 @@ class ThreadEditor extends React.Component {
             content = `${content}\n\n${replyContent}`;
         }
 
-        fetchNewComment(tid, content, anonymous);
+        fetchNewComment(tid, content, anonymous, replyId);
     }
 
     handleCancelReply () {
@@ -169,7 +169,7 @@ const mapStateToProps = state => {
     };
 };
 const mapDispatchToProps = dispatch => ({
-    fetchNewComment: (tid, content, anonymous) => dispatch(fetchNewComment(tid, content, anonymous))
+    fetchNewComment: (tid, content, anonymous, replyId) => dispatch(fetchNewComment(tid, content, anonymous, replyId))
 });
 ThreadEditor = connect(mapStateToProps, mapDispatchToProps)(toJS(ThreadEditor));
 export default ThreadEditor;

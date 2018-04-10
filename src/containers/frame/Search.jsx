@@ -42,14 +42,13 @@ class Search extends React.Component {
             keyword
         });
         if (keyword) {
-            this.props.searchUser(keyword)
+            this.props.searchUser(keyword);
         }
     }
 
     render () {
         const { isFetching, result, error } = this.props;
         const { keyword, isFocus } = this.state;
-        console.log(isFocus);
         
         return (
             <div>
@@ -67,7 +66,7 @@ class Search extends React.Component {
                     />
                 }
             </div>
-        )
+        );
     }
 }
 

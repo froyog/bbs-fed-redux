@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from '../common/Card';
-import { MenuItem } from 'react-bootstrap';
 import Avatar from '../common/Avatar';
 import { Link } from 'react-router-dom';
 
@@ -14,28 +13,28 @@ const SearchOverlay = ({ searchItem, users }) => {
             <hr className="divider" />
             <div className="header">搜索用户</div>
             <ul>
-            {
-                users.length 
-                    ? users.map(user => {
-                        const { id, name } = user;
-                        return (
-                            <Link to={`/user/${id}`} className="search-link">
-                                <li className="search-item" key={id}>
-                                    <Avatar
-                                        name={name}
-                                        id={id}
-                                        className="avatar"
-                                    />
-                                    {name}
-                                </li>
-                            </Link>
-                        );
-                    })
-                    : <li className="search-no-result">找不到用户 {searchItem}</li>
-            }
+                {
+                    users.length 
+                        ? users.map(user => {
+                            const { id, name } = user;
+                            return (
+                                <Link to={`/user/${id}`} className="search-link">
+                                    <li className="search-item" key={id}>
+                                        <Avatar
+                                            name={name}
+                                            id={id}
+                                            className="avatar"
+                                        />
+                                        {name}
+                                    </li>
+                                </Link>
+                            );
+                        })
+                        : <li className="search-no-result">找不到用户 {searchItem}</li>
+                }
             </ul>
         </Card>
-    )
+    );
 };
 
 SearchOverlay.propTypes = {

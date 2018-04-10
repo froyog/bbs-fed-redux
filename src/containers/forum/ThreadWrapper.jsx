@@ -59,7 +59,8 @@ class ThreadWrapper extends React.PureComponent {
         super();
         this.state = {
             activePage: 1,
-            replyContent: ''
+            replyContent: '',
+            replyId: 0
         };
 
         this.handleSelect = this.handleSelect.bind(this);
@@ -92,8 +93,11 @@ class ThreadWrapper extends React.PureComponent {
         history.push(`/forum/thread/${tid}/page/${eventKey}`);
     }
 
-    handleClickReply (replyContent) {
-        this.setState({ replyContent: replyContent });
+    handleClickReply (replyId, replyContent) {
+        this.setState({
+            replyId, 
+            replyContent 
+        });
     }
 
     handleCancelReply () {
@@ -118,7 +122,7 @@ class ThreadWrapper extends React.PureComponent {
     render () {
         const { threadInfo, postList, boardInfo, isFetching, error,
             match: { params: { tid } } } = this.props;
-        const { replyContent } = this.state;
+        const { replyContent, replyId } = this.state;
         if (error) return <ErrorOverlay reason={error} needRefresh />;
         if (!postList || isFetching) return <FetchingOverlay fullPage />;
 
@@ -181,6 +185,7 @@ class ThreadWrapper extends React.PureComponent {
                         onSelect={this.handleSelect} />
                 </Card>
                 <AsyncThreadEditor
+                    replyId={replyId}
                     replyContent={replyContent}
                     onCancelReply={this.handleCancelReply}
                     tid={tid} 

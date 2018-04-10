@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
 
 import '../../styles/frame/header.less';
@@ -14,7 +13,7 @@ const Header = ({ isOpen, onToggleSidebar, onClickNewPost, headerContent }) => {
     };
     const handleClickNewPost = () => {
         onClickNewPost();
-    }
+    };
     const headerContentStyle = {
         transform: headerContent ? 'translateY(-100%)' : 'none'
     };

@@ -57,18 +57,22 @@ export const NEW_COMMENT_REQUEST = 'NEW_COMMENT_REQUEST';
 export const NEW_COMMENT_SUCCESS = 'NEW_COMMENT_SUCCESS';
 export const NEW_COMMENT_FAILURE = 'NEW_COMMENT_FAILURE';
 
-export const fetchNewComment = (tid, content, anonymous) => (dispatch, getState) => {
+export const fetchNewComment = (tid, content, anonymous, replyId) => (dispatch, getState) => {
     const authentication = parseUser(getState());
+    let body = {
+        content,
+        anonymous: Number(anonymous)
+    };
+    if (replyId) {
+        body.reply = replyId;
+    }
     dispatch({
         [CALL_API]: {
             types: [NEW_COMMENT_REQUEST, NEW_COMMENT_SUCCESS, NEW_COMMENT_FAILURE],
             apiPath: `thread/${tid}`,
             request: {
                 method: 'POST',
-                body: JSON.stringify({
-                    content,
-                    anonymous: Number(anonymous)
-                }),
+                body: JSON.stringify(body),
                 headers: {
                     contentType: 'application/json',
                     auth: authentication

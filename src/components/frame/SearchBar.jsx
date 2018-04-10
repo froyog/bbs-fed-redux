@@ -8,7 +8,7 @@ class SearchBar extends React.Component {
     static propTypes = {
         onChange: PropTypes.func.isRequired,
         onFocus: PropTypes.func.isRequired,
-        isBlur: PropTypes.func.isRequired
+        onBlur: PropTypes.func.isRequired
     }
 
     constructor () {
@@ -63,7 +63,7 @@ class SearchBar extends React.Component {
                     onChange={this.handleChange}
                 />
             </div>
-        )
+        );
     }
 }
 
