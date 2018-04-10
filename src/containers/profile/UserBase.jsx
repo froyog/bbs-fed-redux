@@ -61,10 +61,10 @@ class UserBase extends React.Component {
                             cPost={cPost}
                         />
                         <Medal />
-                        {
+                        {/*
                             uid === 'me' &&
                             <Friends />
-                        }
+                        */}
                     </Col>
                 </Row>
             </div>
