@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import asyncComponent from '../../asyncComponent';
-import { Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Search from './Search';
 import { toggleSidebar } from '../../actions/frame/sidebar';
 import { showToast } from '../../actions/common/toast';
 import Header from '../../components/frame/Header';
@@ -87,6 +87,7 @@ class HeaderWrapper extends React.PureComponent {
                     headerContent={headerContent}
                     onClickNewPost={this.handleClickNewPost}
                 />
+                <Search />
                 {
                     tapIsShow &&
                     <FeatureDiscovery 

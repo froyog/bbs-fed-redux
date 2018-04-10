@@ -21,7 +21,6 @@ import { toggleSidebar } from '../actions/frame/sidebar';
 import { initFromLocal } from '../actions/init';
 import { getProfileIfNeeded } from '../actions/profile/profile';
 
-import '../styles/app.less';
 import '../styles/global.less';
 
 
