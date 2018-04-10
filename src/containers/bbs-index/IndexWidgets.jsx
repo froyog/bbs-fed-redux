@@ -62,8 +62,14 @@ AnnounceWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(AnnounceWrap
 
 const AppQRCode = () => {
     return (
-        <Card className="card-small card-home-widget" title="下载客户端">
-            <img className="mobile-qrcode" src={mobileQRCode} alt="Mobile QRcode" />
+        <Card className="card-small card-home-widget" title="">
+            <img 
+                className="mobile-qrcode pull-left" 
+                src={mobileQRCode} 
+                alt="Mobile QRcode" 
+            />
+            <h4 className="qrcode-title">下载客户端</h4>
+            <p className="qrcode-desc">结识天大人，畅仪天下事</p>
         </Card>
     );
 };

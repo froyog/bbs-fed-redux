@@ -25,10 +25,16 @@ class Search extends React.Component {
         this.handleFocus = this.handleFocus.bind(this);
     }
 
+    componentWillUnmount () {
+        clearTimeout(this.timeout);
+    }
+
     handleBlur () {
-        this.setState({
-            isFocus: false
-        });
+        this.timeout = setTimeout(() => {
+            this.setState({
+                isFocus: false
+            });
+        }, 500);
     }
 
     handleFocus () {
