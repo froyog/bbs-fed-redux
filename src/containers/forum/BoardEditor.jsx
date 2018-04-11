@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Prompt } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Modal, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { Card } from '../../components/common/Card';
 import { InputField } from '../../components/common/Input';
 import { Editor } from 'react-draft-wysiwyg';

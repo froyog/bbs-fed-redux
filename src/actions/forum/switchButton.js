@@ -121,6 +121,7 @@ export const likePost = (pid, nextState) => (dispatch, getState) => {
                     auth: authentication
                 }
             }
-        }
+        },
+        requestId: pid
     });
 };

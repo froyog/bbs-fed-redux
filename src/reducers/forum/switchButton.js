@@ -5,7 +5,8 @@ import * as ActionTypes from '../../actions/forum/switchButton';
 const switchButton = (state = fromJS({
     isFetching: false,
     success: '',
-    error: ''
+    error: '',
+    requestId: 0
 }), action) => {
     switch (action.type) {
         case ActionTypes.FOLLOW_BOARD_REQUEST:
@@ -28,6 +29,7 @@ const switchButton = (state = fromJS({
             return Map({
                 'isFetching': false,
                 'success': fromJS(action.json.data),
+                'requestId': action.requestId
             });
         case ActionTypes.FOLLOW_BOARD_FAILURE:
         case ActionTypes.UNFOLLOW_BOARD_FAILURE:
@@ -39,7 +41,8 @@ const switchButton = (state = fromJS({
         case ActionTypes.UNLIKE_POST_FAILURE:
             return Map({
                 'isFetching': false,
-                'error': fromJS(action.error)
+                'error': fromJS(action.error),
+                'requestId': action.requestId
             });
         default:
             return state;

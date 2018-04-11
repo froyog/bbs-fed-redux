@@ -19,22 +19,22 @@ class SwitchButton extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
-            active: props.initialState
+            active: props.initialState || false
         };
 
         this.handleClickButton = this.handleClickButton.bind(this);
         this.callRelatedAction = this.callRelatedAction.bind(this);
     }
 
-    componentWillMount () {
-        this.setState({
-            active: this.props.initialState
-        });
-    }
-
     componentWillReceiveProps (nextProps) {
         const { error, isFetching, showToast } = nextProps;
-        if (error && !isFetching && isFetching !== this.props.isFetching) {
+        if (
+            error && 
+            !isFetching && 
+            isFetching !== this.props.isFetching &&
+            nextProps.requestId === this.props.id
+        ) {
+            console.log(this.state)
             showToast(error);
             this.setState({
                 active: !this.state.active
@@ -85,7 +85,8 @@ const mapStateToProps = state => {
     return {
         isFetching: switchButtonState.get('isFetching'),
         success: switchButtonState.get('success'),
-        error: switchButtonState.get('error')
+        error: switchButtonState.get('error'),
+        requestId: switchButtonState.get('requestId')
     };
 };
 const mapDispatchToProps = dispatch => ({

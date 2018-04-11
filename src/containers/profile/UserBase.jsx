@@ -20,7 +20,9 @@ class UserBase extends React.Component {
 
     componentWillReceiveProps (nextProps) {
         const {selfUid, match, history } = nextProps;
-        if (selfUid === match.params.uid) {
+        console.log(selfUid, match.params.uid);
+        
+        if (selfUid === Number(match.params.uid)) {
             // it is me
             history.push('/user/me/messages');
         }
