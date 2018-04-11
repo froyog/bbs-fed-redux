@@ -101,6 +101,7 @@ class ThreadPost extends React.Component {
         },
         selfUid
         } = this.props;
+        
     
         return (
             <div className="thread-head">
@@ -160,13 +161,15 @@ class ThreadPost extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
-    const deletePostState = state.getIn(['bypassing', 'deletePost']);
+const mapStateToProps = (state, ownProps) => {
+    const deletePostState = state.getIn(['bypassing', 'deletePost', ownProps.post.id]);
     const selfUid = state.getIn(['user', 'uid']);
-    if (!deletePostState) return {};
+    if (!deletePostState) return {
+        selfUid
+    };
 
     return {
-        selfUid: selfUid,
+        selfUid,
         isFetching: deletePostState.get('isFetching'),
         success: deletePostState.get('items'),
         error: deletePostState.get('error')

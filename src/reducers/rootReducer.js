@@ -25,7 +25,8 @@ import { GET_UNREAD_REQUEST, GET_UNREAD_SUCCESS, GET_UNREAD_FAILURE } from '../a
 import { GET_COLLECTIONS_REQUEST, GET_COLLECTIONS_SUCCESS, GET_COLLECTIONS_FAILURE,
     GET_FOLLOWINGS_REQUEST, GET_FOLLOWINGS_SUCCESS, GET_FOLLOWINGS_FAILURE } from '../actions/profile/collections';
 import { LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE } from '../actions/passport/log-io';
-import { DELETE_THREAD_REQUEST, DELETE_THREAD_SUCCESS, DELETE_THREAD_FAILURE } from '../actions/forum/board';
+import { DELETE_THREAD_REQUEST, DELETE_THREAD_SUCCESS, DELETE_THREAD_FAILURE,
+    EDIT_THREAD_REQUEST, EDIT_THREAD_SUCCESS, EDIT_THREAD_FAILURE } from '../actions/forum/board';
 import { DELETE_POST_REQUEST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE } from '../actions/forum/thread';
 import { NEW_REGISTER_REQUEST, NEW_REGISTER_SUCCESS, NEW_REGISTER_FAILURE } from '../actions/passport/register';
 import { SEND_APPEAL_REQUEST, SEND_APPEAL_SUCCESS, SEND_APPEAL_FAILURE } from '../actions/passport/appeal';
@@ -50,7 +51,10 @@ const bypassing = combineReducers({
     followings: bypassingFactory({ types: [GET_FOLLOWINGS_REQUEST, GET_FOLLOWINGS_SUCCESS, GET_FOLLOWINGS_FAILURE] }),
     logout: bypassingFactory({ types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE] }),
     deleteThread: bypassingFactory({ types: [DELETE_THREAD_REQUEST, DELETE_THREAD_SUCCESS, DELETE_THREAD_FAILURE] }),
-    deletePost: bypassingFactory({ types: [DELETE_POST_REQUEST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE] }),
+    deletePost: bypassingFactory({ 
+        types: [DELETE_POST_REQUEST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE],
+        mapActionToKey: action => action.deletePid
+    }),
     newRegister: bypassingFactory({ types: [NEW_REGISTER_REQUEST, NEW_REGISTER_SUCCESS, NEW_REGISTER_FAILURE] }),
     appeal: bypassingFactory({ types: [SEND_APPEAL_REQUEST, SEND_APPEAL_SUCCESS, SEND_APPEAL_FAILURE] }),
     editProfile: bypassingFactory({ types: [EDIT_PROFILE_REQUEST, EDIT_PROFILE_SUCCESS, EDIT_PROFILE_FAILURE] }),
@@ -59,6 +63,7 @@ const bypassing = combineReducers({
     forgetReset: bypassingFactory({ types: [FORGET_RESET_REQUEST, FORGET_RESET_SUCCESS, FORGET_RESET_FAILURE] }),
     oldLogin: bypassingFactory({ types: [OLD_LOGIN_REQUEST, OLD_LOGIN_SUCCESS, OLD_LOGIN_FAILURE] }),
     oldRegister: bypassingFactory({ types: [OLD_REGISTER_REQUEST, OLD_REGISTER_SUCCESS, OLD_REGISTER_FAILURE] }),
+    editThread: bypassingFactory({ types: [EDIT_THREAD_REQUEST, EDIT_THREAD_SUCCESS, EDIT_THREAD_FAILURE] }),
 
 });
 

@@ -98,6 +98,7 @@ export const deletePost = pid => (dispatch, getState) => {
                     auth: authentication
                 }
             }
-        }
+        },
+        deletePid: pid
     });
 };

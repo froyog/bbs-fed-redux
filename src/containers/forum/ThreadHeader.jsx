@@ -157,7 +157,7 @@ class ThreadHeader extends React.Component {
         const { thread: { id: tid, authorId, authorName, title, anonymous,
             tCreate, content, inCollection, like, liked 
         }, 
-        board: { id, name }, selfUid
+        board: { id, name }, selfUid, editThreadState
         } = this.props;
 
         const { isEditing, editorState } = this.state;
@@ -226,6 +226,7 @@ class ThreadHeader extends React.Component {
                         className="raised edit-confirm-button"
                         onClick={this.handleConfirmEdit}
                         type="submit"
+                        disabled={editThreadState.isFetching}
                     >
                         确定
                     </Button>
@@ -236,6 +237,10 @@ class ThreadHeader extends React.Component {
                     >
                         取消
                     </Button>
+                    {
+                        editThreadState.error &&
+                        <p className="error-message">{editThreadState.error}</p>
+                    }
                 </div>
             )
             : <ThreadRenderer content={content} />;
@@ -302,7 +307,8 @@ class ThreadHeader extends React.Component {
 
 
 const mapStateToProps = state => {
-    const deleteThreadState = state.getIn(['bypassing', 'deleteThread']);
+    const deleteThreadState = state.getIn(['bypassing', 'deleteThread']),
+        editThreadState = state.getIn([ 'bypassing', 'editThread' ]);
     const selfUid = state.getIn(['user', 'uid']);
     if (!deleteThreadState) return {};
 
@@ -310,7 +316,8 @@ const mapStateToProps = state => {
         selfUid: selfUid,
         isFetching: deleteThreadState.get('isFetching'),
         success: deleteThreadState.get('items'),
-        error: deleteThreadState.get('error')
+        error: deleteThreadState.get('error'),
+        editThreadState
     };
 };
 const mapDispatchToProps = dispatch => ({

@@ -34,7 +34,7 @@ class SwitchButton extends React.Component {
             isFetching !== this.props.isFetching &&
             nextProps.requestId === this.props.id
         ) {
-            console.log(this.state)
+            console.log(this.state);
             showToast(error);
             this.setState({
                 active: !this.state.active
