@@ -107,10 +107,11 @@ export const editThread = (tid, title, content) => (dispatch, getState) => {
         [CALL_API]: {
             types: [EDIT_THREAD_REQUEST, EDIT_THREAD_SUCCESS, EDIT_THREAD_FAILURE],
             apiPath: `thread/${tid}`,
-            body: JSON.stringify({ title, content }),
             request: {
                 method: 'PUT',
+                body: JSON.stringify({ title, content }),
                 headers: {
+                    contentType: 'application/json',                    
                     auth: authentication
                 }
             }

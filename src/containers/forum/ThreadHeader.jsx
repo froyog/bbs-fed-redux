@@ -11,7 +11,10 @@ import SwitchButton from './SwitchButton';
 import { showToast } from '../../actions/common/toast';
 import { deleteThread, editThread } from '../../actions/forum/board';
 import { connect } from 'react-redux';
-import { toJS, customToolbar, markdownToDraft, draftToMarkdown } from '../../util';
+import { toJS, customToolbar, 
+    markdownToDraft, draftToMarkdown,
+    isAuthorOf, isModeratorOf
+} from '../../util';
 
 // editor
 import { getDecorator } from './editor/mention.js';
@@ -119,7 +122,7 @@ class ThreadHeader extends React.Component {
     }
 
     componentWillReceiveProps (nextProps) {
-        const { isFetching, error, showToast, board: { id: bid } } = nextProps;
+        const { isFetching, error, showToast, board: { id: bid }, editThreadState } = nextProps;
         if (!isFetching && isFetching !== this.props.isFetching) {
             if (error) {
                 showToast(error);
@@ -128,6 +131,13 @@ class ThreadHeader extends React.Component {
                 // go back to board
                 this.props.history.replace(`/forum/board/${bid}/page/1`);
             }
+        }
+        if (
+            !editThreadState.isFetching &&
+            editThreadState.isFetching !== this.props.editThreadState.isFetching &&
+            !editThreadState.error
+        ) {
+            this.props.onEditSuccess(1);
         }
     }
 
@@ -157,13 +167,15 @@ class ThreadHeader extends React.Component {
         const { thread: { id: tid, authorId, authorName, title, anonymous,
             tCreate, content, inCollection, like, liked 
         }, 
-        board: { id, name }, selfUid, editThreadState
+        board: { id: bid, name, forumId: fid },
+        selfUid, selfGroup, selfModerate, editThreadState
         } = this.props;
 
         const { isEditing, editorState } = this.state;
 
-        const renderOperatorDropDown = authorId === selfUid
-            ? (
+        const isAuthor = isAuthorOf(authorId, selfUid);
+        const isModerator = isModeratorOf(selfModerate, selfGroup, bid, fid);
+        const renderOperatorDropDown = (
                 <DropdownButton
                     className="operator-dropdown flat"
                     bsStyle="link"
@@ -172,19 +184,42 @@ class ThreadHeader extends React.Component {
                     pullRight
                 >   
                     <MenuItem header>作者</MenuItem>
-                    <MenuItem eventKey="edit" onSelect={this.handleClickOperator}>编辑</MenuItem>
-                    <MenuItem eventKey="delete" onSelect={this.handleClickOperator}>删除</MenuItem>
+                    <MenuItem 
+                        eventKey="edit" 
+                        onSelect={this.handleClickOperator}
+                        disabled={!isAuthor}
+                    >
+                        编辑
+                    </MenuItem>
+                    <MenuItem 
+                        eventKey="delete" 
+                        onSelect={this.handleClickOperator}
+                        disabled={!isAuthor}
+                    >
+                        删除
+                    </MenuItem>
                     <MenuItem divider />
                     <MenuItem header>管理员</MenuItem>
                     <MenuItem eventKey="0" disabled>设为精华</MenuItem>
-                    <MenuItem eventKey="edit" disabled onSelect={this.handleClickOperator}>编辑</MenuItem>
-                    <MenuItem eventKey="delete" disabled onSelect={this.handleClickOperator}>删除</MenuItem>
+                    <MenuItem 
+                        eventKey="edit" 
+                        disabled={!isModerator} 
+                        onSelect={this.handleClickOperator}
+                    >
+                        编辑
+                    </MenuItem>
+                    <MenuItem 
+                        eventKey="delete" 
+                        disabled={!isModerator}
+                        onSelect={this.handleClickOperator}
+                    >
+                        删除
+                    </MenuItem>
                     <MenuItem eventKey="0" disabled>禁言此作者</MenuItem>
                     <MenuItem eventKey="0" disabled>锁定</MenuItem>
                     <MenuItem eventKey="0" disabled>移动至...</MenuItem>
                 </DropdownButton>
-            )
-            : null;
+        );
 
         const renderTitle = isEditing
             ? (
@@ -199,7 +234,7 @@ class ThreadHeader extends React.Component {
             )
             : (
                 <Media.Heading className="thread-title">
-                    <Link to={`/forum/board/${id}/page/1`}>[{name}]</Link>
+                    <Link to={`/forum/board/${bid}/page/1`}>[{name}]</Link>
                     {title}
                 </Media.Heading>
             );
@@ -309,11 +344,15 @@ class ThreadHeader extends React.Component {
 const mapStateToProps = state => {
     const deleteThreadState = state.getIn(['bypassing', 'deleteThread']),
         editThreadState = state.getIn([ 'bypassing', 'editThread' ]);
-    const selfUid = state.getIn(['user', 'uid']);
+    const selfUid = state.getIn(['user', 'uid']),
+          selfModerate = state.getIn(['user', 'moderator']),
+          selfGroup = state.getIn(['user', 'group']);
     if (!deleteThreadState) return {};
 
     return {
-        selfUid: selfUid,
+        selfUid,
+        selfModerate,
+        selfGroup,
         isFetching: deleteThreadState.get('isFetching'),
         success: deleteThreadState.get('items'),
         error: deleteThreadState.get('error'),

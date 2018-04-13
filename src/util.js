@@ -127,3 +127,38 @@ export const customToolbar = {
     },
     image: { alignmentEnabled: false }
 };
+
+// accessment
+/**
+ * Determine whether this user is the author of the thread or post he is viewing.
+ * @param {number} authorId - author ID of a thread or post
+ * @param {number} selfUid - ID of this user
+ * @returns {boolean}
+ */
+export const isAuthorOf = (authorId, selfUid) => Boolean(authorId === selfUid);
+
+/**
+ * Determine whether this user is able to modify or delete a thread or post.
+ * @param {object} selfModerate - object consist of boards and forums this user mmoderate
+ * @param {number} selfGroup - group of this user
+ * @param {number} boardId - current board ID
+ * @param {number} forumId - current forum ID
+ * @returns {boolean}
+ */
+export const isModeratorOf = (selfModerate, selfGroup, boardId, forumId) => {
+    if (selfGroup === 2) {
+        return true;
+    }
+    if (!selfModerate || !isGroup || !boardId || !forumId) return false;
+    const { 
+        board: boardModerateArray, 
+        forum: forumModerateArray 
+    } = selfModerate;
+    if (
+        boardModerateArray.indexOf(boardId) !== -1 ||
+        forumModerateArray.indexOf(forumId) !== -1
+    ) {
+        return true;
+    }
+    return false;
+}

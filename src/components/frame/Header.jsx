@@ -30,18 +30,19 @@ const Header = ({ isOpen, onToggleSidebar, onClickNewPost, headerContent }) => {
                 </button>
             </div>
             <img className="logo" src={logo} alt="logo" />
-
-            <div 
-                className="header-content" 
-                style={headerContentStyle}
-            >
-                <section>
-                    <img className="slogan" src={slogan} alt="slogan" />
-                    
-                </section>
-                <section>
-                    {headerContent}
-                </section>
+            <div className="header-content-wrapper">
+                <div 
+                    className="header-content" 
+                    style={headerContentStyle}
+                >
+                    <section>
+                        <img className="slogan" src={slogan} alt="slogan" />
+                        
+                    </section>
+                    <section>
+                        {headerContent}
+                    </section>
+                </div>
             </div>
             <Button
                 className="raised quick-thread" 

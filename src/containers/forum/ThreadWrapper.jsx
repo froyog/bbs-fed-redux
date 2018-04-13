@@ -66,7 +66,7 @@ class ThreadWrapper extends React.PureComponent {
         this.handleSelect = this.handleSelect.bind(this);
         this.handleClickReply = this.handleClickReply.bind(this);
         this.handleCancelReply = this.handleCancelReply.bind(this);
-        this.handleRefreshLastPage = this.handleRefreshLastPage.bind(this);
+        this.handleRefreshPage = this.handleRefreshPage.bind(this);
     }
 
     componentWillMount() {
@@ -104,24 +104,29 @@ class ThreadWrapper extends React.PureComponent {
         this.setState({ replyContent: '' });
     }
 
-    handleRefreshLastPage () {
+    handleRefreshPage (page) {
         const { threadInfo: { cPost }, 
             getThreadPage,
             refreshThread, 
             match: { params: { tid } } } = this.props;
         
-        const lastPage = Math.ceil((cPost + 1) / 50);
+        let targetPage;
+        if (page === 'last') {
+            targetPage = String(Math.ceil((cPost + 1) / 50));
+        } else {
+            targetPage = page ? String(page) : '1';
+        }
         
-        refreshThread(lastPage + '');
-        getThreadPage(+tid, lastPage + '');
+        refreshThread(targetPage);
+        getThreadPage(+tid, targetPage);
         this.setState({
             replyContent: ''
         });
     }
 
     render () {
-        const { threadInfo, postList, boardInfo, isFetching, error,
-            match: { params: { tid } } } = this.props;
+        const { threadInfo, postList, boardInfo, isFetching, 
+            error, match: { params: { tid } } } = this.props;
         const { replyContent, replyId } = this.state;
         if (error) return <ErrorOverlay reason={error} needRefresh />;
         if (!postList || isFetching) return <FetchingOverlay fullPage />;
@@ -133,10 +138,9 @@ class ThreadWrapper extends React.PureComponent {
                 key={post.id}
                 post={post}
                 onClickReply={this.handleClickReply} 
-                onDeleteSuccess={this.handleRefreshLastPage}
+                onDeleteSuccess={this.handleRefreshPage}
             />
         );
-
         return (
             <div>
                 <Breadcrumb>
@@ -156,20 +160,9 @@ class ThreadWrapper extends React.PureComponent {
                             thread={threadInfo}
                             board={boardInfo}
                             onClickReply={this.handleClickReply} 
+                            onEditSuccess={this.handleRefreshPage}
                         /> 
                     }
-                    {/*<Pagination
-                        prev
-                        next
-                        first
-                        last
-                        ellipsis
-                        boundaryLinks
-                        maxButtons={3}
-                        bsSize="medium"
-                        items={Math.ceil(cPost / 50)}
-                        activePage={this.state.activePage}
-                        onSelect={this.handleSelect} />*/}
                     {renderPostList}
                     <Pagination
                         prev
@@ -188,8 +181,8 @@ class ThreadWrapper extends React.PureComponent {
                     replyId={replyId}
                     replyContent={replyContent}
                     onCancelReply={this.handleCancelReply}
-                    tid={tid} 
-                    onCommentSuccess={this.handleRefreshLastPage} 
+                    tid={tid}
+                    onCommentSuccess={this.handleRefreshPage}
                     allowAnonymous={allowAnonymous}
                 />
             </div>

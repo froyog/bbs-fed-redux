@@ -124,7 +124,7 @@ class BoardWrapper extends React.Component {
         const paginationItems = type === 'elite' ? cElite : cThread;
         const renderModerator = moderator.map(admin => {
             const { uid, name } = admin;
-            return <Link className="admin-name" to={`/user/${uid}`}>{name}</Link>;
+            return <Link className="admin-name" to={`/user/${uid}`}>{name} </Link>;
         });
         let renderThreads;
         if (paginationItems <= 0) {
