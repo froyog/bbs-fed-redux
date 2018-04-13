@@ -158,7 +158,7 @@ class IndexRankWrapper extends React.Component {
 
     render () {
         const { isFetching, rankData, error } = this.props;
-        if (!rankData || error) return null;
+        if (!rankData || !rankData.length || error) return null;
 
         return (
             <Card 
