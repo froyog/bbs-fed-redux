@@ -146,10 +146,10 @@ export const isAuthorOf = (authorId, selfUid) => Boolean(authorId === selfUid);
  * @returns {boolean}
  */
 export const isModeratorOf = (selfModerate, selfGroup, boardId, forumId) => {
+    if (!selfModerate || !selfGroup || !boardId || !forumId) return false;
     if (selfGroup === 2) {
         return true;
     }
-    if (!selfModerate || !isGroup || !boardId || !forumId) return false;
     const { 
         board: boardModerateArray, 
         forum: forumModerateArray 
@@ -161,4 +161,4 @@ export const isModeratorOf = (selfModerate, selfGroup, boardId, forumId) => {
         return true;
     }
     return false;
-}
+};

@@ -9,7 +9,7 @@ import SwitchButton from './SwitchButton';
 import { showToast } from '../../actions/common/toast';
 import { deletePost } from '../../actions/forum/thread';
 import { connect } from 'react-redux';
-import { toJS } from '../../util';
+import { toJS, isAuthorOf, isModeratorOf } from '../../util';
 
 
 class ThreadPost extends React.Component {
@@ -99,9 +99,24 @@ class ThreadPost extends React.Component {
         const { post: { id: pid, authorId, authorName, 
             floor, anonymous, tCreate, content, liked, like 
         },
-        selfUid
+        board: { boardId, forumId },
+        selfUid, selfGroup, selfModerate
         } = this.props;
-        
+        let renderDeleteButton = null;
+        if (
+            isAuthorOf(authorId, selfUid) || 
+            isModeratorOf(selfModerate, selfGroup, boardId, forumId)
+        ) {
+            renderDeleteButton = (
+                <Button 
+                    bsStyle="link" 
+                    className="flat" 
+                    onClick={this.handleDeletePost}
+                >
+                    删除
+                </Button>
+            );
+        }
     
         return (
             <div className="thread-head">
@@ -142,18 +157,7 @@ class ThreadPost extends React.Component {
                                 </Button>;
                             }}
                         </SwitchButton>
-                        {authorId === selfUid
-                            ? (
-                                <Button 
-                                    bsStyle="link" 
-                                    className="flat" 
-                                    onClick={this.handleDeletePost}
-                                >
-                                删除
-                                </Button>
-                            )
-                            : null
-                        }
+                        {renderDeleteButton}
                     </footer>
                 </Media>
             </div>
@@ -163,13 +167,19 @@ class ThreadPost extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     const deletePostState = state.getIn(['bypassing', 'deletePost', ownProps.post.id]);
-    const selfUid = state.getIn(['user', 'uid']);
+    const selfUid = state.getIn(['user', 'uid']),
+          selfGroup = state.getIn(['user', 'group']),
+          selfModerate = state.getIn(['user', 'moderator']);
     if (!deletePostState) return {
-        selfUid
+        selfUid,
+        selfGroup,
+        selfModerate
     };
 
     return {
         selfUid,
+        selfGroup,
+        selfModerate,
         isFetching: deletePostState.get('isFetching'),
         success: deletePostState.get('items'),
         error: deletePostState.get('error')

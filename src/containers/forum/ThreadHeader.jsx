@@ -176,49 +176,49 @@ class ThreadHeader extends React.Component {
         const isAuthor = isAuthorOf(authorId, selfUid);
         const isModerator = isModeratorOf(selfModerate, selfGroup, bid, fid);
         const renderOperatorDropDown = (
-                <DropdownButton
-                    className="operator-dropdown flat"
-                    bsStyle="link"
-                    title="权限"
-                    id="operator-dropdown"
-                    pullRight
-                >   
-                    <MenuItem header>作者</MenuItem>
-                    <MenuItem 
-                        eventKey="edit" 
-                        onSelect={this.handleClickOperator}
-                        disabled={!isAuthor}
-                    >
+            <DropdownButton
+                className="operator-dropdown flat"
+                bsStyle="link"
+                title="权限"
+                id="operator-dropdown"
+                pullRight
+            >   
+                <MenuItem header>作者</MenuItem>
+                <MenuItem 
+                    eventKey="edit" 
+                    onSelect={this.handleClickOperator}
+                    disabled={!isAuthor}
+                >
                         编辑
-                    </MenuItem>
-                    <MenuItem 
-                        eventKey="delete" 
-                        onSelect={this.handleClickOperator}
-                        disabled={!isAuthor}
-                    >
+                </MenuItem>
+                <MenuItem 
+                    eventKey="delete" 
+                    onSelect={this.handleClickOperator}
+                    disabled={!isAuthor}
+                >
                         删除
-                    </MenuItem>
-                    <MenuItem divider />
-                    <MenuItem header>管理员</MenuItem>
-                    <MenuItem eventKey="0" disabled>设为精华</MenuItem>
-                    <MenuItem 
-                        eventKey="edit" 
-                        disabled={!isModerator} 
-                        onSelect={this.handleClickOperator}
-                    >
+                </MenuItem>
+                <MenuItem divider />
+                <MenuItem header>管理员</MenuItem>
+                <MenuItem eventKey="0" disabled>设为精华</MenuItem>
+                <MenuItem 
+                    eventKey="edit" 
+                    disabled={!isModerator} 
+                    onSelect={this.handleClickOperator}
+                >
                         编辑
-                    </MenuItem>
-                    <MenuItem 
-                        eventKey="delete" 
-                        disabled={!isModerator}
-                        onSelect={this.handleClickOperator}
-                    >
+                </MenuItem>
+                <MenuItem 
+                    eventKey="delete" 
+                    disabled={!isModerator}
+                    onSelect={this.handleClickOperator}
+                >
                         删除
-                    </MenuItem>
-                    <MenuItem eventKey="0" disabled>禁言此作者</MenuItem>
-                    <MenuItem eventKey="0" disabled>锁定</MenuItem>
-                    <MenuItem eventKey="0" disabled>移动至...</MenuItem>
-                </DropdownButton>
+                </MenuItem>
+                <MenuItem eventKey="0" disabled>禁言此作者</MenuItem>
+                <MenuItem eventKey="0" disabled>锁定</MenuItem>
+                <MenuItem eventKey="0" disabled>移动至...</MenuItem>
+            </DropdownButton>
         );
 
         const renderTitle = isEditing
@@ -345,8 +345,8 @@ const mapStateToProps = state => {
     const deleteThreadState = state.getIn(['bypassing', 'deleteThread']),
         editThreadState = state.getIn([ 'bypassing', 'editThread' ]);
     const selfUid = state.getIn(['user', 'uid']),
-          selfModerate = state.getIn(['user', 'moderator']),
-          selfGroup = state.getIn(['user', 'group']);
+        selfModerate = state.getIn(['user', 'moderator']),
+        selfGroup = state.getIn(['user', 'group']);
     if (!deleteThreadState) return {};
 
     return {

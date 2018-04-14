@@ -136,6 +136,7 @@ class ThreadWrapper extends React.PureComponent {
         const renderPostList = postList.map(post =>
             <ThreadPost
                 key={post.id}
+                board={boardInfo}
                 post={post}
                 onClickReply={this.handleClickReply} 
                 onDeleteSuccess={this.handleRefreshPage}
