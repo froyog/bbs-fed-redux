@@ -78,7 +78,7 @@ class SearchWrapper extends React.Component {
                     <li>请减少查询字词的数量。</li>
                 </ul>
             </div>
-        )
+        );
 
         return (
             <Card title={`帖子“${params.keyword}”搜索结果`} className="card-search">
@@ -99,7 +99,7 @@ class SearchWrapper extends React.Component {
                     </Pager.Item>
                 </Pager>
             </Card>
-        )
+        );
     }
 }
 
@@ -111,7 +111,7 @@ const mapStateToProps = state => {
         isFetching: searchState.get('isFetching'),
         result: searchState.get('items'),
         error: searchState.get('error')
-    }
+    };
 };
 const mapDispatchToProps = dispatch => ({
     search: (keyword, page) => dispatch(searchThread(keyword, page))

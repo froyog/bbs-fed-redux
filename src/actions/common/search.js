@@ -23,5 +23,5 @@ export const searchThread = (keyword, page) => dispatch => {
             types: [SEARCH_THREAD_REQUEST, SEARCH_THREAD_SUCCESS, SEARCH_THREAD_FAILURE],
             apiPath: `search/page/${page-1}?keyword=${keyword}`
         }
-    })
-}
+    });
+};

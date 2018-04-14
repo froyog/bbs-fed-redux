@@ -168,8 +168,8 @@ class ThreadPost extends React.Component {
 const mapStateToProps = (state, ownProps) => {
     const deletePostState = state.getIn(['bypassing', 'deletePost', ownProps.post.id]);
     const selfUid = state.getIn(['user', 'uid']),
-          selfGroup = state.getIn(['user', 'group']),
-          selfModerate = state.getIn(['user', 'moderator']);
+        selfGroup = state.getIn(['user', 'group']),
+        selfModerate = state.getIn(['user', 'moderator']);
     if (!deletePostState) return {
         selfUid,
         selfGroup,
