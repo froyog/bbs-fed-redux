@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const SearchOverlay = ({ searchItem, users }) => {
     return (
         <Card className="search-overlay">
-            <Link to={`/search/${searchItem}`} className="search-link">
+            <Link to={`/search/${searchItem}/page/1`} className="search-link">
                 <div className="search-item">搜索帖子：{searchItem}</div>
             </Link>
             <hr className="divider" />

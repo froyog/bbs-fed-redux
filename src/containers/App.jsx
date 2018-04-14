@@ -15,6 +15,8 @@ import Thread from './forum/ThreadWrapper';
 // import UserBase from './profile/UserBase';
 const AsyncUserBase = asyncComponent(() => import('./profile/UserBase'));
 import Rank from './rank/Rank';
+import Search from './search/Search';
+
 import { connect } from 'react-redux';
 import { isMobile } from '../util.js';
 import { toggleSidebar } from '../actions/frame/sidebar';
@@ -70,6 +72,7 @@ class App extends React.Component {
                             <Route path="/forum/thread/:tid/page/:page" component={Thread} />
                             <Route path="/user/:uid" component={AsyncUserBase} />
                             <Route path="/rank" component={Rank} />
+                            <Route path="/search/:keyword/page/:page" component={Search} />
                             <Redirect from="*" to="/404" />
                         </Switch>
                     </Grid>

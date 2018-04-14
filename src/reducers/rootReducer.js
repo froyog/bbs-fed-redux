@@ -36,6 +36,7 @@ import { FORGET_AUTH_REQUEST, FORGET_AUTH_SUCCESS, FORGET_AUTH_FAILURE,
     FORGET_RESET_REQUEST, FORGET_RESET_SUCCESS, FORGET_RESET_FAILURE } from '../actions/passport/forget';
 import { OLD_LOGIN_REQUEST, OLD_LOGIN_SUCCESS, OLD_LOGIN_FAILURE,
     OLD_REGISTER_REQUEST, OLD_REGISTER_SUCCESS, OLD_REGISTER_FAILURE } from '../actions/passport/old';
+import { SEARCH_THREAD_REQUEST, SEARCH_THREAD_SUCCESS, SEARCH_THREAD_FAILURE } from '../actions/common/search';
 
 const bypassing = combineReducers({
     sendPrivateMessage: bypassingFactory({
@@ -64,7 +65,8 @@ const bypassing = combineReducers({
     oldLogin: bypassingFactory({ types: [OLD_LOGIN_REQUEST, OLD_LOGIN_SUCCESS, OLD_LOGIN_FAILURE] }),
     oldRegister: bypassingFactory({ types: [OLD_REGISTER_REQUEST, OLD_REGISTER_SUCCESS, OLD_REGISTER_FAILURE] }),
     editThread: bypassingFactory({ types: [EDIT_THREAD_REQUEST, EDIT_THREAD_SUCCESS, EDIT_THREAD_FAILURE] }),
-
+    searchThread: bypassingFactory({ types: [SEARCH_THREAD_REQUEST, SEARCH_THREAD_SUCCESS, SEARCH_THREAD_FAILURE] }),
+    
 });
 
 const combinedReducer = combineReducers({
