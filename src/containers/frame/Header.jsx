@@ -59,12 +59,12 @@ class HeaderWrapper extends React.PureComponent {
     }
 
     handleClickNewPost () {
-        const { isLogin, showToast, history } = this.props;
+        const { isLogin, showToast, history, currentBoardInfo } = this.props;
         if (!isLogin) {
             showToast('您未登录');
             return;
         }
-        history.push('/forum/thread/new');
+        history.push('/forum/thread/new', { currentBoardInfo: currentBoardInfo });
     }
 
     handleUnmountTap () {
@@ -105,17 +105,23 @@ HeaderWrapper.propTypes = {
     path: PropTypes.string.isRequired
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
     const thread = state.getIn(['thread', '1']);
-    let threadTitle;
+    let threadTitle, result, currentBoardInfo;
     if (thread && !thread.get('isFetching')) {
         threadTitle = thread.getIn(['threadInfo', 'title']);
+    }
+    // eslint-disable-next-line    
+    if (result = /^\/forum\/board\/(\d+)\/page/.exec(ownProps.location.pathname)) {
+        let bid = result[1];
+        currentBoardInfo = state.getIn(['board', bid, 'boardInfo']);
     }
 
     return {
         isLogin: !!(state.getIn(['user', 'uid'])),
         isOpen: state.get('sidebarIsOpen'),
-        threadTitle: threadTitle
+        threadTitle,
+        currentBoardInfo
     };
 };
 const mapDispatchToProps = dispatch => ({

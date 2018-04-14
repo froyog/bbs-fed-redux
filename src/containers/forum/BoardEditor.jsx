@@ -100,7 +100,7 @@ class BoardEditor extends React.Component {
     
     render () {
         const { editorState, title, referToThread, bid, hasContent } = this.state;
-        const { isFetching, error } = this.props;
+        const { isFetching, error, location: { state: locationState } } = this.props;
         if (referToThread) {
             return <Redirect to={`/forum/thread/${referToThread}/page/1`} />;
         }
@@ -121,6 +121,7 @@ class BoardEditor extends React.Component {
                 />
                 <BIDSelector 
                     onBIDSelect={this.handleSelectBID}
+                    currentBoardInfo={locationState.currentBoardInfo}
                 />
                 <Editor
                     toolbar={customToolbar}

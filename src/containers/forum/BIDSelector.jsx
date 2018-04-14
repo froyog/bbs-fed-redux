@@ -87,21 +87,11 @@ class BIDSelector extends React.Component {
 }
 
 
-const mapStateToProps = (state, ownProps) => {
-    let currentBoardInfo, result;
-    // eslint-disable-next-line
-    if (result = /^\/forum\/board\/(\d{3})\/page/.exec(ownProps.location.pathname)) {
-        let bid = result[1];
-        currentBoardInfo = state.getIn(['board', bid, 'boardInfo']);
-    }
-
-    return {
-        forumIsFetching: state.getIn(['forumList', 'isFetching']),
-        forumList: state.getIn(['forumList', 'items']),
-        boardList: state.get('boardList'),
-        currentBoardInfo: currentBoardInfo
-    };
-};
+const mapStateToProps = (state, ownProps) => ({
+    forumIsFetching: state.getIn(['forumList', 'isFetching']),
+    forumList: state.getIn(['forumList', 'items']),
+    boardList: state.get('boardList'),
+});
 const mapDispatchToProps = dispatch => ({
     getForumList: () => dispatch(getForumList()),
     getBoardList: fid => dispatch(getBoardList(fid))
