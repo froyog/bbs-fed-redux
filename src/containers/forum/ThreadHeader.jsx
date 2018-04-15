@@ -109,9 +109,9 @@ class ThreadHeader extends React.Component {
     }
 
     handleChangeTitle ({ target }) {
-        const { id, value } = target;
+        const { value } = target;
         this.setState({
-            [id]: value
+            title: value
         });
     }
 
