@@ -1,25 +1,31 @@
 import { CALL_API } from '../middlewares/callApi';
+import { parseUser } from '../util';
 
 // Get top ten threads for index
 export const GET_TOPTEN_REQUEST = 'GET_TOPTEN_REQUEST';
 export const GET_TOPTEN_SUCCESS = 'GET_TOPTEN_SUCCESS';
 export const GET_TOPTEN_FAILURE = 'GET_TOPTEN_FAILURE';
 
-// Fetch top ten threads
-const fetchTopTen = () => ({
-    [CALL_API]: {
-        types: [GET_TOPTEN_REQUEST, GET_TOPTEN_SUCCESS, GET_TOPTEN_FAILURE],
-        apiPath: 'index/hot'
-    }
-});
-
 // Fetch request depends on cache
 export const getTopTen = () => (dispatch, getState) => {
     const topTen = getState().getIn(['bbsIndex', 'topTen']);
+    
     if (topTen) {
         return null;
     }
-    return dispatch(fetchTopTen());
+    
+    const authentication = parseUser(getState());
+    return dispatch({
+        [CALL_API]: {
+            types: [GET_TOPTEN_REQUEST, GET_TOPTEN_SUCCESS, GET_TOPTEN_FAILURE],
+            apiPath: 'index/hot',
+            request: {
+                headers: {
+                    auth: authentication
+                }
+            }
+        }
+    });
 };
 
 
@@ -46,10 +52,16 @@ const shouldFetchLatest = (latestNode) => {
 // No cache for latest
 export const getLatest = page => (dispatch, getState) => {
     if (shouldFetchLatest(getState().get('latest'))) {
+        const authentication = parseUser(getState());
         return dispatch({
             [CALL_API]: {
                 types: [GET_LATEST_REQUEST, GET_LATEST_SUCCESS, GET_LATEST_FAILURE],
-                apiPath: `index/latest?p=${page}`
+                apiPath: `index/latest?p=${page}`,
+                request: {
+                    headers: {
+                        auth: authentication
+                    }
+                }
             },
             page: page
         });
