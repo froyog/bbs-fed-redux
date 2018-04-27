@@ -46,7 +46,7 @@ class App extends React.Component {
     }
 
     render () {
-        const { isOpen, location } = this.props;
+        const { isOpen, location, redirectLogin } = this.props;
         const mainStyle = {
             [isMobile() ? 'left' : 'marginLeft']: `${isOpen ? '200px' : '0'}`
         };
@@ -54,6 +54,9 @@ class App extends React.Component {
         if (paths) {
             const tid = paths[1];
             return <Redirect to={`/forum/thread/${tid}/page/1`} />;
+        }
+        if (redirectLogin) {
+            return <Redirect to="/passport/login" />;
         }
 
         return (
@@ -83,7 +86,8 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    isOpen: state.get('sidebarIsOpen')
+    isOpen: state.get('sidebarIsOpen'),
+    redirectLogin: state.get('redirectLogin')
 });
 const mapDispatchToProps = dispatch => ({
     onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus)),
