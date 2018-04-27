@@ -94,7 +94,11 @@ const combinedReducer = combineReducers({
 const crossSliceReducer = (state, action) => {
     switch (action.type) {
         case 'LOGIN_SUCCESS':
-            return state.set('user', fromJS(action.json.data));
+            return state.set(
+                'user', fromJS(action.json.data)
+            ).set(
+                'redirectLogin', false
+            );
         case 'GET_SELF_PROFILE_SUCCESS':
             const selfUid = state.getIn(['user', 'uid']);
             return state.setIn(
@@ -105,7 +109,7 @@ const crossSliceReducer = (state, action) => {
             return state.set('user', fromJS(action.userFromLocal));
         case 'LOGOUT_SUCCESS':
         case 'GET_SELF_PROFILE_FAILURE':
-            return state.set('user', null);
+            return state.set('user', null).set('redirectLogin', true);
         case 'SEND_READ_SUCCESS':
             return state.setIn(['bypassing', 'unreadMessage', 'items'], 0);
         default:
