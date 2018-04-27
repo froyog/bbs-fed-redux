@@ -1,5 +1,5 @@
 import { CALL_API } from '../middlewares/callApi';
-import { parseUser } from '../../util';
+import { parseUser } from '../util';
 
 // Get top ten threads for index
 export const GET_TOPTEN_REQUEST = 'GET_TOPTEN_REQUEST';
