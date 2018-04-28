@@ -10,7 +10,7 @@ export const GET_TOPTEN_FAILURE = 'GET_TOPTEN_FAILURE';
 export const getTopTen = () => (dispatch, getState) => {
     const topTen = getState().getIn(['bbsIndex', 'topTen']);
     
-    if (topTen) {
+    if (topTen && !topTen.error) {
         return null;
     }
     
