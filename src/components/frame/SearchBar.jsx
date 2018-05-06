@@ -29,7 +29,6 @@ class SearchBar extends React.Component {
     }
 
     handleFocus () {
-        console.log('on focus')
         this.props.onFocus && this.props.onFocus();   
     }
 
