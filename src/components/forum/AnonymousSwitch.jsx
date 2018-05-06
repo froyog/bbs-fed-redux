@@ -32,7 +32,7 @@ class AnonymousSwitch extends React.Component {
         const { className } = this.props;
         return (
             <div 
-                className={`clearfix${className ? ' ' + className : ''}`}
+                className={`clearfix${className ? ' ' + className : ''} pull-left`}
                 onClick={this.handleClickSwitch}
             >
                 <div className={`material-switch pull-left${active ? ' enabled' : ''}`}>
