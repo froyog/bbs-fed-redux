@@ -9,7 +9,6 @@ import NotFound from './components/NotFound';
 import Passport from './containers/passport/Passport';
 import ImageContainer from './containers/common/ImageContainer';
 
-import './styles/bootstrap.min.css';
 import './styles/icon-font/iconfont.css';
 
 
