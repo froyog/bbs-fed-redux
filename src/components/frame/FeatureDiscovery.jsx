@@ -76,8 +76,7 @@ class FeatureDiscovery extends React.Component {
                         </ul>
                     </section>
                     <footer>
-                        从2.1.1版本开始，更新说明只保留最新更新和历次重要更新内容，如果您想了解历史更新记录，
-                        请前往<Link to="/forum/thread/172517/page/1">Web端历史更新记录及bug反馈</Link>
+                        前往<Link to="/forum/thread/172517/page/1">Web端历史更新记录及bug反馈</Link>获取更多信息
                     </footer>
                     {/* <h1>What's new ?</h1>
                     <section className="version">
