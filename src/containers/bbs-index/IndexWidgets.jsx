@@ -69,7 +69,7 @@ const AppQRCode = () => {
                 alt="Mobile QRcode" 
             />
             <h4 className="qrcode-title">下载客户端</h4>
-            <p className="qrcode-desc">结识天大人，畅仪天下事</p>
+            <p className="qrcode-desc">结识天大人，畅议天下事</p>
         </Card>
     );
 };
