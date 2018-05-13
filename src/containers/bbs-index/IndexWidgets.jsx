@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Label } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Announce, CarouselAd, IndexRank } from '../../components/IndexWidgets';
 import { toJS } from '../../util';
 import { getAnnouncements, getAdsIfNeeded, getIndexRankIfNeeded } from '../../actions/bbsIndex';
@@ -194,4 +195,21 @@ IndexRankWrapper = connect(
     mapRankDispatchToProps
 )(toJS(IndexRankWrapper));
 
-export { AnnounceWrapper, AppQRCode, WeiboFollowing, CarouselAdWrapper, IndexRankWrapper };
+const Footer = () => (
+    <footer className="footer-home">
+        <Link to="/forum/thread/155551/page/1">管理条例</Link>
+        <span className="dot"></span>
+        <Link to="/terms">注册条款</Link>
+        <span className="dot"></span>
+        <Link to="/forum/thread/155554/page/1">使用帮助</Link>
+        <br />
+        <span>津ICP备05004358号</span>
+        <br />
+        <span>津教备0316号</span>
+        <br />
+        <a href="https://coder.twtstudio.com" target="_blank">加入我们</a>
+        <span> © 2018 求实BBS</span>
+    </footer>
+)
+
+export { AnnounceWrapper, AppQRCode, WeiboFollowing, CarouselAdWrapper, IndexRankWrapper, Footer };

@@ -2,7 +2,14 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import TopTen from './TopTen';
 import Latest from './Latest';
-import { AnnounceWrapper, AppQRCode, WeiboFollowing, CarouselAdWrapper, IndexRankWrapper } from './IndexWidgets';
+import { 
+    AnnounceWrapper, 
+    AppQRCode, 
+    WeiboFollowing, 
+    CarouselAdWrapper, 
+    IndexRankWrapper ,
+    Footer
+} from './IndexWidgets';
 import { Row, Col } from 'react-bootstrap';
 
 const HomeWrapper = () =>
@@ -17,6 +24,7 @@ const HomeWrapper = () =>
             <CarouselAdWrapper />
             <WeiboFollowing />
             <AppQRCode />
+            <Footer />
         </Col>
     </Row>;
 
