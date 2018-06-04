@@ -208,7 +208,7 @@ const Footer = () => (
         <span>津教备0316号</span>
         <br />
         <a href="https://coder.twtstudio.com" target="_blank">加入我们</a>
-        <span> © 2018 求实BBS</span>
+        <span> © {new Date().getFullYear()} 求实BBS</span>
     </footer>
 );
 
