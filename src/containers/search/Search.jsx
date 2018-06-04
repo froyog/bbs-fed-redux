@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Search from '../../components/search/Search';
 import { Pager } from 'react-bootstrap';
 import { Card } from '../../components/common/Card';
 import ThreadItem from '../../components/common/ThreadItem';
@@ -66,7 +65,7 @@ class SearchWrapper extends React.Component {
 
     render () {
         const { isFetching, result, error, match: { params } } = this.props;
-        if (error) return <ErrorOverlay reason={action} />;
+        if (error) return <ErrorOverlay reason={error} />;
         if (!result || isFetching) return <FetchingOverlay fullpage />;
         if (!result.length) return (
             <div>

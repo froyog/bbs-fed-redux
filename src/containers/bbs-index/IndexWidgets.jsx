@@ -210,6 +210,6 @@ const Footer = () => (
         <a href="https://coder.twtstudio.com" target="_blank">加入我们</a>
         <span> © 2018 求实BBS</span>
     </footer>
-)
+);
 
 export { AnnounceWrapper, AppQRCode, WeiboFollowing, CarouselAdWrapper, IndexRankWrapper, Footer };

@@ -6,7 +6,7 @@ import { Row, Col } from 'react-bootstrap';
 import Profile from './Profile';
 import { toJS } from '../../util';
 import RecentUpdate from '../../components/profile/RecentUpdate';
-import { Medal, Title, Friends } from '../../components/profile/Widgets';
+import { Medal, Title, /*Friends*/ } from '../../components/profile/Widgets';
 import Properties from './Properties';
 import { ErrorOverlay } from '../../components/common/ErrorModal';
 
