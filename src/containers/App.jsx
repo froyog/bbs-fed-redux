@@ -16,6 +16,7 @@ import Thread from './forum/ThreadWrapper';
 const AsyncUserBase = asyncComponent(() => import('./profile/UserBase'));
 import Rank from './rank/Rank';
 import Search from './search/Search';
+import BottomBar from './frame/BottomBar';
 
 import { connect } from 'react-redux';
 import { isMobile } from '../util.js';
@@ -46,7 +47,7 @@ class App extends React.Component {
     }
 
     render () {
-        const { isOpen, location, redirectLogin } = this.props;
+        const { isOpen, location, redirectLogin, isShowToast } = this.props;
         const mainStyle = {
             [isMobile() ? 'left' : 'marginLeft']: `${isOpen ? '200px' : '0'}`
         };
@@ -64,6 +65,11 @@ class App extends React.Component {
                 <Header path={location.pathname}/>
                 <Sidebar />
                 <Toast />
+                {
+                    isMobile() && !isShowToast
+                        ? <BottomBar />
+                        : null
+                }
                 <div id="main" style={mainStyle}>
                     <Grid>
                         <Switch>
@@ -87,6 +93,7 @@ class App extends React.Component {
 
 const mapStateToProps = state => ({
     isOpen: state.get('sidebarIsOpen'),
+    isShowToast: state.getIn(['toast', 'isShow']),
     redirectLogin: state.get('redirectLogin')
 });
 const mapDispatchToProps = dispatch => ({
