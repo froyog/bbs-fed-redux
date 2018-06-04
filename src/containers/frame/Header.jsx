@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import asyncComponent from '../../asyncComponent';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Search from './Search';

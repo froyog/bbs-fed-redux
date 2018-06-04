@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import appIcon from '../../assests/icon-min.jpg';
 import '../../styles/frame/bottom-bar.less';
 
-const PERIOD_NOT_SHOWN = 1209600000 // two weeks!
+const PERIOD_NOT_SHOWN = 1209600000; // two weeks!
 
 class BottomBar extends React.Component {
     constructor () {
@@ -23,7 +22,7 @@ class BottomBar extends React.Component {
 
     getUrlSchemeFrom (pathname) {
         const URL_SCHEME_ROOT = 'openTJUBBS://';
-        let urlScheme, result;
+        let result;
         if (result = /^\/forum\/thread\/(\d+)\/page/.exec(pathname)) {
             let tid = result[1];
             return `${URL_SCHEME_ROOT}tid=${tid}`;
@@ -50,7 +49,7 @@ class BottomBar extends React.Component {
         const urlScheme = this.getUrlSchemeFrom(pathname);
         window.location.href = urlScheme;
         this.timeout = setTimeout(() => {
-            window.open('https://mobile.twt.edu.cn/bbs')
+            window.open('https://mobile.twt.edu.cn/bbs');
         }, 500);
     }
 
@@ -80,9 +79,5 @@ class BottomBar extends React.Component {
         return null;
     }
 }
-
-BottomBar.propTypes = {
-    
-};
 
 export default withRouter(BottomBar);
