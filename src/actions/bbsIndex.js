@@ -9,8 +9,7 @@ export const GET_TOPTEN_FAILURE = 'GET_TOPTEN_FAILURE';
 // Fetch request depends on cache
 export const getTopTen = () => (dispatch, getState) => {
     const topTen = getState().getIn(['bbsIndex', 'topTen']);
-    
-    if (topTen) {
+    if (topTen && !topTen.get('error')) {
         return null;
     }
     

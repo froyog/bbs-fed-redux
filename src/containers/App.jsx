@@ -23,8 +23,8 @@ import { toggleSidebar } from '../actions/frame/sidebar';
 import { initFromLocal } from '../actions/init';
 import { getProfileIfNeeded } from '../actions/profile/profile';
 
+import '../styles/bootstrap.min.css';
 import '../styles/global.less';
-
 
 class App extends React.Component {
     static propTypes = {

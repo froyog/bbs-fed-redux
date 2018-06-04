@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { InputField } from '../common/Input';
 import { LoadingDots } from '../../components/common/Loading';
-
 
 class Register extends React.Component {
     static propTypes = {
@@ -117,7 +117,7 @@ class Register extends React.Component {
                 />
                 <p className="text-muted">
                     点击注册表示您已阅读并同意
-                    <a href="https://bbs.tju.edu.cn/forum/thread/171565/page/1" target="_blank">《求实BBS注册条款》</a>
+                    <Link to="/terms">《求实BBS注册条款》</Link>
                 </p>
                 <Button
                     className="raised submit-button"

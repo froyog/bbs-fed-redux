@@ -55,6 +55,7 @@ class Search extends React.Component {
     render () {
         const { isFetching, result, error } = this.props;
         const { keyword, isFocus } = this.state;
+        console.log(isFocus);
         
         return (
             <div>

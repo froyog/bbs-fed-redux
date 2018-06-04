@@ -7,9 +7,9 @@ import PiwikReactRouter from 'piwik-react-router';
 import App from './containers/App';
 import NotFound from './components/NotFound';
 import Passport from './containers/passport/Passport';
+import Terms from './containers/passport/Terms';
 import ImageContainer from './containers/common/ImageContainer';
 
-import './styles/bootstrap.min.css';
 import './styles/icon-font/iconfont.css';
 
 
@@ -24,6 +24,7 @@ const Root = () =>
         <Router history={piwik.connectToHistory(createBrowserHistory())}>
             <Switch>
                 <Route path="/passport" component={Passport} />
+                <Route path="/terms" component={Terms} />
                 <Route path="/404" component={NotFound} />
                 <Route path="/api/img/:imgId" component={ImageContainer} />
                 <Route path="/" component={App} />

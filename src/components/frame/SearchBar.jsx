@@ -25,6 +25,7 @@ class SearchBar extends React.Component {
 
     handleClickIcon () {
         this.input.focus();
+        this.props.onFocus && this.props.onFocus();   
     }
 
     handleFocus () {

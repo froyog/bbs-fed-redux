@@ -140,14 +140,17 @@ class ThreadEditor extends React.Component {
                     >
                         发表回复
                     </Button>
-                    <div className="clearfix pull-right">
+                    <div className="clearfix switches-wrapper">
                         {
                             allowAnonymous
-                                ? <AnonymousSwitch onToggle={this.handleToggleAnonymous} /> 
+                                ? <AnonymousSwitch 
+                                    className="switch-wrapper"
+                                    onToggle={this.handleToggleAnonymous} 
+                                /> 
                                 : null
                         }
-                        <AdvancedSwitch 
-                            className="advanced-switch"
+                        <AdvancedSwitch  
+                            className="switch-wrapper"
                             onToggle={this.handleToggleAdvanced}
                         />
                     </div>

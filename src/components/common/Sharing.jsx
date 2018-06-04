@@ -54,7 +54,7 @@ Sharing.propTypes = {
     className: PropTypes.string,
 };
 Sharing.defaultProps = {
-    description: '结识天大人，畅仪天下事_天大求实BBS'
+    description: '结识天大人，畅议天下事_天大求实BBS'
 };
 
 export default Sharing;
