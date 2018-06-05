@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import appIcon from '../../assests/icon-min.jpg';
+import appIcon from '../../assests/icon.jpg';
 import '../../styles/frame/bottom-bar.less';
 
 const PERIOD_NOT_SHOWN = 1209600000; // two weeks!
