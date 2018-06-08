@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import appIcon from '../../assests/icon.jpg';
 import '../../styles/frame/bottom-bar.less';
@@ -25,14 +26,14 @@ class BottomBar extends React.Component {
         let result;
         if (result = /^\/forum\/thread\/(\d+)\/page/.exec(pathname)) {
             let tid = result[1];
-            return `${URL_SCHEME_ROOT}tid=${tid}`;
+            return `${URL_SCHEME_ROOT}?tid=${tid}`;
         } else if (result = /^\/forum\/board\/(\d+)\/page/.exec(pathname)) {
             let bid = result[1];
-            return `${URL_SCHEME_ROOT}bid=${bid}`;
+            return `${URL_SCHEME_ROOT}?bid=${bid}`;
         } else if (result = /^\/user\/(\d+)$/.exec(pathname)) {
             console.log(pathname, result);
             let uid = result[1];
-            return `${URL_SCHEME_ROOT}uid=${uid}`;
+            return `${URL_SCHEME_ROOT}?uid=${uid}`;
         }
         return URL_SCHEME_ROOT;
     }
@@ -49,7 +50,7 @@ class BottomBar extends React.Component {
         const urlScheme = this.getUrlSchemeFrom(pathname);
         window.location.href = urlScheme;
         this.timeout = setTimeout(() => {
-            window.open('https://mobile.twt.edu.cn/bbs');
+            this.props.history.push('/download');
         }, 500);
     }
 
@@ -66,12 +67,12 @@ class BottomBar extends React.Component {
                         <h3>求实BBS客户端</h3>
                         <p>免费下载官方App</p>
                     </div>
-                    <a 
+                    <Button 
                         className="pull-right download-bar-link"
                         onClick={this.handleOpenApp}
                     >
                         应用内打开
-                    </a>
+                    </Button>
         
                 </div>
             );

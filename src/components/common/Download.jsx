@@ -1,10 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Media, Button } from 'react-bootstrap';
-import icon from '../assests/icon.jpg';
-import '../styles/common/download.less';
+import icon from '../../assests/icon.jpg';
+import '../../styles/common/download.less';
 
 class Download extends React.Component {
+    static propTypes = {
+        android: PropTypes.shape({
+            version: PropTypes.string.isRequired,
+            path: PropTypes.string.isRequired
+        }).isRequired,
+        ios: PropTypes.shape({
+            version: PropTypes.string.isRequired,
+            path: PropTypes.string.isRequired
+        }).isRequired
+    }    
+
     constructor () {
         super();
         const userAgent = navigator.userAgent;
@@ -16,6 +27,7 @@ class Download extends React.Component {
 
     render () {
         const { isAndroid, isiOS } = this.state;
+        const { android, ios } = this.props;
         let renderDownload;
         if (isiOS && !isAndroid) {
             renderDownload = (
@@ -30,11 +42,12 @@ class Download extends React.Component {
                     </p>
                     <Button 
                         className="button-outline"
-                        href="https://itunes.apple.com/cn/app/%E6%B1%82%E5%AE%9Ebbs/id1240843433?mt=8"
+                        href={ios.path}
+                        target="_blank"
                     >
                         前往 App Store
                     </Button>
-                    <p className="version">v1.91</p>
+                    <p className="version">v{ios.version}</p>
                 </div>
             );
         } else if (isAndroid && !isiOS) {
@@ -43,10 +56,11 @@ class Download extends React.Component {
                     <Button
                         bsStyle="primary"
                         className="raised button-now"
+                        href={android.path}
                     >
                         立即下载
                     </Button>
-                    <p className="version">v1.6.2</p>
+                    <p className="version">v{android.version}</p>
                 </div>
             );
         } else {
@@ -83,10 +97,6 @@ class Download extends React.Component {
             </div>
         );
     }
-};
-
-Download.propTypes = {
-    
 };
 
 export default Download;

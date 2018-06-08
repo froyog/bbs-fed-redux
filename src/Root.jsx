@@ -8,7 +8,7 @@ import App from './containers/App';
 import NotFound from './components/NotFound';
 import Passport from './containers/passport/Passport';
 import Terms from './containers/passport/Terms';
-import Download from './components/Download';
+import Download from './containers/common/Download';
 import ImageContainer from './containers/common/ImageContainer';
 
 import './styles/icon-font/iconfont.css';
