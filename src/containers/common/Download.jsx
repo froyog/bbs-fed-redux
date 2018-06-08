@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { FetchingOverlay } from '../../components/common/Loading';
 import { ErrorOverlay } from '../../components/common/ErrorModal';
 import Download from '../../components/common/Download';
@@ -32,10 +31,10 @@ class DownloadWrapper extends React.Component {
     render () {
         const { isFetching, appData, error } = this.state;
         if (isFetching) {
-            return <FetchingOverlay fullpage />
+            return <FetchingOverlay fullpage />;
         }
         if (error) {
-            return <ErrorModal reason="数据获取失败" />
+            return <ErrorOverlay reason="数据获取失败" />;
         }
         const android = appData.logs.android[0];
         const ios = appData.logs.ios[0];
