@@ -55,14 +55,11 @@ class FeatureDiscovery extends React.Component {
                 <div className="content">
                     <h1>更新说明</h1>
                     <section className="version">
-                        <h3>2.2.0</h3>
+                        <h3>2.4.0</h3>
                         <ul>
-                            <li>登录页重新设计，<Link to="/passport/login">去看看</Link></li>
-                            <li>添加搜索功能</li>
-                            <li>添加主题帖编辑、删除功能</li>
-                            <li>添加管理员（区长、版主）编辑、删除主题贴功能</li>
-                            <li>调整了编辑器显示方式</li>
-                            <li>若干 bug 修复及性能优化</li>
+                            <li>添加了底部下载栏及下载页</li>
+                            <li>支持引用内打开</li>
+                            <li>添加了主页备案信息，帮助信息</li>
                         </ul>
                     </section>
                     <section className="version">

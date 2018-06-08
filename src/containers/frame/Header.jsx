@@ -16,7 +16,7 @@ class HeaderWrapper extends React.PureComponent {
         this.state = {
             headerContent: '',
             tapIsShow: false,
-            updateDate: Date.parse('2018-4-14')
+            updateDate: Date.parse('2018-6-8')
         };
 
         this.handleUnmountTap = this.handleUnmountTap.bind(this);
