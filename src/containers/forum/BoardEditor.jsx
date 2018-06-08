@@ -83,7 +83,16 @@ class BoardEditor extends React.Component {
         const { newThread } = this.props;
         const { editorState, title, anonymous } = this.state;
         const mdContent = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
-
+        /*
+            temporary
+        */
+        if (mdContent.indexOf('paperpass') !== -1) {
+            alert('您的内容包含敏感词汇，无法发表');
+            return;
+        }
+        /*
+            END
+        */
         const { bid } = this.state;
         if (!bid) return;
 
