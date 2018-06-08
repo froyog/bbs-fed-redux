@@ -88,7 +88,8 @@ const combinedReducer = combineReducers({
     publish,
     rank,
     switchButton,
-    user: (state = Map()) => state
+    user: (state = Map()) => state,
+    redirectLogin: (state = false) => state
 });
 
 const crossSliceReducer = (state, action) => {

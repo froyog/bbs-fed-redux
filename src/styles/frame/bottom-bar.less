@@ -1,0 +1,59 @@
+@import '../universal.less';
+
+#download-bar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 55px;
+    z-index: 99;
+    background-color: rgba(255, 255, 255, 0.85);
+    @media @phones {
+        display: block;
+    }
+
+    .download-bar-icon {
+        display: inline-block;
+        height: 100%;
+        padding: 8px 6px 8px 0;
+    }
+    .download-bar-desc {
+        font-size: 13px;
+        margin-left: 3px;
+        p {
+            color: #888;
+            font-size: 11px;
+            margin: 0;
+        }
+        h3 {
+            font-size: 15px;
+            vertical-align: bottom;
+            margin: 15px 0 0;
+        }
+    }
+    .download-bar-link {
+        margin: 16px 10px 0 0;
+        padding: 4px 8px;
+        border-radius: 3px;
+        border: 1px solid #2565ac;
+        background-color: #2565ac;
+        color: #fff;
+    }
+    .download-bar-close {
+        position: relative;
+        height: 100%;
+        width: 45px;
+        button {
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+        }
+        .icon-close {
+            position: absolute;
+            font-size: 15px;
+            top: 16px;
+            right: 14px;
+        }
+    }    
+}

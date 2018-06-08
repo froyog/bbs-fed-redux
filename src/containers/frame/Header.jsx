@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import asyncComponent from '../../asyncComponent';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Search from './Search';
@@ -9,8 +8,6 @@ import { showToast } from '../../actions/common/toast';
 import Header from '../../components/frame/Header';
 import { toJS } from '../../util';
 import FeatureDiscovery from '../../components/frame/FeatureDiscovery';
-// import BoardEditor from '../forum/BoardEditor';
-const AsyncBoardEditor = asyncComponent(() => import('../forum/BoardEditor'));
 
 
 class HeaderWrapper extends React.PureComponent {

@@ -133,7 +133,7 @@ class ThreadEditor extends React.Component {
                 <div className="clearfix">
                     <Button
                         type="submit"
-                        className="raised"
+                        className="raised reply-button"
                         bsStyle="primary"
                         onClick={this.handleSubmit}
                         disabled={isFetching}

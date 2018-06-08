@@ -1,0 +1,72 @@
+@import '../universal.less';
+
+#download {
+    background: url(../../assests/scape.png) #000 no-repeat 70% center;
+    background-size: cover;
+    min-height: 100vh;
+
+    .content {
+        position: absolute;
+        width: 100%;
+        max-width: 500px;
+        border-radius: 15px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(255, 255, 255, 85%);
+        z-index: 10;
+        padding: 50px 50px 30px;
+
+        @media screen and (max-width: 500px) {
+            border-radius: 0;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
+
+    .icon {
+        display: block;
+        width: 90px;
+        margin-right: 5px;
+    }
+
+    .title {
+        margin: 0;
+        margin-bottom: 3px;
+    }
+
+    .desc {
+        font-size: 16px;
+        color: #777;
+        margin-bottom: 5px;
+    }
+    
+    .button-outline {
+        background-color: transparent;
+        border-color: #999;
+        color: #777;
+    }
+
+    .version {
+        color: #aaa;
+        margin: 0;
+    }
+
+    .average-rate  {
+        margin-bottom: 5px;
+        .rate {
+            position: relative;
+            top: 2px;
+            margin-left: 4px;
+        }
+        .icon-star {
+            font-size: 12px;
+            margin-right: 2px;
+            color: rgb(255, 149, 0);
+        }
+    }
+
+    .button-now {
+        margin: 15px 0 0 0;
+    }
+}
