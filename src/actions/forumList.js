@@ -1,4 +1,5 @@
 import { CALL_API } from '../middlewares/callApi';
+import { parseUser } from '../util';
 
 // Get forum list start here.
 export const GET_FORUMLIST_REQUEST = 'GET_FORUMLIST_REQUEST';
@@ -30,18 +31,23 @@ export const GET_BOARDLIST_REQUEST = 'GET_BOARDLIST_REQUEST';
 export const GET_BOARDLIST_SUCCESS = 'GET_BOARDLIST_SUCCESS';
 export const GET_BOARDLIST_FAILURE = 'GET_BOARDLIST_FAILURE';
 
-const fetchBoardList = fid => ({
-    [CALL_API]: {
-        types: [GET_BOARDLIST_REQUEST, GET_BOARDLIST_SUCCESS, GET_BOARDLIST_FAILURE],
-        apiPath: `forum/${fid}`,
-    },
-    fid: fid
-});
-
 export const getBoardList = fid => (dispatch, getState) => {
     const boardListByFid = getState().getIn(['boardList', fid]);
     if (boardListByFid) {
         return null;
     }
-    return dispatch(fetchBoardList(fid));
+
+    const authentication = parseUser(getState());
+    return dispatch({
+        [CALL_API]: {
+            types: [GET_BOARDLIST_REQUEST, GET_BOARDLIST_SUCCESS, GET_BOARDLIST_FAILURE],
+            apiPath: `forum/${fid}`,
+            request: {
+                headers: {
+                    auth: authentication
+                }
+            }
+        },
+        fid: fid
+    });
 };
