@@ -44,13 +44,13 @@ class AdvancedSwitch extends React.Component {
                     placement="top"
                     overlay={
                         <Tooltip className="advanced-help" id="advanced-help">
-                            <h5>专为<strong>高级用户</strong>设计</h5>
+                            <h5>专为<strong>硬核用户</strong>设计</h5>
                             <p>如果您熟悉 Markdown 语法，打开此选项在编辑器中直接书写 Markdown 语法。</p>
                         </Tooltip>
                     }
                 >
                     <span className={`anonymous-text`}>
-                        高级模式
+                        硬核模式
                     </span>
 
                 </OverlayTrigger>

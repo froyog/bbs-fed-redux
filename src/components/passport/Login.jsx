@@ -72,6 +72,7 @@ class Login extends React.Component {
                     >
                         登 录
                     </Button>
+                    <a href="https://login.twtstudio.com/sso/login">天外天账号登录</a>
                     <p className="error-msg">{error}</p>
                 </Form>
                 <div className="additional-link-wrapper">

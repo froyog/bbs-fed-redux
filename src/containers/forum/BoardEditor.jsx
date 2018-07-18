@@ -9,6 +9,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, EditorState } from 'draft-js';
 import { fetchNewThread } from '../../actions/forum/board';
 import AnonymousSwitch from '../../components/forum/AnonymousSwitch';
+import AdvancedSwitch from '../../components/forum/AdvancedSwitch';
 import { connect } from 'react-redux';
 import { getDecorator } from './editor/mention.js';
 import Attach from './editor/Attach';
@@ -31,6 +32,7 @@ class BoardEditor extends React.Component {
             bid: 0,
             referToThread: false,
             anonymous: false,
+            advancedMode: false,
             hasContent: false,
         };
 
@@ -38,6 +40,7 @@ class BoardEditor extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleSelectBID = this.handleSelectBID.bind(this);
+        this.handleToggleAdvanced = this.handleToggleAdvanced.bind(this);
         this.getEditorState = this.getEditorState.bind(this);
         this.handleToggleAnonymous = this.handleToggleAnonymous.bind(this);
     }
@@ -78,11 +81,29 @@ class BoardEditor extends React.Component {
         });
     }
 
+    handleToggleAdvanced (advancedState) {
+        this.setState({
+            advancedMode: advancedState
+        });
+    }
+
     handleSubmit (e) {
         e.preventDefault();
         const { newThread } = this.props;
-        const { editorState, title, anonymous } = this.state;
-        const mdContent = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
+        const { editorState, title, anonymous, advancedMode } = this.state;
+        let mdContent;
+        if (advancedMode) {
+            mdContent = editorState.getCurrentContent().getPlainText();
+        } else {
+            mdContent = draftToMarkdown(convertToRaw(editorState.getCurrentContent()), {
+                entityItems: {
+                    'IMAGE': {
+                        open: () => {},
+                        close: entity => `![](${entity.data.src})`
+                    }
+                }
+            });
+        }
         /*
             temporary
         */
@@ -108,7 +129,7 @@ class BoardEditor extends React.Component {
     }
     
     render () {
-        const { editorState, title, referToThread, bid, hasContent } = this.state;
+        const { editorState, title, referToThread, bid, hasContent, advancedMode } = this.state;
         const { isFetching, error, location: { state: locationState } } = this.props;
         if (referToThread) {
             return <Redirect to={`/forum/thread/${referToThread}/page/1`} />;
@@ -133,6 +154,7 @@ class BoardEditor extends React.Component {
                     currentBoardInfo={locationState.currentBoardInfo}
                 />
                 <Editor
+                    toolbarStyle={ advancedMode ? { display: 'none' } : {}}
                     toolbar={customToolbar}
                     toolbarCustomButtons={[<Attach />]}
                     editorState={editorState}
@@ -147,15 +169,19 @@ class BoardEditor extends React.Component {
                     }
                 />
                 <footer>
-                    <p className="error-message-in-editor">{error}</p>
-
-                    {
-                        +bid === 193 &&
-                        <AnonymousSwitch 
-                            className="pull-left"
-                            onToggle={this.handleToggleAnonymous}
+                    <div className="clearfix switches-wrapper">
+                        {
+                            +bid === 193 &&
+                            <AnonymousSwitch 
+                                className="switch-wrapper"
+                                onToggle={this.handleToggleAnonymous}
+                            />
+                        }
+                        <AdvancedSwitch  
+                            className="switch-wrapper"
+                            onToggle={this.handleToggleAdvanced}
                         />
-                    }
+                    </div>
                     <Button
                         bsStyle="link"
                         onClick={this.handleSubmit}
@@ -173,6 +199,7 @@ class BoardEditor extends React.Component {
                             返回主页
                         </Button>
                     </LinkContainer>
+                    <p className="error-message-in-editor">{error}</p>
                 </footer>
             </Card>
         );
