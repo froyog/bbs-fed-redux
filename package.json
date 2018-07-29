@@ -36,7 +36,7 @@
     "react": "^15.6.2",
     "react-bootstrap": "^0.31.3",
     "react-dom": "^15.6.2",
-    "react-draft-wysiwyg": "^1.10.10",
+    "react-draft-wysiwyg": "^1.12.13",
     "react-image-crop": "^3.0.9",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
