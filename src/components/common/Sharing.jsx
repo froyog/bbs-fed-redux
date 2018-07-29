@@ -22,12 +22,13 @@ const Sharing = ({ sites, url, title, source, description, className }) => {
                 <a key={i} className='icon iconfont icon-wechat' target='_blank' href='javascript:void(0)'>
                     <div className="wechat-qrcode">
                         <h4>微信扫一扫：分享</h4>
-                        <div className="qrcode">
-                            <QRCode value={url} size={100} />
-                        </div>
-                        <div className="help">
-                            <p>微信中扫描二维码</p>
-                            <p>将帖子分享至朋友圈</p>
+                        <div className="wechat-qrcode-block">
+                            <div className="qrcode">
+                                <QRCode value={url} size={100} />
+                            </div>
+                            <div className="help">
+                                <p>微信中扫描二维码<br />将帖子分享至朋友圈</p>
+                            </div>
                         </div>
                     </div>
                 </a>
