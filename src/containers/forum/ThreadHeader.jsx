@@ -142,7 +142,7 @@ class ThreadHeader extends React.Component {
             return this.setState({errorMessage:"请输入数字"});
         }
         else{
-        return this.setState({errorMessage:""});
+            return this.setState({errorMessage:""});
         }
     }
    
@@ -263,45 +263,45 @@ class ThreadHeader extends React.Component {
                     onSelect={this.handleClickOperator}
                 > 
                    
-                <OverlayTrigger
-                    trigger="click"
-                    overlay={
-                        <Popover
-                            title="禁言"
-                            className="attach-popover" 
-                            id="attach-popover"
-                        >
+                    <OverlayTrigger
+                        trigger="click"
+                        overlay={
+                            <Popover
+                                title="禁言"
+                                className="attach-popover" 
+                                id="attach-popover"
+                            >
                             
-                            <InputField 
-                            text="封禁时长(小时)"
-                            fullWidth
-                            value={duration}
-                            placeholder="请输入数字"
-                            id="duration"                            
-                            onChange={this.handleInputChange}
-                            errorMessage={errorMessage}
-                            />
-                            <InputField 
-                            text="附加消息"
-                            fullWidth
-                            value={message}
-                            placeholder="写下想对ta说的话"
-                            id="message"
-                            onChange={this.handleInputChange}
-                            />
-                            <Button
-                            bsStyle="primary"
-                            block
-                            onClick={this.handleBanMessage} 
-                            >提交
-                            </Button>
-                        </Popover>
-                    }
-                >
-                    <p >
+                                <InputField 
+                                    text="封禁时长(小时)"
+                                    fullWidth
+                                    value={duration}
+                                    placeholder="请输入数字"
+                                    id="duration"                            
+                                    onChange={this.handleInputChange}
+                                    errorMessage={errorMessage}
+                                />
+                                <InputField 
+                                    text="附加消息"
+                                    fullWidth
+                                    value={message}
+                                    placeholder="写下想对ta说的话"
+                                    id="message"
+                                    onChange={this.handleInputChange}
+                                />
+                                <Button
+                                    bsStyle="primary"
+                                    block
+                                    onClick={this.handleBanMessage} 
+                                >提交
+                                </Button>
+                            </Popover>
+                        }
+                    >
+                        <p >
                         禁言此作者
-                    </p>
-                </OverlayTrigger>
+                        </p>
+                    </OverlayTrigger>
                 </MenuItem>
                 <MenuItem 
                     eventKey="lock" 
@@ -309,17 +309,17 @@ class ThreadHeader extends React.Component {
                     onSelect={this.handleClickOperator}
                    
                 >
-                   <SwitchButton
+                    <SwitchButton
                         switchType="lock"
                         id={tid}
                         initialState={bLocked} 
-                   >
-                       {(active, onClickButton) => {
-                                return<p  onClick={onClickButton}>
-                                    {active ? '已锁定' : '锁定'}
-                                </p>
-                                }}
-                   </SwitchButton>
+                    >
+                        {(active, onClickButton) => {
+                            return<p  onClick={onClickButton}>
+                                {active ? '已锁定' : '锁定'}
+                            </p>;
+                        }}
+                    </SwitchButton>
                 </MenuItem>
                 <MenuItem eventKey="0" disabled>移动至...</MenuItem>
             </DropdownButton>

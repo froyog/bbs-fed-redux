@@ -11,7 +11,7 @@ import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
 import ThreadHeader from './ThreadHeader';
 import ThreadPost from './ThreadPost';
 import { ErrorOverlay } from '../../components/common/ErrorModal';
-import '../../styles/forum/thread.less'
+import '../../styles/forum/thread.less';
 // import ThreadEditor from './ThreadEditor';
 const AsyncThreadEditor = asyncComponent(() => import('./ThreadEditor'));
 
@@ -131,7 +131,7 @@ class ThreadWrapper extends React.PureComponent {
    
     render () {
         const { threadInfo, postList, boardInfo, isFetching, 
-           error, match: { params: { tid } } } = this.props;
+            error, match: { params: { tid } } } = this.props;
         const { replyContent, replyId } = this.state;
         if (error) return <ErrorOverlay reason={error} needRefresh />;
         if (!postList || isFetching) return <FetchingOverlay fullPage />;
@@ -184,11 +184,11 @@ class ThreadWrapper extends React.PureComponent {
                         onSelect={this.handleSelect} />
                 </Card>
                 {bLocked
-                ?
-                 <div className="lock-overlay">
-                    <p className='lock-p'>此帖子已被锁定</p>
-                 </div>
-                :null}
+                    ?
+                        <div className="lock-overlay">
+                        <p className='lock-p'>此帖子已被锁定</p>
+                    </div>
+                    :null}
                 <AsyncThreadEditor
                     replyId={replyId}
                     replyContent={replyContent}
