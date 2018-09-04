@@ -10,10 +10,12 @@ import Sharing from '../../components/common/Sharing';
 import SwitchButton from './SwitchButton';
 import { showToast } from '../../actions/common/toast';
 import { deleteThread, editThread } from '../../actions/forum/board';
+import { userBan } from '../../actions/frame/ban';
 import { connect } from 'react-redux';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { toJS, customToolbar, 
     markdownToDraft, draftToMarkdown,
-    isAuthorOf, isModeratorOf
+    isAuthorOf, isModeratorOf,isMobile 
 } from '../../util';
 
 // editor
@@ -31,7 +33,7 @@ class ThreadHeader extends React.Component {
         thread: PropTypes.shape({
             cPost: PropTypes.number,
             authorId: PropTypes.number,
-            blocked: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+            bLocked: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
             anonymous: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
             visibility: PropTypes.number,
             tModify: PropTypes.number,
@@ -41,7 +43,8 @@ class ThreadHeader extends React.Component {
             title: PropTypes.string,
             content: PropTypes.string,
             authorNickname: PropTypes.string,
-            id: PropTypes.number
+            id: PropTypes.number,
+           
         }).isRequired,
         board: PropTypes.shape({
             id: PropTypes.number,
@@ -51,6 +54,7 @@ class ThreadHeader extends React.Component {
         }),
         onClickReply: PropTypes.func.isRequired,
         deleteThread: PropTypes.func.isRequired,
+        userBan: PropTypes.func.isRequired,
         isFetching: PropTypes.bool,
         success: PropTypes.string,
         error: PropTypes.string,
@@ -62,12 +66,13 @@ class ThreadHeader extends React.Component {
         super(props);
         this.state = {
             isEditing: false,
+            errorMessage: '',
             title: props.thread.title,
             editorState: EditorState.createWithContent(
                 convertFromRaw(markdownToDraft(props.thread.content))
             )
         };
-
+        
         this._renderUserName = this._renderUserName.bind(this);
         this.handleClickOperator = this.handleClickOperator.bind(this);
         this.handleChangeTitle = this.handleChangeTitle.bind(this);
@@ -75,10 +80,13 @@ class ThreadHeader extends React.Component {
         this.getEditorState = this.getEditorState.bind(this);
         this.handleCancelEdit = this.handleCancelEdit.bind(this);
         this.handleConfirmEdit = this.handleConfirmEdit.bind(this);
+        this.handleBanMessage = this.handleBanMessage.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this._checkDuration = this._checkDuration.bind(this);
     }
-
+    
     handleClickOperator (eventKey) {
-        const { deleteThread, thread: { id: tid } } = this.props;
+        const { deleteThread, thread: { id: tid, authorId } } = this.props;
         switch (eventKey) {
             case 'delete':
                 deleteThread && deleteThread(tid);
@@ -87,6 +95,11 @@ class ThreadHeader extends React.Component {
                 this.setState({
                     isEditing: true
                 });
+                break;
+            case 'lock':
+                location.reload();
+                break;
+            case 'ban':
                 break;
             default:
                 break;
@@ -103,8 +116,8 @@ class ThreadHeader extends React.Component {
         e.preventDefault();
         const { editThread, thread: { id: tid } } = this.props;
         const { title, editorState } = this.state;
-        const mdContent = draftToMarkdown(convertToRaw(editorState.getCurrentContent()));
-
+        const mdContent = draftToMarkdown(convertToRaw(editorState.getCurrentContent())); 
+        
         editThread(tid, title, mdContent);
     }
 
@@ -120,7 +133,36 @@ class ThreadHeader extends React.Component {
             editorState
         });
     }
+    
+    _checkDuration(duration){
+        if(duration === "" || duration ==null){
+            return this.setState({errorMessage:"请输入封禁时长"});
+        }
+        if(!isNaN(duration)){
+            return this.setState({errorMessage:"请输入数字"});
+        }
+        else{
+        return this.setState({errorMessage:""});
+        }
+    }
+   
+    handleInputChange (e) {
+        const { duration, message } = e.target;
+        this.setState({
+            [e.target.id]: e.target.value
+        });
+        this._checkDuration(duration);
+    }
 
+    
+    handleBanMessage (e){
+        e.preventDefault();
+        const { thread: { authorId}, userBan, board:{ id:boardId }} = this.props;
+        const {duration,message}=this.state;
+        userBan && userBan(authorId,boardId,duration,message) ;
+    }
+
+    
     componentWillReceiveProps (nextProps) {
         const { isFetching, error, showToast, board: { id: bid }, editThreadState } = nextProps;
         if (!isFetching && isFetching !== this.props.isFetching) {
@@ -165,14 +207,14 @@ class ThreadHeader extends React.Component {
 
     render () {
         const { thread: { id: tid, authorId, authorName, title, anonymous,
-            tCreate, content, inCollection, like, liked 
+            tCreate, content, inCollection, like, liked, bLocked, boardId
         }, 
         board: { id: bid, name, forumId: fid },
         selfUid, selfGroup, selfModerate, editThreadState
         } = this.props;
-
-        const { isEditing, editorState } = this.state;
-
+       
+        const { isEditing, editorState, ban, duration, message, banError } = this.state;
+        const { errorMessage } = this.state;
         const isAuthor = isAuthorOf(authorId, selfUid);
         const isModerator = isModeratorOf(selfModerate, selfGroup, bid, fid);
         const renderOperatorDropDown = (
@@ -215,8 +257,70 @@ class ThreadHeader extends React.Component {
                 >
                         删除
                 </MenuItem>
-                <MenuItem eventKey="0" disabled>禁言此作者</MenuItem>
-                <MenuItem eventKey="0" disabled>锁定</MenuItem>
+                <MenuItem 
+                    eventKey="ban" 
+                    disabled={!isModerator}
+                    onSelect={this.handleClickOperator}
+                > 
+                   
+                <OverlayTrigger
+                    trigger="click"
+                    overlay={
+                        <Popover
+                            title="禁言"
+                            className="attach-popover" 
+                            id="attach-popover"
+                        >
+                            
+                            <InputField 
+                            text="封禁时长(小时)"
+                            fullWidth
+                            value={duration}
+                            placeholder="请输入数字"
+                            id="duration"                            
+                            onChange={this.handleInputChange}
+                            errorMessage={errorMessage}
+                            />
+                            <InputField 
+                            text="附加消息"
+                            fullWidth
+                            value={message}
+                            placeholder="写下想对ta说的话"
+                            id="message"
+                            onChange={this.handleInputChange}
+                            />
+                            <Button
+                            bsStyle="primary"
+                            block
+                            onClick={this.handleBanMessage} 
+                            >提交
+                            </Button>
+                        </Popover>
+                    }
+                >
+                    <p >
+                        禁言此作者
+                    </p>
+                </OverlayTrigger>
+                </MenuItem>
+                <MenuItem 
+                    eventKey="lock" 
+                    disabled={!isModerator}
+                    onSelect={this.handleClickOperator}
+                   
+                >
+                   <SwitchButton
+                        switchType="lock"
+                        id={tid}
+                        initialState={bLocked} 
+                   >
+                       {(active, onClickButton) => {
+                                return<p  onClick={onClickButton}>
+                                    {active ? '已锁定' : '锁定'}
+                                </p>
+                                }}
+                   </SwitchButton>
+                </MenuItem>
                 <MenuItem eventKey="0" disabled>移动至...</MenuItem>
             </DropdownButton>
         );
@@ -343,11 +447,13 @@ class ThreadHeader extends React.Component {
 
 const mapStateToProps = state => {
     const deleteThreadState = state.getIn(['bypassing', 'deleteThread']),
+        userBanState = state.getIn(['bypassing','userBan']),
         editThreadState = state.getIn([ 'bypassing', 'editThread' ]);
     const selfUid = state.getIn(['user', 'uid']),
         selfModerate = state.getIn(['user', 'moderator']),
         selfGroup = state.getIn(['user', 'group']);
     if (!deleteThreadState) return {};
+    if (!userBanState) return {};
 
     return {
         selfUid,
@@ -356,13 +462,17 @@ const mapStateToProps = state => {
         isFetching: deleteThreadState.get('isFetching'),
         success: deleteThreadState.get('items'),
         error: deleteThreadState.get('error'),
-        editThreadState
+        editThreadState,
+        isFetching: userBanState.get('isFetching'),
+        success: userBanState.get('items'),
+        error: userBanState.get('error'),
     };
 };
 const mapDispatchToProps = dispatch => ({
     deleteThread: tid => dispatch(deleteThread(tid)),
     showToast: message => dispatch(showToast(message)),
-    editThread: (tid, title, content) => dispatch(editThread(tid, title, content))
+    editThread: (tid, title, content) => dispatch(editThread(tid, title, content)),
+    userBan:(uid, boardId ,duration, message) => dispatch(userBan(uid,boardId,duration,message)),
 });
 ThreadHeader = connect(mapStateToProps, mapDispatchToProps)(toJS(ThreadHeader));
 ThreadHeader = withRouter(ThreadHeader);

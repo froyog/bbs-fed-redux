@@ -37,6 +37,8 @@ import { FORGET_AUTH_REQUEST, FORGET_AUTH_SUCCESS, FORGET_AUTH_FAILURE,
 import { OLD_LOGIN_REQUEST, OLD_LOGIN_SUCCESS, OLD_LOGIN_FAILURE,
     OLD_REGISTER_REQUEST, OLD_REGISTER_SUCCESS, OLD_REGISTER_FAILURE } from '../actions/passport/old';
 import { SEARCH_THREAD_REQUEST, SEARCH_THREAD_SUCCESS, SEARCH_THREAD_FAILURE } from '../actions/common/search';
+import { BAN_USER_REQUEST, BAN_USER_SUCCESS, BAN_USER_FAILURE} from '../actions/frame/ban';
+
 
 const bypassing = combineReducers({
     sendPrivateMessage: bypassingFactory({
@@ -66,6 +68,7 @@ const bypassing = combineReducers({
     oldRegister: bypassingFactory({ types: [OLD_REGISTER_REQUEST, OLD_REGISTER_SUCCESS, OLD_REGISTER_FAILURE] }),
     editThread: bypassingFactory({ types: [EDIT_THREAD_REQUEST, EDIT_THREAD_SUCCESS, EDIT_THREAD_FAILURE] }),
     searchThread: bypassingFactory({ types: [SEARCH_THREAD_REQUEST, SEARCH_THREAD_SUCCESS, SEARCH_THREAD_FAILURE] }),
+    userBan: bypassingFactory({types: [BAN_USER_REQUEST, BAN_USER_SUCCESS, BAN_USER_FAILURE]})
     
 });
 
