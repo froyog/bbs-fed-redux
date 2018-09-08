@@ -105,7 +105,7 @@ class ThreadHeader extends React.Component {
             case 'lock':
                 { 
                     this.setState({
-                      isLock:true,
+                        isLock:true,
                     });
                     this.handleSubmit();
                 }
@@ -158,7 +158,7 @@ class ThreadHeader extends React.Component {
    
     handleSubmit(){        
         if(this.props.onSubmit){
-            this.props.onSubmit(!this.state.isLock)
+            this.props.onSubmit(!this.state.isLock);
         };
     }
     handleInputChange (e) {
@@ -179,11 +179,11 @@ class ThreadHeader extends React.Component {
 
     
     componentWillReceiveProps (nextProps) { 
-       const { isFetching, error, showToast, board: { id: bid }, editThreadState,
-         isbanFetching, banerror, bansuccess} = nextProps; 
+        const { isFetching, error, showToast, board: { id: bid }, editThreadState,
+            isbanFetching, banerror, bansuccess} = nextProps; 
         if(isbanFetching){
-             showToast("禁言成功")
-            }
+            showToast("禁言成功");
+        }
         if ((!isFetching && isFetching !== this.props.isFetching) || (!isbanFetching && isbanFetching !== this.props.isbanFetching)) {
             if (error || banerror) {
                 showToast(error);
@@ -337,7 +337,7 @@ class ThreadHeader extends React.Component {
                         {(active, onClickButton) => {
                             return (
                                 <p  onClick={onClickButton}>
-                                {active ? '已锁定' : '锁定'}
+                                    {active ? '已锁定' : '锁定'}
                                 </p>
                             );
                            

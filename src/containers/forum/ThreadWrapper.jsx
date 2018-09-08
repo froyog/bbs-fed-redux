@@ -70,7 +70,7 @@ class ThreadWrapper extends React.PureComponent {
         this.handleClickReply = this.handleClickReply.bind(this);
         this.handleCancelReply = this.handleCancelReply.bind(this);
         this.handleRefreshPage = this.handleRefreshPage.bind(this);
-        this.handleSubmitIsLock = this.handleSubmitIsLock.bind(this)
+        this.handleSubmitIsLock = this.handleSubmitIsLock.bind(this);
     }
 
     componentWillMount() {
@@ -106,7 +106,7 @@ class ThreadWrapper extends React.PureComponent {
     }
 
     handleSubmitIsLock (isLock) {
-        this.setState({ isLock: isLock })
+        this.setState({ isLock: isLock });
     }     
     
     handleCancelReply () {
