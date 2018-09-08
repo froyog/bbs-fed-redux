@@ -6,7 +6,7 @@ export const BAN_USER_REQUEST = 'BAN_USER_REQUEST';
 export const BAN_USER_SUCCESS = 'BAN_USER_SUCCESS';
 export const BAN_USER_FAILURE = 'BAN_USER_FAILURE';
 
-export const userBan = (uid, board_id, duration, message) => (dispatch, getState) => {
+export const banUser = (uid, board_id, duration, message) => (dispatch, getState) => {
     const authentication = parseUser(getState());
     dispatch({
         [CALL_API]: {

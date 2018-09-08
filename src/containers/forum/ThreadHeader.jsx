@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Media, Button, DropdownButton, MenuItem } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import { InputField } from '../../components/common/Input';
 import Time from '../../components/common/Time';
@@ -10,9 +9,11 @@ import Sharing from '../../components/common/Sharing';
 import SwitchButton from './SwitchButton';
 import { showToast } from '../../actions/common/toast';
 import { deleteThread, editThread } from '../../actions/forum/board';
-import { userBan } from '../../actions/frame/ban';
+import { banUser } from '../../actions/frame/ban';
 import { connect } from 'react-redux';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { Media, Button, 
+    DropdownButton, MenuItem, Alert, 
+    OverlayTrigger, Popover} from 'react-bootstrap';
 import { toJS, customToolbar, 
     markdownToDraft, draftToMarkdown,
     isAuthorOf, isModeratorOf,isMobile 
@@ -54,7 +55,7 @@ class ThreadHeader extends React.Component {
         }),
         onClickReply: PropTypes.func.isRequired,
         deleteThread: PropTypes.func.isRequired,
-        userBan: PropTypes.func.isRequired,
+        banUser: PropTypes.func.isRequired,
         isFetching: PropTypes.bool,
         success: PropTypes.string,
         error: PropTypes.string,
@@ -67,6 +68,10 @@ class ThreadHeader extends React.Component {
         this.state = {
             isEditing: false,
             errorMessage: '',
+            banMessage: '',
+            bantitle: '',
+            isLock: false,
+            isBan: false,
             title: props.thread.title,
             editorState: EditorState.createWithContent(
                 convertFromRaw(markdownToDraft(props.thread.content))
@@ -83,10 +88,11 @@ class ThreadHeader extends React.Component {
         this.handleBanMessage = this.handleBanMessage.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this._checkDuration = this._checkDuration.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this); 
     }
     
     handleClickOperator (eventKey) {
-        const { deleteThread, thread: { id: tid, authorId } } = this.props;
+        const { deleteThread, onSubmit, thread: { id: tid, authorId } } = this.props;
         switch (eventKey) {
             case 'delete':
                 deleteThread && deleteThread(tid);
@@ -97,10 +103,14 @@ class ThreadHeader extends React.Component {
                 });
                 break;
             case 'lock':
-                location.reload();
+                { 
+                    this.setState({
+                      isLock:true,
+                    });
+                    this.handleSubmit();
+                }
                 break;
-            case 'ban':
-                break;
+            
             default:
                 break;
         }
@@ -135,17 +145,22 @@ class ThreadHeader extends React.Component {
     }
     
     _checkDuration(duration){
-        if(duration === "" || duration ==null){
-            return this.setState({errorMessage:"请输入封禁时长"});
+        if(duration === "" || duration == null){
+            return this.setState({ errorMessage: "请输入封禁时长" });
         }
         if(!isNaN(duration)){
-            return this.setState({errorMessage:"请输入数字"});
+            return this.setState({ errorMessage: "请输入数字" });
         }
         else{
-            return this.setState({errorMessage:""});
+            return this.setState({ errorMessage: "" });
         }
     }
    
+    handleSubmit(){        
+        if(this.props.onSubmit){
+            this.props.onSubmit(!this.state.isLock)
+        };
+    }
     handleInputChange (e) {
         const { duration, message } = e.target;
         this.setState({
@@ -157,17 +172,22 @@ class ThreadHeader extends React.Component {
     
     handleBanMessage (e){
         e.preventDefault();
-        const { thread: { authorId}, userBan, board:{ id:boardId }} = this.props;
-        const {duration,message}=this.state;
-        userBan && userBan(authorId,boardId,duration,message) ;
+        const { thread: { authorId }, banUser, board: { id:boardId }} = this.props;
+        const { duration, message }=this.state;
+        banUser && banUser(authorId,boardId,duration,message);
     }
 
     
-    componentWillReceiveProps (nextProps) {
-        const { isFetching, error, showToast, board: { id: bid }, editThreadState } = nextProps;
-        if (!isFetching && isFetching !== this.props.isFetching) {
-            if (error) {
+    componentWillReceiveProps (nextProps) { 
+       const { isFetching, error, showToast, board: { id: bid }, editThreadState,
+         isbanFetching, banerror, bansuccess} = nextProps; 
+        if(isbanFetching){
+             showToast("禁言成功")
+            }
+        if ((!isFetching && isFetching !== this.props.isFetching) || (!isbanFetching && isbanFetching !== this.props.isbanFetching)) {
+            if (error || banerror) {
                 showToast(error);
+                showToast(banerror);
             } else {
                 // success
                 // go back to board
@@ -213,8 +233,9 @@ class ThreadHeader extends React.Component {
         selfUid, selfGroup, selfModerate, editThreadState
         } = this.props;
        
-        const { isEditing, editorState, ban, duration, message, banError } = this.state;
+        const { isEditing, editorState, ban, duration, message, banError, isBan } = this.state;
         const { errorMessage } = this.state;
+        const { bantitle, banMessage } = this.state;
         const isAuthor = isAuthorOf(authorId, selfUid);
         const isModerator = isModeratorOf(selfModerate, selfGroup, bid, fid);
         const renderOperatorDropDown = (
@@ -269,21 +290,20 @@ class ThreadHeader extends React.Component {
                             <Popover
                                 title="禁言"
                                 className="attach-popover" 
-                                id="attach-popover"
+                                id="ban-popover"
                             >
                             
                                 <InputField 
-                                    text="封禁时长(小时)"
-                                    fullWidth
+                                    text="封禁时长"
                                     value={duration}
-                                    placeholder="请输入数字"
+                                    placeholder="以小时为单位"
                                     id="duration"                            
                                     onChange={this.handleInputChange}
+                                   
                                     errorMessage={errorMessage}
                                 />
                                 <InputField 
                                     text="附加消息"
-                                    fullWidth
                                     value={message}
                                     placeholder="写下想对ta说的话"
                                     id="message"
@@ -315,9 +335,12 @@ class ThreadHeader extends React.Component {
                         initialState={bLocked} 
                     >
                         {(active, onClickButton) => {
-                            return<p  onClick={onClickButton}>
+                            return (
+                                <p  onClick={onClickButton}>
                                 {active ? '已锁定' : '锁定'}
-                            </p>;
+                                </p>
+                            );
+                           
                         }}
                     </SwitchButton>
                 </MenuItem>
@@ -447,13 +470,13 @@ class ThreadHeader extends React.Component {
 
 const mapStateToProps = state => {
     const deleteThreadState = state.getIn(['bypassing', 'deleteThread']),
-        userBanState = state.getIn(['bypassing','userBan']),
+        banUserState = state.getIn(['bypassing', 'banUser']),
         editThreadState = state.getIn([ 'bypassing', 'editThread' ]);
     const selfUid = state.getIn(['user', 'uid']),
         selfModerate = state.getIn(['user', 'moderator']),
         selfGroup = state.getIn(['user', 'group']);
     if (!deleteThreadState) return {};
-    if (!userBanState) return {};
+    if (!banUserState) return {};
 
     return {
         selfUid,
@@ -463,16 +486,16 @@ const mapStateToProps = state => {
         success: deleteThreadState.get('items'),
         error: deleteThreadState.get('error'),
         editThreadState,
-        isFetching: userBanState.get('isFetching'),
-        success: userBanState.get('items'),
-        error: userBanState.get('error'),
+        isbanFetching: banUserState.get('isFetching'),
+        bansuccess: banUserState.get('items'),
+        banerror: banUserState.get('error'),
     };
 };
 const mapDispatchToProps = dispatch => ({
     deleteThread: tid => dispatch(deleteThread(tid)),
     showToast: message => dispatch(showToast(message)),
     editThread: (tid, title, content) => dispatch(editThread(tid, title, content)),
-    userBan:(uid, boardId ,duration, message) => dispatch(userBan(uid,boardId,duration,message)),
+    banUser:(uid, boardId ,duration, message) => dispatch(banUser(uid,boardId,duration,message)),
 });
 ThreadHeader = connect(mapStateToProps, mapDispatchToProps)(toJS(ThreadHeader));
 ThreadHeader = withRouter(ThreadHeader);

@@ -62,6 +62,7 @@ class ThreadWrapper extends React.PureComponent {
         this.state = {
             activePage: 1,
             replyContent: '',
+            isLock: false,
             replyId: 0
         };
 
@@ -69,7 +70,7 @@ class ThreadWrapper extends React.PureComponent {
         this.handleClickReply = this.handleClickReply.bind(this);
         this.handleCancelReply = this.handleCancelReply.bind(this);
         this.handleRefreshPage = this.handleRefreshPage.bind(this);
-        
+        this.handleSubmitIsLock = this.handleSubmitIsLock.bind(this)
     }
 
     componentWillMount() {
@@ -104,7 +105,10 @@ class ThreadWrapper extends React.PureComponent {
         
     }
 
-   
+    handleSubmitIsLock (isLock) {
+        this.setState({ isLock: isLock })
+    }     
+    
     handleCancelReply () {
         this.setState({ replyContent: '' });
     }
@@ -132,7 +136,7 @@ class ThreadWrapper extends React.PureComponent {
     render () {
         const { threadInfo, postList, boardInfo, isFetching, 
             error, match: { params: { tid } } } = this.props;
-        const { replyContent, replyId } = this.state;
+        const { replyContent, replyId, isLock } = this.state;
         if (error) return <ErrorOverlay reason={error} needRefresh />;
         if (!postList || isFetching) return <FetchingOverlay fullPage />;
 
@@ -167,6 +171,7 @@ class ThreadWrapper extends React.PureComponent {
                             board={boardInfo}
                             onClickReply={this.handleClickReply} 
                             onEditSuccess={this.handleRefreshPage}
+                            onSubmit={this.handleSubmitIsLock}
                         /> 
                     }
                     {renderPostList}
@@ -183,7 +188,7 @@ class ThreadWrapper extends React.PureComponent {
                         activePage={this.state.activePage}
                         onSelect={this.handleSelect} />
                 </Card>
-                {bLocked
+                {bLocked || isLock
                     ?
                         <div className="lock-overlay">
                         <p className='lock-p'>此帖子已被锁定</p>
