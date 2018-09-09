@@ -181,13 +181,16 @@ class ThreadHeader extends React.Component {
     componentWillReceiveProps (nextProps) { 
         const { isFetching, error, showToast, board: { id: bid }, editThreadState,
             isbanFetching, banerror, bansuccess} = nextProps; 
-        if(isbanFetching){
+        if(bansuccess){
             showToast("禁言成功");
         }
         if ((!isFetching && isFetching !== this.props.isFetching) || (!isbanFetching && isbanFetching !== this.props.isbanFetching)) {
             if (error || banerror) {
-                showToast(error);
-                showToast(banerror);
+                if(error){
+                    showToast(error);
+                } else{ 
+                    showToast(banerror);
+                }
             } else {
                 // success
                 // go back to board
