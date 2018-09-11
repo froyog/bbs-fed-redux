@@ -17,6 +17,8 @@ const switchButton = (state = fromJS({
         case ActionTypes.UNLIKE_THREAD_REQUEST:
         case ActionTypes.LIKE_POST_REQUEST:
         case ActionTypes.UNLIKE_POST_REQUEST:
+        case ActionTypes.LOCK_THREAD_REQUEST:
+        case ActionTypes.UNLOCK_THREAD_REQUEST:
             return state.set('isFetching', true);
         case ActionTypes.FOLLOW_BOARD_SUCCESS:
         case ActionTypes.UNFOLLOW_BOARD_SUCCESS:
@@ -26,6 +28,8 @@ const switchButton = (state = fromJS({
         case ActionTypes.UNLIKE_THREAD_SUCCESS:
         case ActionTypes.LIKE_POST_SUCCESS:
         case ActionTypes.UNLIKE_POST_SUCCESS:
+        case ActionTypes.LOCK_THREAD_SUCCESS:
+        case ActionTypes.UNLOCK_THREAD_SUCCESS:
             return Map({
                 'isFetching': false,
                 'success': fromJS(action.json.data),
@@ -39,10 +43,13 @@ const switchButton = (state = fromJS({
         case ActionTypes.UNLIKE_THREAD_FAILURE:
         case ActionTypes.LIKE_POST_FAILURE:
         case ActionTypes.UNLIKE_POST_FAILURE:
+        case ActionTypes.LOCK_THREAD_FAILURE:
+        case ActionTypes.UNLOCK_THREAD_FAILURE:
             return Map({
                 'isFetching': false,
                 'error': fromJS(action.error),
-                'requestId': action.requestId
+                'requestId': action.requestId,
+                
             });
         default:
             return state;

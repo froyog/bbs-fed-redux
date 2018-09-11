@@ -11,6 +11,7 @@ import { Breadcrumb, BreadcrumbItem } from '../../components/common/Breadcrumb';
 import ThreadHeader from './ThreadHeader';
 import ThreadPost from './ThreadPost';
 import { ErrorOverlay } from '../../components/common/ErrorModal';
+import '../../styles/forum/thread.less';
 // import ThreadEditor from './ThreadEditor';
 const AsyncThreadEditor = asyncComponent(() => import('./ThreadEditor'));
 
@@ -21,10 +22,11 @@ class ThreadWrapper extends React.PureComponent {
         isFetching: PropTypes.bool,
         error: PropTypes.string,
         tid: PropTypes.number,
+        
         threadInfo: PropTypes.shape({
             cPost: PropTypes.number,
             authorId: PropTypes.number,
-            blocked: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+            bLocked: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
             anonymous: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
             visibility: PropTypes.number,
             tModify: PropTypes.number,
@@ -60,6 +62,7 @@ class ThreadWrapper extends React.PureComponent {
         this.state = {
             activePage: 1,
             replyContent: '',
+            isLock: false,
             replyId: 0
         };
 
@@ -67,6 +70,7 @@ class ThreadWrapper extends React.PureComponent {
         this.handleClickReply = this.handleClickReply.bind(this);
         this.handleCancelReply = this.handleCancelReply.bind(this);
         this.handleRefreshPage = this.handleRefreshPage.bind(this);
+        this.handleSubmitIsLock = this.handleSubmitIsLock.bind(this);
     }
 
     componentWillMount() {
@@ -96,10 +100,15 @@ class ThreadWrapper extends React.PureComponent {
     handleClickReply (replyId, replyContent) {
         this.setState({
             replyId, 
-            replyContent 
+            replyContent,
         });
+        
     }
 
+    handleSubmitIsLock (isLock) {
+        this.setState({ isLock: isLock });
+    }     
+    
     handleCancelReply () {
         this.setState({ replyContent: '' });
     }
@@ -123,15 +132,15 @@ class ThreadWrapper extends React.PureComponent {
             replyContent: ''
         });
     }
-
+   
     render () {
         const { threadInfo, postList, boardInfo, isFetching, 
             error, match: { params: { tid } } } = this.props;
-        const { replyContent, replyId } = this.state;
+        const { replyContent, replyId, isLock } = this.state;
         if (error) return <ErrorOverlay reason={error} needRefresh />;
         if (!postList || isFetching) return <FetchingOverlay fullPage />;
 
-        const { cPost, title } = threadInfo;
+        const { cPost, title, bLocked } = threadInfo;
         const { id: boardId, name, anonymous: allowAnonymous } = boardInfo;
         const renderPostList = postList.map(post =>
             <ThreadPost
@@ -162,6 +171,7 @@ class ThreadWrapper extends React.PureComponent {
                             board={boardInfo}
                             onClickReply={this.handleClickReply} 
                             onEditSuccess={this.handleRefreshPage}
+                            onSubmit={this.handleSubmitIsLock}
                         /> 
                     }
                     {renderPostList}
@@ -178,6 +188,12 @@ class ThreadWrapper extends React.PureComponent {
                         activePage={this.state.activePage}
                         onSelect={this.handleSelect} />
                 </Card>
+                {bLocked || isLock
+                    ?
+                        <div className="lock-overlay">
+                        <p className='lock-p'>此帖子已被锁定</p>
+                    </div>
+                    :null}
                 <AsyncThreadEditor
                     replyId={replyId}
                     replyContent={replyContent}
@@ -203,7 +219,7 @@ const mapStateToProps = (state, ownProps) => {
         error: thread.get('error'),
         threadInfo: thread.get('threadInfo'),
         postList: thread.get('postList'),
-        boardInfo: thread.get('boardInfo')
+        boardInfo: thread.get('boardInfo'),
     };
 };
 const mapDispatchToProps = dispatch => ({
