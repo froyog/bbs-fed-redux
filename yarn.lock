@@ -2026,6 +2026,10 @@ draftjs-utils@^0.8.8:
   version "0.8.8"
   resolved "http://registry.npm.taobao.org/draftjs-utils/download/draftjs-utils-0.8.8.tgz#5835daed95f59d3ee1f96fdcbbb9809772c86490"
 
+draftjs-utils@^0.9.3:
+  version "0.9.4"
+  resolved "https://registry.yarnpkg.com/draftjs-utils/-/draftjs-utils-0.9.4.tgz#976c61aa133dbbbfedd65ae1dd6627d7b98c6f08"
+
 duplexer2@^0.1.4:
   version "0.1.4"
   resolved "http://registry.npm.taobao.org/duplexer2/download/duplexer2-0.1.4.tgz#8b12dab878c0d69e3e7891051662a32fc6bddcc1"
@@ -3090,6 +3094,10 @@ html-minifier@^3.2.3:
     param-case "2.1.x"
     relateurl "0.2.x"
     uglify-js "3.3.x"
+
+html-to-draftjs@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/html-to-draftjs/-/html-to-draftjs-1.4.0.tgz#8a3cbbba5b49d50be8ce85cc08b112d5bf00fc1d"
 
 html-webpack-plugin@2.29.0:
   version "2.29.0"
@@ -5327,12 +5335,13 @@ react-dom@^15.6.2:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react-draft-wysiwyg@^1.10.10:
-  version "1.12.4"
-  resolved "http://registry.npm.taobao.org/react-draft-wysiwyg/download/react-draft-wysiwyg-1.12.4.tgz#dafe574b6849290a1387b983d4ca62c00e791af8"
+react-draft-wysiwyg@^1.12.13:
+  version "1.12.13"
+  resolved "https://registry.yarnpkg.com/react-draft-wysiwyg/-/react-draft-wysiwyg-1.12.13.tgz#609bf9918607837223b67893b1e40d58e20341f4"
   dependencies:
     classnames "^2.2.5"
-    draftjs-utils "^0.8.8"
+    draftjs-utils "^0.9.3"
+    html-to-draftjs "^1.4.0"
     linkify-it "^2.0.3"
     prop-types "^15.6.0"
 
