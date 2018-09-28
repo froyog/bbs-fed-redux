@@ -12,11 +12,11 @@ import { deleteThread, editThread } from '../../actions/forum/board';
 import { banUser } from '../../actions/frame/ban';
 import { connect } from 'react-redux';
 import { Media, Button, 
-    DropdownButton, MenuItem, Alert, 
+    DropdownButton, MenuItem, 
     OverlayTrigger, Popover} from 'react-bootstrap';
 import { toJS, customToolbar, 
     markdownToDraft, draftToMarkdown,
-    isAuthorOf, isModeratorOf,isMobile 
+    isAuthorOf, isModeratorOf 
 } from '../../util';
 
 // editor
@@ -92,7 +92,7 @@ class ThreadHeader extends React.Component {
     }
     
     handleClickOperator (eventKey) {
-        const { deleteThread, onSubmit, thread: { id: tid, authorId } } = this.props;
+        const { deleteThread, thread: { id: tid } } = this.props;
         switch (eventKey) {
             case 'delete':
                 deleteThread && deleteThread(tid);
@@ -103,12 +103,10 @@ class ThreadHeader extends React.Component {
                 });
                 break;
             case 'lock':
-                { 
-                    this.setState({
-                        isLock:true,
-                    });
-                    this.handleSubmit();
-                }
+                this.setState({
+                    isLock:true,
+                });
+                this.handleSubmit();
                 break;
             
             default:
@@ -162,7 +160,7 @@ class ThreadHeader extends React.Component {
         };
     }
     handleInputChange (e) {
-        const { duration, message } = e.target;
+        const { duration } = e.target;
         this.setState({
             [e.target.id]: e.target.value
         });
@@ -230,15 +228,14 @@ class ThreadHeader extends React.Component {
 
     render () {
         const { thread: { id: tid, authorId, authorName, title, anonymous,
-            tCreate, content, inCollection, like, liked, bLocked, boardId
+            tCreate, content, inCollection, like, liked, bLocked
         }, 
         board: { id: bid, name, forumId: fid },
         selfUid, selfGroup, selfModerate, editThreadState
         } = this.props;
        
-        const { isEditing, editorState, ban, duration, message, banError, isBan } = this.state;
+        const { isEditing, editorState, duration, message } = this.state;
         const { errorMessage } = this.state;
-        const { bantitle, banMessage } = this.state;
         const isAuthor = isAuthorOf(authorId, selfUid);
         const isModerator = isModeratorOf(selfModerate, selfGroup, bid, fid);
         const renderOperatorDropDown = (

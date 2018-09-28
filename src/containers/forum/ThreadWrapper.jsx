@@ -189,11 +189,13 @@ class ThreadWrapper extends React.PureComponent {
                         onSelect={this.handleSelect} />
                 </Card>
                 {bLocked || isLock
-                    ?
+                    ? (
                         <div className="lock-overlay">
-                        <p className='lock-p'>此帖子已被锁定</p>
-                    </div>
-                    :null}
+                            <p className='lock-p'>此帖子已被管理员锁定</p>
+                        </div>
+                    )
+                    : null
+                }
                 <AsyncThreadEditor
                     replyId={replyId}
                     replyContent={replyContent}
