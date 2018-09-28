@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
-import { followBoard, collectThread, likeThread, likePost } from '../../actions/forum/switchButton';
+import { followBoard, collectThread, likeThread, likePost, lockThread} from '../../actions/forum/switchButton';
 import { showToast } from '../../actions/common/toast';
 
 class SwitchButton extends React.Component {
@@ -59,6 +59,9 @@ class SwitchButton extends React.Component {
             case 'likePost':
                 this.props.onChangeLikePostState(id, nextState);
                 break;
+            case 'lock':
+                this.props.onChangeLockThreadState(id,nextState);
+                break;
             default:
                 break;
         }
@@ -94,6 +97,7 @@ const mapDispatchToProps = dispatch => ({
     onChangeCollectState: (tid, nextColloectState) => dispatch(collectThread(tid, nextColloectState)),
     onChangeLikeThreadState: (tid, nextLikeState) => dispatch(likeThread(tid, nextLikeState)),
     onChangeLikePostState: (pid, nextLikeState) => dispatch(likePost(pid, nextLikeState)),
+    onChangeLockThreadState: (tid,nextLockState) => dispatch(lockThread(tid,nextLockState)),
     showToast: message => dispatch(showToast(message))
 });
 SwitchButton = connect(mapStateToProps, mapDispatchToProps)(toJS(SwitchButton));

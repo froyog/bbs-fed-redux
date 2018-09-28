@@ -125,3 +125,36 @@ export const likePost = (pid, nextState) => (dispatch, getState) => {
         requestId: pid
     });
 };
+
+export const LOCK_THREAD_REQUEST = 'LOCK_THREAD_REQUEST';
+export const LOCK_THREAD_SUCCESS = 'LOCK_THREAD_SUCCESS';
+export const LOCK_THREAD_FAILURE = 'LOCK_THREAD_FAILURE';
+export const UNLOCK_THREAD_REQUEST = 'UNLOCK_THREAD_REQUEST';
+export const UNLOCK_THREAD_SUCCESS = 'UNLOCK_THREAD_SUCCESS';
+export const UNLOCK_THREAD_FAILURE = 'UNLOCK_THREAD_FAILURE';
+
+
+    
+      
+
+export const lockThread = (tid, nextState) => (dispatch, getState) => {
+    const authentication = parseUser(getState());
+    return dispatch({
+        [CALL_API]: {
+            types: (
+                nextState 
+                    ? [LOCK_THREAD_REQUEST, LOCK_THREAD_SUCCESS, LOCK_THREAD_FAILURE]
+                    : [UNLOCK_THREAD_REQUEST, UNLOCK_THREAD_SUCCESS, UNLOCK_THREAD_FAILURE]
+            ),
+            
+            apiPath: `thread/${tid}/lock`,
+            request: {
+                method: nextState ? 'PUT' : 'DELETE',
+                headers: {
+                    auth: authentication
+                }
+            }
+        }
+    });
+    
+};
