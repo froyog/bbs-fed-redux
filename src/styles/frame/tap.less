@@ -1,6 +1,5 @@
 @import '../universal.less';
 
-
 .tap-wrapper {
     position: fixed;
     background-color: @material-blue-gray;
@@ -13,11 +12,11 @@
     opacity: 0;
     transform: scale(0);
     transform-origin: 350px 550px;
-    .transition-material(.6s);
+    .transition-material(0.6s);
 
-    a { 
-        color: #fff; 
-        opacity: .6; 
+    a {
+        color: #fff;
+        opacity: 0.6;
         &:hover {
             opacity: 1;
         }
@@ -78,6 +77,6 @@
 
     &.active {
         transform: scale(1);
-        opacity: .9;
+        opacity: 0.9;
     }
 }

@@ -1,36 +1,39 @@
 import { fromJS, Map } from 'immutable';
 import * as ActionTypes from '../../actions/forum/thread';
 
-const thread = (state = fromJS({
-    isFetching: false,
-    tid: 0,
-    threadInfo: {},
-    postList: [],
-    didInvaildate: true
-}), action) => {
+const thread = (
+    state = fromJS({
+        isFetching: false,
+        tid: 0,
+        threadInfo: {},
+        postList: [],
+        didInvaildate: true,
+    }),
+    action
+) => {
     switch (action.type) {
         case ActionTypes.GET_THREAD_REQUEST:
             return state.set('isFetching', true);
         case ActionTypes.GET_THREAD_SUCCESS:
             const data = action.json.data;
             return Map({
-                'isFetching': false,
-                'tid': action.tid,
-                'threadInfo': fromJS(data.thread),
-                'boardInfo': fromJS(data.board),
-                'postList': fromJS(data.post),
-                'didInvaildate': false
+                isFetching: false,
+                tid: action.tid,
+                threadInfo: fromJS(data.thread),
+                boardInfo: fromJS(data.board),
+                postList: fromJS(data.post),
+                didInvaildate: false,
             });
         case ActionTypes.GET_THREAD_FAILURE:
             return Map({
-                'isFetching': false,
-                'error': fromJS(action.error),
-                'didInvaildate': false
+                isFetching: false,
+                error: fromJS(action.error),
+                didInvaildate: false,
             });
         case ActionTypes.INVAILDATE_THREAD_PAGE:
             return Map({
-                'isFetching': false,
-                'didInvaildate': true,
+                isFetching: false,
+                didInvaildate: true,
             });
         default:
             return state;
@@ -45,9 +48,7 @@ const threadByPage = (state = Map(), action) => {
         case ActionTypes.GET_THREAD_SUCCESS:
         case ActionTypes.GET_THREAD_FAILURE:
         case ActionTypes.INVAILDATE_THREAD_PAGE:
-            return state.set(
-                action.page, thread(state.get(action['page']), action)
-            );
+            return state.set(action.page, thread(state.get(action['page']), action));
         default:
             return state;
     }

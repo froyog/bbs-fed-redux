@@ -3,38 +3,37 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import '../../styles/frame/tap.less';
 
-
 class FeatureDiscovery extends React.Component {
     static PropTypes = {
-        onUnmountTap: PropTypes.func.isRequired
-    }
+        onUnmountTap: PropTypes.func.isRequired,
+    };
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
-            tapIsOpen: false
+            tapIsOpen: false,
         };
 
         this.handleClickCloseButton = this.handleClickCloseButton.bind(this);
     }
 
-    componentDidMount () {
+    componentDidMount() {
         // for animation
         setTimeout(() => {
             this.setState({
-                tapIsOpen: true
+                tapIsOpen: true,
             });
         }, 200);
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         clearTimeout(this.timer);
     }
 
-    handleClickCloseButton () {
+    handleClickCloseButton() {
         const { onUnmountTap } = this.props;
         this.setState({
-            tapIsOpen: false
+            tapIsOpen: false,
         });
         // spare some time for animation before unmount
         this.timer = setTimeout(() => {
@@ -42,15 +41,12 @@ class FeatureDiscovery extends React.Component {
         }, 800);
     }
 
-    render () {
+    render() {
         const { tapIsOpen } = this.state;
         return (
             <div className={`tap-wrapper${tapIsOpen ? ' active' : ''}`}>
-                <button 
-                    className="close-button"
-                    onClick={this.handleClickCloseButton}
-                >
-                    <i className="iconfont icon-close"></i>
+                <button className="close-button" onClick={this.handleClickCloseButton}>
+                    <i className="iconfont icon-close" />
                 </button>
                 <div className="content">
                     <h1>更新说明</h1>
@@ -73,7 +69,9 @@ class FeatureDiscovery extends React.Component {
                         </ul>
                     </section>
                     <footer>
-                        前往<Link to="/forum/thread/172517/page/1">Web端历史更新记录及bug反馈</Link>获取更多信息
+                        前往
+                        <Link to="/forum/thread/172517/page/1">Web端历史更新记录及bug反馈</Link>
+                        获取更多信息
                     </footer>
                     {/* <h1>What's new ?</h1>
                     <section className="version">
@@ -118,6 +116,6 @@ class FeatureDiscovery extends React.Component {
             </div>
         );
     }
-};
+}
 
 export default FeatureDiscovery;

@@ -6,27 +6,26 @@ import { toJS } from '../../util';
 import { getForumList, getBoardList } from '../../actions/forumList';
 import { withRouter } from 'react-router-dom';
 
-
 class BIDSelector extends React.Component {
     static PropsTypes = {
         onBIDSelect: PropTypes.func.isRequired,
         forumList: PropTypes.array,
         boardList: PropTypes.array,
-        forumIsFetching: PropTypes.bool
-    }
+        forumIsFetching: PropTypes.bool,
+    };
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
             selectedForumId: 0,
-            selectedBoardId: 0
+            selectedBoardId: 0,
         };
 
         this.handleSelectForum = this.handleSelectForum.bind(this);
         this.handleSelectBoard = this.handleSelectBoard.bind(this);
     }
 
-    componentDidMount () {
+    componentDidMount() {
         const { getForumList, currentBoardInfo, onBIDSelect } = this.props;
         getForumList && getForumList();
         if (currentBoardInfo) {
@@ -35,31 +34,33 @@ class BIDSelector extends React.Component {
         }
     }
 
-    handleSelectForum (selectedForumId) {
+    handleSelectForum(selectedForumId) {
         this.props.getBoardList(selectedForumId);
         this.setState({
-            selectedForumId: selectedForumId
+            selectedForumId: selectedForumId,
         });
     }
 
-    handleSelectBoard (selectedBoardId) {
+    handleSelectBoard(selectedBoardId) {
         this.props.onBIDSelect(selectedBoardId);
     }
 
-    render () {
+    render() {
         const { forumList, boardList, currentBoardInfo } = this.props;
         const { selectedForumId } = this.state;
         let forumOptions, initialForumName, initialBoardName;
-        forumOptions = forumList && forumList.map(forum => ({
-            name: forum.name,
-            id: forum.id
-        }));
+        forumOptions =
+            forumList &&
+            forumList.map(forum => ({
+                name: forum.name,
+                id: forum.id,
+            }));
         let boardOptions;
-        
+
         if (boardList[selectedForumId] && boardList[selectedForumId].items.boards) {
             boardOptions = boardList[selectedForumId].items.boards.map(board => ({
                 name: board.name,
-                id: board.id
+                id: board.id,
             }));
         }
         if (currentBoardInfo) {
@@ -86,7 +87,6 @@ class BIDSelector extends React.Component {
     }
 }
 
-
 const mapStateToProps = (state, ownProps) => ({
     forumIsFetching: state.getIn(['forumList', 'isFetching']),
     forumList: state.getIn(['forumList', 'items']),
@@ -94,9 +94,12 @@ const mapStateToProps = (state, ownProps) => ({
 });
 const mapDispatchToProps = dispatch => ({
     getForumList: () => dispatch(getForumList()),
-    getBoardList: fid => dispatch(getBoardList(fid))
+    getBoardList: fid => dispatch(getBoardList(fid)),
 });
-BIDSelector = connect(mapStateToProps, mapDispatchToProps)(toJS(BIDSelector));
+BIDSelector = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(toJS(BIDSelector));
 BIDSelector = withRouter(BIDSelector);
 
 export default BIDSelector;

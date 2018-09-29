@@ -6,7 +6,6 @@ import localize from '../middlewares/localize';
 import piwikTracker from '../middlewares/piwikTracker';
 import RavenMiddleware from 'redux-raven-middleware';
 
-
 const configureStore = preloadedState =>
     createStore(
         rootReducer,

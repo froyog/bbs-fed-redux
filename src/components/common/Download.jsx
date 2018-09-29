@@ -8,24 +8,24 @@ class Download extends React.Component {
     static propTypes = {
         android: PropTypes.shape({
             version: PropTypes.string.isRequired,
-            path: PropTypes.string.isRequired
+            path: PropTypes.string.isRequired,
         }).isRequired,
         ios: PropTypes.shape({
             version: PropTypes.string.isRequired,
-            path: PropTypes.string.isRequired
-        }).isRequired
-    }    
+            path: PropTypes.string.isRequired,
+        }).isRequired,
+    };
 
-    constructor () {
+    constructor() {
         super();
         const userAgent = navigator.userAgent;
         this.state = {
             isAndroid: Boolean(userAgent.indexOf('Android') > -1 || userAgent.indexOf('Adr') > -1),
-            isiOS: Boolean(userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/))
+            isiOS: Boolean(userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)),
         };
     }
 
-    render () {
+    render() {
         const { isAndroid, isiOS } = this.state;
         const { android, ios } = this.props;
         let renderDownload;
@@ -33,18 +33,14 @@ class Download extends React.Component {
             renderDownload = (
                 <div>
                     <p className="average-rate">
-                        <i className="iconfont icon-star"></i>
-                        <i className="iconfont icon-star"></i>
-                        <i className="iconfont icon-star"></i>
-                        <i className="iconfont icon-star"></i>
-                        <i className="iconfont icon-star"></i>
+                        <i className="iconfont icon-star" />
+                        <i className="iconfont icon-star" />
+                        <i className="iconfont icon-star" />
+                        <i className="iconfont icon-star" />
+                        <i className="iconfont icon-star" />
                         <span className="rate">4.8</span>
                     </p>
-                    <Button 
-                        className="button-outline"
-                        href={ios.path}
-                        target="_blank"
-                    >
+                    <Button className="button-outline" href={ios.path} target="_blank">
                         前往 App Store
                     </Button>
                     <p className="version">v{ios.version}</p>
@@ -53,11 +49,7 @@ class Download extends React.Component {
         } else if (isAndroid && !isiOS) {
             renderDownload = (
                 <div>
-                    <Button
-                        bsStyle="primary"
-                        className="raised button-now"
-                        href={android.path}
-                    >
+                    <Button bsStyle="primary" className="raised button-now" href={android.path}>
                         立即下载
                     </Button>
                     <p className="version">v{android.version}</p>
@@ -79,11 +71,11 @@ class Download extends React.Component {
                 <div className="content">
                     <Media>
                         <Media.Left>
-                            <img 
-                                src={icon} 
-                                className="icon" 
+                            <img
+                                src={icon}
+                                className="icon"
                                 style={{
-                                    borderRadius: isiOS ? '22.5%' : '10px'
+                                    borderRadius: isiOS ? '22.5%' : '10px',
                                 }}
                             />
                         </Media.Left>
@@ -97,6 +89,6 @@ class Download extends React.Component {
             </div>
         );
     }
-};
+}
 
 export default Download;

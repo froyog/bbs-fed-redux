@@ -5,7 +5,6 @@ import { Carousel, Media } from 'react-bootstrap';
 import Time from './common/Time';
 import Avatar from './common/Avatar';
 
-
 export const Announce = ({ items }) => {
     return (
         <ul className="announcement-list">
@@ -21,48 +20,49 @@ export const Announce = ({ items }) => {
     );
 };
 Announce.propTpyes = {
-    items: PropTypes.arrayOf(PropTypes.shape({
-        title: PropTypes.string,
-        id: PropTypes.number
-    }))
+    items: PropTypes.arrayOf(
+        PropTypes.shape({
+            title: PropTypes.string,
+            id: PropTypes.number,
+        })
+    ),
 };
 
 export const CarouselAd = ({ adList }) => {
     return (
-        <Carousel 
+        <Carousel
             className="index-carousel"
             prevIcon={null}
             nextIcon={null}
             interval={3000}
             pauseOnHover={true}
         >
-            { adList.map(ad => {
+            {adList.map(ad => {
                 const { id, img, src: href } = ad;
                 return (
                     <Carousel.Item key={id}>
                         <a href={href}>
-                            <img 
-                                src={`https://bbs.tju.edu.cn/api/img/${img}`} 
-                                alt="Ad Image"
-                            />
+                            <img src={`https://bbs.tju.edu.cn/api/img/${img}`} alt="Ad Image" />
                         </a>
                     </Carousel.Item>
                 );
-            }) }
+            })}
         </Carousel>
     );
 };
 
 CarouselAd.propTypes = {
-    adList: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number,
-        img: PropTypes.number,
-        src: PropTypes.string
-    }))
+    adList: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number,
+            img: PropTypes.number,
+            src: PropTypes.string,
+        })
+    ),
 };
 
 export const IndexRank = ({ rankData }) => {
-    const [ startTime, rankList ] = rankData;
+    const [startTime, rankList] = rankData;
     return (
         <div>
             <ul className="rank-list">
@@ -71,15 +71,14 @@ export const IndexRank = ({ rankData }) => {
                     return (
                         <Media key={id}>
                             <Media.Left align="middle">
-                                <Avatar 
-                                    id={id} 
-                                    name={name} 
-                                    className="avatar"
-                                />
+                                <Avatar id={id} name={name} className="avatar" />
                             </Media.Left>
                             <Media.Body>
                                 <Media.Heading>{name}</Media.Heading>
-                                <p>周获积分：{pointsInc}</p>
+                                <p>
+                                    周获积分：
+                                    {pointsInc}
+                                </p>
                             </Media.Body>
                         </Media>
                     );
@@ -87,20 +86,29 @@ export const IndexRank = ({ rankData }) => {
             </ul>
             <div className="action-wrapper">
                 <p>开始计算于</p>
-                <p><Time timestamp={startTime} absolute /></p>
-                <p>去<Link to="/rank">排行榜</Link>逛逛</p>
+                <p>
+                    <Time timestamp={startTime} absolute />
+                </p>
+                <p>
+                    去<Link to="/rank">排行榜</Link>
+                    逛逛
+                </p>
             </div>
         </div>
     );
 };
 
 IndexRank.propTypes = {
-    rankData: PropTypes.arrayOf(PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.number,
-            name: PropTypes.string,
-            pointInc: PropTypes.number
-        }))
-    ]))
+    rankData: PropTypes.arrayOf(
+        PropTypes.oneOfType([
+            PropTypes.number,
+            PropTypes.arrayOf(
+                PropTypes.shape({
+                    id: PropTypes.number,
+                    name: PropTypes.string,
+                    pointInc: PropTypes.number,
+                })
+            ),
+        ])
+    ),
 };

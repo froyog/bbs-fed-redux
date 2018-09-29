@@ -1,6 +1,5 @@
 @import '../universal.less';
 
-
 .profile-avatar {
     position: absolute;
     bottom: 0;
@@ -39,7 +38,7 @@
         right: 0;
         top: 40px;
         padding: 10px 20px 15px;
-        background-color: rgba(255, 255, 255, .95);
+        background-color: rgba(255, 255, 255, 0.95);
         box-shadow: @shadow-material-deep;
         border-radius: 3px;
 
@@ -66,10 +65,12 @@
         outline: 0 !important;
         border-color: #007bff;
         color: #007bff;
-        transition: all .3s;
+        transition: all 0.3s;
         float: right;
 
-        &:hover, &:active, &:focus {
+        &:hover,
+        &:active,
+        &:focus {
             color: #fff;
             background-color: #007bff;
         }
@@ -87,7 +88,7 @@
         position: relative;
         overflow: hidden;
         margin-bottom: 10px;
-        
+
         .bg {
             position: absolute;
             top: -20px;
@@ -99,12 +100,12 @@
         }
     }
 
-    .profile-wrapper { 
+    .profile-wrapper {
         position: relative;
         margin: 0 36px;
     }
-    .intro { 
-        margin-left: 165px; 
+    .intro {
+        margin-left: 165px;
         &.editing {
             margin-left: 205px;
         }
@@ -116,8 +117,8 @@
     }
 
     .nickname {
-        opacity: .6;
-        font-size: .6em;
+        opacity: 0.6;
+        font-size: 0.6em;
         font-weight: normal;
     }
 
@@ -130,14 +131,18 @@
         }
     }
 
-    .input-gap { margin-right: 20px; }
-    
+    .input-gap {
+        margin-right: 20px;
+    }
+
     .password-set-wrapper {
         margin-top: 10px;
         overflow: hidden;
-        .transition-material(.5s, max-height);
+        .transition-material(0.5s, max-height);
 
-        p { margin: 0; }
+        p {
+            margin: 0;
+        }
     }
     .editing-rest {
         padding: 0 36px;
@@ -155,25 +160,39 @@
             height: 100px;
             top: 0;
         }
-        .profile-avatar.editing, .ReactCrop {
+        .profile-avatar.editing,
+        .ReactCrop {
             position: static;
             width: 150px;
             height: 150px;
             margin-right: 5px;
         }
-        .profile-wrapper { margin: 0 20px; }
-        .intro { margin-left: 110px; }
-        .intro.editing { margin-left: 0; }
-        .editing-rest { margin-left: 0; padding: 0 20px; }
-        .profile-cover { height: 140px; }
+        .profile-wrapper {
+            margin: 0 20px;
+        }
+        .intro {
+            margin-left: 110px;
+        }
+        .intro.editing {
+            margin-left: 0;
+        }
+        .editing-rest {
+            margin-left: 0;
+            padding: 0 20px;
+        }
+        .profile-cover {
+            height: 140px;
+        }
         .profile-editing-wrapper {
             position: relative;
             top: -40px;
         }
-        button.profile-ops { 
-            float: none; 
+        button.profile-ops {
+            float: none;
         }
-        .nickname { display: none; }
+        .nickname {
+            display: none;
+        }
     }
 }
 

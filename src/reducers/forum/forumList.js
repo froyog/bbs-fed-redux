@@ -3,7 +3,7 @@ import * as ActionTypes from '../../actions/forumList';
 
 const defaultState = fromJS({
     isFetching: false,
-    items: []
+    items: [],
 });
 
 const forumList = (state = defaultState, action) => {
@@ -12,17 +12,16 @@ const forumList = (state = defaultState, action) => {
             return state.set('isFetching', true);
         case ActionTypes.GET_FORUMLIST_SUCCESS:
             return Map({
-                'isFetching': false,
-                'items': fromJS(action.json.data)
+                isFetching: false,
+                items: fromJS(action.json.data),
             });
         case ActionTypes.GET_FORUMLIST_FAILURE:
             return Map({
-                'isFetching': false,
-                'error': fromJS(action.error)
+                isFetching: false,
+                error: fromJS(action.error),
             });
         default:
             return state;
-
     }
 };
 

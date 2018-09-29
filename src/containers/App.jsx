@@ -32,7 +32,7 @@ class App extends React.Component {
         isOpen: PropTypes.bool.isRequired,
         onToggleSidebar: PropTypes.func.isRequired,
         initFromLocal: PropTypes.func.isRequired,
-        getSelfProfile: PropTypes.func.isRequired
+        getSelfProfile: PropTypes.func.isRequired,
     };
 
     componentWillMount() {
@@ -46,10 +46,10 @@ class App extends React.Component {
         getSelfProfile();
     }
 
-    render () {
+    render() {
         const { isOpen, location, redirectLogin, isShowToast } = this.props;
         const mainStyle = {
-            [isMobile() ? 'left' : 'marginLeft']: `${isOpen ? '200px' : '0'}`
+            [isMobile() ? 'left' : 'marginLeft']: `${isOpen ? '200px' : '0'}`,
         };
         let paths = /\/forum\/thread\/(\d+)\/?$/.exec(window.location.pathname);
         if (paths) {
@@ -62,21 +62,17 @@ class App extends React.Component {
 
         return (
             <div id="frame" onScroll={this.handlePageScroll}>
-                <Header path={location.pathname}/>
+                <Header path={location.pathname} />
                 <Sidebar />
                 <Toast />
-                {
-                    isMobile() && !isShowToast
-                        ? <BottomBar />
-                        : null
-                }
+                {isMobile() && !isShowToast ? <BottomBar /> : null}
                 <div id="main" style={mainStyle}>
                     <Grid>
                         <Switch>
                             <Redirect exact from="/user" to="/user/me/messages" />
                             <Route exact path="/" component={Home} />
                             <Route exact path="/forum" component={Forum} />
-                            <Route exact path="/forum/thread/new" component={AsyncBoardEditor} />                
+                            <Route exact path="/forum/thread/new" component={AsyncBoardEditor} />
                             <Route path="/forum/board/:bid/page/:page" component={Board} />
                             <Route path="/forum/thread/:tid/page/:page" component={Thread} />
                             <Route path="/user/:uid" component={AsyncUserBase} />
@@ -94,13 +90,18 @@ class App extends React.Component {
 const mapStateToProps = state => ({
     isOpen: state.get('sidebarIsOpen'),
     isShowToast: state.getIn(['toast', 'isShow']),
-    redirectLogin: state.get('redirectLogin')
+    redirectLogin: state.get('redirectLogin'),
 });
 const mapDispatchToProps = dispatch => ({
     onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus)),
     initFromLocal: userState => dispatch(initFromLocal(userState)),
-    getSelfProfile: () => dispatch(getProfileIfNeeded('me'))
+    getSelfProfile: () => dispatch(getProfileIfNeeded('me')),
 });
-App = withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+App = withRouter(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(App)
+);
 
 export default App;

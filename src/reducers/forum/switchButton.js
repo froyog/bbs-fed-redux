@@ -2,12 +2,15 @@ import { fromJS, Map } from 'immutable';
 import * as ActionTypes from '../../actions/forum/switchButton';
 
 // all state in one reducer
-const switchButton = (state = fromJS({
-    isFetching: false,
-    success: '',
-    error: '',
-    requestId: 0
-}), action) => {
+const switchButton = (
+    state = fromJS({
+        isFetching: false,
+        success: '',
+        error: '',
+        requestId: 0,
+    }),
+    action
+) => {
     switch (action.type) {
         case ActionTypes.FOLLOW_BOARD_REQUEST:
         case ActionTypes.UNFOLLOW_BOARD_REQUEST:
@@ -31,9 +34,9 @@ const switchButton = (state = fromJS({
         case ActionTypes.LOCK_THREAD_SUCCESS:
         case ActionTypes.UNLOCK_THREAD_SUCCESS:
             return Map({
-                'isFetching': false,
-                'success': fromJS(action.json.data),
-                'requestId': action.requestId
+                isFetching: false,
+                success: fromJS(action.json.data),
+                requestId: action.requestId,
             });
         case ActionTypes.FOLLOW_BOARD_FAILURE:
         case ActionTypes.UNFOLLOW_BOARD_FAILURE:
@@ -46,10 +49,9 @@ const switchButton = (state = fromJS({
         case ActionTypes.LOCK_THREAD_FAILURE:
         case ActionTypes.UNLOCK_THREAD_FAILURE:
             return Map({
-                'isFetching': false,
-                'error': fromJS(action.error),
-                'requestId': action.requestId,
-                
+                isFetching: false,
+                error: fromJS(action.error),
+                requestId: action.requestId,
             });
         default:
             return state;

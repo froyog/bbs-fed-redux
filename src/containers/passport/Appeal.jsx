@@ -5,17 +5,16 @@ import { connect } from 'react-redux';
 import { toJS } from '../../util';
 import { sendAppeal } from '../../actions/passport/appeal';
 
-
 let AppealWrapper = ({ isFetching, error, item, onSubmitAppeal }) => {
     const handleSubmitAppeal = appealInfo => {
         onSubmitAppeal && onSubmitAppeal(appealInfo);
     };
     return (
-        <Appeal 
+        <Appeal
             success={item}
             isFetching={isFetching}
             error={error}
-            onSubmitAppeal={handleSubmitAppeal}        
+            onSubmitAppeal={handleSubmitAppeal}
         />
     );
 };
@@ -23,7 +22,7 @@ let AppealWrapper = ({ isFetching, error, item, onSubmitAppeal }) => {
 AppealWrapper.propTypes = {
     onSubmitAppeal: PropTypes.func.isRequired,
     isFetching: PropTypes.bool,
-    error: PropTypes.string
+    error: PropTypes.string,
 };
 
 const mapStateToProps = state => {
@@ -32,11 +31,14 @@ const mapStateToProps = state => {
     return {
         isFetching: appealState.get('isFetching'),
         item: appealState.get('items'),
-        error: appealState.get('error')
+        error: appealState.get('error'),
     };
 };
 const mapDispatchToProps = dispatch => ({
-    onSubmitAppeal: appealInfo => dispatch(sendAppeal(appealInfo))
+    onSubmitAppeal: appealInfo => dispatch(sendAppeal(appealInfo)),
 });
-AppealWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(AppealWrapper));
+AppealWrapper = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(toJS(AppealWrapper));
 export default AppealWrapper;

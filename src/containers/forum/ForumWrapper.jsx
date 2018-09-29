@@ -5,32 +5,32 @@ import { getBoardList } from '../../actions/forumList';
 import { toJS } from '../../util.js';
 import Forum from '../../components/Forum';
 
-
-let ForumWrapper = ({ info, getBoardList, isFetching, items, error }) =>
+let ForumWrapper = ({ info, getBoardList, isFetching, items, error }) => (
     <Forum
         isFetching={isFetching}
         basicInfo={info}
         detailedInfo={items}
-        onGetDetail={(fid) => {
+        onGetDetail={fid => {
             getBoardList(fid);
         }}
         error={error}
-    />;
+    />
+);
 
 ForumWrapper.propTypes = {
     info: PropTypes.shape({
         name: PropTypes.string.isRequired,
         info: PropTypes.string.isRequired,
         cBoard: PropTypes.number.isRequired,
-        id: PropTypes.number.isRequired
+        id: PropTypes.number.isRequired,
     }).isRequired,
     getBoardList: PropTypes.func.isRequired,
     isFetching: PropTypes.bool,
     items: PropTypes.shape({
         boards: PropTypes.array,
-        forum: PropTypes.object
+        forum: PropTypes.object,
     }),
-    error: PropTypes.string
+    error: PropTypes.string,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -42,12 +42,14 @@ const mapStateToProps = (state, ownProps) => {
     return {
         isFetching: detailedInfo.get('isFetching'),
         items: detailedInfo.get('items'),
-        error: error
+        error: error,
     };
 };
 
-
-ForumWrapper = connect(mapStateToProps, {
-    getBoardList
-})(toJS(ForumWrapper));
+ForumWrapper = connect(
+    mapStateToProps,
+    {
+        getBoardList,
+    }
+)(toJS(ForumWrapper));
 export default ForumWrapper;

@@ -4,40 +4,41 @@ import { Link } from 'react-router-dom';
 import { Button, Form, FormControl, FormGroup } from 'react-bootstrap';
 import truth from '../../assests/banner.jpg';
 
-
 class Login extends React.Component {
     static propTypes = {
         onLogin: PropTypes.func.isRequired,
         isFetching: PropTypes.bool.isRequired,
-        error: PropTypes.string.isRequired
-    }
+        error: PropTypes.string.isRequired,
+    };
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
             username: '',
-            password: ''
+            password: '',
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
     }
 
-    handleInputChange (e) {
-        const { target: { id, value } } = e;
+    handleInputChange(e) {
+        const {
+            target: { id, value },
+        } = e;
         this.setState({
-            [id]: value
+            [id]: value,
         });
     }
 
-    handleLogin (e) {
+    handleLogin(e) {
         e.preventDefault();
         const { onLogin } = this.props;
         const { username, password } = this.state;
         onLogin && onLogin(username, password);
     }
 
-    render () {
+    render() {
         const { isFetching, error } = this.props;
         const { username, password } = this.state;
         return (
@@ -76,11 +77,9 @@ class Login extends React.Component {
                     <p className="error-msg">{error}</p>
                 </Form>
                 <div className="additional-link-wrapper">
-                    <Link to='/passport/forget/auth'>忘记用户名/密码</Link>
-                    |
-                    <Link to='/passport/old'>老用户认证</Link>
-                    |
-                    <Link to='/passport/appeal'>人工申诉</Link>
+                    <Link to="/passport/forget/auth">忘记用户名/密码</Link>|
+                    <Link to="/passport/old">老用户认证</Link>|
+                    <Link to="/passport/appeal">人工申诉</Link>
                 </div>
             </div>
         );

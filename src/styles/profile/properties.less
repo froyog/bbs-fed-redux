@@ -8,9 +8,15 @@
     border-bottom: 1px solid #eee;
     padding: 15px 0;
     font-size: 16px;
-    p { margin-bottom: 3px; }
-    strong { color: @material-red; }
-    .meta + div:not(.message-reply-post) { margin-top: 5px; }
+    p {
+        margin-bottom: 3px;
+    }
+    strong {
+        color: @material-red;
+    }
+    .meta + div:not(.message-reply-post) {
+        margin-top: 5px;
+    }
     .title {
         color: #8590a6;
         margin-bottom: 5px;
@@ -26,7 +32,9 @@
 
         .avatar-size(30px);
     }
-    .message-author { line-height: 30px; }
+    .message-author {
+        line-height: 30px;
+    }
     .message-time {
         line-height: 24px;
         font-size: 14px;
@@ -40,7 +48,7 @@
 
     .deleted-overlay {
         .screen(absolute);
-        background-color: rgba(255, 255, 255, .7);
+        background-color: rgba(255, 255, 255, 0.7);
         text-align: center;
         padding-top: 30px;
     }
@@ -61,7 +69,6 @@
             max-width: 75%;
         }
     }
-
 }
 
 .message-private {
@@ -115,11 +122,13 @@
     }
 }
 
-.message-delete, .message-reply-post, .message-reply-thread {
-    .reply-content, .replied-content {
+.message-delete,
+.message-reply-post,
+.message-reply-thread {
+    .reply-content,
+    .replied-content {
         margin-left: 14px;
         padding: 0 0 5px 21px;
-
     }
     .replied-content {
         border-left: 3px solid #bbb;
@@ -160,14 +169,16 @@
         color: #333;
         font-size: 18px;
 
-        &:hover { color: #333; }
+        &:hover {
+            color: #333;
+        }
     }
     .anonymous {
         color: @material-red;
     }
     .statistics {
-        i { 
-            font-size: 14px; 
+        i {
+            font-size: 14px;
             color: #999;
             margin-right: 3px;
         }
@@ -184,7 +195,7 @@
         margin: 0;
         font-size: 18px;
         color: #999;
-        transition: all .3s;
+        transition: all 0.3s;
     }
     .delete-button {
         opacity: 0;

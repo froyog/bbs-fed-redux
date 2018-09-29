@@ -13,41 +13,41 @@ class ImageFeed extends React.Component {
         name: PropTypes.string,
         type: PropTypes.string,
         anonymous: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-        imageShape: PropTypes.string
+        imageShape: PropTypes.string,
     };
 
     static defaultProps = {
         type: 'user',
         anonymous: false,
-        imageShape: 'circle'
+        imageShape: 'circle',
     };
 
-    constructor (props) {
+    constructor(props) {
         super(props);
         const { type, id } = props;
         let src;
         if (props.anonymous) {
             src = anonymousAvatar;
         } else {
-            src = `https://bbs.tju.edu.cn/api/${type}/${id}/avatar`; 
+            src = `https://bbs.tju.edu.cn/api/${type}/${id}/avatar`;
         }
         this.state = {
             src: src,
-            generateAvatar: false
+            generateAvatar: false,
         };
 
         this.handleError = this.handleError.bind(this);
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
         if (nextProps.id !== this.props.id) {
             this.setState({
-                src: `https://bbs.tju.edu.cn/api/${nextProps.type}/${nextProps.id}/avatar`
+                src: `https://bbs.tju.edu.cn/api/${nextProps.type}/${nextProps.id}/avatar`,
             });
         }
     }
 
-    handleError () {
+    handleError() {
         const { type, name } = this.props;
         if (type === 'user') {
             if (!name) {
@@ -58,7 +58,7 @@ class ImageFeed extends React.Component {
         }
     }
 
-    render () {
+    render() {
         const { src, generateAvatar } = this.state;
         // eslint-disable-next-line
         const { name, id, imageShape, anonymous, ...restProps } = this.props;
@@ -68,8 +68,13 @@ class ImageFeed extends React.Component {
             return (
                 <Link to={`/user/${id}`}>
                     <span
-                        style={{ backgroundColor: randomColor, color: '#fff',
-                            display: 'inline-block', fontWeight: 'bold', textAlign: 'center' }}
+                        style={{
+                            backgroundColor: randomColor,
+                            color: '#fff',
+                            display: 'inline-block',
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                        }}
                         {...restProps}
                     >
                         {name.substring(0, 1).toUpperCase()}
@@ -78,17 +83,11 @@ class ImageFeed extends React.Component {
             );
         }
         const shape = {
-            [imageShape]: true
+            [imageShape]: true,
         };
         return (
             <Link to={`/user/${id}`}>
-                <Image
-                    src={src}
-                    alt=""
-                    {...shape}
-                    onError={this.handleError}
-                    {...restProps} 
-                />
+                <Image src={src} alt="" {...shape} onError={this.handleError} {...restProps} />
             </Link>
         );
     }

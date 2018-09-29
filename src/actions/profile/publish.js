@@ -5,7 +5,6 @@ export const GET_PUBLISH_REQUEST = 'GET_PUBLISH_REQUEST';
 export const GET_PUBLISH_SUCCESS = 'GET_PUBLISH_SUCCESS';
 export const GET_PUBLISH_FAILURE = 'GET_PUBLISH_FAILURE';
 
-
 export const GET_REPLY_REQUEST = 'GET_REPLY_REQUEST';
 export const GET_REPLY_SUCCESS = 'GET_REPLY_SUCCESS';
 export const GET_REPLY_FAILURE = 'GET_REPLY_FAILURE';
@@ -20,20 +19,20 @@ const createPublishAction = ({ types, apiPath }) => {
                 request: {
                     method: 'GET',
                     headers: {
-                        auth: authenication
-                    }
-                }
+                        auth: authenication,
+                    },
+                },
             },
-            page: page
+            page: page,
         });
     };
 };
 
 export const getPublishList = createPublishAction({
     types: [GET_PUBLISH_REQUEST, GET_PUBLISH_SUCCESS, GET_PUBLISH_FAILURE],
-    apiPath: 'home/publish/thread'
+    apiPath: 'home/publish/thread',
 });
 export const getReplyList = createPublishAction({
     types: [GET_REPLY_REQUEST, GET_REPLY_SUCCESS, GET_REPLY_FAILURE],
-    apiPath: 'home/publish/post'
+    apiPath: 'home/publish/post',
 });

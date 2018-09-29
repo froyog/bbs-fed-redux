@@ -4,42 +4,41 @@ import { Button } from 'react-bootstrap';
 import { InputField } from '../common/Input';
 // import { LoadingDots } from '../../components/common/Loading';
 
-
 class ForgetAuth extends React.Component {
     static propTypes = {
         onSubmitSelfInfo: PropTypes.func.isRequired,
         isFetching: PropTypes.bool,
-        error: PropTypes.string
-    }
+        error: PropTypes.string,
+    };
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
             optionalInfo: '',
             realName: '',
-            cid: ''
+            cid: '',
         };
-        
+
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmitSelfInfo = this.handleSubmitSelfInfo.bind(this);
     }
 
-    handleInputChange (e) {
+    handleInputChange(e) {
         const { id, value } = e.target;
         this.setState({
-            [id]: value
+            [id]: value,
         });
     }
 
-    handleSubmitSelfInfo (e) {
+    handleSubmitSelfInfo(e) {
         e.preventDefault();
         const { onSubmitSelfInfo } = this.props;
         const { realName, cid, optionalInfo } = this.state;
-        let selfInfo = { 
+        let selfInfo = {
             real_name: realName,
-            cid: cid
+            cid: cid,
         };
-        
+
         if (/^\d+$/.test(optionalInfo)) {
             // student number
             selfInfo.stunum = optionalInfo;
@@ -50,13 +49,13 @@ class ForgetAuth extends React.Component {
         onSubmitSelfInfo && onSubmitSelfInfo(selfInfo);
     }
 
-    render () {
+    render() {
         const { isFetching, error } = this.props;
         return (
             <div>
                 <h3>忘记用户名/密码</h3>
                 <p>请填写以下内容进行验证</p>
-                <InputField 
+                <InputField
                     text="学号或用户名"
                     type="text"
                     id="optionalInfo"
@@ -64,14 +63,14 @@ class ForgetAuth extends React.Component {
                     onChange={this.handleInputChange}
                     placeholder="选填一项"
                 />
-                <InputField 
+                <InputField
                     text="真实姓名"
                     type="text"
                     id="realName"
                     fullWidth
                     onChange={this.handleInputChange}
                 />
-                <InputField 
+                <InputField
                     text="身份证号"
                     type="text"
                     id="cid"
@@ -94,52 +93,51 @@ class ForgetAuth extends React.Component {
     }
 }
 
-
 class ForgetReset extends React.Component {
     static propTypes = {
         isFetching: PropTypes.bool,
         error: PropTypes.string,
         username: PropTypes.string,
         success: PropTypes.string,
-        onSubmitNewPassword: PropTypes.func.isRequired
-    }
+        onSubmitNewPassword: PropTypes.func.isRequired,
+    };
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
             password: '',
             passwordRepeat: '',
-            errorMessage: ''
+            errorMessage: '',
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmitNewPassword = this.handleSubmitNewPassword.bind(this);
     }
 
-    _checkVaildation (token, value) {
+    _checkVaildation(token, value) {
         if (token === 'passwordRepeat') {
             const { password } = this.state;
             if (password !== value) {
                 this.setState({
-                    errorMessage: '两个密码不匹配，请检查您的输入'
+                    errorMessage: '两个密码不匹配，请检查您的输入',
                 });
                 return;
             }
         }
         this.setState({
-            errorMessage: ''
+            errorMessage: '',
         });
     }
 
-    handleInputChange (e) {
+    handleInputChange(e) {
         const { id, value } = e.target;
         this._checkVaildation(id, value);
         this.setState({
-            [id]: value
+            [id]: value,
         });
     }
 
-    handleSubmitNewPassword (e) {
+    handleSubmitNewPassword(e) {
         e.preventDefault();
         const { onSubmitNewPassword } = this.props;
         const { password } = this.state;
@@ -147,7 +145,7 @@ class ForgetReset extends React.Component {
         onSubmitNewPassword && onSubmitNewPassword(password);
     }
 
-    render () {
+    render() {
         const { username, isFetching, error, success } = this.props;
         const { errorMessage } = this.state;
         return (
@@ -155,13 +153,7 @@ class ForgetReset extends React.Component {
                 <h3>验证通过 请重置密码</h3>
                 <p>这次别再忘了哈</p>
                 {/* username for showing purpose only */}
-                <InputField
-                    text="用户名"
-                    type="text"
-                    fullWidth
-                    initialValue={username}
-                    disabled
-                />
+                <InputField text="用户名" type="text" fullWidth initialValue={username} disabled />
                 <InputField
                     text="设置新密码"
                     type="password"
@@ -187,9 +179,7 @@ class ForgetReset extends React.Component {
                 >
                     提交
                 </Button>
-                { success &&
-                    <p className="text-center">密码修改成功，正在前往登录页</p>
-                }
+                {success && <p className="text-center">密码修改成功，正在前往登录页</p>}
                 <p className="text-center error-message">{error}</p>
             </div>
         );

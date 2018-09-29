@@ -10,37 +10,38 @@ import { ErrorOverlay } from '../../components/common/ErrorModal';
 
 import '../../styles/home.less';
 
-
 class TopTenWrapper extends React.Component {
     static propTypes = {
         getTopTen: PropTypes.func.isRequired,
-        topTenThreads: PropTypes.arrayOf(PropTypes.shape({
-            boardId: PropTypes.number,
-            authorId: PropTypes.number,
-            tReply: PropTypes.number,
-            boardName: PropTypes.string,
-            authorName: PropTypes.string,
-            title: PropTypes.string,
-            id: PropTypes.number,
-            cPost: PropTypes.number,
-            anonymous: PropTypes.number
-        })),
+        topTenThreads: PropTypes.arrayOf(
+            PropTypes.shape({
+                boardId: PropTypes.number,
+                authorId: PropTypes.number,
+                tReply: PropTypes.number,
+                boardName: PropTypes.string,
+                authorName: PropTypes.string,
+                title: PropTypes.string,
+                id: PropTypes.number,
+                cPost: PropTypes.number,
+                anonymous: PropTypes.number,
+            })
+        ),
         isFetching: PropTypes.bool,
-        fireErrorModal: PropTypes.func
+        fireErrorModal: PropTypes.func,
     };
 
     componentWillMount() {
         this.props.getTopTen();
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
         const { error } = nextProps;
         if (error) {
             // fire error modal
         }
     }
 
-    render () {
+    render() {
         const { topTenThreads, isFetching, error } = this.props;
         let renderThreads;
         if (error) return <ErrorOverlay reason={error} needRefresh />;
@@ -50,11 +51,10 @@ class TopTenWrapper extends React.Component {
         if (!topTenThreads || !topTenThreads.length) {
             renderThreads = <p className="text-center">您似乎来到了帖子的荒原 :(</p>;
         } else {
-            renderThreads = topTenThreads.map(topTenThreads =>
+            renderThreads = topTenThreads.map(topTenThreads => (
                 <ThreadItem key={topTenThreads.id} thread={topTenThreads} />
-            );
+            ));
         }
-
 
         return (
             <Card title="全站十大" className="card-home">
@@ -71,12 +71,15 @@ const mapStateToProps = state => {
     return {
         isFetching: topTen.get('isFetching'),
         topTenThreads: topTen.get('items'),
-        error: topTen.get('error')
+        error: topTen.get('error'),
     };
 };
 const mapDispatchToProps = {
-    getTopTen
+    getTopTen,
 };
-TopTenWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(TopTenWrapper));
+TopTenWrapper = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(toJS(TopTenWrapper));
 
 export default TopTenWrapper;

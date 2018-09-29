@@ -13,7 +13,7 @@
             // option...
             padding: 5px 6px;
             display: inline-block;
-            transition: .3s ease;
+            transition: 0.3s ease;
             &.rdw-option-active {
                 background-color: #ddd;
             }
@@ -21,7 +21,6 @@
                 background-color: #eee;
             }
         }
-
     }
 
     .rdw-emoji-modal {
@@ -74,11 +73,10 @@
     font-size: 16px;
     cursor: text;
 
-    
     img {
         max-width: 42%;
     }
-    
+
     .rdw-mention-link {
         cursor: pointer;
     }
@@ -95,11 +93,11 @@
         min-width: 180px;
         max-height: 200px;
         overflow: auto;
-        background-color: rgba(255, 255, 255, .7);
+        background-color: rgba(255, 255, 255, 0.7);
     }
 
-    
-    .rdw-suggestion-option, .rdw-suggestion-option-active {
+    .rdw-suggestion-option,
+    .rdw-suggestion-option-active {
         display: block;
         cursor: pointer;
         padding: 6px;
@@ -124,7 +122,7 @@
 // placeholder
 .public-DraftEditorPlaceholder-root {
     position: absolute;
-    opacity: .35;
+    opacity: 0.35;
 }
 
 .error-message-in-editor {
@@ -138,7 +136,7 @@
     position: absolute;
     width: 235px;
     height: 185px;
-    background-color: rgba(250, 250, 250, .75);
+    background-color: rgba(250, 250, 250, 0.75);
     padding: 15px;
     z-index: 1;
     box-shadow: @shadow-material;
@@ -149,7 +147,7 @@
         font-weight: normal;
     }
 
-    input:not([type=checkbox]) {
+    input:not([type='checkbox']) {
         border-radius: 2px;
         border: 1px solid #f1f1f1;
         height: 25px;
@@ -157,7 +155,9 @@
         padding: 0 5px;
         width: 205px;
     }
-    .rdw-link-modal-target-option { display: none; }
+    .rdw-link-modal-target-option {
+        display: none;
+    }
 
     button {
         margin-top: 10px;
@@ -211,7 +211,8 @@
 }
 
 .advanced-help {
-    p, h5 {
+    p,
+    h5 {
         text-align: left;
     }
     p {

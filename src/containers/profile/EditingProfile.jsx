@@ -32,7 +32,7 @@ class EditingProfile extends React.Component {
         uploadAvatarState: PropTypes.shape({
             isFetching: PropTypes.bool,
             items: PropTypes.string,
-            error: PropTypes.error
+            error: PropTypes.error,
         }),
         isFetching: PropTypes.bool,
         success: PropTypes.string,
@@ -40,10 +40,10 @@ class EditingProfile extends React.Component {
         saveProfile: PropTypes.func.isRequired,
         showToast: PropTypes.func.isRequired,
         refreshSelfProfile: PropTypes.func.isRequired,
-        uploadAvatar: PropTypes.func.isRequired
-    }
+        uploadAvatar: PropTypes.func.isRequired,
+    };
 
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.state = {
             nickname: props.profile.nickname,
@@ -59,10 +59,10 @@ class EditingProfile extends React.Component {
                 x: 25,
                 y: 25,
                 width: 50,
-                aspect: 1 / 1
+                aspect: 1 / 1,
             },
             pixelCrop: {},
-            avatarSrc: `https://bbs.tju.edu.cn/api/user/${props.uid}/avatar`
+            avatarSrc: `https://bbs.tju.edu.cn/api/user/${props.uid}/avatar`,
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -76,9 +76,15 @@ class EditingProfile extends React.Component {
         this.handleFallBackAvatar = this.handleFallBackAvatar.bind(this);
     }
 
-    componentWillReceiveProps (nextProps) {
-        const { isFetching: nextIsFetching, error, showToast, 
-            history, refreshSelfProfile, uploadAvatarState } = nextProps;
+    componentWillReceiveProps(nextProps) {
+        const {
+            isFetching: nextIsFetching,
+            error,
+            showToast,
+            history,
+            refreshSelfProfile,
+            uploadAvatarState,
+        } = nextProps;
         if (!error && !nextIsFetching && nextIsFetching !== this.props.isFetching) {
             // success
             refreshSelfProfile();
@@ -91,8 +97,10 @@ class EditingProfile extends React.Component {
             }
             showToast('个人资料已更新');
         }
-        
-        if (!uploadAvatarState.error && !uploadAvatarState.isFetching &&
+
+        if (
+            !uploadAvatarState.error &&
+            !uploadAvatarState.isFetching &&
             uploadAvatarState.isFetching !== this.props.uploadAvatarState.isFetching
         ) {
             showToast('头像已更新');
@@ -102,44 +110,44 @@ class EditingProfile extends React.Component {
         }
     }
 
-    _checkVaildation (token, value) {
+    _checkVaildation(token, value) {
         if (token === 'passwordRepeat') {
             const { password } = this.state;
             if (password !== value) {
                 this.setState({
-                    notMatchErrorMessage: '两个密码不匹配，请检查您的输入'
+                    notMatchErrorMessage: '两个密码不匹配，请检查您的输入',
                 });
                 return;
             }
         }
         this.setState({
-            notMatchErrorMessage: ''
+            notMatchErrorMessage: '',
         });
     }
 
-    handleChooseImage () {
+    handleChooseImage() {
         this.input.click();
     }
 
-    handleFileUpload (e) {
+    handleFileUpload(e) {
         e.preventDefault();
         const file = e.target.files[0];
         this.setState({
-            uploadedImageUrl: file ? URL.createObjectURL(file) : ''
+            uploadedImageUrl: file ? URL.createObjectURL(file) : '',
         });
     }
 
-    handleCompleteCrop (crop, pixelCrop) {
+    handleCompleteCrop(crop, pixelCrop) {
         this.setState({ crop, pixelCrop });
     }
 
-    handleSubmitAvatar (e) {
+    handleSubmitAvatar(e) {
         e.preventDefault();
 
         const { uploadedImageUrl, pixelCrop } = this.state;
         const { uploadAvatar } = this.props;
         if (!uploadedImageUrl) return;
-        
+
         let img = new Image();
         img.onload = () => {
             let canvas = document.createElement('canvas');
@@ -151,43 +159,75 @@ class EditingProfile extends React.Component {
 
             let cropData = pixelCrop;
             if (cropData.width) {
-                ctx.drawImage(img, cropData.x, cropData.y, cropData.width, cropData.height, 0, 0, SIZE, SIZE);
+                ctx.drawImage(
+                    img,
+                    cropData.x,
+                    cropData.y,
+                    cropData.width,
+                    cropData.height,
+                    0,
+                    0,
+                    SIZE,
+                    SIZE
+                );
             } else if (img.width > img.height) {
-                ctx.drawImage(img, (img.width - img.height) / 2, 0, img.height, img.height, 0, 0, SIZE, SIZE);
+                ctx.drawImage(
+                    img,
+                    (img.width - img.height) / 2,
+                    0,
+                    img.height,
+                    img.height,
+                    0,
+                    0,
+                    SIZE,
+                    SIZE
+                );
             } else {
-                ctx.drawImage(img, 0, (img.height - img.width) / 2, img.width, img.width, 0, 0, SIZE, SIZE);
+                ctx.drawImage(
+                    img,
+                    0,
+                    (img.height - img.width) / 2,
+                    img.width,
+                    img.width,
+                    0,
+                    0,
+                    SIZE,
+                    SIZE
+                );
             }
 
             let form = new FormData();
             form.append('avatar', dataURItoBlob(canvas.toDataURL('image/jpeg')));
             for (var pair of form.entries()) {
-                console.log(pair[0]+ ', ' + pair[1]); 
+                console.log(pair[0] + ', ' + pair[1]);
             }
             uploadAvatar && uploadAvatar(form);
         };
         img.src = uploadedImageUrl;
     }
 
-    handleClickSetPassword () {
+    handleClickSetPassword() {
         this.setState({
-            isShowPasswordSet: !this.state.isShowPasswordSet
+            isShowPasswordSet: !this.state.isShowPasswordSet,
         });
     }
 
-    handleInputChange (e) {
-        const { target: { id, value } } = e;
+    handleInputChange(e) {
+        const {
+            target: { id, value },
+        } = e;
         this._checkVaildation(id, value);
         this.setState({
-            [id]: value
+            [id]: value,
         });
     }
 
-    handleCancel () {
+    handleCancel() {
         const { onCancel } = this.props;
         onCancel && onCancel();
     }
 
-    handleSubmitProfile (e) {
+    handleSubmitProfile(e) {
         e.preventDefault();
         const { nickname, signature, password, oldPassword } = this.state;
         const { saveProfile } = this.props;
@@ -199,69 +239,74 @@ class EditingProfile extends React.Component {
             editedProfile.old_password = oldPassword;
             editedProfile.password = password;
             this.setState({
-                isPasswordChanged: true
+                isPasswordChanged: true,
             });
         }
         saveProfile && saveProfile(editedProfile);
     }
 
-    handleFallBackAvatar () {
+    handleFallBackAvatar() {
         this.setState({
-            avatarSrc: defaultAvatar
+            avatarSrc: defaultAvatar,
         });
     }
 
-    render () {
-        const { profile: { name, nickname, signature, cPost, 
-            cOnline, tCreate }, isFetching, error } = this.props;
-        const { isShowPasswordSet, notMatchErrorMessage, 
-            uploadedImageUrl, crop, avatarSrc } = this.state;
+    render() {
+        const {
+            profile: { name, nickname, signature, cPost, cOnline, tCreate },
+            isFetching,
+            error,
+        } = this.props;
+        const {
+            isShowPasswordSet,
+            notMatchErrorMessage,
+            uploadedImageUrl,
+            crop,
+            avatarSrc,
+        } = this.state;
 
         return (
             <div className="profile-editing-wrapper">
                 <div className="profile-wrapper">
                     <div>
-                        {
-                            uploadedImageUrl
-                                ? <ReactCrop 
-                                    src={uploadedImageUrl}
-                                    onChange={this.handleCompleteCrop}
-                                    crop={crop}
-                                />
-                                : <img 
-                                    className="profile-avatar editing"
-                                    src={avatarSrc} 
-                                    alt="user-avatar" 
-                                    onError={this.handleFallBackAvatar}
-                                />
-                        }
+                        {uploadedImageUrl ? (
+                            <ReactCrop
+                                src={uploadedImageUrl}
+                                onChange={this.handleCompleteCrop}
+                                crop={crop}
+                            />
+                        ) : (
+                            <img
+                                className="profile-avatar editing"
+                                src={avatarSrc}
+                                alt="user-avatar"
+                                onError={this.handleFallBackAvatar}
+                            />
+                        )}
                         <Button
                             className="edit-avatar-button"
-                            onClick={uploadedImageUrl 
-                                ? this.handleSubmitAvatar
-                                : this.handleChooseImage 
+                            onClick={
+                                uploadedImageUrl ? this.handleSubmitAvatar : this.handleChooseImage
                             }
                         >
-                            {
-                                uploadedImageUrl ? '确定' : '更新头像'
-                            }
+                            {uploadedImageUrl ? '确定' : '更新头像'}
                         </Button>
-                        <input 
-                            type="file"  
-                            ref={ input => this.input = input }
+                        <input
+                            type="file"
+                            ref={input => (this.input = input)}
                             onChange={this.handleFileUpload}
                         />
                     </div>
                     <div className="intro editing">
                         <div className="username">{name}</div>
-                        <InputField 
+                        <InputField
                             text="昵称"
                             id="nickname"
                             className="input-gap"
                             onChange={this.handleInputChange}
                             initialValue={nickname}
                         />
-                        <InputField 
+                        <InputField
                             text="签名"
                             id="signature"
                             onChange={this.handleInputChange}
@@ -279,21 +324,23 @@ class EditingProfile extends React.Component {
                     </div>
                 </div>
                 <div className="editing-rest">
-                    <div 
+                    <div
                         className="password-set-wrapper"
-                        style={{ 
+                        style={{
                             maxHeight: isShowPasswordSet ? '180px' : '0',
-                            marginTop: isShowPasswordSet ? '10px' : '0' 
+                            marginTop: isShowPasswordSet ? '10px' : '0',
                         }}
                     >
-                        <div><InputField 
-                            text="原密码"
-                            id="oldPassword"
-                            type="password"
-                            onChange={this.handleInputChange}
-                        /></div>
+                        <div>
+                            <InputField
+                                text="原密码"
+                                id="oldPassword"
+                                type="password"
+                                onChange={this.handleInputChange}
+                            />
+                        </div>
                         <div className="edit-password-line clearfix">
-                            <InputField 
+                            <InputField
                                 text="设置新密码"
                                 type="password"
                                 placeholder="8位以上字符"
@@ -301,7 +348,7 @@ class EditingProfile extends React.Component {
                                 className="input-gap pull-left"
                                 onChange={this.handleInputChange}
                             />
-                            <InputField 
+                            <InputField
                                 text="确认密码"
                                 type="password"
                                 id="passwordRepeat"
@@ -312,9 +359,18 @@ class EditingProfile extends React.Component {
                         </div>
                     </div>
                     <h4>统计信息</h4>
-                    <p>帐号创建日期：<Time timestamp={tCreate} absolute /></p>
-                    <p>上站次数：{cOnline}</p>
-                    <p>总共发帖：{cPost}</p>
+                    <p>
+                        帐号创建日期：
+                        <Time timestamp={tCreate} absolute />
+                    </p>
+                    <p>
+                        上站次数：
+                        {cOnline}
+                    </p>
+                    <p>
+                        总共发帖：
+                        {cPost}
+                    </p>
                 </div>
                 <div className="editing-buttons-wrapper clearfix">
                     <Button
@@ -325,10 +381,7 @@ class EditingProfile extends React.Component {
                     >
                         提交更改
                     </Button>
-                    <Button
-                        className="profile-ops-secondary"
-                        onClick={this.handleCancel}
-                    >
+                    <Button className="profile-ops-secondary" onClick={this.handleCancel}>
                         取消
                     </Button>
                 </div>
@@ -349,16 +402,19 @@ const mapStateToProps = state => {
         isFetching: editProfileState.get('isFetching'),
         success: editProfileState.get('items'),
         error: editProfileState.get('error'),
-        uploadAvatarState: uploadAvatarState
+        uploadAvatarState: uploadAvatarState,
     };
 };
 const mapDispatchToProps = dispatch => ({
     saveProfile: editedProfile => dispatch(saveProfile(editedProfile)),
     showToast: message => dispatch(showToast(message)),
     refreshSelfProfile: () => dispatch(getProfileIfNeeded('me', true)),
-    uploadAvatar: avatar => dispatch(uploadAvatar(avatar))
+    uploadAvatar: avatar => dispatch(uploadAvatar(avatar)),
 });
 EditingProfile = withRouter(EditingProfile);
-EditingProfile = connect(mapStateToProps, mapDispatchToProps)(toJS(EditingProfile));
+EditingProfile = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(toJS(EditingProfile));
 
 export default EditingProfile;

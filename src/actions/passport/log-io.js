@@ -14,13 +14,13 @@ export const login = (username, password) => dispatch =>
                 method: 'POST',
                 body: JSON.stringify({
                     username: username,
-                    password:password
+                    password: password,
                 }),
                 headers: {
-                    contentType: 'application/json'
-                }
-            }
-        }
+                    contentType: 'application/json',
+                },
+            },
+        },
     });
 
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
@@ -36,9 +36,9 @@ export const logout = () => (dispatch, getState) => {
             request: {
                 method: 'DELETE',
                 headers: {
-                    auth: authenication
-                }
-            }
-        }
+                    auth: authenication,
+                },
+            },
+        },
     });
 };

@@ -4,18 +4,18 @@ import { ErrorOverlay } from '../../components/common/ErrorModal';
 import Download from '../../components/common/Download';
 
 class DownloadWrapper extends React.Component {
-    constructor () {
+    constructor() {
         super();
         this.state = {
             isFetching: true,
             appData: false,
-            error: 0
+            error: 0,
         };
     }
 
-    componentDidMount () {
+    componentDidMount() {
         this.setState({
-            isFetching: true
+            isFetching: true,
         });
         fetch('https://mobile-api.twtstudio.com/api/app/info')
             .then(res => res.json())
@@ -23,12 +23,12 @@ class DownloadWrapper extends React.Component {
                 this.setState({
                     isFetching: false,
                     appData: data.data[0], // bbs
-                    error: !data.success
+                    error: !data.success,
                 });
             });
     }
 
-    render () {
+    render() {
         const { isFetching, appData, error } = this.state;
         if (isFetching) {
             return <FetchingOverlay fullpage />;
@@ -38,12 +38,7 @@ class DownloadWrapper extends React.Component {
         }
         const android = appData.logs.android[0];
         const ios = appData.logs.ios[0];
-        return (
-            <Download 
-                android={android}
-                ios={ios}
-            />
-        );
+        return <Download android={android} ios={ios} />;
     }
 }
 

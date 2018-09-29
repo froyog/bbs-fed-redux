@@ -9,10 +9,10 @@ class Register extends React.Component {
     static propTypes = {
         onSubmitRegister: PropTypes.func.isRequired,
         isFetching: PropTypes.bool,
-        error: PropTypes.string
-    }
+        error: PropTypes.string,
+    };
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
             realname: '',
@@ -21,7 +21,7 @@ class Register extends React.Component {
             username: '',
             password: '',
             passwordRepeat: '',
-            errorMessage: ''
+            errorMessage: '',
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -29,48 +29,48 @@ class Register extends React.Component {
         this.handleClickRegister = this.handleClickRegister.bind(this);
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         clearTimeout(this.timeout);
     }
 
-    handleInputChange (e) {
+    handleInputChange(e) {
         const { id, value } = e.target;
         this._checkVaildation(id, value);
         this.setState({
-            [e.target.id]: e.target.value
+            [e.target.id]: e.target.value,
         });
     }
 
-    handleClickRegister (e) {
+    handleClickRegister(e) {
         e.preventDefault();
         const { onSubmitRegister } = this.props;
         const { realname, stunum, cid, username, password } = this.state;
         onSubmitRegister && onSubmitRegister({ realname, stunum, cid, username, password });
     }
 
-    _checkVaildation (token, value) {
+    _checkVaildation(token, value) {
         if (token === 'passwordRepeat') {
             const { password } = this.state;
             if (password !== value) {
                 this.setState({
-                    errorMessage: '两个密码不匹配，请检查您的输入'
+                    errorMessage: '两个密码不匹配，请检查您的输入',
                 });
                 return;
             }
         }
         this.setState({
-            errorMessage: ''
+            errorMessage: '',
         });
     }
 
-    render () {
+    render() {
         const { error: serverErrorMessage, isFetching, success } = this.props;
         const { errorMessage } = this.state;
-        
+
         return (
             <form className="register">
                 <h3>欢迎新用户</h3>
-                <InputField 
+                <InputField
                     text="姓名"
                     id="realname"
                     className="input-realname"
@@ -78,7 +78,7 @@ class Register extends React.Component {
                     fullWidth
                     placeholder="您的真实姓名"
                 />
-                <InputField 
+                <InputField
                     text="学/工号"
                     id="stunum"
                     className="input-stunum"
@@ -86,20 +86,15 @@ class Register extends React.Component {
                     fullWidth
                     placeholder="新生可用录取通知书号注册"
                 />
-                <InputField 
-                    text="身份证号"
-                    id="cid"
-                    onChange={this.handleInputChange}
-                    fullWidth
-                />
-                <InputField 
+                <InputField text="身份证号" id="cid" onChange={this.handleInputChange} fullWidth />
+                <InputField
                     text="用户名"
                     id="username"
                     onChange={this.handleInputChange}
                     fullWidth
                     placeholder="仅限字母数字且不能为纯数字"
                 />
-                <InputField 
+                <InputField
                     text="设置密码"
                     type="password"
                     id="password"
@@ -107,7 +102,7 @@ class Register extends React.Component {
                     fullWidth
                     placeholder="8位以上字符"
                 />
-                <InputField 
+                <InputField
                     text="确认密码"
                     type="password"
                     id="passwordRepeat"
@@ -127,20 +122,15 @@ class Register extends React.Component {
                     disabled={errorMessage || isFetching}
                     onClick={this.handleClickRegister}
                 >
-                    {
-                        isFetching
-                            ? <LoadingDots />
-                            : '注册'
-                    }
+                    {isFetching ? <LoadingDots /> : '注册'}
                 </Button>
                 <p className="error-msg">{serverErrorMessage}</p>
-                {
-                    success === '请求成功' &&
+                {success === '请求成功' && (
                     <div className="success-wrapper">
                         <p className="success-msg">注册成功</p>
                         <p>正在跳转至登录页</p>
                     </div>
-                }
+                )}
             </form>
         );
     }

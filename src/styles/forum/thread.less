@@ -2,8 +2,12 @@
 
 .thread-head {
     margin-bottom: 30px;
-    .thread-meta { margin-bottom: 20px; }
-    .media-left { padding-right: 20px; }
+    .thread-meta {
+        margin-bottom: 20px;
+    }
+    .media-left {
+        padding-right: 20px;
+    }
 
     .author-avatar {
         border-radius: 50%;
@@ -23,14 +27,18 @@
     .thread-title {
         padding: 7px 0 10px;
         border-bottom: 1px dashed #ccc;
-        a { padding-right: 5px; }
+        a {
+            padding-right: 5px;
+        }
     }
 
     .floor {
         font-weight: bold;
         margin-left: 15px;
     }
-    .text-muted { color: #999; }
+    .text-muted {
+        color: #999;
+    }
     .post-meta {
         margin-bottom: 10px;
         border-bottom: 1px dashed #ccc;
@@ -54,7 +62,9 @@
         .thread-title {
             padding-top: 0;
         }
-        .author-nickname { display: none; }
+        .author-nickname {
+            display: none;
+        }
         .author-avatar.post {
             width: 28px;
             height: 28px;
@@ -159,47 +169,45 @@
     background-color: white;
 }
 
-.lock:hover{
-    background-color: #777
+.lock:hover {
+    background-color: #777;
 }
 
-.lock-overlay{
+.lock-overlay {
     position: absolute;
     border-radius: 2px;
     margin: 0 0 1rem 0;
     height: 319px;
-    background-color: rgba(255, 255, 255, .7);
+    background-color: rgba(255, 255, 255, 0.7);
     text-align: center;
     z-index: 1;
     line-height: 319px;
     @media screen and (min-width: 1200px) {
         width: 940px;
     }
-    
-    @media screen and (min-width:992px) and (max-width:1199px) {
+
+    @media screen and (min-width: 992px) and (max-width: 1199px) {
         width: 740px;
     }
 
-    @media screen and (min-width:768px) and (max-width:991px) {
+    @media screen and (min-width: 768px) and (max-width: 991px) {
         width: 520px;
-    
     }
-    p { 
+    p {
         color: @bbs-blue;
         font-size: 18px;
     }
     @media @phones {
-        width: 100%
+        width: 100%;
     }
 }
 
-
 #ban-popover {
-    top: 220px!important;
-    @media screen  and (min-width: 1200px) {
+    top: 220px !important;
+    @media screen and (min-width: 1200px) {
         left: 780px !important;
     }
-    @media screen  and (min-width: 992px) and (max-width: 1199px) {
+    @media screen and (min-width: 992px) and (max-width: 1199px) {
         left: 400px !important;
     }
     @media screen and (min-width: 768px) and (max-width: 991px) {

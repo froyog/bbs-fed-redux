@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import '../../styles/common/refresh.less';
 
-
 const RefreshButton = ({ isFetching, className, ...restProps }) => {
     const iconClassName = `iconfont icon-refresh ${isFetching ? 'animating' : ''}`;
 
@@ -21,7 +20,7 @@ const RefreshButton = ({ isFetching, className, ...restProps }) => {
 
 RefreshButton.propTypes = {
     isFetching: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
 };
 
 export default RefreshButton;

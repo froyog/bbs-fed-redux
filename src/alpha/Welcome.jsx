@@ -5,12 +5,11 @@ import WelcomeLogin from './WelcomeLogin';
 
 import './style/alpha.less';
 
-
 class Welcome extends React.Component {
-    constructor () {
+    constructor() {
         super();
         this.state = {
-            countdown: 0
+            countdown: 0,
         };
         this.updateCountdown = this.updateCountdown.bind(this);
         this.handleAuthPass = this.handleAuthPass.bind(this);
@@ -20,7 +19,7 @@ class Welcome extends React.Component {
         const targetDate = new Date(2017, 11, 18).getTime();
         this.setState({
             targetDate: targetDate,
-            countdown: targetDate - Date.now()
+            countdown: targetDate - Date.now(),
         });
         this.timer = setInterval(() => {
             this.updateCountdown();
@@ -31,18 +30,18 @@ class Welcome extends React.Component {
         clearInterval(this.timer);
     }
 
-    updateCountdown () {
+    updateCountdown() {
         const dateNow = Date.now();
         this.setState({
-            countdown: this.state.targetDate - dateNow
+            countdown: this.state.targetDate - dateNow,
         });
     }
 
-    handleAuthPass () {
+    handleAuthPass() {
         this.props.history.push('/');
     }
 
-    render () {
+    render() {
         const { countdown } = this.state;
         const second = countdown.toString().slice(0, -3);
         const milisecond = countdown.toString().slice(-3, -2);
@@ -52,10 +51,9 @@ class Welcome extends React.Component {
                 <h2>抢先体验</h2>
                 <p className="version-info">ALPHA 0.5.0</p>
                 <h1 className="countdown">
-                    {second}.
-                    <small>{milisecond}</small>
+                    {second}.<small>{milisecond}</small>
                 </h1>
-                <WelcomeLogin onAuthPass={this.handleAuthPass}/>
+                <WelcomeLogin onAuthPass={this.handleAuthPass} />
             </div>
         );
     }

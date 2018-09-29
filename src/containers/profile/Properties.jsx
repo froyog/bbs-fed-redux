@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, NavLink } from 'react-router-dom';
-import { Card } from '../../components/common/Card'; 
+import { Card } from '../../components/common/Card';
 import Messages from './Messages';
 import Collections from './Collections';
 import Publish from './Publish';
@@ -28,11 +28,11 @@ const Properties = () => {
                 </li>
             </ul>
             <Switch>
-                <Route path='/user/me/messages' component={Messages} />
-                <Route path='/user/me/collections' component={Collections} />
-                <Route path='/user/me/publish' component={Publish} /> 
+                <Route path="/user/me/messages" component={Messages} />
+                <Route path="/user/me/collections" component={Collections} />
+                <Route path="/user/me/publish" component={Publish} />
             </Switch>
-        </Card> 
+        </Card>
     );
 };
 

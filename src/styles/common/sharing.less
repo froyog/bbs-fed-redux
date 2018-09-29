@@ -4,7 +4,7 @@
 .share-button a {
     font-size: 22px;
     padding: 0 5px;
-    transition: .3s all;
+    transition: 0.3s all;
     color: #999;
     text-decoration: none;
 }
@@ -15,10 +15,18 @@
         display: block;
     }
 }
-.icon-qq:hover {color: #00a1e9;}
-.icon-weibo:hover {color: #e6162d;}
-.icon-qzone:hover {color: #fdbe3d;}
-.icon-douban:hover{color: #2e963d;}
+.icon-qq:hover {
+    color: #00a1e9;
+}
+.icon-weibo:hover {
+    color: #e6162d;
+}
+.icon-qzone:hover {
+    color: #fdbe3d;
+}
+.icon-douban:hover {
+    color: #2e963d;
+}
 
 .wechat-qrcode {
     display: none;
@@ -29,7 +37,7 @@
     font-size: 12px;
     background-color: #fff;
     z-index: 99;
-    box-shadow: 0 5px 30px rgba(0,0,0,0.18);
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.18);
     h4 {
         color: #fff;
         margin-top: 0;
@@ -37,7 +45,8 @@
         background-color: @wechat-theme;
         line-height: 2em;
     }
-    p, h4 {
+    p,
+    h4 {
         font-family: sans-serif;
     }
     &-block {

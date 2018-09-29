@@ -7,31 +7,25 @@ import '../../styles/common/toast.less';
 class Toast extends React.Component {
     static propTypes = {
         toastMessage: PropTypes.string.isRequired,
-        onDismiss: PropTypes.func.isRequired
-    }
+        onDismiss: PropTypes.func.isRequired,
+    };
 
-    componentDidMount () {
+    componentDidMount() {
         this.timer = setTimeout(() => {
             this.props.onDismiss();
         }, 2000);
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         clearTimeout(this.timer);
     }
 
-    render () {
+    render() {
         const { toastMessage, onDismiss } = this.props;
         return (
             <div className="toast">
-                <p className="pull-left">
-                    {toastMessage}
-                </p>
-                <Button
-                    bsStyle="link"
-                    className="flat pull-right"
-                    onClick={onDismiss}
-                >
+                <p className="pull-left">{toastMessage}</p>
+                <Button bsStyle="link" className="flat pull-right" onClick={onDismiss}>
                     好的
                 </Button>
             </div>

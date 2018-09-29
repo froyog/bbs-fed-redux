@@ -7,7 +7,7 @@
     left: 0;
     z-index: 100;
     background-color: #fff;
-    transition: transform .3s;
+    transition: transform 0.3s;
     padding: 50px 0;
 }
 
@@ -18,7 +18,7 @@
     background-color: #000;
     .screen;
     z-index: 10;
-    transition: opacity .3s ease-out, visibility .3s ease-out;
+    transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
 
     @media @phones {
         display: block;
@@ -62,12 +62,12 @@
             color: white;
             margin-bottom: 0;
             word-break: break-all;
-            opacity: .9;
+            opacity: 0.9;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
             max-width: 165px;
-            transition: opacity .4s;
+            transition: opacity 0.4s;
             margin-left: 3px;
         }
         p.username {
@@ -75,15 +75,17 @@
             font-weight: bold;
             font-size: 15px;
         }
-        p.not-login { margin-bottom: 5px; }
+        p.not-login {
+            margin-bottom: 5px;
+        }
         .opearate {
             background-color: transparent;
             color: #fff;
-            border-color: rgba(255, 255, 255, .5);
+            border-color: rgba(255, 255, 255, 0.5);
             margin-right: 5px;
-            transition: all .3s;
+            transition: all 0.3s;
             &:hover {
-                background-color: rgba(255, 255, 255, .35);
+                background-color: rgba(255, 255, 255, 0.35);
             }
         }
         .logout {
@@ -92,7 +94,7 @@
             position: absolute;
             top: 115px;
             left: 20px;
-            transition: opacity .4s;
+            transition: opacity 0.4s;
         }
     }
 
@@ -102,17 +104,18 @@
         & > li {
             display: block;
             text-align: center;
-            transition: background-color .3s ease;
+            transition: background-color 0.3s ease;
             a {
                 display: inline-block;
                 width: 100%;
                 height: 100%;
                 padding: 10px 0;
                 text-decoration: none;
-                color: rgba(0, 0, 0, .5);
+                color: rgba(0, 0, 0, 0.5);
                 font-size: 16px;
             }
-            &:hover, a.active {
+            &:hover,
+            a.active {
                 color: #000;
                 background-color: #eee;
             }

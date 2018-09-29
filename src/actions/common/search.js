@@ -8,8 +8,8 @@ export const searchUser = keyword => dispatch => {
     dispatch({
         [CALL_API]: {
             types: [SEARCH_USER_REQUEST, SEARCH_USER_SUCCESS, SEARCH_USER_FAILURE],
-            apiPath: `search/user/${keyword}`
-        }
+            apiPath: `search/user/${keyword}`,
+        },
     });
 };
 
@@ -21,7 +21,7 @@ export const searchThread = (keyword, page) => dispatch => {
     dispatch({
         [CALL_API]: {
             types: [SEARCH_THREAD_REQUEST, SEARCH_THREAD_SUCCESS, SEARCH_THREAD_FAILURE],
-            apiPath: `search/page/${page-1}?keyword=${keyword}`
-        }
+            apiPath: `search/page/${page - 1}?keyword=${keyword}`,
+        },
     });
 };

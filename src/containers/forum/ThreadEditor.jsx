@@ -15,7 +15,6 @@ import { fetchNewComment } from '../../actions/forum/thread';
 
 import '../../styles/forum/editor.less';
 
-
 class ThreadEditor extends React.Component {
     static propTypes = {
         replyContent: PropTypes.string.isRequired,
@@ -23,10 +22,10 @@ class ThreadEditor extends React.Component {
         isFetching: PropTypes.bool,
         error: PropTypes.string,
         pid: PropTypes.number,
-        allowAnonymous: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired
+        allowAnonymous: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired,
     };
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
             editorState: EditorState.createEmpty(),
@@ -42,7 +41,7 @@ class ThreadEditor extends React.Component {
         this.handleToggleAnonymous = this.handleToggleAnonymous.bind(this);
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
         const { pid, onCommentSuccess } = nextProps;
         const { pid: oldPid } = this.props;
         if (pid && pid !== oldPid) {
@@ -50,13 +49,13 @@ class ThreadEditor extends React.Component {
         }
     }
 
-    handleEditorStateChange (editorState) {
+    handleEditorStateChange(editorState) {
         this.setState({
-            editorState
+            editorState,
         });
     }
 
-    handleSubmit (e) {
+    handleSubmit(e) {
         e.preventDefault();
         const { editorState, anonymous, advancedMode } = this.state;
         const { tid, fetchNewComment, replyContent, replyId } = this.props;
@@ -66,11 +65,11 @@ class ThreadEditor extends React.Component {
         } else {
             content = draftToMarkdown(convertToRaw(editorState.getCurrentContent()), {
                 entityItems: {
-                    'IMAGE': {
+                    IMAGE: {
                         open: () => {},
-                        close: entity => `![](${entity.data.src})`
-                    }
-                }
+                        close: entity => `![](${entity.data.src})`,
+                    },
+                },
             });
         }
         if (replyContent.trim()) {
@@ -80,56 +79,53 @@ class ThreadEditor extends React.Component {
         fetchNewComment(tid, content, anonymous, replyId);
     }
 
-    handleCancelReply () {
+    handleCancelReply() {
         const { onCancelReply } = this.props;
         if (onCancelReply) onCancelReply();
     }
 
-    handleToggleAnonymous (anonymousState) {
+    handleToggleAnonymous(anonymousState) {
         this.setState({
-            anonymous: anonymousState
+            anonymous: anonymousState,
         });
     }
 
-    handleToggleAdvanced (advancedState) {
+    handleToggleAdvanced(advancedState) {
         this.setState({
-            advancedMode: advancedState
+            advancedMode: advancedState,
         });
     }
 
-    getEditorState () {
+    getEditorState() {
         return this.state.editorState;
     }
 
-    render () {
+    render() {
         const { editorState, advancedMode } = this.state;
         const { replyContent, error, isFetching, allowAnonymous } = this.props;
 
         return (
             <Card className="card-thread-editor">
                 <Editor
-                    toolbarStyle={ advancedMode ? { display: 'none' } : {}}
+                    toolbarStyle={advancedMode ? { display: 'none' } : {}}
                     toolbar={customToolbar}
                     toolbarCustomButtons={[<Attach />]}
                     editorState={editorState}
                     onEditorStateChange={this.handleEditorStateChange}
                     localization={{ locale: 'zh' }}
                     customDecorators={getDecorator(
-                        this.getEditorState, 
-                        this.handleEditorStateChange)}
+                        this.getEditorState,
+                        this.handleEditorStateChange
+                    )}
                 />
-                { replyContent &&
+                {replyContent && (
                     <div className="reply">
-                        <Button
-                            bsStyle="link"
-                            className="flat"
-                            onClick={this.handleCancelReply}
-                        >
+                        <Button bsStyle="link" className="flat" onClick={this.handleCancelReply}>
                             取消回复
                         </Button>
                         <ThreadRenderer content={replyContent} />
                     </div>
-                }
+                )}
                 <div className="clearfix">
                     <Button
                         type="submit"
@@ -141,15 +137,13 @@ class ThreadEditor extends React.Component {
                         发表回复
                     </Button>
                     <div className="clearfix switches-wrapper">
-                        {
-                            allowAnonymous
-                                ? <AnonymousSwitch 
-                                    className="switch-wrapper"
-                                    onToggle={this.handleToggleAnonymous} 
-                                /> 
-                                : null
-                        }
-                        <AdvancedSwitch  
+                        {allowAnonymous ? (
+                            <AnonymousSwitch
+                                className="switch-wrapper"
+                                onToggle={this.handleToggleAnonymous}
+                            />
+                        ) : null}
+                        <AdvancedSwitch
                             className="switch-wrapper"
                             onToggle={this.handleToggleAdvanced}
                         />
@@ -168,11 +162,15 @@ const mapStateToProps = state => {
     return {
         isFetching: newComment.get('isFetching'),
         pid: newComment.get('pid'),
-        error: newComment.get('error')
+        error: newComment.get('error'),
     };
 };
 const mapDispatchToProps = dispatch => ({
-    fetchNewComment: (tid, content, anonymous, replyId) => dispatch(fetchNewComment(tid, content, anonymous, replyId))
+    fetchNewComment: (tid, content, anonymous, replyId) =>
+        dispatch(fetchNewComment(tid, content, anonymous, replyId)),
 });
-ThreadEditor = connect(mapStateToProps, mapDispatchToProps)(toJS(ThreadEditor));
+ThreadEditor = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(toJS(ThreadEditor));
 export default ThreadEditor;

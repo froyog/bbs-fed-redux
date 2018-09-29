@@ -1,11 +1,10 @@
 import { fromJS, Map } from 'immutable';
 import * as ActionTypes from '../../actions/passport/log-io';
 
-
 const defaultState = fromJS({
-    'isFetching': false,
-    'success': false,
-    'error': ''
+    isFetching: false,
+    success: false,
+    error: '',
 });
 
 const Login = (state = defaultState, action) => {
@@ -14,15 +13,15 @@ const Login = (state = defaultState, action) => {
             return state.set('isFetching', true);
         case ActionTypes.LOGIN_SUCCESS:
             return Map({
-                'isFetching': false,
-                'success': true,
-                'error': ''
+                isFetching: false,
+                success: true,
+                error: '',
             });
         case ActionTypes.LOGIN_FAILURE:
             return Map({
-                'isFetching': false,
-                'success': false,
-                'error': fromJS(action.error)
+                isFetching: false,
+                success: false,
+                error: fromJS(action.error),
             });
         default:
             return state;

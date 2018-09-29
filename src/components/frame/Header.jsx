@@ -6,7 +6,6 @@ import '../../styles/frame/header.less';
 import logo from '../../assests/logo.png';
 import slogan from '../../assests/slogan.jpg';
 
-
 const Header = ({ isOpen, onToggleSidebar, onClickNewPost, headerContent }) => {
     const handleToggleSidebar = () => {
         onToggleSidebar(!isOpen);
@@ -15,40 +14,27 @@ const Header = ({ isOpen, onToggleSidebar, onClickNewPost, headerContent }) => {
         onClickNewPost();
     };
     const headerContentStyle = {
-        transform: headerContent ? 'translateY(-100%)' : 'none'
+        transform: headerContent ? 'translateY(-100%)' : 'none',
     };
 
     return (
         <div>
             <div className="menu-button-wrapper">
-                <i className="iconfont icon-menu"></i>
-                <button
-                    role="button"
-                    onClick={handleToggleSidebar}
-                >
+                <i className="iconfont icon-menu" />
+                <button role="button" onClick={handleToggleSidebar}>
                     Open Meun
                 </button>
             </div>
             <img className="logo" src={logo} alt="logo" />
             <div className="header-content-wrapper">
-                <div 
-                    className="header-content" 
-                    style={headerContentStyle}
-                >
+                <div className="header-content" style={headerContentStyle}>
                     <section>
                         <img className="slogan" src={slogan} alt="slogan" />
-                        
                     </section>
-                    <section>
-                        {headerContent}
-                    </section>
+                    <section>{headerContent}</section>
                 </div>
             </div>
-            <Button
-                className="raised quick-thread" 
-                bsStyle="primary"
-                onClick={handleClickNewPost}
-            >
+            <Button className="raised quick-thread" bsStyle="primary" onClick={handleClickNewPost}>
                 发帖
             </Button>
         </div>

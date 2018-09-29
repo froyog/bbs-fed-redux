@@ -7,30 +7,30 @@ import '../../styles/frame/bottom-bar.less';
 const PERIOD_NOT_SHOWN = 1209600000; // two weeks!
 
 class BottomBar extends React.Component {
-    constructor () {
+    constructor() {
         super();
         const closeOnDate = localStorage.getItem('closeOnDate');
         this.state = {
-            isShow: Boolean(Date.now() - closeOnDate > PERIOD_NOT_SHOWN)
+            isShow: Boolean(Date.now() - closeOnDate > PERIOD_NOT_SHOWN),
         };
         this.handleCloseBar = this.handleCloseBar.bind(this);
         this.handleOpenApp = this.handleOpenApp.bind(this);
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         clearTimeout(this.timeout);
     }
 
-    getUrlSchemeFrom (pathname) {
+    getUrlSchemeFrom(pathname) {
         const URL_SCHEME_ROOT = 'openTJUBBS://';
         let result;
-        if (result = /^\/forum\/thread\/(\d+)\/page/.exec(pathname)) {
+        if ((result = /^\/forum\/thread\/(\d+)\/page/.exec(pathname))) {
             let tid = result[1];
             return `${URL_SCHEME_ROOT}?tid=${tid}`;
-        } else if (result = /^\/forum\/board\/(\d+)\/page/.exec(pathname)) {
+        } else if ((result = /^\/forum\/board\/(\d+)\/page/.exec(pathname))) {
             let bid = result[1];
             return `${URL_SCHEME_ROOT}?bid=${bid}`;
-        } else if (result = /^\/user\/(\d+)$/.exec(pathname)) {
+        } else if ((result = /^\/user\/(\d+)$/.exec(pathname))) {
             console.log(pathname, result);
             let uid = result[1];
             return `${URL_SCHEME_ROOT}?uid=${uid}`;
@@ -38,14 +38,14 @@ class BottomBar extends React.Component {
         return URL_SCHEME_ROOT;
     }
 
-    handleCloseBar () {
+    handleCloseBar() {
         this.setState({
-            isShow: false
+            isShow: false,
         });
         localStorage.setItem('closeOnDate', Date.now());
     }
 
-    handleOpenApp () {
+    handleOpenApp() {
         const pathname = this.props.location.pathname;
         const urlScheme = this.getUrlSchemeFrom(pathname);
         window.location.href = urlScheme;
@@ -54,12 +54,12 @@ class BottomBar extends React.Component {
         }, 500);
     }
 
-    render () {
+    render() {
         if (this.state.isShow) {
             return (
                 <div id="download-bar" className="clearfix">
                     <div className="pull-left download-bar-close">
-                        <i className="icon iconfont icon-close"></i>
+                        <i className="icon iconfont icon-close" />
                         <button onClick={this.handleCloseBar}>close</button>
                     </div>
                     <img src={appIcon} className="pull-left download-bar-icon" alt="App Icon" />
@@ -67,13 +67,9 @@ class BottomBar extends React.Component {
                         <h3>求实BBS客户端</h3>
                         <p>免费下载官方App</p>
                     </div>
-                    <Button 
-                        className="pull-right download-bar-link"
-                        onClick={this.handleOpenApp}
-                    >
+                    <Button className="pull-right download-bar-link" onClick={this.handleOpenApp}>
                         应用内打开
                     </Button>
-        
                 </div>
             );
         }

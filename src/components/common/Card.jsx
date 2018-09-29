@@ -7,25 +7,20 @@ export const Card = ({ className, title, nopadding, action, children, ...restPro
     const customClassName = className ? `card ${className}` : 'card';
 
     return (
-        <div
-            className={customClassName}
-            {...restProps}
-        >
+        <div className={customClassName} {...restProps}>
             <div className="card-content">
                 {title && <h1 className="card-title">{title}</h1>}
                 {children}
             </div>
             {nopadding}
-            <div className="card-action">
-                {action}
-            </div>
+            <div className="card-action">{action}</div>
         </div>
     );
 };
 
 Card.propTypes = {
     className: PropTypes.string,
-    title: PropTypes.string
+    title: PropTypes.string,
 };
 
 export const CardImage = ({ image, alt, title, className, children }) => {
@@ -37,10 +32,7 @@ export const CardImage = ({ image, alt, title, className, children }) => {
                 <img src={image} alt={alt} />
                 <h1>{title}</h1>
             </div>
-            {
-                children &&
-                <div className="card-content">{children}</div>
-            }
+            {children && <div className="card-content">{children}</div>}
         </div>
     );
 };
@@ -49,5 +41,5 @@ CardImage.propTypes = {
     image: PropTypes.string.isRequired,
     alt: PropTypes.string.isRequired,
     title: PropTypes.string,
-    className: PropTypes.string
+    className: PropTypes.string,
 };

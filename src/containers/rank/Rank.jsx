@@ -4,8 +4,7 @@ import RankPage from './RankPage';
 
 import { Card } from '../../components/common/Card';
 
-
-const Rank = () =>
+const Rank = () => (
     <Card>
         <ul className="tabs">
             <li className="tab">
@@ -21,13 +20,10 @@ const Rank = () =>
         </ul>
         <Switch>
             <Redirect exact from="/rank" to="/rank/week" />
-            <Route path="/rank/week" render={props => (
-                <RankPage {...props} type="week" />
-            )} />
-            <Route path="/rank/month" render={props => (
-                <RankPage {...props} type="month" />
-            )} />
+            <Route path="/rank/week" render={props => <RankPage {...props} type="week" />} />
+            <Route path="/rank/month" render={props => <RankPage {...props} type="month" />} />
         </Switch>
-    </Card>;
+    </Card>
+);
 
 export default Rank;

@@ -11,13 +11,13 @@ class Search extends React.Component {
         isFetching: PropTypes.bool,
         result: PropTypes.array,
         error: PropTypes.string,
-    }
+    };
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
             keyword: '',
-            isFocus: false
+            isFocus: false,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -25,51 +25,45 @@ class Search extends React.Component {
         this.handleFocus = this.handleFocus.bind(this);
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         clearTimeout(this.timeout);
     }
 
-    handleBlur () {
+    handleBlur() {
         this.timeout = setTimeout(() => {
             this.setState({
-                isFocus: false
+                isFocus: false,
             });
         }, 500);
     }
 
-    handleFocus () {
+    handleFocus() {
         this.setState({
-            isFocus: true
+            isFocus: true,
         });
     }
 
-    handleChange (keyword) {
+    handleChange(keyword) {
         this.setState({
-            keyword
+            keyword,
         });
         if (keyword) {
             this.props.searchUser(keyword);
         }
     }
 
-    render () {
+    render() {
         const { isFetching, result, error } = this.props;
         const { keyword, isFocus } = this.state;
         return (
             <div>
-                <SearchBar 
+                <SearchBar
                     onChange={this.handleChange}
                     onBlur={this.handleBlur}
                     onFocus={this.handleFocus}
                     isFocus={isFocus}
                 />
-                {
-                    isFocus && keyword &&
-                    <SearchOverlay 
-                        searchItem={keyword}
-                        users={result}
-                    />
-                }
+                {isFocus && keyword && <SearchOverlay searchItem={keyword} users={result} />}
             </div>
         );
     }
@@ -82,11 +76,14 @@ const mapStateToProps = state => {
     return {
         isFetching: searchUser.get('isFetching'),
         result: searchUser.get('result'),
-        error: searchUser.get('error')
+        error: searchUser.get('error'),
     };
 };
 const mapDispatchToProps = dispatch => ({
-    searchUser: keyword => dispatch(searchUser(keyword))
+    searchUser: keyword => dispatch(searchUser(keyword)),
 });
-Search = connect(mapStateToProps, mapDispatchToProps)(toJS(Search));
+Search = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(toJS(Search));
 export default Search;

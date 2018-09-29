@@ -5,16 +5,13 @@ import callApi from '../middlewares/callApi';
 import localize from '../middlewares/localize';
 import piwikTracker from '../middlewares/piwikTracker';
 
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const configureStore = preloadedState => {
     const store = createStore(
         rootReducer,
         preloadedState,
-        composeEnhancers(
-            applyMiddleware(thunk, callApi, piwikTracker, localize)
-        )
+        composeEnhancers(applyMiddleware(thunk, callApi, piwikTracker, localize))
     );
 
     if (module.hot) {

@@ -1,20 +1,19 @@
 import { CALL_API } from '../../middlewares/callApi';
 import { parseUser } from '../../util';
 
-
 export const GET_BOARD_REQUEST = 'GET_BOARD_REQUEST';
 export const GET_BOARD_SUCCESS = 'GET_BOARD_SUCCESS';
 export const GET_BOARD_FAILURE = 'GET_BOARD_FAILURE';
 export const INVAILDATE_BOARD = 'INVAILDATE_BOARD';
-
 
 const shouldFetchBoard = (boardState, page, type, order) => {
     if (!boardState) {
         return true;
     } else if (boardState.isFetching) {
         return false;
-    } else if (boardState.get('page') !== page || 
-        boardState.get('type') !== type || 
+    } else if (
+        boardState.get('page') !== page ||
+        boardState.get('type') !== type ||
         boardState.get('order') !== order
     ) {
         return true;
@@ -34,25 +33,24 @@ export const getBoard = (bid, page, type, order) => (dispatch, getState) => {
                 apiPath: `board/${bid}/page/${page - 1}?type=${type}&order=${order}`,
                 request: {
                     headers: {
-                        auth: authentication
-                    }
-                }
+                        auth: authentication,
+                    },
+                },
             },
             bid: bid,
             page: page,
             threadType: type,
-            order: order
+            order: order,
         });
     }
 };
 
 export const refreshBoard = bid => dispatch => {
-    return dispatch({ 
+    return dispatch({
         type: 'INVAILDATE_BOARD',
-        bid: bid
+        bid: bid,
     });
 };
-
 
 export const NEW_THREAD_REQUEST = 'NEW_THREAD_REQUEST';
 export const NEW_THREAD_SUCCESS = 'NEW_THREAD_SUCCESS';
@@ -66,13 +64,13 @@ export const fetchNewThread = (bid, title, content, anonymous) => (dispatch, get
             apiPath: `board/${bid}`,
             request: {
                 method: 'POST',
-                body: JSON.stringify({title, content, anonymous: Number(anonymous)}),
+                body: JSON.stringify({ title, content, anonymous: Number(anonymous) }),
                 headers: {
                     contentType: 'application/json',
-                    auth: authentication
-                }
-            }
-        }
+                    auth: authentication,
+                },
+            },
+        },
     });
 };
 
@@ -89,10 +87,10 @@ export const deleteThread = tid => (dispatch, getState) => {
             request: {
                 method: 'DELETE',
                 headers: {
-                    auth: authentication
-                }
-            }
-        }
+                    auth: authentication,
+                },
+            },
+        },
     });
 };
 
@@ -111,10 +109,10 @@ export const editThread = (tid, title, content) => (dispatch, getState) => {
                 method: 'PUT',
                 body: JSON.stringify({ title, content }),
                 headers: {
-                    contentType: 'application/json',                    
-                    auth: authentication
-                }
-            }
-        }
+                    contentType: 'application/json',
+                    auth: authentication,
+                },
+            },
+        },
     });
 };

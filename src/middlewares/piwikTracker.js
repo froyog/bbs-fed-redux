@@ -2,13 +2,17 @@ import { GET_SELF_PROFILE_SUCCESS } from '../actions/profile/profile';
 import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../actions/passport/log-io';
 import { FORGET_RESET_REQUEST } from '../actions/passport/forget';
 
-
 export default (dispatch, getState) => next => action => {
     if (window._paq) {
         let tracker = [];
         switch (action.type) {
             case GET_SELF_PROFILE_SUCCESS:
-                const { uid, json: { data: { name } } } = action;
+                const {
+                    uid,
+                    json: {
+                        data: { name },
+                    },
+                } = action;
                 tracker = ['setUserId', `[${uid}] ${name}`];
                 break;
             case LOGIN_SUCCESS:
@@ -27,7 +31,6 @@ export default (dispatch, getState) => next => action => {
             window._paq.push(tracker);
         }
     }
-
 
     return next(action);
 };

@@ -13,10 +13,10 @@ export const oldLoginWith = loginInfo => dispatch =>
                 method: 'POST',
                 body: JSON.stringify(loginInfo),
                 headers: {
-                    contentType: 'application/json'
-                }
-            }
-        }
+                    contentType: 'application/json',
+                },
+            },
+        },
     });
 
 export const OLD_REGISTER_REQUEST = 'OLD_REGISTER_REQUEST';
@@ -32,8 +32,8 @@ export const oldRegisterWith = registerInfo => dispatch =>
                 method: 'POST',
                 body: JSON.stringify(registerInfo),
                 headers: {
-                    contentType: 'application/json'
-                }
-            }
-        }
+                    contentType: 'application/json',
+                },
+            },
+        },
     });

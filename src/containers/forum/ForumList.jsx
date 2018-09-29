@@ -9,33 +9,29 @@ import FeelingLucky from '../../components/common/FeelingLucky';
 
 import { Row, Col } from 'react-bootstrap';
 
-
 class ForumListWrapper extends React.Component {
     static propTypes = {
         getForumList: PropTypes.func.isRequired,
         isFetching: PropTypes.bool.isRequired,
-        items: PropTypes.arrayOf(PropTypes.shape({
-            name: PropTypes.string.isRequired,
-            info: PropTypes.string.isRequired,
-            cBoard: PropTypes.number.isRequired,
-            id: PropTypes.number.isRequired
-        }).isRequired).isRequired
+        items: PropTypes.arrayOf(
+            PropTypes.shape({
+                name: PropTypes.string.isRequired,
+                info: PropTypes.string.isRequired,
+                cBoard: PropTypes.number.isRequired,
+                id: PropTypes.number.isRequired,
+            }).isRequired
+        ).isRequired,
     };
 
     componentDidMount() {
         this.props.getForumList();
     }
 
-    render () {
+    render() {
         const { isFetching, items } = this.props;
         const renderForumList = items.map(forum => {
             const fid = forum.id;
-            return (
-                <Forum
-                    key={fid}
-                    info={forum}
-                />
-            );
+            return <Forum key={fid} info={forum} />;
         });
 
         if (isFetching) return <FetchingOverlay fullPage />;
@@ -50,7 +46,6 @@ class ForumListWrapper extends React.Component {
     }
 }
 
-
 const mapStateToProps = state => {
     return {
         isFetching: state.getIn(['forumList', 'isFetching']),
@@ -58,8 +53,10 @@ const mapStateToProps = state => {
     };
 };
 
-
-ForumListWrapper = connect(mapStateToProps, {
-    getForumList
-})(toJS(ForumListWrapper));
+ForumListWrapper = connect(
+    mapStateToProps,
+    {
+        getForumList,
+    }
+)(toJS(ForumListWrapper));
 export default ForumListWrapper;

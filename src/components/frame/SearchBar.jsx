@@ -3,18 +3,17 @@ import PropTypes from 'prop-types';
 
 import '../../styles/frame/search.less';
 
-
 class SearchBar extends React.Component {
     static propTypes = {
         onChange: PropTypes.func.isRequired,
         onFocus: PropTypes.func.isRequired,
-        onBlur: PropTypes.func.isRequired
-    }
+        onBlur: PropTypes.func.isRequired,
+    };
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
-            content: ''
+            content: '',
         };
 
         this.handleBlur = this.handleBlur.bind(this);
@@ -23,40 +22,37 @@ class SearchBar extends React.Component {
         this.handleClickIcon = this.handleClickIcon.bind(this);
     }
 
-    handleClickIcon () {
+    handleClickIcon() {
         this.input.focus();
-        this.props.onFocus && this.props.onFocus();   
+        this.props.onFocus && this.props.onFocus();
     }
 
-    handleFocus () {
-        this.props.onFocus && this.props.onFocus();   
+    handleFocus() {
+        this.props.onFocus && this.props.onFocus();
     }
 
-    handleBlur () {
+    handleBlur() {
         this.props.onBlur && this.props.onBlur();
     }
 
-    handleChange (e) {
+    handleChange(e) {
         const content = e.target.value;
         this.setState({
-            content
+            content,
         });
         this.props.onChange && this.props.onChange(content);
     }
 
-    render () {
+    render() {
         const { content } = this.state;
         const { isFocus } = this.props;
         return (
             <div className="search-bar">
-                <i 
-                    className="iconfont icon-search"
-                    onClick={this.handleClickIcon}     
-                />
+                <i className="iconfont icon-search" onClick={this.handleClickIcon} />
                 <input
                     value={content}
                     style={{ width: `${isFocus ? '156px' : '0'}` }}
-                    ref={input => this.input = input}
+                    ref={input => (this.input = input)}
                     placeholder="搜索用户或帖子..."
                     className={`search-input${isFocus ? ' active' : ''}`}
                     onFocus={this.handleFocus}

@@ -10,8 +10,8 @@ export const GET_FORUMLIST_FAILURE = 'GET_FORUMLIST_FAILURE';
 const fetchForumList = () => ({
     [CALL_API]: {
         types: [GET_FORUMLIST_REQUEST, GET_FORUMLIST_SUCCESS, GET_FORUMLIST_FAILURE],
-        apiPath: 'forum'
-    }
+        apiPath: 'forum',
+    },
 });
 
 // Fetch forum list unless it is currently cashed.
@@ -23,7 +23,6 @@ export const getForumList = () => (dispatch, getState) => {
     }
     return dispatch(fetchForumList());
 };
-
 
 // Get board list given a forum ID
 // Logic is the same above
@@ -44,10 +43,10 @@ export const getBoardList = fid => (dispatch, getState) => {
             apiPath: `forum/${fid}`,
             request: {
                 headers: {
-                    auth: authentication
-                }
-            }
+                    auth: authentication,
+                },
+            },
         },
-        fid: fid
+        fid: fid,
     });
 };

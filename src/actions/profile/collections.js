@@ -20,10 +20,10 @@ const createCollectionAction = ({ sliceReducerName, types, apiPath }) => {
                     request: {
                         method: 'GET',
                         headers: {
-                            auth: authenication
-                        }
-                    }
-                }
+                            auth: authenication,
+                        },
+                    },
+                },
             });
         }
     };
@@ -32,11 +32,11 @@ const createCollectionAction = ({ sliceReducerName, types, apiPath }) => {
 export const getCollectionsIfNeeded = createCollectionAction({
     sliceReducerName: 'collections',
     types: [GET_COLLECTIONS_REQUEST, GET_COLLECTIONS_SUCCESS, GET_COLLECTIONS_FAILURE],
-    apiPath: 'home/collection'
+    apiPath: 'home/collection',
 });
 
 export const getFollowingsIfNeeded = createCollectionAction({
     sliceReducerName: 'followings',
     types: [GET_FOLLOWINGS_REQUEST, GET_FOLLOWINGS_SUCCESS, GET_FOLLOWINGS_FAILURE],
-    apiPath: 'home/follow'
+    apiPath: 'home/follow',
 });

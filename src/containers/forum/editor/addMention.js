@@ -1,14 +1,7 @@
-import {
-    EditorState,
-    Modifier,
-} from 'draft-js';
+import { EditorState, Modifier } from 'draft-js';
 import { getSelectedBlock } from 'draftjs-utils';
 
-export const addMention = (
-    editorState,
-    onChange,
-    suggestion,
-) => {
+export const addMention = (editorState, onChange, suggestion) => {
     const { id, name } = suggestion;
     const url = `/user/${id}`;
     const entityKey = editorState
@@ -38,12 +31,12 @@ export const addMention = (
         updatedSelection,
         `@${name}`,
         newEditorState.getCurrentInlineStyle(),
-        entityKey,
+        entityKey
     );
     newEditorState = EditorState.push(newEditorState, contentState, 'insert-characters');
 
     if (!spaceAlreadyPresent) {
-    // insert a blank space after mention
+        // insert a blank space after mention
         updatedSelection = newEditorState.getSelection().merge({
             anchorOffset: mentionIndex + name.length + 1,
             focusOffset: mentionIndex + name.length + 1,
@@ -54,7 +47,7 @@ export const addMention = (
             updatedSelection,
             ' ',
             newEditorState.getCurrentInlineStyle(),
-            undefined,
+            undefined
         );
     }
     onChange(EditorState.push(newEditorState, contentState, 'insert-characters'));

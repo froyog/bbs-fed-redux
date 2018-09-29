@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-
 const Time = ({ timestamp, absolute, ...restProps }) => {
-    const pad = val =>
-        ('0' + val).substr(-2);
+    const pad = val => ('0' + val).substr(-2);
 
     const relativeTime = date => {
         const now = new Date();
@@ -15,9 +13,10 @@ const Time = ({ timestamp, absolute, ...restProps }) => {
         if (absDiff < 1000) return '刚刚';
 
         const relation = diff > 0 ? '后' : '前';
-        const base = diff > 0
-            ? new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999)
-            : new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const base =
+            diff > 0
+                ? new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999)
+                : new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
         if ((diff > 0 && date <= base) || (diff < 0 && date >= base)) {
             // on same day
@@ -38,16 +37,19 @@ const Time = ({ timestamp, absolute, ...restProps }) => {
         }
 
         if (diffDay === 0) {
-            return `${diff > 0 ? '明天' : '昨天'} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+            return `${diff > 0 ? '明天' : '昨天'} ${pad(date.getHours())}:${pad(
+                date.getMinutes()
+            )}`;
         } else if (diffDay === 1) {
-            return `${diff > 0 ? '后天' : '前天'} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+            return `${diff > 0 ? '后天' : '前天'} ${pad(date.getHours())}:${pad(
+                date.getMinutes()
+            )}`;
         } else {
             return `${diffDay + 1} 天${relation}`;
         }
     };
 
-    const renderTooltip = timeString =>
-        <Tooltip id="full time">{timeString}</Tooltip>;
+    const renderTooltip = timeString => <Tooltip id="full time">{timeString}</Tooltip>;
 
     const createDate = new Date(timestamp * 1000);
     const year = createDate.getFullYear();
@@ -66,15 +68,14 @@ const Time = ({ timestamp, absolute, ...restProps }) => {
             <span {...restProps}>{relative}</span>
         </OverlayTrigger>
     );
-
 };
 
 Time.propTypes = {
     timestamp: PropTypes.number.isRequired,
-    absolute: PropTypes.bool
+    absolute: PropTypes.bool,
 };
 Time.defaultProps = {
-    absolute: false
+    absolute: false,
 };
 
 export default Time;

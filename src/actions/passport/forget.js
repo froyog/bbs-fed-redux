@@ -13,10 +13,10 @@ export const getForgetInfoWith = selfInfo => dispatch =>
                 method: 'POST',
                 body: JSON.stringify(selfInfo),
                 headers: {
-                    contentType: 'application/json'
-                }
-            }
-        }
+                    contentType: 'application/json',
+                },
+            },
+        },
     });
 
 export const FORGET_RESET_REQUEST = 'FORGET_RESET_REQUEST';
@@ -32,9 +32,9 @@ export const resetPasswordWith = resetInfo => dispatch =>
                 method: 'POST',
                 body: JSON.stringify(resetInfo),
                 headers: {
-                    contentType: 'application/json'
-                }
-            }
+                    contentType: 'application/json',
+                },
+            },
         },
-        uid: resetInfo.uid
+        uid: resetInfo.uid,
     });

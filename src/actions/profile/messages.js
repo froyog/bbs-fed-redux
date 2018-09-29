@@ -8,7 +8,7 @@ export const GET_MESSAGE_SUCCESS = 'GET_MESSAGE_SUCCESS';
 export const GET_MESSAGE_FAILURE = 'GET_MESSAGE_FAILURE';
 export const INVAILDATE_MESSAGES = 'INVAILDATE_MESSAGES';
 
-const shouldFetchMessages = (messageSliceState) => {
+const shouldFetchMessages = messageSliceState => {
     if (!messageSliceState.get('messages').length) {
         return true;
     } else if (messageSliceState.get('isFetching')) {
@@ -28,11 +28,11 @@ export const getMessages = page => (dispatch, getState) => {
                 request: {
                     method: 'GET',
                     headers: {
-                        auth: authentication
-                    }
-                }
+                        auth: authentication,
+                    },
+                },
             },
-            page: page
+            page: page,
         });
     }
 };
@@ -55,15 +55,15 @@ export const sendPrivateMessage = (targetUid, content) => (dispatch, getState) =
                 method: 'POST',
                 body: JSON.stringify({
                     to_uid: targetUid,
-                    content: content
+                    content: content,
                 }),
                 headers: {
                     contentType: 'application/json',
-                    auth: authentication
-                }
-            }
+                    auth: authentication,
+                },
+            },
         },
-        targetUid: targetUid
+        targetUid: targetUid,
     });
 };
 
@@ -81,10 +81,10 @@ export const clearUnreadTag = () => (dispatch, getState) => {
             request: {
                 method: 'POST',
                 headers: {
-                    auth: authentication
-                }
-            }
-        }
+                    auth: authentication,
+                },
+            },
+        },
     });
 };
 
@@ -101,10 +101,10 @@ export const getDialog = (withUid, page) => (dispatch, getState) => {
             request: {
                 method: 'GET',
                 headers: {
-                    auth: authentication
-                }
-            }
+                    auth: authentication,
+                },
+            },
         },
-        withUid: withUid
+        withUid: withUid,
     });
 };

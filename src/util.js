@@ -14,7 +14,6 @@ export const isEqual = (a, b) => {
     return true;
 };
 
-
 // Judge the current device type via width
 const getDeviceWidth = () => window.innerWidth;
 export const isMobile = (breakpointWidth = 768) => {
@@ -33,16 +32,15 @@ export const toJS = WrappedComponent => wrappedComponentProps => {
     const KEY = 0;
     const VALUE = 1;
 
-    const propsJS = Object.entries(
-        wrappedComponentProps
-    ).reduce((newProps, wrappedComponentProp) => {
-        newProps[wrappedComponentProp[KEY]] = Iterable.isIterable(
-            wrappedComponentProp[VALUE]
-        )
-            ? wrappedComponentProp[VALUE].toJS()
-            : wrappedComponentProp[VALUE];
-        return newProps;
-    }, {});
+    const propsJS = Object.entries(wrappedComponentProps).reduce(
+        (newProps, wrappedComponentProp) => {
+            newProps[wrappedComponentProp[KEY]] = Iterable.isIterable(wrappedComponentProp[VALUE])
+                ? wrappedComponentProp[VALUE].toJS()
+                : wrappedComponentProp[VALUE];
+            return newProps;
+        },
+        {}
+    );
 
     return <WrappedComponent {...propsJS} />;
 };
@@ -52,7 +50,10 @@ export const toJS = WrappedComponent => wrappedComponentProps => {
 export const dataURItoBlob = dataURI => {
     const byteString = atob(dataURI.split(',')[1]);
 
-    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    const mimeString = dataURI
+        .split(',')[0]
+        .split(':')[1]
+        .split(';')[0];
 
     const ab = new ArrayBuffer(byteString.length);
     let ia = new Uint8Array(ab);
@@ -60,7 +61,7 @@ export const dataURItoBlob = dataURI => {
         ia[i] = byteString.charCodeAt(i);
     }
 
-    const bb = new Blob([ab], { 'type': mimeString });
+    const bb = new Blob([ab], { type: mimeString });
     return bb;
 };
 
@@ -93,7 +94,7 @@ export const compressImage = (file, callback) => {
 };
 
 // get user info from state
-export const parseUser = (state) => {
+export const parseUser = state => {
     const user = state.get('user');
     if (!user) {
         return false;
@@ -106,26 +107,27 @@ export const parseUser = (state) => {
 
 import { draftToMarkdown as originalDraftToMarkdown } from 'markdown-draft-js';
 
-export const draftToMarkdown = rawObject => originalDraftToMarkdown(rawObject, {
-    entityItems: {
-        'IMAGE': {
-            open: () => {},
-            close: entity => `![](${entity.data.src})`
-        }
-    }
-});
+export const draftToMarkdown = rawObject =>
+    originalDraftToMarkdown(rawObject, {
+        entityItems: {
+            IMAGE: {
+                open: () => {},
+                close: entity => `![](${entity.data.src})`,
+            },
+        },
+    });
 // re-export for convenient usage
 export { markdownToDraft } from 'markdown-draft-js';
 
 export const customToolbar = {
     options: ['inline', 'blockType', 'list', 'emoji', 'history'],
     inline: {
-        options: ['bold', 'italic', 'underline', 'strikethrough', 'monospace']
+        options: ['bold', 'italic', 'underline', 'strikethrough', 'monospace'],
     },
     list: {
-        options: ['unordered', 'ordered']
+        options: ['unordered', 'ordered'],
     },
-    image: { alignmentEnabled: false }
+    image: { alignmentEnabled: false },
 };
 
 // accessment
@@ -150,14 +152,8 @@ export const isModeratorOf = (selfModerate, selfGroup, boardId, forumId) => {
     if (selfGroup === 2) {
         return true;
     }
-    const { 
-        board: boardModerateArray, 
-        forum: forumModerateArray 
-    } = selfModerate;
-    if (
-        boardModerateArray.indexOf(boardId) !== -1 ||
-        forumModerateArray.indexOf(forumId) !== -1
-    ) {
+    const { board: boardModerateArray, forum: forumModerateArray } = selfModerate;
+    if (boardModerateArray.indexOf(boardId) !== -1 || forumModerateArray.indexOf(forumId) !== -1) {
         return true;
     }
     return false;

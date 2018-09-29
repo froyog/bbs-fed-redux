@@ -12,24 +12,23 @@ renderer.image = (href, title, text) => {
     }
     // be careful with the "class" property.
     // this is not jsx
-    return (`
+    return `
         <a class="img-link" href="${fullUri}" target="_blank">
             <img src="${fullUri}" alt="Thread Image" />
         </a>
-    `);
+    `;
 };
 marked.setOptions({
     renderer: renderer,
-    sanitize: true
+    sanitize: true,
 });
-
 
 class ThreadRenderer extends React.PureComponent {
     static propTypes = {
-        content: PropTypes.string.isRequired
+        content: PropTypes.string.isRequired,
     };
 
-    render () {
+    render() {
         const { content } = this.props;
         if (!content) return null;
 
@@ -37,10 +36,10 @@ class ThreadRenderer extends React.PureComponent {
         return (
             <article
                 className="thread-renderer"
-                dangerouslySetInnerHTML={{__html: markdownContent}} 
+                dangerouslySetInnerHTML={{ __html: markdownContent }}
             />
         );
     }
-};
+}
 
 export default ThreadRenderer;

@@ -5,26 +5,27 @@ const bypassing = ({ types, mapActionToKey }) => {
         throw new Error('Expected types to be an array of three elements.');
     }
 
-    const [ requestType, successType, failureType ] = types;
+    const [requestType, successType, failureType] = types;
 
-    const bypassState = (state = fromJS({
-        isFetching: false,
-        items: null,
-        error: ''
-    }), action) => {
+    const bypassState = (
+        state = fromJS({
+            isFetching: false,
+            items: null,
+            error: '',
+        }),
+        action
+    ) => {
         switch (action.type) {
             case requestType:
                 return state.set('isFetching', true);
             case successType:
                 return Map({
-                    'isFetching': false,
-                    'items': fromJS(action.json.data),
-                    'error': ''
+                    isFetching: false,
+                    items: fromJS(action.json.data),
+                    error: '',
                 });
             case failureType:
-                return state
-                    .set('isFetching', false)
-                    .set('error', action.error);
+                return state.set('isFetching', false).set('error', action.error);
             default:
                 return state;
         }

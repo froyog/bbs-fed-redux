@@ -1,6 +1,5 @@
 import { CALL_API } from '../../middlewares/callApi';
 
-
 export const NEW_REGISTER_REQUEST = 'NEW_REGISTER_REQUEST';
 export const NEW_REGISTER_SUCCESS = 'NEW_REGISTER_SUCCESS';
 export const NEW_REGISTER_FAILURE = 'NEW_REGISTER_FAILURE';
@@ -17,12 +16,12 @@ export const newRegister = ({ username, password, cid, stunum, realname }) => di
                     password,
                     cid,
                     stunum,
-                    real_name: realname
+                    real_name: realname,
                 }),
                 headers: {
-                    contentType: 'application/json'
-                }
-            }
-        }
+                    contentType: 'application/json',
+                },
+            },
+        },
     });
 };

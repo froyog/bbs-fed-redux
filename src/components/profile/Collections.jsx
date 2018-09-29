@@ -4,7 +4,6 @@ import { Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Time from '../common/Time';
 
-
 export const Followings = ({ items: followings, onDeleteFollowing }) => {
     return (
         <Table responsive striped hover>
@@ -22,7 +21,9 @@ export const Followings = ({ items: followings, onDeleteFollowing }) => {
                     return (
                         <tr key={id}>
                             <td>{forumName}</td>
-                            <td><Link to={`/forum/board/${id}/page/1`}>{name}</Link></td>
+                            <td>
+                                <Link to={`/forum/board/${id}/page/1`}>{name}</Link>
+                            </td>
                             <td className="thread-title">{info}</td>
                             <td>{cThread}</td>
                         </tr>
@@ -34,17 +35,19 @@ export const Followings = ({ items: followings, onDeleteFollowing }) => {
 };
 
 Followings.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number,
-        forumId: PropTypes.number,
-        forumName: PropTypes.string,
-        name: PropTypes.string,
-        info: PropTypes.string,
-        cThread: PropTypes.number
-    }))
+    items: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number,
+            forumId: PropTypes.number,
+            forumName: PropTypes.string,
+            name: PropTypes.string,
+            info: PropTypes.string,
+            cThread: PropTypes.number,
+        })
+    ),
 };
 
-export const Collections = ({ items: collections, onDeleteCollection }) => 
+export const Collections = ({ items: collections, onDeleteCollection }) => (
     <Table responsive striped hover>
         <thead>
             <tr>
@@ -68,27 +71,32 @@ export const Collections = ({ items: collections, onDeleteCollection }) =>
                         <td>
                             <Link to={`/user/${authorId}`}>{authorName}</Link>
                         </td>
-                        <td><Time timestamp={tReply} absolute /></td>
+                        <td>
+                            <Time timestamp={tReply} absolute />
+                        </td>
                     </tr>
                 );
             })}
         </tbody>
-    </Table>;
+    </Table>
+);
 
 Collections.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number,
-        title: PropTypes.string,
-        boardId: PropTypes.number,
-        boardName: PropTypes.string,
-        authorId: PropTypes.number,
-        authorName: PropTypes.string,
-        authorNickname: PropTypes.string,
-        cPost: PropTypes.number,
-        bTop: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-        bElite: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-        tReply: PropTypes.number,
-        tCreate: PropTypes.number,
-        tModify: PropTypes.number
-    }))
+    items: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number,
+            title: PropTypes.string,
+            boardId: PropTypes.number,
+            boardName: PropTypes.string,
+            authorId: PropTypes.number,
+            authorName: PropTypes.string,
+            authorNickname: PropTypes.string,
+            cPost: PropTypes.number,
+            bTop: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+            bElite: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+            tReply: PropTypes.number,
+            tCreate: PropTypes.number,
+            tModify: PropTypes.number,
+        })
+    ),
 };

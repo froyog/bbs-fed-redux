@@ -6,7 +6,6 @@ import { login } from '../actions/passport/login';
 import { toJS } from '../util';
 import { AUTH_FAIL, AUTH_PASS, toggleAuth } from './action/auth';
 
-
 class WelcomeLogin extends React.PureComponent {
     static propTypes = {
         login: PropTypes.func.isRequired,
@@ -14,17 +13,17 @@ class WelcomeLogin extends React.PureComponent {
         user: PropTypes.shape({
             uid: PropTypes.number,
             token: PropTypes.string,
-            group: PropTypes.number
+            group: PropTypes.number,
         }),
-        error: PropTypes.string
+        error: PropTypes.string,
     };
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
             name: '',
             password: '',
-            localError: ''
+            localError: '',
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -32,7 +31,7 @@ class WelcomeLogin extends React.PureComponent {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (typeof nextProps.user !== "undefined") {
+        if (typeof nextProps.user !== 'undefined') {
             const adminGroup = nextProps.user.group;
             if (adminGroup === 2) {
                 // manager
@@ -48,49 +47,52 @@ class WelcomeLogin extends React.PureComponent {
                 fetch('/signin', {
                     method: 'POST',
                     body: JSON.stringify({
-                        uid: nextProps.user.uid
+                        uid: nextProps.user.uid,
                     }),
                     headers: {
-                        'Content-Type': 'application/json'
-                    }
+                        'Content-Type': 'application/json',
+                    },
                 })
                     .then(res => res.json())
-                    .then(json => {
-                        if (!json.err) {
-                            toggleAuth(AUTH_PASS);
-                            onAuthPass();
+                    .then(
+                        json => {
+                            if (!json.err) {
+                                toggleAuth(AUTH_PASS);
+                                onAuthPass();
+                                return;
+                            }
+                            toggleAuth(AUTH_FAIL);
+                            this.setState({
+                                localError: '您似乎不在邀请列表中，请联系管理员获取邀请资格',
+                            });
                             return;
+                        },
+                        json => {
+                            this.setState({
+                                localError: '网络错误',
+                            });
                         }
-                        toggleAuth(AUTH_FAIL);
-                        this.setState({
-                            localError: '您似乎不在邀请列表中，请联系管理员获取邀请资格'
-                        });
-                        return;
-                    }, json => {
-                        this.setState({
-                            localError: '网络错误'
-                        });
-                    });
+                    );
             }
         }
     }
 
-    handleInputChange ({ target }) {
+    handleInputChange({ target }) {
         this.setState({
-            [target.id]: target.value
+            [target.id]: target.value,
         });
     }
 
-    handleSubmit (e) {
+    handleSubmit(e) {
         e.preventDefault();
         const { name, password } = this.state;
         this.props.login({
             username: name,
-            password: password
+            password: password,
         });
     }
 
-    render () {
+    render() {
         const { name, password, localError } = this.state;
         const { isFetching, error } = this.props;
 
@@ -100,31 +102,30 @@ class WelcomeLogin extends React.PureComponent {
                 <p>{localError && localError}</p>
                 <Form inline>
                     <FormGroup>
-                        <ControlLabel>用户名</ControlLabel>
-                        {' '}
+                        <ControlLabel>用户名</ControlLabel>{' '}
                         <FormControl
                             id="name"
                             type="text"
                             value={name}
                             placeholder="请使用BBS账户登录"
-                            onChange={this.handleInputChange} />
-                    </FormGroup>
-                    {' '}
+                            onChange={this.handleInputChange}
+                        />
+                    </FormGroup>{' '}
                     <FormGroup>
-                        <ControlLabel>密码</ControlLabel>
-                        {' '}
+                        <ControlLabel>密码</ControlLabel>{' '}
                         <FormControl
                             id="password"
                             type="password"
                             value={password}
-                            onChange={this.handleInputChange} />
-                    </FormGroup>
-                    {' '}
+                            onChange={this.handleInputChange}
+                        />
+                    </FormGroup>{' '}
                     <Button
                         type="submit"
                         disabled={isFetching}
                         bsStyle="primary"
-                        onClick={this.handleSubmit}>
+                        onClick={this.handleSubmit}
+                    >
                         {isFetching ? '提交中' : '提交'}
                     </Button>
                 </Form>
@@ -135,17 +136,20 @@ class WelcomeLogin extends React.PureComponent {
 
 const mapStateToProps = state => {
     const login = state.get('login');
-    if (!login || ! state) return {};
+    if (!login || !state) return {};
     return {
         isFetching: login.get('isFetching'),
         user: state.get('user'),
-        error: login.get('error')
+        error: login.get('error'),
     };
 };
 const mapDispatchToProps = dispatch => ({
     login: loginInfo => dispatch(login(loginInfo)),
-    toggleAuth: authStatus => dispatch(toggleAuth(authStatus))
+    toggleAuth: authStatus => dispatch(toggleAuth(authStatus)),
 });
-WelcomeLogin = connect(mapStateToProps, mapDispatchToProps)(toJS(WelcomeLogin));
+WelcomeLogin = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(toJS(WelcomeLogin));
 
 export default WelcomeLogin;

@@ -5,58 +5,62 @@ import { Button } from 'react-bootstrap';
 import { InputField } from '../common/Input';
 // import { LoadingDots } from '../../components/common/Loading';
 
-
 class OldLogin extends React.Component {
     static propTypes = {
         onSubmitLoginInfo: PropTypes.func.isRequired,
         isFetching: PropTypes.bool,
-        error: PropTypes.string
-    }
+        error: PropTypes.string,
+    };
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
             oldUsername: '',
             oldPassword: '',
         };
-        
+
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmitLoginInfo = this.handleSubmitLoginInfo.bind(this);
     }
 
-    handleInputChange (e) {
+    handleInputChange(e) {
         const { id, value } = e.target;
         this.setState({
-            [id]: value
+            [id]: value,
         });
     }
 
-    handleSubmitLoginInfo (e) {
+    handleSubmitLoginInfo(e) {
         e.preventDefault();
         const { onSubmitLoginInfo } = this.props;
         const { oldUsername, oldPassword } = this.state;
-        
-        onSubmitLoginInfo && onSubmitLoginInfo({
-            username: oldUsername,
-            password: oldPassword
-        });
+
+        onSubmitLoginInfo &&
+            onSubmitLoginInfo({
+                username: oldUsername,
+                password: oldPassword,
+            });
     }
 
-    render () {
+    render() {
         const { isFetching, error } = this.props;
         return (
             <div>
                 <h3>老用户认证</h3>
-                <p>如果您的BBS帐号是<strong>2017年5月31日</strong>前注册的， 请完成老用户认证以帮助同步您的个人数据</p>
+                <p>
+                    如果您的BBS帐号是
+                    <strong>2017年5月31日</strong>
+                    前注册的， 请完成老用户认证以帮助同步您的个人数据
+                </p>
                 <p>此操作只需进行一次</p>
-                <InputField 
+                <InputField
                     text="原用户名"
                     type="text"
                     id="oldUsername"
                     fullWidth
                     onChange={this.handleInputChange}
                 />
-                <InputField 
+                <InputField
                     text="原密码"
                     type="password"
                     id="oldPassword"
@@ -75,23 +79,24 @@ class OldLogin extends React.Component {
                 </Button>
                 <p className="text-center error-message">{error}</p>
                 <p className="text-center">
-                    早已忘记帐号密码？认证遇到问题？进入<Link to="/passport/appeal">人工申诉</Link>页面取回帐号
+                    早已忘记帐号密码？认证遇到问题？进入
+                    <Link to="/passport/appeal">人工申诉</Link>
+                    页面取回帐号
                 </p>
             </div>
         );
     }
 }
 
-
 class OldRegister extends React.Component {
     static propTypes = {
         isFetching: PropTypes.bool,
         error: PropTypes.string,
         success: PropTypes.string,
-        onSubmitRegisterInfo: PropTypes.func.isRequired
-    }
+        onSubmitRegisterInfo: PropTypes.func.isRequired,
+    };
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
             username: '',
@@ -99,50 +104,51 @@ class OldRegister extends React.Component {
             password: '',
             realName: '',
             passwordRepeat: '',
-            errorMessage: ''
+            errorMessage: '',
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleRegisterInfo = this.handleRegisterInfo.bind(this);
     }
 
-    _checkVaildation (token, value) {
+    _checkVaildation(token, value) {
         if (token === 'passwordRepeat') {
             const { password } = this.state;
             if (password !== value) {
                 this.setState({
-                    errorMessage: '两个密码不匹配，请检查您的输入'
+                    errorMessage: '两个密码不匹配，请检查您的输入',
                 });
                 return;
             }
         }
         this.setState({
-            errorMessage: ''
+            errorMessage: '',
         });
     }
 
-    handleInputChange (e) {
+    handleInputChange(e) {
         const { id, value } = e.target;
         this._checkVaildation(id, value);
         this.setState({
-            [id]: value
+            [id]: value,
         });
     }
 
-    handleRegisterInfo (e) {
+    handleRegisterInfo(e) {
         e.preventDefault();
-        const { onSubmitRegisterInfo,  } = this.props;
+        const { onSubmitRegisterInfo } = this.props;
         const { username, cid, password, realName } = this.state;
 
-        onSubmitRegisterInfo && onSubmitRegisterInfo({
-            username: username,
-            cid: cid,
-            real_name: realName,
-            password: password
-        });
+        onSubmitRegisterInfo &&
+            onSubmitRegisterInfo({
+                username: username,
+                cid: cid,
+                real_name: realName,
+                password: password,
+            });
     }
 
-    render () {
+    render() {
         const { isFetching, error, success } = this.props;
         const { errorMessage } = this.state;
         return (
@@ -195,9 +201,7 @@ class OldRegister extends React.Component {
                 >
                     提交
                 </Button>
-                { success &&
-                    <p className="text-center">注册成功</p>
-                }
+                {success && <p className="text-center">注册成功</p>}
                 <p className="text-center error-message">{error}</p>
             </div>
         );

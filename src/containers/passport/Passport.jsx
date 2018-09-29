@@ -4,36 +4,23 @@ import { Switch, Route, Redirect, NavLink, Link } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
 import Appeal from './Appeal';
-import { ForgetAuthWrapper as ForgetAuth,
-    ForgetResetWrapper as ForgetReset } from './Forget';
-import { OldLoginWrapper as OldLogin,
-    OldRegisterWrapper as OldRegister } from './Old';
-    
-import '../../styles/passport/passport.less';
+import { ForgetAuthWrapper as ForgetAuth, ForgetResetWrapper as ForgetReset } from './Forget';
+import { OldLoginWrapper as OldLogin, OldRegisterWrapper as OldRegister } from './Old';
 
+import '../../styles/passport/passport.less';
 
 const Passport = () => {
     return (
         <div id="passport">
-            <div
-                className="card-passport"
-            >
+            <div className="card-passport">
                 <div className="back-to-home-wrapper">
                     <Link to="/">返回主页</Link>
                 </div>
                 <div className="switch-links">
-                    <NavLink 
-                        className="pull-left" 
-                        activeClassName="active" 
-                        to="/passport/login"
-                    >
+                    <NavLink className="pull-left" activeClassName="active" to="/passport/login">
                         登录
                     </NavLink>
-                    <NavLink 
-                        className="pull-left" 
-                        activeClassName="active" 
-                        to="/passport/register"
-                    >
+                    <NavLink className="pull-left" activeClassName="active" to="/passport/register">
                         注册
                     </NavLink>
                 </div>
@@ -56,7 +43,5 @@ const Passport = () => {
     );
 };
 
-Passport.propTypes = {
-
-};
+Passport.propTypes = {};
 export default Passport;

@@ -17,23 +17,18 @@ export const ErrorOverlay = ({ reason, action, needRefresh }) => {
                 </div>
             </div>
             <div className="action">
-                <p>错误原因：
-                    <span className="reason">
-                        {reason || '未知原因，已上传至错误服务器'}
-                    </span>
+                <p>
+                    错误原因：
+                    <span className="reason">{reason || '未知原因，已上传至错误服务器'}</span>
                 </p>
-                { action }
-                { needRefresh &&
+                {action}
+                {needRefresh && (
                     <p>
-                        <Button 
-                            bsStyle="danger"
-                            className="raised"
-                            onClick={refreshPage}
-                        >
+                        <Button bsStyle="danger" className="raised" onClick={refreshPage}>
                             刷新页面
                         </Button>
                     </p>
-                }
+                )}
             </div>
         </div>
     );
@@ -42,5 +37,5 @@ export const ErrorOverlay = ({ reason, action, needRefresh }) => {
 ErrorOverlay.propTypes = {
     reason: PropTypes.string,
     action: PropTypes.element,
-    needRefresh: PropTypes.bool
+    needRefresh: PropTypes.bool,
 };

@@ -1,6 +1,5 @@
 @import '../universal.less';
 
-
 // The overlay part. Used for larger scenario
 .fetching-overlay {
     // background-color: #fff;
@@ -18,7 +17,7 @@
 }
 
 .loader-line-wrap {
-    animation: spin 1800ms cubic-bezier(.175, .885, .32, 1.275) infinite;
+    animation: spin 1800ms cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
     box-sizing: border-box;
     width: 100px;
     height: 50px;
@@ -40,11 +39,21 @@
 
     .square(100px);
 }
-.loader-line-wrap:nth-child(1) { animation-delay: -50ms; }
-.loader-line-wrap:nth-child(2) { animation-delay: -100ms; }
-.loader-line-wrap:nth-child(3) { animation-delay: -150ms; }
-.loader-line-wrap:nth-child(4) { animation-delay: -200ms; }
-.loader-line-wrap:nth-child(5) { animation-delay: -250ms; }
+.loader-line-wrap:nth-child(1) {
+    animation-delay: -50ms;
+}
+.loader-line-wrap:nth-child(2) {
+    animation-delay: -100ms;
+}
+.loader-line-wrap:nth-child(3) {
+    animation-delay: -150ms;
+}
+.loader-line-wrap:nth-child(4) {
+    animation-delay: -200ms;
+}
+.loader-line-wrap:nth-child(5) {
+    animation-delay: -250ms;
+}
 
 .loader-line-wrap:nth-child(1) .loader-line {
     border-color: hsl(0, 80%, 60%);
@@ -73,141 +82,225 @@
 }
 
 @keyframes spin {
-    0%, 10% {
-		transform: rotate(0);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
+    0%,
+    10% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 // A much smaller spinner. Usaully used for POST/PUT request
 .cp-spinner {
-	position: relative;
-	display: inline-block;
-	box-sizing: border-box;
-	width: 3pc;
-	height: 3pc;
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 3pc;
+    height: 3pc;
 }
 
 .cp-hue {
-	width: 24px;
-	border-radius: 50%;
-	background: #f56151;
-	animation: cp-hue-animate 1s ease-in-out infinite;
+    width: 24px;
+    border-radius: 50%;
+    background: #f56151;
+    animation: cp-hue-animate 1s ease-in-out infinite;
 }
 
-.cp-hue,.cp-hue:before {
-	display: inline-block;
-	box-sizing: border-box;
-	height: 24px;
+.cp-hue,
+.cp-hue:before {
+    display: inline-block;
+    box-sizing: border-box;
+    height: 24px;
 }
 
 .cp-hue:before {
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: 9pt;
-	border-radius: 0 9pt 9pt 0;
-	background: #fff;
-	content: " ";
-	animation: cp-hue-animate-before 1s ease-in-out infinite;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 9pt;
+    border-radius: 0 9pt 9pt 0;
+    background: #fff;
+    content: ' ';
+    animation: cp-hue-animate-before 1s ease-in-out infinite;
 }
 
 @keyframes cp-hue-animate {
-	0% { background: #f56151; }
-	25% { background: #58bd55; }
-	50% { background: #eb68a1; }
-	75% { background: #f3d53f; }
-	to { background: #f56151; }
+    0% {
+        background: #f56151;
+    }
+    25% {
+        background: #58bd55;
+    }
+    50% {
+        background: #eb68a1;
+    }
+    75% {
+        background: #f3d53f;
+    }
+    to {
+        background: #f56151;
+    }
 }
 
 @keyframes cp-hue-animate-before {
-	0% {
-		opacity: .5;
-		transform: rotateY(0);
-		transform-origin: left center;
-	}
-	30%,70% {
-		opacity: .2;
-		transform: rotateY(180deg);
-		transform-origin: left center;
-	}
-	to {
-		opacity: .5;
-		transform: rotateY(0);
-	}
+    0% {
+        opacity: 0.5;
+        transform: rotateY(0);
+        transform-origin: left center;
+    }
+    30%,
+    70% {
+        opacity: 0.2;
+        transform: rotateY(180deg);
+        transform-origin: left center;
+    }
+    to {
+        opacity: 0.5;
+        transform: rotateY(0);
+    }
 }
 
 // three dots loader
 
 .three-dots-loader {
-	margin: 0 auto;
-	width: 5.6em;
+    margin: 0 auto;
+    width: 5.6em;
 }
 
 .three-dots-loader .dot {
-	width: 15px;
-	height: 15px;
-	border-radius: 15px;
-	background-color: #64b5f6;
-	margin: 0 3px;
-	transform: scale(0);
-	display: inline-block;
-	animation: dotanim 1s infinite ease-in-out;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    background-color: #64b5f6;
+    margin: 0 3px;
+    transform: scale(0);
+    display: inline-block;
+    animation: dotanim 1s infinite ease-in-out;
 }
 
-.three-dots-loader .dot:nth-child(1) { animation-delay: 0s; }
-.three-dots-loader .dot:nth-child(2) { animation-delay: 0.3s; }
-.three-dots-loader .dot:nth-child(3) { animation-delay: 0.6s; }
-.three-dots-loader .dot:nth-child(4) { animation-delay: 0.9s; }
+.three-dots-loader .dot:nth-child(1) {
+    animation-delay: 0s;
+}
+.three-dots-loader .dot:nth-child(2) {
+    animation-delay: 0.3s;
+}
+.three-dots-loader .dot:nth-child(3) {
+    animation-delay: 0.6s;
+}
+.three-dots-loader .dot:nth-child(4) {
+    animation-delay: 0.9s;
+}
 
 @keyframes dotanim {
-	0% { transform: scale(0.5); }
-	50% { transform: scale(1); }
-	90% { transform: scale(0.5); }
-	100% { transform: scale(0.5); }
+    0% {
+        transform: scale(0.5);
+    }
+    50% {
+        transform: scale(1);
+    }
+    90% {
+        transform: scale(0.5);
+    }
+    100% {
+        transform: scale(0.5);
+    }
 }
-
 
 // loading lines (medium-like)
 .animated-background {
-	position: relative;
-	height: 95px;
-	background: #f6f7f8;
-	background: linear-gradient(to right, #eee 8%, #ddd 18%, #eee 33%);
-	background-size: 800px 104px;
-	animation: 1s shimmer linear infinite forwards;
+    position: relative;
+    height: 95px;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #eee 8%, #ddd 18%, #eee 33%);
+    background-size: 800px 104px;
+    animation: 1s shimmer linear infinite forwards;
 
-	.line-speartor { left: 0; right: 0; height: 7px; }
-	.word-speartor { height: 10px; }
-	.shadow-masker {
-		position: absolute;
-		background-color: #fff;
+    .line-speartor {
+        left: 0;
+        right: 0;
+        height: 7px;
+    }
+    .word-speartor {
+        height: 10px;
+    }
+    .shadow-masker {
+        position: absolute;
+        background-color: #fff;
 
-		&:first-child { top: 0; left: 200px; right: 0; }
-		&:nth-child(2) { top: 10px; }
-		&:nth-child(3) { top: 17px; left: 30px; width: 16px; }
-		&:nth-child(4) { top: 17px; left: 160px; width: 10px; }
-		&:nth-child(5) { top: 17px; left: 360px; right: 0; }
-		&:nth-child(6) { top: 27px; }
-		&:nth-child(7) { top: 34px; left: 260px; right: 0; }
-		&:nth-child(8) { top: 44px; }
-		&:nth-child(10) { top: 51px; left: 190px; right: 0; }
-		&:nth-child(11) { top: 61px; }
-		&:nth-child(12) { top: 68px; left: 20px; width: 10px; }
-		&:nth-child(13) { top: 68px; left: 110px; width: 20px; }
-		&:nth-child(14) { top: 68px; left: 400px; right: 0; }
-		&:nth-child(15) { top: 78px; }
-		&:nth-child(16) { top: 85px; left: 118px; right: 0; }
-	}
+        &:first-child {
+            top: 0;
+            left: 200px;
+            right: 0;
+        }
+        &:nth-child(2) {
+            top: 10px;
+        }
+        &:nth-child(3) {
+            top: 17px;
+            left: 30px;
+            width: 16px;
+        }
+        &:nth-child(4) {
+            top: 17px;
+            left: 160px;
+            width: 10px;
+        }
+        &:nth-child(5) {
+            top: 17px;
+            left: 360px;
+            right: 0;
+        }
+        &:nth-child(6) {
+            top: 27px;
+        }
+        &:nth-child(7) {
+            top: 34px;
+            left: 260px;
+            right: 0;
+        }
+        &:nth-child(8) {
+            top: 44px;
+        }
+        &:nth-child(10) {
+            top: 51px;
+            left: 190px;
+            right: 0;
+        }
+        &:nth-child(11) {
+            top: 61px;
+        }
+        &:nth-child(12) {
+            top: 68px;
+            left: 20px;
+            width: 10px;
+        }
+        &:nth-child(13) {
+            top: 68px;
+            left: 110px;
+            width: 20px;
+        }
+        &:nth-child(14) {
+            top: 68px;
+            left: 400px;
+            right: 0;
+        }
+        &:nth-child(15) {
+            top: 78px;
+        }
+        &:nth-child(16) {
+            top: 85px;
+            left: 118px;
+            right: 0;
+        }
+    }
 }
 
 @keyframes shimmer {
-	0% {
-		background-position: -468px 0;
-	}
-	100% {
-		background-position: 468px 0;
-	}
+    0% {
+        background-position: -468px 0;
+    }
+    100% {
+        background-position: 468px 0;
+    }
 }

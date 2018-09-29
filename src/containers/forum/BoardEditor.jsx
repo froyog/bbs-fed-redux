@@ -18,14 +18,13 @@ import { toJS, draftToMarkdown, customToolbar } from '../../util';
 
 import '../../styles/forum/editor.less';
 
-
 class BoardEditor extends React.Component {
     static propTypes = {
         newThread: PropTypes.func.isRequired,
-        bid: PropTypes.number
+        bid: PropTypes.number,
     };
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
             editorState: EditorState.createEmpty(),
@@ -45,49 +44,49 @@ class BoardEditor extends React.Component {
         this.handleToggleAnonymous = this.handleToggleAnonymous.bind(this);
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
         const { tid, error, isFetching } = nextProps;
         if (tid && !error && !isFetching) {
             // success
             this.setState({
-                referToThread: tid
+                referToThread: tid,
             });
         }
     }
 
-    handleEditorStateChange (editorState) {
+    handleEditorStateChange(editorState) {
         this.setState({
             editorState,
-            hasContent: editorState.getCurrentContent().hasText()
+            hasContent: editorState.getCurrentContent().hasText(),
         });
     }
 
-    handleTitleChange ({ target }) {
+    handleTitleChange({ target }) {
         this.setState({
             title: target.value,
-            hasContent: target.value.length
+            hasContent: target.value.length,
         });
     }
 
-    handleSelectBID (bid) {
+    handleSelectBID(bid) {
         this.setState({
-            bid: bid
+            bid: bid,
         });
     }
 
-    handleToggleAnonymous (anonymousState) {
+    handleToggleAnonymous(anonymousState) {
         this.setState({
-            anonymous: anonymousState
+            anonymous: anonymousState,
         });
     }
 
-    handleToggleAdvanced (advancedState) {
+    handleToggleAdvanced(advancedState) {
         this.setState({
-            advancedMode: advancedState
+            advancedMode: advancedState,
         });
     }
 
-    handleSubmit (e) {
+    handleSubmit(e) {
         e.preventDefault();
         const { newThread } = this.props;
         const { editorState, title, anonymous, advancedMode } = this.state;
@@ -97,11 +96,11 @@ class BoardEditor extends React.Component {
         } else {
             mdContent = draftToMarkdown(convertToRaw(editorState.getCurrentContent()), {
                 entityItems: {
-                    'IMAGE': {
+                    IMAGE: {
                         open: () => {},
-                        close: entity => `![](${entity.data.src})`
-                    }
-                }
+                        close: entity => `![](${entity.data.src})`,
+                    },
+                },
             });
         }
         /*
@@ -118,29 +117,30 @@ class BoardEditor extends React.Component {
         if (!bid) return;
 
         this.setState({
-            hasContent: false
+            hasContent: false,
         });
-        
+
         newThread(bid, title, mdContent, anonymous);
     }
 
-    getEditorState () {
+    getEditorState() {
         return this.state.editorState;
     }
-    
-    render () {
+
+    render() {
         const { editorState, title, referToThread, bid, hasContent, advancedMode } = this.state;
-        const { isFetching, error, location: { state: locationState } } = this.props;
+        const {
+            isFetching,
+            error,
+            location: { state: locationState },
+        } = this.props;
         if (referToThread) {
             return <Redirect to={`/forum/thread/${referToThread}/page/1`} />;
         }
 
         return (
             <Card className="editor-main">
-                <Prompt 
-                    when={!!hasContent}
-                    message="确定要离开吗？编辑器的内容不会被保存"
-                />
+                <Prompt when={!!hasContent} message="确定要离开吗？编辑器的内容不会被保存" />
                 <InputField
                     id="title"
                     text="标题"
@@ -149,35 +149,34 @@ class BoardEditor extends React.Component {
                     fullWidth
                     onChange={this.handleTitleChange}
                 />
-                <BIDSelector 
+                <BIDSelector
                     onBIDSelect={this.handleSelectBID}
                     currentBoardInfo={locationState.currentBoardInfo}
                 />
                 <Editor
-                    toolbarStyle={ advancedMode ? { display: 'none' } : {}}
+                    toolbarStyle={advancedMode ? { display: 'none' } : {}}
                     toolbar={customToolbar}
                     toolbarCustomButtons={[<Attach />]}
                     editorState={editorState}
                     onEditorStateChange={this.handleEditorStateChange}
                     localization={{
-                        locale: 'zh'
+                        locale: 'zh',
                     }}
                     placeholder="与天大分享你刚编的故事"
                     customDecorators={getDecorator(
-                        this.getEditorState, 
-                        this.handleEditorStateChange)
-                    }
+                        this.getEditorState,
+                        this.handleEditorStateChange
+                    )}
                 />
                 <footer>
                     <div className="clearfix switches-wrapper">
-                        {
-                            +bid === 193 &&
-                            <AnonymousSwitch 
+                        {+bid === 193 && (
+                            <AnonymousSwitch
                                 className="switch-wrapper"
                                 onToggle={this.handleToggleAnonymous}
                             />
-                        }
-                        <AdvancedSwitch  
+                        )}
+                        <AdvancedSwitch
                             className="switch-wrapper"
                             onToggle={this.handleToggleAdvanced}
                         />
@@ -192,10 +191,7 @@ class BoardEditor extends React.Component {
                         发表
                     </Button>
                     <LinkContainer to="/">
-                        <Button
-                            bsStyle="link"
-                            className="flat"
-                        >
+                        <Button bsStyle="link" className="flat">
                             返回主页
                         </Button>
                     </LinkContainer>
@@ -217,8 +213,12 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 const mapDispatchToProps = dispatch => ({
-    newThread: (bid, title, content, anonymous) => dispatch(fetchNewThread(bid, title, content, anonymous)),
+    newThread: (bid, title, content, anonymous) =>
+        dispatch(fetchNewThread(bid, title, content, anonymous)),
 });
-BoardEditor = connect(mapStateToProps, mapDispatchToProps)(toJS(BoardEditor));
+BoardEditor = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(toJS(BoardEditor));
 
 export default BoardEditor;

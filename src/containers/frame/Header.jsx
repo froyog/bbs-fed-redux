@@ -9,31 +9,30 @@ import Header from '../../components/frame/Header';
 import { toJS } from '../../util';
 import FeatureDiscovery from '../../components/frame/FeatureDiscovery';
 
-
 class HeaderWrapper extends React.PureComponent {
-    constructor () {
+    constructor() {
         super();
         this.state = {
             headerContent: '',
             tapIsShow: false,
-            updateDate: Date.parse('2018-6-8')
+            updateDate: Date.parse('2018-6-8'),
         };
 
         this.handleUnmountTap = this.handleUnmountTap.bind(this);
         this.handleClickNewPost = this.handleClickNewPost.bind(this);
     }
 
-    componentDidMount () {
+    componentDidMount() {
         const readState = JSON.parse(localStorage.getItem('featureIsRead'));
         const { updateDate } = this.state;
         if (!readState || !readState.isRead || readState.readDate < updateDate) {
             this.setState({
-                tapIsShow: true
+                tapIsShow: true,
             });
         }
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
         const { path, threadTitle } = nextProps;
         if (threadTitle) {
             let headerContent;
@@ -45,17 +44,17 @@ class HeaderWrapper extends React.PureComponent {
             clearTimeout(this.timer);
             this.timer = setTimeout(() => {
                 this.setState({
-                    headerContent: headerContent
+                    headerContent: headerContent,
                 });
             }, 500);
         }
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         clearTimeout(this.timer);
     }
 
-    handleClickNewPost () {
+    handleClickNewPost() {
         const { isLogin, showToast, history, currentBoardInfo } = this.props;
         if (!isLogin) {
             showToast('您未登录');
@@ -64,42 +63,40 @@ class HeaderWrapper extends React.PureComponent {
         history.push('/forum/thread/new', { currentBoardInfo: currentBoardInfo });
     }
 
-    handleUnmountTap () {
-        localStorage.setItem('featureIsRead', JSON.stringify({
-            isRead: true,
-            readDate: new Date().getTime()
-        }));
+    handleUnmountTap() {
+        localStorage.setItem(
+            'featureIsRead',
+            JSON.stringify({
+                isRead: true,
+                readDate: new Date().getTime(),
+            })
+        );
         this.setState({ tapIsShow: false });
     }
 
-    render () {
+    render() {
         const { isOpen, onToggleSidebar } = this.props;
         const { headerContent, tapIsShow } = this.state;
 
         return (
             <header id="header" role="banner">
-                <Header 
+                <Header
                     isOpen={isOpen}
                     onToggleSidebar={onToggleSidebar}
                     headerContent={headerContent}
                     onClickNewPost={this.handleClickNewPost}
                 />
                 <Search />
-                {
-                    tapIsShow &&
-                    <FeatureDiscovery 
-                        onUnmountTap={this.handleUnmountTap}
-                    />
-                }
+                {tapIsShow && <FeatureDiscovery onUnmountTap={this.handleUnmountTap} />}
             </header>
         );
     }
-};
+}
 
 HeaderWrapper.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onToggleSidebar: PropTypes.func.isRequired,
-    path: PropTypes.string.isRequired
+    path: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -108,23 +105,28 @@ const mapStateToProps = (state, ownProps) => {
     if (thread && !thread.get('isFetching')) {
         threadTitle = thread.getIn(['threadInfo', 'title']);
     }
-    // eslint-disable-next-line    
-    if (result = /^\/forum\/board\/(\d+)\/page/.exec(ownProps.location.pathname)) {
+    // eslint-disable-next-line
+    if ((result = /^\/forum\/board\/(\d+)\/page/.exec(ownProps.location.pathname))) {
         let bid = result[1];
         currentBoardInfo = state.getIn(['board', bid, 'boardInfo']);
     }
 
     return {
-        isLogin: !!(state.getIn(['user', 'uid'])),
+        isLogin: !!state.getIn(['user', 'uid']),
         isOpen: state.get('sidebarIsOpen'),
         threadTitle,
-        currentBoardInfo
+        currentBoardInfo,
     };
 };
 const mapDispatchToProps = dispatch => ({
     showToast: message => dispatch(showToast(message)),
-    onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus))
+    onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus)),
 });
-HeaderWrapper = withRouter(connect(mapStateToProps, mapDispatchToProps)(toJS(HeaderWrapper)));
+HeaderWrapper = withRouter(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(toJS(HeaderWrapper))
+);
 
 export default HeaderWrapper;

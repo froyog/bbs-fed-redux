@@ -5,18 +5,22 @@
     top: 50px;
     margin: 0 auto;
     padding: 10px 15px;
-    transition: .3s;
+    transition: 0.3s;
 
     @media @phones {
         padding: 10px 0;
     }
 }
-body { 
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Pingfang-SC,"Microsoft Yahei",SimHei,Arial,sans-serif !important; 
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Pingfang-SC,
+        'Microsoft Yahei', SimHei, Arial, sans-serif !important;
     background-color: #fafafa;
 }
-input[type="file"] { display: none; }
-button.raised, a.raised {
+input[type='file'] {
+    display: none;
+}
+button.raised,
+a.raised {
     padding: 3px 20px;
     box-shadow: @shadow-material-raise;
 }
@@ -28,12 +32,12 @@ button.float {
     border-radius: 50%;
     text-decoration: none !important;
     outline: none !important;
-    transition: all .3s;
+    transition: all 0.3s;
     background-color: #eee;
     box-shadow: @shadow-material-float;
 
-    i { 
-        width: 100%; 
+    i {
+        width: 100%;
         line-height: 100%;
     }
 
@@ -43,20 +47,22 @@ button.float {
     }
 }
 
-button.flat, a.flat {
+button.flat,
+a.flat {
     color: @flat-pink;
     font-weight: 500;
-    transition: .3s ease;
+    transition: 0.3s ease;
     outline: 0 !important;
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
         text-decoration: none;
-        color: rgba(255, 64, 129, .6);
+        color: rgba(255, 64, 129, 0.6);
     }
 }
 
 .container {
     @media @phones {
-        padding: 0
+        padding: 0;
     }
 }
 
@@ -73,8 +79,9 @@ button.load-more {
     font-size: 16px;
     color: inherit;
     outline: none !important;
-    
-    &:hover, &:focus {
+
+    &:hover,
+    &:focus {
         color: #2565ac;
         text-decoration: none;
     }
@@ -100,18 +107,20 @@ li.tab {
     display: inline-block;
     padding-right: 10px;
     cursor: pointer;
-    
+
     a {
         display: inline-block;
         line-height: 1.5;
         font-size: 18px;
         color: #333;
-        &:hover, &:focus, &.active {
+        &:hover,
+        &:focus,
+        &.active {
             text-decoration: none;
             font-size: 24px;
             color: @material-red;
         }
-        transition: all .3s;
+        transition: all 0.3s;
     }
 }
 

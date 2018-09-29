@@ -11,9 +11,9 @@
     z-index: 500;
     border-radius: 2px;
     padding: 0 20px;
-    animation: .5s showUp cubic-bezier(.23, 1, .32, 1) forwards;
+    animation: 0.5s showUp cubic-bezier(0.23, 1, 0.32, 1) forwards;
     transform: translateY(100%);
-    
+
     p {
         line-height: 40px;
         color: #fafafa;
@@ -24,15 +24,20 @@
         padding: 0;
         margin: 0;
         border: 0;
-        color: #FFEB3B;
+        color: #ffeb3b;
 
-        &:hover, &:focus {
-            color: #FFF59D;
+        &:hover,
+        &:focus {
+            color: #fff59d;
         }
     }
 }
 
 @keyframes showUp {
-    0% { transform: translateY(100%); }
-    100% { transform: translateY(0); }
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
 }

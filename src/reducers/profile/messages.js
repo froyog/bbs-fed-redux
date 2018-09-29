@@ -1,39 +1,38 @@
 import { Map, List, fromJS } from 'immutable';
 import * as ActionTypes from '../../actions/profile/messages';
 
-
-const messages = (state = fromJS({
-    'isFetching': false,
-    'messages': [],
-    'error': '',
-    'didInvaildate': false
-}), action) => {
+const messages = (
+    state = fromJS({
+        isFetching: false,
+        messages: [],
+        error: '',
+        didInvaildate: false,
+    }),
+    action
+) => {
     switch (action.type) {
         case ActionTypes.GET_MESSAGE_REQUEST:
-            return state
-                .set('isFetching', true)
-                .set('error', '');
+            return state.set('isFetching', true).set('error', '');
         case ActionTypes.GET_MESSAGE_SUCCESS:
             const incomingMessages = fromJS(action.json.data);
-            const finalItems = action.page === 0
-                ? incomingMessages
-                : state.get('messages').concat(incomingMessages);
-            
+            const finalItems =
+                action.page === 0
+                    ? incomingMessages
+                    : state.get('messages').concat(incomingMessages);
+
             return Map({
-                'isFetching': false,
-                'didInvaildate': false,
-                'messages': finalItems,
-                'error': ''
+                isFetching: false,
+                didInvaildate: false,
+                messages: finalItems,
+                error: '',
             });
         case ActionTypes.GET_MESSAGE_FAILURE:
             return Map({
-                'isFetching': false,
-                'error': action.error,
+                isFetching: false,
+                error: action.error,
             });
         case ActionTypes.INVAILDATE_MESSAGES:
-            return state
-                .set('didInvaildate', true)
-                .set('messages', List());
+            return state.set('didInvaildate', true).set('messages', List());
         default:
             return state;
     }

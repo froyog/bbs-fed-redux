@@ -13,14 +13,13 @@ import ImageContainer from './containers/common/ImageContainer';
 
 import './styles/icon-font/iconfont.css';
 
-
 const store = configureStore();
 const piwik = PiwikReactRouter({
     url: 'https://elf.twtstudio.com',
-    siteId: 13
+    siteId: 13,
 });
 
-const Root = () =>
+const Root = () => (
     <Provider store={store}>
         <Router history={piwik.connectToHistory(createBrowserHistory())}>
             <Switch>
@@ -32,6 +31,7 @@ const Root = () =>
                 <Route path="/" component={App} />
             </Switch>
         </Router>
-    </Provider>;
+    </Provider>
+);
 
 export default Root;

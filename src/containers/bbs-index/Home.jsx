@@ -2,17 +2,17 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import TopTen from './TopTen';
 import Latest from './Latest';
-import { 
-    AnnounceWrapper, 
-    AppQRCode, 
-    WeiboFollowing, 
-    CarouselAdWrapper, 
-    IndexRankWrapper ,
-    Footer
+import {
+    AnnounceWrapper,
+    AppQRCode,
+    WeiboFollowing,
+    CarouselAdWrapper,
+    IndexRankWrapper,
+    Footer,
 } from './IndexWidgets';
 import { Row, Col } from 'react-bootstrap';
 
-const HomeWrapper = () =>
+const HomeWrapper = () => (
     <Row>
         <Col md={9}>
             <TopTen />
@@ -26,6 +26,7 @@ const HomeWrapper = () =>
             <AppQRCode />
             <Footer />
         </Col>
-    </Row>;
+    </Row>
+);
 
 export default HomeWrapper;

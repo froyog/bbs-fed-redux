@@ -3,7 +3,6 @@
 
 import { camelizeKeys } from 'humps';
 
-
 export const CALL_API = 'Call API';
 
 let API_ROOT;
@@ -13,7 +12,6 @@ if (process.env.NODE_ENV === 'production') {
 } else if (process.env.NODE_ENV === 'development') {
     API_ROOT = 'https://bbs.tju.edu.cn/testapi';
 }
-
 
 const fetchApi = (apiPath, request = {}, state = {}) => {
     const fullUrl = `${API_ROOT}/${apiPath}`;
@@ -38,20 +36,17 @@ const fetchApi = (apiPath, request = {}, state = {}) => {
         }
     }
 
-    return (
-        fetch(fullUrl, customRequest)
-            .then(res => res.json())
-            .then(json => {
-                if (json.err) {
-                    return Promise.reject(json);
-                }
+    return fetch(fullUrl, customRequest)
+        .then(res => res.json())
+        .then(json => {
+            if (json.err) {
+                return Promise.reject(json);
+            }
 
-                const camelizedJson = camelizeKeys(json);
-                return camelizedJson;
-            })
-    );
+            const camelizedJson = camelizeKeys(json);
+            return camelizedJson;
+        });
 };
-
 
 export default store => next => action => {
     const callAPI = action[CALL_API];
@@ -77,18 +72,24 @@ export default store => next => action => {
         return finalAction;
     };
 
-    const [ requestType, successType, failureType ] = types;
+    const [requestType, successType, failureType] = types;
 
     next(actionWith({ type: requestType }));
 
     return fetchApi(apiPath, request, store.getState()).then(
-        response => next(actionWith({
-            json: response,
-            type: successType
-        })),
-        error => next(actionWith({
-            error: error.data || '网络连接错误',
-            type: failureType
-        }))
+        response =>
+            next(
+                actionWith({
+                    json: response,
+                    type: successType,
+                })
+            ),
+        error =>
+            next(
+                actionWith({
+                    error: error.data || '网络连接错误',
+                    type: failureType,
+                })
+            )
     );
 };

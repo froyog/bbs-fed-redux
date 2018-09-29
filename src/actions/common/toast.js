@@ -5,13 +5,13 @@ export const showToast = message => (dispatch, getState) => {
     if (!getState().getIn(['toast', 'isShow'])) {
         return dispatch({
             type: SHOW_TOAST,
-            message: message
+            message: message,
         });
     }
 };
 
 export const hideToast = () => dispatch => {
     return dispatch({
-        type: HIDE_TOAST
+        type: HIDE_TOAST,
     });
 };

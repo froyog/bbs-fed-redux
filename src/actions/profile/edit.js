@@ -16,10 +16,10 @@ export const saveProfile = editedProfile => (dispatch, getState) => {
                 body: JSON.stringify(editedProfile),
                 headers: {
                     auth: authenication,
-                    contentType: 'application/json'
-                }
-            }
-        }
+                    contentType: 'application/json',
+                },
+            },
+        },
     });
 };
 
@@ -37,9 +37,9 @@ export const uploadAvatar = fileData => (dispatch, getState) => {
                 method: 'PUT',
                 body: fileData,
                 headers: {
-                    auth: authentication
-                }
-            }
-        }
+                    auth: authentication,
+                },
+            },
+        },
     });
 };

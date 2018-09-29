@@ -3,9 +3,9 @@ import { CALL_API } from '../../middlewares/callApi';
 
 export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR';
 
-export const toggleSidebar = (openStatus) => ({
+export const toggleSidebar = openStatus => ({
     type: TOGGLE_SIDEBAR,
-    isOpen: openStatus
+    isOpen: openStatus,
 });
 
 export const GET_UNREAD_REQUEST = 'GET_UNREAD_REQUEST';
@@ -21,9 +21,9 @@ export const getUnreadMessage = () => (dispatch, getState) => {
             request: {
                 method: 'GET',
                 headers: {
-                    auth: authenication
-                }
-            }
-        }
+                    auth: authenication,
+                },
+            },
+        },
     });
 };

@@ -1,6 +1,5 @@
 @import '../universal.less';
 
-
 .error-modal {
     position: fixed;
     top: 100px;
@@ -10,7 +9,7 @@
     margin-left: -250px;
     border-radius: 5px;
     background-color: #f2dede;
-    color: #b71c1c ;
+    color: #b71c1c;
     z-index: 1000;
     box-shadow: @shadow-material;
     transform-origin: top;
@@ -19,7 +18,7 @@
     h4 {
         margin-top: 0;
     }
-    
+
     p:last-child {
         margin-bottom: 0;
     }
@@ -67,13 +66,12 @@
     }
 }
 
-
 // 404 page
 
 .not-found-content {
     height: 100vh;
     font-size: 32px;
-	font-weight: 500;;
+    font-weight: 500;
     position: relative;
     z-index: 1;
     background-color: #d2e1ec;
@@ -92,8 +90,12 @@
         padding: 20vh 20px 0 20px;
         text-align: center;
         line-height: 2em;
-        h1 { font-size: 60px; }
-        h3 { font-size: 38px; }
+        h1 {
+            font-size: 60px;
+        }
+        h3 {
+            font-size: 38px;
+        }
     }
     .home-link {
         font-size: 20px;
@@ -115,7 +117,8 @@
         background: #f6f9fa;
         box-shadow: 0 0 10px 10px #f6f9fa;
     }
-    .ground:before, .ground:after {
+    .ground:before,
+    .ground:after {
         content: '';
         display: block;
         width: 250px;
@@ -129,42 +132,22 @@
     .ground:after {
         left: 50%;
         margin-left: -166.66667px;
-        box-shadow: -330px 270px 15px #adb9cd, 
-        -630px 570px 15px #8496b4, 
-        -880px 920px 15px #a1aec6, 
-        -1230px 1170px 15px #a7b4c9, 
-        -1455px 1545px 15px #adb9cd, 
-        -1765px 1835px 15px #8a9bb8, 
-        -2135px 2065px 15px #91a1bc, 
-        -2420px 2380px 15px #8193b2, 
-        -2740px 2660px 15px #7e90b0, 
-        -2965px 3035px 15px #8798b6, 
-        -3290px 3310px 15px #8e9eba, 
-        -3605px 3595px 15px #8a9bb8, 
-        -3920px 3880px 15px #bac4d5, 
-        -4190px 4210px 15px #a4b1c8, 
-        -4465px 4535px 15px #8193b2, 
-        -4800px 4800px 15px #9aa9c2;
+        box-shadow: -330px 270px 15px #adb9cd, -630px 570px 15px #8496b4, -880px 920px 15px #a1aec6,
+            -1230px 1170px 15px #a7b4c9, -1455px 1545px 15px #adb9cd, -1765px 1835px 15px #8a9bb8,
+            -2135px 2065px 15px #91a1bc, -2420px 2380px 15px #8193b2, -2740px 2660px 15px #7e90b0,
+            -2965px 3035px 15px #8798b6, -3290px 3310px 15px #8e9eba, -3605px 3595px 15px #8a9bb8,
+            -3920px 3880px 15px #bac4d5, -4190px 4210px 15px #a4b1c8, -4465px 4535px 15px #8193b2,
+            -4800px 4800px 15px #9aa9c2;
     }
     .ground:before {
         right: 50%;
         margin-right: -166.66667px;
-        box-shadow: 260px -340px 15px #8e9eba, 
-        635px -565px 15px #b4bed1, 
-        950px -850px 15px #bac4d5, 
-        1205px -1195px 15px #94a3be, 
-        1505px -1495px 15px #aab6cb, 
-        1775px -1825px 15px #b7c1d3, 
-        2100px -2100px 15px #a1aec6, 
-        2430px -2370px 15px #8e9eba, 
-        2655px -2745px 15px #8a9bb8, 
-        3035px -2965px 15px #91a1bc, 
-        3335px -3265px 15px #8e9eba, 
-        3620px -3580px 15px #8496b4, 
-        3885px -3915px 15px #adb9cd, 
-        4250px -4150px 15px #aab6cb, 
-        4535px -4465px 15px #8193b2, 
-        4830px -4770px 15px #8496b4;
+        box-shadow: 260px -340px 15px #8e9eba, 635px -565px 15px #b4bed1, 950px -850px 15px #bac4d5,
+            1205px -1195px 15px #94a3be, 1505px -1495px 15px #aab6cb, 1775px -1825px 15px #b7c1d3,
+            2100px -2100px 15px #a1aec6, 2430px -2370px 15px #8e9eba, 2655px -2745px 15px #8a9bb8,
+            3035px -2965px 15px #91a1bc, 3335px -3265px 15px #8e9eba, 3620px -3580px 15px #8496b4,
+            3885px -3915px 15px #adb9cd, 4250px -4150px 15px #aab6cb, 4535px -4465px 15px #8193b2,
+            4830px -4770px 15px #8496b4;
     }
     .mound {
         margin-top: -120px;
@@ -195,7 +178,7 @@
         height: 6px;
         position: absolute;
         left: 50%;
-        margin-left: - 150px;
+        margin-left: -150px;
         top: 68px;
         z-index: 2;
         background: #dd4040;
@@ -218,7 +201,8 @@
         transform: rotate(35deg);
         background: #dd4040;
     }
-    .mound_spade:before, .mound_spade:after {
+    .mound_spade:before,
+    .mound_spade:after {
         content: '';
         display: block;
         position: absolute;
@@ -241,4 +225,3 @@
         border-radius: 4px 4px 20px 20px;
     }
 }
- 

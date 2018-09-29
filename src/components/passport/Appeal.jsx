@@ -5,13 +5,12 @@ import { Button } from 'react-bootstrap';
 import { LoadingDots } from '../common/Loading';
 import { Link } from 'react-router-dom';
 
-
 class Appeal extends React.Component {
     static propTypes = {
-        onSubmitAppeal: PropTypes.func.isRequired
-    }
+        onSubmitAppeal: PropTypes.func.isRequired,
+    };
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
             realname: '',
@@ -19,27 +18,27 @@ class Appeal extends React.Component {
             stunum: '',
             username: '',
             email: '',
-            message: ''
+            message: '',
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleClickAppeal = this.handleClickAppeal.bind(this);
     }
 
-    handleInputChange (e) {
+    handleInputChange(e) {
         this.setState({
-            [e.target.id]: e.target.value
+            [e.target.id]: e.target.value,
         });
     }
 
-    handleClickAppeal (e) {
+    handleClickAppeal(e) {
         e.preventDefault();
         const { onSubmitAppeal } = this.props;
         const { realname, cid, stunum, username, email, message } = this.state;
         onSubmitAppeal && onSubmitAppeal({ realname, cid, stunum, username, email, message });
     }
 
-    render () {
+    render() {
         const { realname, cid, stunum, username, email, message } = this.state;
         const { isFetching, error, success } = this.props;
 
@@ -47,7 +46,7 @@ class Appeal extends React.Component {
             <form>
                 <h4>人工申诉</h4>
                 <p>请尽可能填写以下信息，以帮助您更快完成验证</p>
-                <InputField 
+                <InputField
                     text="姓名"
                     id="realname"
                     className="input-realname"
@@ -55,7 +54,7 @@ class Appeal extends React.Component {
                     fullWidth
                     value={realname}
                 />
-                <InputField 
+                <InputField
                     text="学号"
                     id="stunum"
                     className="input-stunum"
@@ -64,14 +63,14 @@ class Appeal extends React.Component {
                     value={stunum}
                     placeholder="选填"
                 />
-                <InputField 
+                <InputField
                     text="身份证号"
                     id="cid"
                     onChange={this.handleInputChange}
                     fullWidth
                     value={cid}
                 />
-                <InputField 
+                <InputField
                     text="用户名"
                     id="username"
                     onChange={this.handleInputChange}
@@ -79,7 +78,7 @@ class Appeal extends React.Component {
                     value={username}
                     placeholder="选填"
                 />
-                <InputField 
+                <InputField
                     text="邮箱"
                     id="email"
                     onChange={this.handleInputChange}
@@ -87,7 +86,7 @@ class Appeal extends React.Component {
                     value={email}
                     placeholder="（必填）我们将使用此邮箱与您联系"
                 />
-                <InputField 
+                <InputField
                     text="补充信息"
                     id="message"
                     onChange={this.handleInputChange}
@@ -102,23 +101,17 @@ class Appeal extends React.Component {
                     onClick={this.handleClickAppeal}
                     disabled={isFetching}
                 >
-                    {
-                        isFetching
-                            ? <LoadingDots />
-                            : '提交'
-                    }
+                    {isFetching ? <LoadingDots /> : '提交'}
                 </Button>
-                {
-                    success === '请求成功' &&
+                {success === '请求成功' && (
                     <div className="success-wrapper">
                         <p className="success-msg">您的申诉已提交，请等待审核</p>
-                        <p><Link to='/'>返回首页</Link></p>
+                        <p>
+                            <Link to="/">返回首页</Link>
+                        </p>
                     </div>
-                }
-                {
-                    error &&
-                    <p className="text-center error-message">{error}</p>
-                }
+                )}
+                {error && <p className="text-center error-message">{error}</p>}
             </form>
         );
     }

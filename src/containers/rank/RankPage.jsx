@@ -13,60 +13,61 @@ class RankPageWrapper extends React.Component {
         isFetching: PropTypes.bool,
         rankList: PropTypes.shape({
             after: PropTypes.number,
-            rank: PropTypes.arrayOf(PropTypes.shape({
-                points: PropTypes.number,
-                name: PropTypes.string,
-                nickname: PropTypes.string,
-                tCreate: PropTypes.number,
-                cOnline: PropTypes.number,
-                signature: PropTypes.string,
-                id: PropTypes.number,
-                pointsInc: PropTypes.number
-            }))
+            rank: PropTypes.arrayOf(
+                PropTypes.shape({
+                    points: PropTypes.number,
+                    name: PropTypes.string,
+                    nickname: PropTypes.string,
+                    tCreate: PropTypes.number,
+                    cOnline: PropTypes.number,
+                    signature: PropTypes.string,
+                    id: PropTypes.number,
+                    pointsInc: PropTypes.number,
+                })
+            ),
         }),
-        error: PropTypes.string
-    }
+        error: PropTypes.string,
+    };
 
-    componentWillMount () {
+    componentWillMount() {
         const { getCompleteRank, type } = this.props;
         getCompleteRank && getCompleteRank(type);
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
         const { type, getCompleteRank } = nextProps;
         if (type !== this.props.type) {
             getCompleteRank && getCompleteRank(type);
         }
     }
 
-    render () {
+    render() {
         const { isFetching, rankList, error } = this.props;
         if (error) return <ErrorOverlay reason={error} needRefresh />;
-        if (isFetching || !rankList) return <LoadingLines />; 
+        if (isFetching || !rankList) return <LoadingLines />;
 
-        return (
-            <RankPage 
-                data={rankList}
-            />
-        );
+        return <RankPage data={rankList} />;
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
     const { type } = ownProps;
-    
+
     const rankStateByType = state.getIn(['rank', type]);
     if (!rankStateByType) return {};
 
     return {
         isFetching: rankStateByType.get('isFetching'),
         rankList: rankStateByType.get('rankList'),
-        error: rankStateByType.get('error')
+        error: rankStateByType.get('error'),
     };
 };
 const mapDispatchToProps = dispatch => ({
-    getCompleteRank: type => dispatch(getCompleteRank(type))
+    getCompleteRank: type => dispatch(getCompleteRank(type)),
 });
-RankPageWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(RankPageWrapper));
+RankPageWrapper = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(toJS(RankPageWrapper));
 
 export default RankPageWrapper;

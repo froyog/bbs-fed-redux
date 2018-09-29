@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Card } from './Card';
 import '../../styles/common/input.less';
 
-
 export class InputField extends React.PureComponent {
     static propTypes = {
         text: PropTypes.string.isRequired,
@@ -22,14 +21,14 @@ export class InputField extends React.PureComponent {
     static defaultProps = {
         type: 'text',
         fullWidth: false,
-        color: '#2565ac'
+        color: '#2565ac',
     };
 
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.state = {
             focused: false,
-            hasContent: !!props.initialValue
+            hasContent: !!props.initialValue,
         };
 
         this.handleInputFocused = this.handleInputFocused.bind(this);
@@ -37,41 +36,51 @@ export class InputField extends React.PureComponent {
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    handleInputFocused () {
+    handleInputFocused() {
         this.setState({
-            focused: true
+            focused: true,
         });
     }
 
-    handleInputBlur () {
+    handleInputBlur() {
         this.setState({
-            focused: false
+            focused: false,
         });
     }
 
-    handleInputChange ({ target }) {
+    handleInputChange({ target }) {
         const { onChange } = this.props;
         if (onChange) onChange({ target });
-        
+
         if (target.value.length === 0) {
             this.setState({
-                hasContent: false
+                hasContent: false,
             });
             return;
         }
         this.setState({
-            hasContent: true
+            hasContent: true,
         });
     }
 
-    render () {
-        const { id, text, type, placeholder, fullWidth, 
-            errorMessage, className, initialValue, disabled, style } = this.props;
+    render() {
+        const {
+            id,
+            text,
+            type,
+            placeholder,
+            fullWidth,
+            errorMessage,
+            className,
+            initialValue,
+            disabled,
+            style,
+        } = this.props;
         const { focused, hasContent } = this.state;
-        
+
         let labelStyle = {
             transform: 'scale(1) translate(0, 0)',
-            color: 'rgba(0, 0, 0, .5)'
+            color: 'rgba(0, 0, 0, .5)',
         };
         if (focused) {
             labelStyle.transform = 'scale(.75) translate(0, -28px)';
@@ -84,29 +93,26 @@ export class InputField extends React.PureComponent {
             labelStyle.color = '#d32f2f';
         }
 
-
         return (
-            <div 
-                className={`input-wrapper${className ? ' ' + className : ''}`} 
+            <div
+                className={`input-wrapper${className ? ' ' + className : ''}`}
                 style={{ width: `${fullWidth ? '100%' : '256px'}`, ...style }}
             >
-                <label
-                    htmlFor={id}
-                    style={labelStyle}
-                >
+                <label htmlFor={id} style={labelStyle}>
                     {text}
                 </label>
-                { placeholder && !hasContent &&
-                    <div
-                        className="placeholder"
-                        style={{
-                            opacity: `${focused ? '1' : '0'}`,
-                            [focused ? 'zIndex' : null]: '2'
-                        }}
-                    >
-                        {placeholder}
-                    </div>
-                }
+                {placeholder &&
+                    !hasContent && (
+                        <div
+                            className="placeholder"
+                            style={{
+                                opacity: `${focused ? '1' : '0'}`,
+                                [focused ? 'zIndex' : null]: '2',
+                            }}
+                        >
+                            {placeholder}
+                        </div>
+                    )}
                 <input
                     defaultValue={initialValue}
                     type={type}
@@ -121,17 +127,13 @@ export class InputField extends React.PureComponent {
                     <hr
                         style={{
                             transform: `scaleX(${focused ? '1' : '0'})`,
-                            borderBottomColor: `${focused && errorMessage ? '#d32f2f' : '#2565ac' }`
+                            borderBottomColor: `${focused && errorMessage ? '#d32f2f' : '#2565ac'}`,
                         }}
                         aria-hidden="true"
-                        className="border-colored" 
+                        className="border-colored"
                     />
                 </div>
-                { errorMessage &&
-                    <div className="input-error">
-                        {errorMessage}
-                    </div>
-                }
+                {errorMessage && <div className="input-error">{errorMessage}</div>}
             </div>
         );
     }
@@ -142,20 +144,20 @@ export class SelectField extends React.PureComponent {
         labelText: PropTypes.string.isRequired,
         onSelect: PropTypes.func.isRequired,
         fullWidth: PropTypes.bool,
-        color: PropTypes.string
+        color: PropTypes.string,
     };
 
     static defaultProps = {
         fullWidth: false,
-        color: '#2565ac'
+        color: '#2565ac',
     };
 
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.state = {
             focused: false,
             hasContent: false,
-            selectedValue: props.initialValue || ''
+            selectedValue: props.initialValue || '',
         };
 
         this.handleInputFocused = this.handleInputFocused.bind(this);
@@ -163,59 +165,56 @@ export class SelectField extends React.PureComponent {
         this.handleSelect = this.handleSelect.bind(this);
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
         const { options } = this.props;
         const { options: nextOptions } = nextProps;
         if (typeof options === 'undefined' && nextOptions) {
             this.setState({
-                selectedValue: ''
+                selectedValue: '',
             });
         }
     }
 
-    handleInputFocused () {
+    handleInputFocused() {
         this.setState({
-            focused: true
-        });
-    }
-    
-    handleInputBlur () {
-        this.setState({
-            focused: false
+            focused: true,
         });
     }
 
-    handleSelect (e) {
+    handleInputBlur() {
+        this.setState({
+            focused: false,
+        });
+    }
+
+    handleSelect(e) {
         const { id, innerText } = e.target;
         // eslint-disable-next-line
         this.props.onSelect && this.props.onSelect(id);
         this.setState({
             selectedValue: innerText,
-            hasContent: true
+            hasContent: true,
         });
     }
 
-    render () {
+    render() {
         const { id, labelText, fullWidth, options } = this.props;
         const { focused, selectedValue, hasContent } = this.state;
-        let optionItem, inputDisabled = false;
+        let optionItem,
+            inputDisabled = false;
         if (options && options.length) {
-            optionItem = options.map(option => 
-                <li 
-                    onMouseDown={this.handleSelect}
-                    id={option.id}
-                    key={option.id}
-                >
+            optionItem = options.map(option => (
+                <li onMouseDown={this.handleSelect} id={option.id} key={option.id}>
                     {option.name}
                 </li>
-            );
+            ));
         } else {
             inputDisabled = true;
         }
 
         let labelStyle = {
             transform: 'scale(.75) translate(0, -28px)',
-            color: 'rgba(0, 0, 0, .5)'
+            color: 'rgba(0, 0, 0, .5)',
         };
         if (focused) {
             labelStyle.transform = 'scale(.75) translate(0, -28px)';
@@ -226,24 +225,22 @@ export class SelectField extends React.PureComponent {
         }
 
         return (
-            <div className="input-wrapper select" style={{ width: `${fullWidth ? '100%' : '256px'}` }}>
-                <label
-                    htmlFor={id}
-                    style={labelStyle}
-                >
+            <div
+                className="input-wrapper select"
+                style={{ width: `${fullWidth ? '100%' : '256px'}` }}
+            >
+                <label htmlFor={id} style={labelStyle}>
                     {labelText}
                 </label>
                 <div>
-                    { optionItem && 
-                        <Card 
+                    {optionItem && (
+                        <Card
                             className="options"
                             style={{ display: `${focused ? 'block' : 'none'}` }}
                         >
-                            <ul>
-                                {optionItem}
-                            </ul>
+                            <ul>{optionItem}</ul>
                         </Card>
-                    }
+                    )}
                     <input
                         type="select"
                         value={selectedValue}
@@ -253,14 +250,14 @@ export class SelectField extends React.PureComponent {
                         disabled={inputDisabled}
                     />
                     <svg className="select-icon" focusable="false" viewBox="0 0 24 24">
-                        <path d="M7 10l5 5 5-5z"></path>
+                        <path d="M7 10l5 5 5-5z" />
                     </svg>
                 </div>
                 <div>
                     <hr aria-hidden="true" className="border-muted" />
                     <hr
                         style={{
-                            transform: `scaleX(${focused ? '1' : '0'})`
+                            transform: `scaleX(${focused ? '1' : '0'})`,
                         }}
                         aria-hidden="true"
                         className="border-colored"

@@ -5,21 +5,20 @@ import { newRegister } from '../../actions/passport/register';
 import { connect } from 'react-redux';
 import { toJS } from '../../util';
 
-
 class RegisterWrapper extends React.Component {
     static propTypes = {
         onNewRegister: PropTypes.func.isRequired,
         isFetching: PropTypes.bool,
-        error: PropTypes.string
-    }
+        error: PropTypes.string,
+    };
 
-    constructor () {
+    constructor() {
         super();
 
         this.handleRegister = this.handleRegister.bind(this);
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
         const { isFetching, success, history } = nextProps;
         if (success === '请求成功' && !isFetching && isFetching !== this.props.isFetching) {
             this.timeout = setTimeout(() => {
@@ -28,16 +27,16 @@ class RegisterWrapper extends React.Component {
         }
     }
 
-    handleRegister (registerInfo) {
+    handleRegister(registerInfo) {
         const { onNewRegister } = this.props;
         onNewRegister && onNewRegister(registerInfo);
     }
 
-    render () {
+    render() {
         const { isFetching, error, item } = this.props;
 
         return (
-            <Register 
+            <Register
                 isFetching={isFetching}
                 error={error}
                 success={item}
@@ -54,11 +53,14 @@ const mapStateToProps = state => {
     return {
         isFetching: newRegisterState.get('isFetching'),
         error: newRegisterState.get('error'),
-        item: newRegisterState.get('items')
+        item: newRegisterState.get('items'),
     };
 };
 const mapDispatchToProps = dispatch => ({
-    onNewRegister: registerInfo => dispatch(newRegister(registerInfo))
+    onNewRegister: registerInfo => dispatch(newRegister(registerInfo)),
 });
-RegisterWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(RegisterWrapper));
+RegisterWrapper = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(toJS(RegisterWrapper));
 export default RegisterWrapper;

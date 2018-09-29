@@ -7,51 +7,52 @@ import { LoadingDots, LoadingLines } from '../../components/common/Loading';
 import MessageBase from './MessageBase';
 import { Button } from 'react-bootstrap';
 
-
 class Messages extends React.Component {
     static propTypes = {
         getMessages: PropTypes.func.isRequired,
         refreshMessages: PropTypes.func.isRequired,
         isFetching: PropTypes.bool.isRequired,
         error: PropTypes.string.isRequired,
-        messages: PropTypes.arrayOf(PropTypes.shape({
-            authorId: PropTypes.number,
-            authorName: PropTypes.string,
-            authorNickname: PropTypes.string,
-            id: PropTypes.number,
-            read: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-            tCreate: PropTypes.number,
-            tag: PropTypes.number
-        }))
-    }
+        messages: PropTypes.arrayOf(
+            PropTypes.shape({
+                authorId: PropTypes.number,
+                authorName: PropTypes.string,
+                authorNickname: PropTypes.string,
+                id: PropTypes.number,
+                read: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+                tCreate: PropTypes.number,
+                tag: PropTypes.number,
+            })
+        ),
+    };
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
-            page: 0
+            page: 0,
         };
 
         this.handleLoadMore = this.handleLoadMore.bind(this);
     }
 
-    componentWillMount () {
+    componentWillMount() {
         this.props.getMessages(this.state.page);
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         const { clearUnreadTag } = this.props;
         clearUnreadTag && clearUnreadTag();
     }
 
-    handleLoadMore () {
+    handleLoadMore() {
         const { page } = this.state;
         this.props.getMessages(page + 1);
         this.setState({
-            page: page + 1
+            page: page + 1,
         });
     }
 
-    render () {
+    render() {
         const { isFetching, messages, error } = this.props;
 
         if (isFetching && !messages.length) return <LoadingLines />;
@@ -59,9 +60,9 @@ class Messages extends React.Component {
 
         return (
             <div>
-                { messages.map(message => {
+                {messages.map(message => {
                     return <MessageBase key={message.id} message={message} />;
-                }) }
+                })}
                 <Button
                     className="load-more"
                     block
@@ -69,7 +70,7 @@ class Messages extends React.Component {
                     onClick={this.handleLoadMore}
                     disabled={isFetching}
                 >
-                    { isFetching ? <LoadingDots /> : '更多消息' }
+                    {isFetching ? <LoadingDots /> : '更多消息'}
                 </Button>
             </div>
         );
@@ -79,16 +80,19 @@ class Messages extends React.Component {
 const mapStateToProps = state => {
     const messagesState = state.get('messages');
     return {
-        'isFetching': messagesState.get('isFetching'),
-        'messages': messagesState.get('messages'),
-        'error': messagesState.get('error')
+        isFetching: messagesState.get('isFetching'),
+        messages: messagesState.get('messages'),
+        error: messagesState.get('error'),
     };
 };
 const mapDispatchToProps = dispatch => ({
     getMessages: page => dispatch(getMessages(page)),
     refreshMessages: () => dispatch(refreshMessages()),
-    clearUnreadTag: () => dispatch(clearUnreadTag())
+    clearUnreadTag: () => dispatch(clearUnreadTag()),
 });
-Messages = connect(mapStateToProps, mapDispatchToProps)(toJS(Messages));
+Messages = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(toJS(Messages));
 
 export default Messages;

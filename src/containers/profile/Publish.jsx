@@ -7,14 +7,13 @@ import { getPublishList, getReplyList } from '../../actions/profile/publish';
 import { deleteThread } from '../../actions/forum/board';
 import { deletePost } from '../../actions/forum/thread';
 
-
 class Publish extends React.Component {
     static propTypes = {
         getPublishList: PropTypes.func.isRequired,
-        getReplyList: PropTypes.func.isRequired
-    }
+        getReplyList: PropTypes.func.isRequired,
+    };
 
-    constructor () {
+    constructor() {
         super();
 
         this.handleLoadMoreThread = this.handleLoadMoreThread.bind(this);
@@ -22,43 +21,39 @@ class Publish extends React.Component {
         this.handleDelete = this.handleDelete.bind(this);
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
         const { getPublishList, getReplyList } = nextProps;
         {
             const { isFetching, error } = nextProps.deleteThreadState;
-            if (!error && !isFetching && 
-                isFetching !== this.props.deleteThreadState.isFetching
-            ) {
+            if (!error && !isFetching && isFetching !== this.props.deleteThreadState.isFetching) {
                 getPublishList && getPublishList(0);
             }
         }
         {
             const { isFetching, error } = nextProps.deletePostState;
-            if (!error && !isFetching 
-                && isFetching !== this.props.deletePostState.isFetching
-            ) {
+            if (!error && !isFetching && isFetching !== this.props.deletePostState.isFetching) {
                 getReplyList && getReplyList(0);
             }
         }
     }
 
-    componentWillMount () {
+    componentWillMount() {
         const { getPublishList, getReplyList } = this.props;
         getPublishList && getPublishList(0);
         getReplyList && getReplyList(0);
     }
 
-    handleLoadMoreThread (page) {
+    handleLoadMoreThread(page) {
         const { getPublishList } = this.props;
         getPublishList && getPublishList(page);
     }
 
-    handleLoadMorePost (page) {
+    handleLoadMorePost(page) {
         const { getReplyList } = this.props;
         getReplyList && getReplyList(page);
     }
 
-    handleDelete (type, id) {
+    handleDelete(type, id) {
         const { deleteThread, deletePost } = this.props;
         if (type === 'thread') {
             // tid
@@ -69,18 +64,18 @@ class Publish extends React.Component {
         }
     }
 
-    render () {
+    render() {
         const { publishState, replyState } = this.props;
         return (
             <div>
-                <PublishList 
+                <PublishList
                     type="thread"
                     onLoadMorePage={this.handleLoadMoreThread}
                     publishState={publishState}
                     onDelete={this.handleDelete}
                 />
                 <PublishList
-                    type="post" 
+                    type="post"
                     onLoadMorePage={this.handleLoadMorePost}
                     publishState={replyState}
                     onDelete={this.handleDelete}
@@ -98,15 +93,18 @@ const mapStateToProps = state => {
         publishState: publishSliceState.get('thread'),
         replyState: publishSliceState.get('post'),
         deleteThreadState: state.getIn(['bypassing', 'deleteThread']),
-        deletePostState: state.getIn(['bypassing', 'deletePost'])
+        deletePostState: state.getIn(['bypassing', 'deletePost']),
     };
 };
 const mapDispatchToProps = dispatch => ({
     getPublishList: page => dispatch(getPublishList(page)),
     getReplyList: page => dispatch(getReplyList(page)),
     deleteThread: tid => dispatch(deleteThread(tid)),
-    deletePost: pid => dispatch(deletePost(pid))
+    deletePost: pid => dispatch(deletePost(pid)),
 });
-Publish = connect(mapStateToProps, mapDispatchToProps)(toJS(Publish));
+Publish = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(toJS(Publish));
 
 export default Publish;

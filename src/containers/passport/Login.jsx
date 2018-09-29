@@ -5,41 +5,34 @@ import { toJS } from '../../util';
 import { login } from '../../actions/passport/log-io';
 import Login from '../../components/passport/Login';
 
-
 class LoginWrapper extends React.Component {
     static propTypes = {
         login: PropTypes.func.isRequired,
         isFetching: PropTypes.bool.isRequired,
-        error: PropTypes.string.isRequired
-    }
+        error: PropTypes.string.isRequired,
+    };
 
-    constructor () {
+    constructor() {
         super();
 
         this.handleLogin = this.handleLogin.bind(this);
     }
 
-    handleLogin (username, password) {
+    handleLogin(username, password) {
         const { login } = this.props;
         login && login(username, password);
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
         const { isFetching, success, history } = nextProps;
         if (success && isFetching !== this.props.isFetching) {
             history.push('/', { from: 'login' });
         }
     }
 
-    render () {
+    render() {
         const { isFetching, error } = this.props;
-        return (
-            <Login 
-                onLogin={this.handleLogin}
-                isFetching={isFetching}
-                error={error}
-            />
-        );
+        return <Login onLogin={this.handleLogin} isFetching={isFetching} error={error} />;
     }
 }
 
@@ -48,12 +41,15 @@ const mapStateToProps = state => {
     return {
         isFetching: loginState.get('isFetching'),
         success: loginState.get('success'),
-        error: loginState.get('error')
+        error: loginState.get('error'),
     };
 };
 const mapDispatchToProps = dispatch => ({
-    login: (username, password) => dispatch(login(username, password))
+    login: (username, password) => dispatch(login(username, password)),
 });
-LoginWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(LoginWrapper));
+LoginWrapper = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(toJS(LoginWrapper));
 
 export default LoginWrapper;
