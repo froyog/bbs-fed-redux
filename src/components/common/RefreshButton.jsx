@@ -8,12 +8,11 @@ const RefreshButton = ({ isFetching, className, ...restProps }) => {
 
     return (
         <Button
-            className={className ? `${className} flat refresh` : 'flat refresh'}
+            className={className ? `${className} flat2 refresh` : 'flat2 refresh'}
             bsStyle="link"
             {...restProps}
         >
             <i className={iconClassName} />
-            刷新
         </Button>
     );
 };

@@ -1,11 +1,17 @@
 button.refresh {
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0;
+    border: 0;
+    width: 20px;
+    height: 20px;
 
     .icon-refresh {
-        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        line-height: 20px;
         transform-origin: center;
-        margin-right: 3px;
 
         &.animating {
             animation: 1s rotating infinite linear;

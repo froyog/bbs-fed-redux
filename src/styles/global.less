@@ -60,6 +60,26 @@ a.flat {
     }
 }
 
+button.flat2,
+a.flat2 {
+    color: rgba(0, 0, 0, 0.5);
+    transition: 0.3s ease;
+    outline: 0 !important;
+    &:hover {
+        color: rgb(0, 0, 0);
+        &::after {
+            content: '';
+            width: 200%;
+            height: 200%;
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+
 .container {
     @media @phones {
         padding: 0;
