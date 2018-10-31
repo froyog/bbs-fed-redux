@@ -73,6 +73,18 @@ Smart 组件和 Dumb 组件：需要连接 redux store 的组件为 Smart 组件
 
 可以局部使用，用于生成相似结构的 action creator。如果认为有助于减少样板代码，可以使用。
 
+## 错误追踪 / 流量统计
+
+### 使用 Raven 进行错误追踪
+
+使用 redux-raven-middleware 将错误汇报至 [sentry](https://sentry-twtstudio.com)。
+
+### 使用 Piwik 进行流量统计
+
+以 PiwikReactRouter 代替 React-Router 统计所有经过路由的流量（GET 请求）
+
+piwikTraker 这个
+
 ## 编码规范
 
 ### 代码格式
