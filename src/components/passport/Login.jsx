@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button, Form, FormControl, FormGroup } from 'react-bootstrap';
 import truth from '../../assests/banner.jpg';
+import { isMobile } from '../../util';
 
 
 class Login extends React.Component {
@@ -16,11 +17,14 @@ class Login extends React.Component {
         super();
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            shouldCollpaseLinks: false
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
+        this.handleInputBlur = this.handleInputBlur.bind(this);
+        this.handleInputFocus = this.handleInputFocus.bind(this);
     }
 
     handleInputChange (e) {
@@ -37,9 +41,25 @@ class Login extends React.Component {
         onLogin && onLogin(username, password);
     }
 
+    handleInputFocus (e) {
+        if (isMobile(1000)) {
+            this.setState({
+                shouldCollpaseLinks: true
+            });
+        }
+    }
+
+    handleInputBlur (e) {
+        if (isMobile(1000)) {
+            this.setState({
+                shouldCollpaseLinks: false
+            });
+        }
+    }
+
     render () {
         const { isFetching, error } = this.props;
-        const { username, password } = this.state;
+        const { username, password, shouldCollpaseLinks } = this.state;
         return (
             <div className="login">
                 <img className="banner" src={truth} alt="banner" />
@@ -51,6 +71,8 @@ class Login extends React.Component {
                             value={username}
                             placeholder="请输入用户名"
                             onChange={this.handleInputChange}
+                            onBlur={this.handleInputBlur}
+                            onFocus={this.handleInputFocus}
                         />
                     </FormGroup>
                     <FormGroup controlId="password">
@@ -60,6 +82,8 @@ class Login extends React.Component {
                             value={password}
                             placeholder="请输入密码"
                             onChange={this.handleInputChange}
+                            onBlur={this.handleInputBlur}
+                            onFocus={this.handleInputFocus}
                         />
                     </FormGroup>
                     <Button
@@ -74,7 +98,7 @@ class Login extends React.Component {
                     </Button>
                     <p className="error-msg">{error}</p>
                 </Form>
-                <div className="additional-link-wrapper">
+                <div className="additional-link-wrapper" style={{ display: shouldCollpaseLinks ? 'none' : 'block' }}>
                     <Link to='/passport/forget/auth'>忘记用户名/密码</Link>
                     |
                     <Link to='/passport/old'>老用户认证</Link>
