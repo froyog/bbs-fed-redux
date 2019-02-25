@@ -4,6 +4,7 @@ import forumList from './forum/forumList';
 import boardList from './forum/boardList';
 import board from './forum/board';
 import sidebar from './frame/sidebar';
+import redirect from './frame/redirect';
 import bbsIndex from './bbsIndex';
 import login from './passport/login';
 import thread from './forum/thread';
@@ -71,6 +72,7 @@ const bypassing = combineReducers({
 
 const combinedReducer = combineReducers({
     sidebarIsOpen: sidebar,
+    redirectUrl: redirect,
     forumList,
     boardList,
     board,

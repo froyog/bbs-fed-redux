@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { toJS } from '../../util';
 import { login } from '../../actions/passport/log-io';
 import Login from '../../components/passport/Login';
+import { setReferUrl } from '../../actions/frame/redirect';
 
 
 class LoginWrapper extends React.Component {
@@ -25,9 +26,10 @@ class LoginWrapper extends React.Component {
     }
 
     componentWillReceiveProps (nextProps) {
-        const { isFetching, success, history } = nextProps;
+        const { isFetching, success, history, redirectUrl, setReferUrl } = nextProps;
         if (success && isFetching !== this.props.isFetching) {
-            history.push('/', { from: 'login' });
+            history.push(redirectUrl, { from: 'login' });
+            setReferUrl('/');
         }
     }
 
@@ -48,11 +50,13 @@ const mapStateToProps = state => {
     return {
         isFetching: loginState.get('isFetching'),
         success: loginState.get('success'),
-        error: loginState.get('error')
+        error: loginState.get('error'),
+        redirectUrl: state.get('redirectUrl')
     };
 };
 const mapDispatchToProps = dispatch => ({
-    login: (username, password) => dispatch(login(username, password))
+    login: (username, password) => dispatch(login(username, password)),
+    setReferUrl: url => dispatch(setReferUrl(url))
 });
 LoginWrapper = connect(mapStateToProps, mapDispatchToProps)(toJS(LoginWrapper));
 

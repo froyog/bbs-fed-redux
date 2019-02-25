@@ -130,7 +130,7 @@ class BoardEditor extends React.Component {
                 />
                 <BIDSelector 
                     onBIDSelect={this.handleSelectBID}
-                    currentBoardInfo={locationState.currentBoardInfo}
+                    currentBoardInfo={locationState ? locationState.currentBoardInfo : null}
                 />
                 <Editor
                     toolbar={customToolbar}

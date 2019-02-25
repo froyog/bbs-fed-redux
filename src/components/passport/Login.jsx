@@ -42,7 +42,7 @@ class Login extends React.Component {
     }
 
     handleInputFocus (e) {
-        if (isMobile(1000)) {
+        if (isMobile()) {
             this.setState({
                 shouldCollpaseLinks: true
             });
@@ -50,7 +50,7 @@ class Login extends React.Component {
     }
 
     handleInputBlur (e) {
-        if (isMobile(1000)) {
+        if (isMobile()) {
             this.setState({
                 shouldCollpaseLinks: false
             });

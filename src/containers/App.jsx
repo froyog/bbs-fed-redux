@@ -21,6 +21,7 @@ import BottomBar from './frame/BottomBar';
 import { connect } from 'react-redux';
 import { isMobile } from '../util.js';
 import { toggleSidebar } from '../actions/frame/sidebar';
+import { setReferUrl } from '../actions/frame/redirect';
 import { initFromLocal } from '../actions/init';
 import { getProfileIfNeeded } from '../actions/profile/profile';
 
@@ -36,7 +37,7 @@ class App extends React.Component {
     };
 
     componentWillMount() {
-        const { onToggleSidebar, initFromLocal, getSelfProfile } = this.props;
+        const { onToggleSidebar, initFromLocal, getSelfProfile, setReferUrl, location } = this.props;
 
         onToggleSidebar(!isMobile());
 
@@ -44,9 +45,11 @@ class App extends React.Component {
         initFromLocal(user);
 
         getSelfProfile();
+        
+        setReferUrl(location.pathname);
     }
 
-    render () {
+    render() {
         const { isOpen, location, redirectLogin, isShowToast } = this.props;
         const mainStyle = {
             [isMobile() ? 'left' : 'marginLeft']: `${isOpen ? '200px' : '0'}`
@@ -99,7 +102,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onToggleSidebar: openStatus => dispatch(toggleSidebar(openStatus)),
     initFromLocal: userState => dispatch(initFromLocal(userState)),
-    getSelfProfile: () => dispatch(getProfileIfNeeded('me'))
+    getSelfProfile: () => dispatch(getProfileIfNeeded('me')),
+    setReferUrl: url => dispatch(setReferUrl(url))
 });
 App = withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
 
